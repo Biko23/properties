@@ -1,8 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+<<<<<<< HEAD
 import RegisterProperty from '../views/RegisterProperty.vue'
 import RegisterProperty2 from '../views/RegisterProperty2.vue'
+=======
+import Property from '@/views/Property'
+>>>>>>> d12d930a5c7ae7db8971e5fca23236cb27be6020
 
 Vue.use(VueRouter)
 
@@ -13,6 +17,7 @@ const routes = [
     component: Home
   },
   {
+<<<<<<< HEAD
     path: '/register',
     name: 'RegisterProperty',
     component: RegisterProperty
@@ -21,6 +26,11 @@ const routes = [
     path: '/register2',
     name: 'RegisterProperty2',
     component: RegisterProperty2
+=======
+    path: '/property',
+    name: 'Property',
+    component: Property
+>>>>>>> d12d930a5c7ae7db8971e5fca23236cb27be6020
   },
   {
     path: '/about',
