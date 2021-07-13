@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import RegisterProperty from '../views/RegisterProperty.vue'
+import RegisterProperty2 from '../views/RegisterProperty2.vue'
 
 Vue.use(VueRouter)
 
@@ -9,6 +11,16 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/register',
+    name: 'RegisterProperty',
+    component: RegisterProperty
+  },
+  {
+    path: '/register2',
+    name: 'RegisterProperty2',
+    component: RegisterProperty2
   },
   {
     path: '/about',
