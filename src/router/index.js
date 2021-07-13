@@ -1,13 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-<<<<<<< HEAD
 import RegisterProperty from '../views/RegisterProperty.vue'
 import RegisterProperty2 from '../views/RegisterProperty2.vue'
 import Property from '@/views/Property'
-=======
-import Learn from '../views/Home.vue'
->>>>>>> 44448395317a4709edbbabbac20ded0cfee14f65
+
 
 Vue.use(VueRouter)
 
