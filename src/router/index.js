@@ -1,9 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+<<<<<<< HEAD
 import RegisterProperty from '../views/RegisterProperty.vue'
 import RegisterProperty2 from '../views/RegisterProperty2.vue'
 import Property from '@/views/Property'
+=======
+import Learn from '../views/Home.vue'
+>>>>>>> 44448395317a4709edbbabbac20ded0cfee14f65
 
 Vue.use(VueRouter)
 
@@ -35,6 +39,11 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+  },
+  {
+    path:'/learn',
+    name:'Learn',
+    component:() => import(/* webpackChunkName: "about" */ '../views/Learn.vue')
   }
 ]
 
