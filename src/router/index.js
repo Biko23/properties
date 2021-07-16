@@ -4,6 +4,11 @@ import Home from '../views/Home.vue'
 import RegisterProperty from '../views/RegisterProperty.vue'
 import RegisterProperty2 from '../views/RegisterProperty2.vue'
 import Property from '@/views/Property'
+import SignUp from '@/views/SignUp'
+import Login from '@/views/Login'
+import GetStarted from '@/views/GetStarted'
+import UserProfile from '@/views/UserProfile'
+import ViewProperty from '@/components/ViewProperty'
 
 
 Vue.use(VueRouter)
@@ -28,6 +33,31 @@ const routes = [
     path: '/property',
     name: 'Property',
     component: Property
+  },
+  {
+    path: '/signup',
+    name: 'SignUp',
+    component: SignUp
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/getstarted',
+    name: 'GetStarted',
+    component: GetStarted
+  },
+  {
+    path: '/profile',
+    name: 'UserProfile',
+    component: UserProfile
+  },
+  {
+    path: '/view',
+    name: 'ViewProperty',
+    component: ViewProperty
   },
   {
     path: '/about',
