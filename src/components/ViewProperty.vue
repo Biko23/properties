@@ -107,13 +107,14 @@
       </v-row>
     </v-container>
 
-
     <v-container>
       <v-row>
         <v-col>
           <v-card color="basil">
             <v-card-title class="text-center justify-center py-6">
-              <h1 class="font-weight-bold text-h6 basil--text">More property Details</h1>
+              <h1 class="font-weight-bold text-h6 basil--text">
+                More property Details
+              </h1>
             </v-card-title>
 
             <v-tabs
@@ -122,46 +123,117 @@
               color="basil"
               grow
             >
-              <v-tab>
-                try 1
-              </v-tab>
-              <v-tab>
-                try 2
-              </v-tab>
-              <v-tab>
-                try 3
-              </v-tab>
-              <v-tab>
-                try 4
-              </v-tab>
+              <v-tab> Features </v-tab>
+              <v-tab> Monthly Costs </v-tab>
+              <v-tab> Neighborhood </v-tab>
+              <v-tab> Rating </v-tab>
+              <v-tab> Rental Value </v-tab>
             </v-tabs>
 
             <v-tabs-items v-model="tab">
-              <v-tab-item >
+              <v-tab-item>
                 <v-card color="basil" flat>
                   <v-card-text>
-                      <p>This is for the first</p>
+                    <!-- Features content -->
+                    <v-data-table
+                      :headers="featureHeaders"
+                      :items="propertyFeatures"
+                      :items-per-page="5"
+                      class="elevation-1"
+                    ></v-data-table>
                   </v-card-text>
                 </v-card>
               </v-tab-item>
-              <v-tab-item >
+              <v-tab-item>
                 <v-card color="basil" flat>
                   <v-card-text>
-                      <p>This is for the first</p>
+                    <!-- Monthly costs content -->
+                    <v-data-table
+                      :headers="monthlyCostHeaders"
+                      :items="propertyMonthtyCosts"
+                      :items-per-page="5"
+                      class="elevation-1"
+                    ></v-data-table>
                   </v-card-text>
                 </v-card>
               </v-tab-item>
-              <v-tab-item >
+              <v-tab-item>
                 <v-card color="basil" flat>
                   <v-card-text>
-                      <p>This is for the second</p>
+                    <!-- Content for neighborhood -->
+
+                    <v-row>
+                      <v-col>
+                        <v-img
+                          src="../assets/houseview1.png"
+                          :lazy-src="`https://picsum.photos/10/6?image=${
+                            n * 5 + 10
+                          }`"
+                          aspect-ratio="1"
+                          class="grey lighten-2"
+                          height="200"
+                        ></v-img>
+                      </v-col>
+                      <v-col>
+                        <v-img
+                          src="../assets/houseview2.png"
+                          :lazy-src="`https://picsum.photos/10/6?image=${
+                            n * 5 + 10
+                          }`"
+                          aspect-ratio="1"
+                          class="grey lighten-2"
+                          height="200"
+                        ></v-img>
+                      </v-col>
+                      <v-col>
+                        <v-img
+                          src="../assets/houseview3.png"
+                          :lazy-src="`https://picsum.photos/10/6?image=${
+                            n * 5 + 10
+                          }`"
+                          aspect-ratio="1"
+                          class="grey lighten-2"
+                          height="200"
+                        ></v-img>
+                      </v-col>
+                      <v-col>
+                        <v-img
+                          src="../assets/houseview3.png"
+                          :lazy-src="`https://picsum.photos/10/6?image=${
+                            n * 5 + 10
+                          }`"
+                          aspect-ratio="1"
+                          class="grey lighten-2"
+                          height="200"
+                        ></v-img>
+                      </v-col>
+                    </v-row>
                   </v-card-text>
                 </v-card>
               </v-tab-item>
-              <v-tab-item >
+              <v-tab-item>
                 <v-card color="basil" flat>
+                  <v-card-text class="text-center">
+                    <!-- Content rating-->
+                    <v-row align="center" class="mx-0">
+                      <v-rating
+                        :value="4.5"
+                        color="amber"
+                        dense
+                        half-increments
+                        readonly
+                        size="14"
+                      ></v-rating>
+                      <div class="grey--text ms-4">4.5 (413)</div>
+                    </v-row>
+                  </v-card-text>
+                </v-card>
+              </v-tab-item>
+              <v-tab-item>
+                <v-card color="basil" flat>
+                  <v-card-title>Rent Amount</v-card-title>
                   <v-card-text>
-                      <p>This is for the Third</p>
+                    <h3>20000000 /=</h3>
                   </v-card-text>
                 </v-card>
               </v-tab-item>
@@ -180,6 +252,49 @@ export default {
   components: { TopNav, MainNav },
   name: "ViewProperty",
   data: () => ({
+    propertyFeatures: [
+      {
+        features_id: 1,
+        feature: "Iron sheets",
+        description: "Roman Tiles Coffee brown",
+      },
+      { features_id: 2, feature: "Floors", description: "4" },
+      {
+        features_id: 3,
+        feature: "Type",
+        description:
+          "3 Bedrooms,1 dinning room, 1 sitting room ,kitchen, and 2 washrooms",
+      },
+    ],
+    propertyMonthtyCosts: [
+      {
+        monthly_costs_id: 1,
+        principal_plus_interest: 20000000.0,
+        mortgage_insurance: 4000000.0,
+        property_tax: 500000.0,
+        home_insurance: 500000.0,
+        utility_costs: 500000.0,
+      },
+    ],
+    propertyNeiborhood: [],
+    propertyRating: [],
+    propertyRentalValue: [
+      {
+        rental_value_id: 1,
+        rental_value_amt: 2000000,
+      },
+    ],
+    featureHeaders: [
+      { text: "Feature", value: "feature" },
+      { text: "Description", value: "description" },
+    ],
+    monthlyCostHeaders: [
+      { text: "Principal Plus Interest", value: "principal_plus_interest" },
+      { text: "Mortgage Insurance", value: "mortgage_insurance" },
+      { text: "Tax", value: "property_tax" },
+      { text: "Home Insurance", value: "home_insurance" },
+      { text: "Utility Costs", value: "utility_costs" },
+    ],
     tab: null,
     itemss: ["Appetizers", "Entrees", "Deserts", "Cocktails"],
     text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, ",
