@@ -4,14 +4,15 @@
       <p id="intro">With us you can sell your home with no fear</p>
       <p id="intro2">Directly to us, through an agent, or yourself</p>
     </v-container>
-    <v-divider></v-divider><br />
+    ><br />
     <div style="text-align: center; margin-top: 15px">
       <h3><span style="color: #3b6ef3"> HOW </span>IT WORKS</h3>
     </div>
     <v-container>
       <v-row>
-        <v-col cols="12" md="6">
-          <v-card max-width="auto">
+        <v-col></v-col>
+        <v-col cols="12" md="5" style="background-color: #f2f2f2">
+          <div>
             <v-card-title>Sell your home directly to us </v-card-title>
 
             <v-card-subtitle>
@@ -19,7 +20,7 @@
               could deliver. You won't have time for sleeping, soldier, not with
               all the bed making you'll be doing.
               <h4>See how much we can pay</h4>
-              <br/>
+              <br />
               <v-row row d-flex>
                 <v-text-field
                   v-model="name"
@@ -27,7 +28,13 @@
                   required
                   outlined
                 ></v-text-field>
-                <v-btn style="background-color: #3b6ef3;margin-top:0.5em;margin-left:0.5em">
+                <v-btn
+                  style="
+                    background-color: #3b6ef3;
+                    margin-top: 0.5em;
+                    margin-left: 0.5em;
+                  "
+                >
                   <span
                     style="
                       color: #ffffff;
@@ -45,9 +52,9 @@
                 </v-btn>
               </v-row>
             </v-card-subtitle>
-          </v-card>
+          </div>
         </v-col>
-        <v-col cols="12" md="6">
+        <v-col cols="12" md="5">
           <v-card max-width="auto">
             <v-img
               src="https://res.cloudinary.com/diued7ugb/image/upload/v1625732723/house1_svrut7.jpg"
@@ -55,10 +62,12 @@
             ></v-img>
           </v-card>
         </v-col>
-      </v-row>
+        <v-col></v-col> </v-row
+      ><br /><br>
 
       <v-row>
-        <v-col cols="12" md="6">
+        <v-col></v-col>
+        <v-col cols="12" md="5">
           <v-card max-width="auto">
             <v-img
               src="https://res.cloudinary.com/diued7ugb/image/upload/v1625732723/house1_svrut7.jpg"
@@ -66,8 +75,8 @@
             ></v-img>
           </v-card>
         </v-col>
-        <v-col cols="12" md="6">
-          <v-card max-width="auto">
+        <v-col cols="12" md="5" style="background-color: #f2f2f2">
+          <div>
             <v-card-title> Sell your home via a Broker </v-card-title>
 
             <v-card-subtitle>
@@ -94,13 +103,16 @@
                 </v-btn>
               </p>
             </v-card-subtitle>
-          </v-card>
+          </div>
         </v-col>
-      </v-row>
+        <v-col></v-col>
+      </v-row><br><br>
 
-      <v-row>
-        <v-col cols="12" md="6">
-          <v-card max-width="auto">
+      <v-row
+        ><br />
+        <v-col></v-col>
+        <v-col cols="12" md="5" style="background-color: #f2f2f2">
+          <div>
             <v-card-title> Sell your home yourself</v-card-title>
 
             <v-card-subtitle>
@@ -126,9 +138,9 @@
                 </v-btn>
               </p>
             </v-card-subtitle>
-          </v-card>
+          </div>
         </v-col>
-        <v-col cols="12" md="6">
+        <v-col cols="12" md="5">
           <v-card max-width="auto">
             <v-img
               src="https://res.cloudinary.com/diued7ugb/image/upload/v1625732723/house1_svrut7.jpg"
@@ -136,13 +148,14 @@
             ></v-img>
           </v-card>
         </v-col>
+        <v-col></v-col>
       </v-row>
     </v-container>
-    <Footer/>
+    <Footer />
   </div>
 </template>
 <script>
-import Footer from './Footer.vue';
+import Footer from "./Footer.vue";
 export default {
   components: { Footer },
   name: "LearnComponent",
@@ -171,7 +184,6 @@ export default {
   height: 75vh;
   width: 100%;
 }
-
 
 @media only screen and (max-width: 768px) {
   #container {
