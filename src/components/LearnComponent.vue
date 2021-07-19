@@ -163,7 +163,7 @@ export default {
   background-color: #f4f5f8;
 }
 #container {
-  background-image: url("https://res.cloudinary.com/diued7ugb/image/upload/v1625732723/house1_svrut7.jpg");
+  background-image: url("https://res.cloudinary.com/diued7ugb/image/upload/v1626370006/google-maps-759_1_zqu50z.png");
   background-size: cover;
   height: 75vh;
   width: 100%;
@@ -172,8 +172,6 @@ export default {
 
 @media only screen and (max-width: 768px) {
   #container {
-    background-image: url("https://res.cloudinary.com/diued7ugb/image/upload/v1625732723/house1_svrut7.jpg");
-    background-size: cover;
     height: 30vh;
     width: 100%;
   }

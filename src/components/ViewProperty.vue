@@ -242,14 +242,19 @@
         </v-col>
       </v-row>
     </v-container>
+    <about />
+  <Footer />
+
   </div>
 </template>
 
 <script>
+import About from '../views/About.vue';
+import Footer from './Footer.vue';
 import MainNav from "./MainNav.vue";
 import TopNav from "./TopNav.vue";
 export default {
-  components: { TopNav, MainNav },
+  components: { TopNav, MainNav, About, Footer },
   name: "ViewProperty",
   data: () => ({
     propertyFeatures: [

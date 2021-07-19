@@ -40,7 +40,7 @@
                 <v-list>
                     <links title="Explore your options" />
                     <links title="Home values" />
-                    <links title="Seller's guide" />
+                    <links title="Seller's guide"  link="/learn" />
                 </v-list>
             </v-menu>
 
@@ -88,7 +88,7 @@
 
             <v-menu :key="text" :rounded="rounded" offset-y>
                 <template v-slot:activator="{ attrs, on }">
-                    <a href="#" color="deep-purple accent-4" class="blue--text ma-7" v-bind="attrs" v-on="on" style="text-decoration: none" icon @click="show5 = !show5">Mortgage
+                    <a href="#" color="deep-purple accent-4" class="blue--text ma-7" v-bind="attrs" v-on="on" style="text-decoration: none" icon @click="show5 = !show5">Get Started
                         <v-icon color="blue accent-3">
                             {{show5 ? "mdi-chevron-up" : "mdi-chevron-down"}}
                         </v-icon>
@@ -96,7 +96,7 @@
                 </template>
 
                 <v-list>
-                    <links title="Mortgage Lenders" />
+                    <links title="As a Landlord" link="/getstarted" />
                     <links title="Mortgage Rates" />
                     <links title="Mortgage Refinancing" />
                     <links link="/" title="Mortgage Calculator" />
@@ -133,7 +133,7 @@
                 <v-list>
                     <links title="Explore your options" />
                     <links title="Home values" />
-                    <links title="Seller's guide" />
+                    <links title="Seller's guide" link="/learn" />
                 </v-list>
             </v-list-group>
 
@@ -163,10 +163,10 @@
 
             <v-list-group :value="false" prepend-icon="mdi-scale">
                 <template v-slot:activator>
-                    <v-list-item-title>Mortgage</v-list-item-title>
+                    <v-list-item-title>Get Started</v-list-item-title>
                 </template>
                 <v-list>
-                    <links title="Mortgage Lenders" />
+                    <links title="As a Landlord" link="/getstarted"/>
                     <links title="Mortgage Rates" />
                     <links title="Mortgage Refinancing" />
                     <links link="/" title="Mortgage Calculator" />

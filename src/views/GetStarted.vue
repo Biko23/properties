@@ -44,7 +44,7 @@
             >
             </v-img>
             <br />
-            <h3 style="text-align: center">I'm a broker</h3>
+            <h3 style="text-align: center">I'm a Landloard</h3>
             <div style="text-align: center">
               <v-btn color="primary">Get started</v-btn><br><br>
             </div>
@@ -78,7 +78,7 @@
             >
             </v-img
             ><br />
-            <h3 style="text-align: center">I'm a broker</h3>
+            <h3 style="text-align: center">I'm a Photographer</h3>
             <div style="text-align: center">
               <v-btn color="primary">Get started</v-btn><br><br>
             </div>
@@ -94,7 +94,7 @@
             >
             </v-img>
             <br />
-            <h3 style="text-align: center">I'm a broker</h3>
+            <h3 style="text-align: center">I'm a builder</h3>
             <div style="text-align: center">
               <v-btn color="primary">Get started</v-btn><br><br>
             </div>
@@ -110,7 +110,7 @@
             >
             </v-img>
             <br />
-            <h3 style="text-align: center">I'm a broker</h3>
+            <h3 style="text-align: center">I'm a Service provider</h3>
             <div style="text-align: center">
               <v-btn color="primary">Get started</v-btn><br><br>
             </div>
@@ -119,6 +119,7 @@
         </v-col>
       </v-row>
     </v-container>
+    <about />
    <footer />
    <h3></h3>
   </div>
@@ -129,8 +130,9 @@ import BottonNav from '../components/BottonNav.vue';
 import Footer from '../components/Footer.vue';
 import MainNav from "../components/MainNav.vue";
 import TopNav from "../components/TopNav.vue";
+import About from './About.vue';
 export default {
-  components: { TopNav, MainNav, BottonNav, Footer },
+  components: { TopNav, MainNav, BottonNav, Footer, About },
   name: "GetStarted",
 };
 </script>
