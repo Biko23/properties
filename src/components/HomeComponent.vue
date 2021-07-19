@@ -19,7 +19,7 @@
                     alt=""
                     width="20"
                     srcset=""
-                    style="margin-top:-12px; position:absolute;"
+                    style="margin-top: -12px; position: absolute"
                   />
                 </button>
               </span>
@@ -56,7 +56,7 @@
               </h3>
               <p
                 style="
-                  font-size: 14px;
+                  font-size: 0.9rem;
                   font-style: normal;
                   font-weight: 300;
                   line-height: 20px;
@@ -66,10 +66,9 @@
                   margin-right: 5px;
                 "
               >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Error,
-                impedit? Quisquam, inventore ad consequatur dolor neque quo ipsa
-                nam ullam cumque quos incidunt earum quaerat autem repellat,
-                optio, omnis minima.
+                Are you looking for a modern, standout yet affordable home or
+                house to buy for yourself? We have gotten a variety of what you
+                need within and around Kampala.
               </p>
               <p style="text-align: center">
                 <v-btn style="background-color: #3b6ef3">
@@ -111,7 +110,7 @@
               </h3>
               <p
                 style="
-                  font-size: 14px;
+                  font-size: 0.9rem;
                   font-style: normal;
                   font-weight: 300;
                   line-height: 20px;
@@ -121,31 +120,29 @@
                   margin-right: 5px;
                 "
               >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Error,
-                impedit? Quisquam, inventore ad consequatur dolor neque quo ipsa
-                nam ullam cumque quos incidunt earum quaerat autem repellat,
-                optio, omnis minima.
+                We have gotten for you the best rental houses and homes around.
+                With a number of appproved brokers and properties your rest
+                assured to get the best.
               </p>
               <p style="text-align: center">
                 <a href="/property">
-                 <v-btn style="background-color: #3b6ef3">
-                  <span
-                    style="
-                      color: #ffffff;
-                      font-size: 20px;
-                      font-style: normal;
-                      font-weight: 300;
-                      line-height: 30px;
-                      letter-spacing: 0em;
-                      text-align: center;
-                      text-transform: capitalize;
-                    "
-                  >
-                    Rent Now</span
-                  >
-                </v-btn>
+                  <v-btn style="background-color: #3b6ef3">
+                    <span
+                      style="
+                        color: #ffffff;
+                        font-size: 20px;
+                        font-style: normal;
+                        font-weight: 300;
+                        line-height: 30px;
+                        letter-spacing: 0em;
+                        text-align: center;
+                        text-transform: capitalize;
+                      "
+                    >
+                      Rent Now</span
+                    >
+                  </v-btn>
                 </a>
-               
               </p>
               <br />
             </v-text>
@@ -180,31 +177,30 @@
                   margin-right: 5px;
                 "
               >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Error,
-                impedit? Quisquam, inventore ad consequatur dolor neque quo ipsa
-                nam ullam cumque quos incidunt earum quaerat autem repellat,
-                optio, omnis minima.
+                Finding the right buyer for your property can sometimes be
+                tricky. With us, you can sell your property directly to us,
+                yourself or via a broker. Whatever option works for you, we have
+                got you covered.
               </p>
               <p style="text-align: center">
                 <a href="/register">
-                 <v-btn style="background-color: #3b6ef3">
-                  <span
-                    style="
-                      color: #ffffff;
-                      font-size: 20px;
-                      font-style: normal;
-                      font-weight: 300;
-                      line-height: 30px;
-                      letter-spacing: 0em;
-                      text-align: center;
-                      text-transform: capitalize;
-                    "
-                  >
-                    Sell</span
-                  >
-                </v-btn>
+                  <v-btn style="background-color: #3b6ef3">
+                    <span
+                      style="
+                        color: #ffffff;
+                        font-size: 20px;
+                        font-style: normal;
+                        font-weight: 300;
+                        line-height: 30px;
+                        letter-spacing: 0em;
+                        text-align: center;
+                        text-transform: capitalize;
+                      "
+                    >
+                      Sell</span
+                    >
+                  </v-btn>
                 </a>
-               
               </p>
               <br />
             </v-text>
@@ -229,7 +225,7 @@
               </h3>
               <p
                 style="
-                  font-size: 14px;
+                  font-size: 0.9rem;
                   font-style: normal;
                   font-weight: 300;
                   line-height: 20px;
@@ -239,10 +235,9 @@
                   margin-right: 5px;
                 "
               >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Error,
-                impedit? Quisquam, inventore ad consequatur dolor neque quo ipsa
-                nam ullam cumque quos incidunt earum quaerat autem repellat,
-                optio, omnis minima.
+                Do you need a loan to service, purchase, or mantain your
+                property? At affordable rates we can help you make your dream
+                come true. You are just a few steps away from achieving this.
               </p>
               <p style="text-align: center">
                 <v-btn style="background-color: #3b6ef3">
@@ -274,7 +269,7 @@
       <v-row>
         <v-col>
           <v-card-actions>
-            <v-btn color="#3b6ef3" text> Explore </v-btn>
+            <v-btn color="#3b6ef3" text> Buy </v-btn>
             <v-btn icon @click="show = !show">
               <v-icon>{{
                 show ? "mdi-chevron-up" : "mdi-chevron-down"
@@ -300,7 +295,7 @@
 
         <v-col>
           <v-card-actions>
-            <v-btn color="#3b6ef3" text> Explore </v-btn>
+            <v-btn color="#3b6ef3" text> Rent </v-btn>
             <v-btn icon @click="show = !show">
               <v-icon>{{
                 show ? "mdi-chevron-up" : "mdi-chevron-down"
@@ -326,7 +321,7 @@
 
         <v-col>
           <v-card-actions>
-            <v-btn color="#3b6ef3" text> Explore </v-btn>
+            <v-btn color="#3b6ef3" text> Sell </v-btn>
             <v-btn icon @click="show = !show">
               <v-icon>{{
                 show ? "mdi-chevron-up" : "mdi-chevron-down"
@@ -352,7 +347,7 @@
 
         <v-col>
           <v-card-actions>
-            <v-btn color="#3b6ef3" text> Explore </v-btn>
+            <v-btn color="#3b6ef3" text> Home Loan </v-btn>
             <v-btn icon @click="show = !show">
               <v-icon>{{
                 show ? "mdi-chevron-up" : "mdi-chevron-down"
@@ -377,7 +372,7 @@
         </v-col>
         <v-col>
           <v-card-actions>
-            <v-btn color="#3b6ef3" text> Explore </v-btn>
+            <v-btn color="#3b6ef3" text> Mortgage </v-btn>
             <v-btn icon @click="show = !show">
               <v-icon>{{
                 show ? "mdi-chevron-up" : "mdi-chevron-down"
@@ -421,9 +416,10 @@
             <v-card-title style="color: #3b6ef3"> Luxury Villas </v-card-title>
 
             <v-card-subtitle>
-              I'm a thing. But, like most politicians, he promised more than he
-              could deliver. You won't have time for sleeping, soldier, not with
-              all the bed making you'll be doing.
+              Luxurious and upgraded, this 4 bedroom, 4.5 bathroom home of 5,281
+              sq. ft. (including poolhouse, per independent third-party
+              measurement) rests on a lot of 1.23 acres (per county) on a
+              peaceful cul-de-sac in the Lakeside neighborhood.
             </v-card-subtitle>
           </v-card>
         </v-col>
@@ -438,9 +434,10 @@
             <v-card-title style="color: #3b6ef3"> Luxury Villas </v-card-title>
 
             <v-card-subtitle>
-              I'm a thing. But, like most politicians, he promised more than he
-              could deliver. You won't have time for sleeping, soldier, not with
-              all the bed making you'll be doing.
+              Luxurious and upgraded, this 4 bedroom, 4.5 bathroom home of 5,281
+              sq. ft. (including poolhouse, per independent third-party
+              measurement) rests on a lot of 1.23 acres (per county) on a
+              peaceful cul-de-sac in the Lakeside neighborhood.
             </v-card-subtitle>
           </v-card>
         </v-col>
@@ -455,9 +452,10 @@
             <v-card-title style="color: #3b6ef3"> Luxury Villas </v-card-title>
 
             <v-card-subtitle>
-              I'm a thing. But, like most politicians, he promised more than he
-              could deliver. You won't have time for sleeping, soldier, not with
-              all the bed making you'll be doing.
+              Luxurious and upgraded, this 4 bedroom, 4.5 bathroom home of 5,281
+              sq. ft. (including poolhouse, per independent third-party
+              measurement) rests on a lot of 1.23 acres (per county) on a
+              peaceful cul-de-sac in the Lakeside neighborhood.
             </v-card-subtitle>
           </v-card>
         </v-col>
@@ -472,107 +470,22 @@
             <v-card-title style="color: #3b6ef3"> Luxury Villas </v-card-title>
 
             <v-card-subtitle>
-              I'm a thing. But, like most politicians, he promised more than he
-              could deliver. You won't have time for sleeping, soldier, not with
-              all the bed making you'll be doing.
+              Luxurious and upgraded, this 4 bedroom, 4.5 bathroom home of 5,281
+              sq. ft. (including poolhouse, per independent third-party
+              measurement) rests on a lot of 1.23 acres (per county) on a
+              peaceful cul-de-sac in the Lakeside neighborhood.
             </v-card-subtitle>
           </v-card>
         </v-col>
       </v-row>
     </v-container>
 
-    <v-container class="about-us-container" fluid>
-      <v-row>
-        <v-col sm="1"></v-col>
-        <v-col
-          cols="12"
-          md="3"
-          xs="12"
-          style="margin-left: -33px; margin-top: 60px"
-        >
-          <v-img
-            src="https://res.cloudinary.com/diued7ugb/image/upload/v1625732723/house1_svrut7.jpg"
-            gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
-          ></v-img>
-        </v-col>
+    <about />
 
-        <v-col cols="12" md="4" xs="12" style="margin-top: 25px">
-          <div style="text-align: left">
-            <h3><span style="color: #3b6ef3"> ABOUT </span>US</h3>
-          </div>
-          <p
-            style="
-              font-size: 13px;
-              font-style: normal;
-              font-weight: 300;
-              line-height: 20px;
-              letter-spacing: 0em;
-              margin-right: 50px;
-              color: black;
-            "
-          >
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium
-            a quas perferendis reiciendis ratione autem temporibus, possimus
-            corrupti totam doloremque est dolorem amet, nisi rerum obcaecati
-            molestias dolorum eveniet sed?
-          </p>
-          <p
-            style="
-              font-size: 13px;
-              font-style: normal;
-              font-weight: 300;
-              line-height: 20px;
-              letter-spacing: 0em;
-              margin-right: 50px;
-              color: black;
-            "
-          >
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique,
-            iste. Beatae enim id aspernatur soluta, sapiente dolorem delectus
-            impedit fugit amet dicta, ad quod illum molestias? Ipsa asperiores
-            pariatur veniam!
-          </p>
-        </v-col>
-        <v-col cols="12" md="4" xs="12" style="margin-top: 25px">
-          <div style="text-align: left">
-            <h3><span style="color: #3b6ef3"> WHY </span>US</h3>
-          </div>
-          <p
-            style="
-              font-size: 13px;
-              font-style: normal;
-              font-weight: 300;
-              line-height: 20px;
-              letter-spacing: 0em;
-              margin-right: 50px;
-            "
-          >
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium
-            a quas perferendis reiciendis ratione autem temporibus, possimus
-            corrupti totam doloremque est dolorem amet, nisi rerum obcaecati
-            molestias dolorum eveniet sed?
-          </p>
-          <p
-            style="
-              font-size: 13px;
-              font-style: normal;
-              font-weight: 300;
-              line-height: 20px;
-              letter-spacing: 0em;
-              margin-right: 50px;
-            "
-          >
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique,
-            iste. Beatae enim id aspernatur soluta, sapiente dolorem delectus
-            impedit fugit amet dicta, ad quod illum molestias? Ipsa asperiores
-            pariatur veniam!
-          </p>
-        </v-col>
-        <v-col sm="1"></v-col>
-      </v-row>
-    </v-container>
 
-    <v-container fluid style="background-color:#3b6ef3">
+<!---->
+   
+    <v-container fluid style="background-color: #3b6ef3">
       <v-row>
         <!-- <v-footer color="#3b6ef3"> -->
         <v-col>
@@ -592,23 +505,10 @@
       </v-row>
     </v-container>
 
-    <v-container fluid style="background-color:#3b6ef3; color:#ffff;">
+    <v-container fluid style="background-color: #3b6ef3; color: #ffff">
       <v-row>
-        <v-col  md="3" xs="6">
-          <h3 style="color:#ffff;">Our Address</h3>
-          <p
-              style="
-                font-size: 14px;
-                font-style: normal;
-                font-weight: 300;
-                line-height: 30px;
-                letter-spacing: 0em;
-                color:#fffff;
-              "
-            >
-              JC Main Road, Near Silnile tower <br />
-              Pin-21542 NewYork US.
-            </p>
+        <v-col md="3" xs="6">
+          <h3 style="color: #ffff">Our Address</h3>
           <p
             style="
               font-size: 14px;
@@ -616,18 +516,31 @@
               font-weight: 300;
               line-height: 30px;
               letter-spacing: 0em;
-              color:#ffff;
+              color: #fffff;
+            "
+          >
+            JC Main Road, Near Silnile tower <br />
+            Pin-21542 NewYork US.
+          </p>
+          <p
+            style="
+              font-size: 14px;
+              font-style: normal;
+              font-weight: 300;
+              line-height: 30px;
+              letter-spacing: 0em;
+              color: #ffff;
             "
           >
             email@domainname.com
           </p>
         </v-col>
 
-        <v-col  md="3" xs="6">
+        <v-col md="3" xs="6">
           <h3>Other Useful Links</h3>
           <p
             style="
-            color:#ffff;
+              color: #ffff;
               font-size: 14px;
               font-style: normal;
               font-weight: 300;
@@ -644,7 +557,7 @@
               font-weight: 300;
               line-height: 30px;
               letter-spacing: 0em;
-              color:#ffff;
+              color: #ffff;
             "
           >
             Terms and Conditions
@@ -656,7 +569,7 @@
               font-weight: 300;
               line-height: 30px;
               letter-spacing: 0em;
-              color:#ffff;
+              color: #ffff;
             "
           >
             Privacy Policy
@@ -692,7 +605,7 @@
       </v-row>
     </v-container>
     <v-divider></v-divider>
-    <v-container  fluid style="background-color:#3b6ef3">
+    <v-container fluid style="background-color: #3b6ef3">
       <v-row>
         <v-col>
           <v-card-text class="white--text" style="text-align: center">
@@ -709,7 +622,9 @@
 </template>
 
 <script>
+import About from '../views/About.vue';
 export default {
+  components: { About },
   name: "Home2",
 
   data: () => ({
@@ -746,7 +661,8 @@ input {
   background-color: #f4f5f8;
 }
 #container {
-  background-image: url("https://res.cloudinary.com/diued7ugb/image/upload/v1625732723/house1_svrut7.jpg");
+  background-image: url("https://res.cloudinary.com/diued7ugb/image/upload/v1626688591/vj-von-art-BP1Ze0qcp-c-unsplash_tlgt7k.jpg");
+  /* background-image: url("https://res.cloudinary.com/diued7ugb/image/upload/v1626688778/dillon-kydd-XGvwt544g8k-unsplash_lrvzid.jpg"); */
   background-size: cover;
   height: 75vh;
   width: 100%;
@@ -762,8 +678,7 @@ input {
 
 @media only screen and (max-width: 768px) {
   #container {
-    background-image: url("https://res.cloudinary.com/diued7ugb/image/upload/v1625732723/house1_svrut7.jpg");
-    background-size: cover;
+   
     height: 30vh;
     width: 100%;
   }
