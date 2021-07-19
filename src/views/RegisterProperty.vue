@@ -65,7 +65,8 @@
             rows="8"
           ></v-textarea>
         </v-col>
-        <v-col>
+        
+        <v-col><a href="/register2" style="text-decoration:none;">
           <v-btn style="background-color: #3b6ef3; width: 200px">
             <span
               style="
@@ -82,6 +83,7 @@
               Next Step</span
             >
           </v-btn>
+          </a>
         </v-col> </v-row
       ><br />
     </v-container>

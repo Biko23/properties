@@ -1,5 +1,7 @@
 <template>
+ <a href="/view" style=" text-decoration:none;">
 <v-card max-width="auto">
+   
     <v-card-subtitle class="time">Added {{date}} </v-card-subtitle>
     <v-img src="https://res.cloudinary.com/diued7ugb/image/upload/v1625732723/house1_svrut7.jpg" height="200px"></v-img>
     <v-card-subtitle>
@@ -8,6 +10,7 @@
         <small>{{location}}</small>
          </v-card-subtitle>
 </v-card>
+</a>
 </template>
 
 <script>

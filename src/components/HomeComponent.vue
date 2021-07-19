@@ -127,7 +127,8 @@
                 optio, omnis minima.
               </p>
               <p style="text-align: center">
-                <v-btn style="background-color: #3b6ef3">
+                <a href="/property">
+                 <v-btn style="background-color: #3b6ef3">
                   <span
                     style="
                       color: #ffffff;
@@ -143,6 +144,8 @@
                     Rent Now</span
                   >
                 </v-btn>
+                </a>
+               
               </p>
               <br />
             </v-text>
@@ -183,7 +186,8 @@
                 optio, omnis minima.
               </p>
               <p style="text-align: center">
-                <v-btn style="background-color: #3b6ef3">
+                <a href="/register">
+                 <v-btn style="background-color: #3b6ef3">
                   <span
                     style="
                       color: #ffffff;
@@ -199,6 +203,8 @@
                     Sell</span
                   >
                 </v-btn>
+                </a>
+               
               </p>
               <br />
             </v-text>

@@ -4,8 +4,9 @@
     <v-container id="main-container" fluid>
       <v-row>
         <v-col>
+          <a href="/" style="color:black;text-align:center;margin-top:140px;margin-left:100px;text-decoration:none;">Back home</a>
           <h1 id="get-started">Get ready to start buying and selling more!</h1>
-          <p>Create an account</p>
+          <p style="margin-left:100px;">Create an account</p>
         </v-col>
         <v-col>
           <v-form id="form">

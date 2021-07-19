@@ -3,7 +3,9 @@
     <top-nav />
     <v-container id="main-container" fluid>
       <v-row>
+       
         <v-col>
+                 <a href="/" style="color:black;text-align:center;margin-top:140px;margin-left:250px;text-decoration:none;">Back home</a>
           <h1 id="get-started">Welcome Back!</h1>
           <p id="login-into">Login into your account</p>
         </v-col>

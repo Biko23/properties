@@ -1,25 +1,4 @@
 
-  
-//      <!-- <v-app-bar color="#f2f2f2" dense dark>
-//       <div style="">
-//         <v-img
-//           style="margin-left: auto; margin-right: auto; display: block"
-//           lazy-src="https://picsum.photos/id/11/10/6"
-//           max-height="45"
-//           max-width="45"
-//           src="https://res.cloudinary.com/diued7ugb/image/upload/v1625749459/Vector_pebqf0.png"
-//         ></v-img>
-//       </div>
-
-//       <v-toolbar-title style="color: #3b6ef3; margin-top: 8px"
-//         >Stanbic Properties</v-toolbar-title
-//       >
-//       <v-spacer></v-spacer>
-//      </v-app-bar> -->
-
-
-
-
 
 <template>
   <nav>
@@ -34,35 +13,162 @@
         ></v-img>
       </div>
 
-      <v-toolbar-title style="color: #3b6ef3; margin-top: 8px"
-        >Stanbic Properties</v-toolbar-title
-      >
+      <a href="/" style="text-decoration: none">
+        <v-toolbar-title
+          style="color: #3b6ef3; margin-top: 8px; text-decoration: none"
+          >Stanbic Properties</v-toolbar-title
+        >
+      </a>
+
       <v-spacer></v-spacer>
-      <div>
-        <!-- <v-tooltip bottom color="white">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn color="primary" dark v-bind="attrs" v-on="on" expand-on-hover>
-              Button
+      <v-row justify="space-around">
+        <v-menu :key="text" :rounded="rounded" offset-y>
+          <template v-slot:activator="{ attrs, on }">
+            <v-btn
+              :color="colors[index]"
+              class="white--text ma-5"
+              v-bind="attrs"
+              v-on="on"
+            >
+             Buy
             </v-btn>
           </template>
-          <span>
-            <v-card class="mx-auto" color="white">
-              <v-card-text color="white">
-                <div>Word of the Day</div>
-                <p class="text-h4 text--primary">be•nev•o•lent</p>
-                <p>adjective</p>
-                <div class="text--primary">
-                  well meaning and kindly.<br />
-                  "a benevolent smile"
-                </div>
-              </v-card-text>
-              <v-card-actions>
-                <v-btn text color="deep-purple accent-4"> Learn More </v-btn>
-              </v-card-actions>
-            </v-card>
-          </span>
-        </v-tooltip> -->
-      </div>
+
+          <v-list>
+            <v-list-item link to="/">
+              <v-list-item-title> Buy </v-list-item-title>
+            </v-list-item>
+
+            <v-list-item link to="/">
+              <v-list-item-title> Buy Another property </v-list-item-title>
+            </v-list-item>
+            <v-list-item link to="/">
+              <v-list-item-title> Buy Another property </v-list-item-title>
+            </v-list-item>
+            <v-list-item link to="/">
+              <v-list-item-title> Buy Another property </v-list-item-title>
+            </v-list-item>
+            <v-list-item link to="/">
+              <v-list-item-title> Buy Another property </v-list-item-title>
+            </v-list-item>
+            <v-list-item link to="/">
+              <v-list-item-title> Buy Another property </v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+
+        <v-menu :key="text" :rounded="rounded" offset-y>
+          <template v-slot:activator="{ attrs, on }">
+            <v-btn
+              :color="colors[index]"
+              class="white--text ma-5"
+              v-bind="attrs"
+              v-on="on"
+            >
+             Sell
+            </v-btn>
+          </template>
+
+          <v-list>
+            <v-list-item link to="/">
+              <v-list-item-title> Buy </v-list-item-title>
+            </v-list-item>
+
+            <v-list-item link to="/">
+              <v-list-item-title> Buy Another property </v-list-item-title>
+            </v-list-item>
+            <v-list-item link to="/">
+              <v-list-item-title> Buy Another property </v-list-item-title>
+            </v-list-item>
+            <v-list-item link to="/">
+              <v-list-item-title> Buy Another property </v-list-item-title>
+            </v-list-item>
+            <v-list-item link to="/">
+              <v-list-item-title> Buy Another property </v-list-item-title>
+            </v-list-item>
+            <v-list-item link to="/">
+              <v-list-item-title> Buy Another property </v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+
+        <v-menu :key="text" :rounded="rounded" offset-y>
+          <template v-slot:activator="{ attrs, on }">
+            <v-btn
+              :color="colors[index]"
+              class="white--text ma-5"
+              v-bind="attrs"
+              v-on="on"
+            >
+             Rent
+            </v-btn>
+          </template>
+
+          <v-list>
+            <links />
+            <links />
+            <links />
+            <links link="/" title="Home" />
+          </v-list>
+        </v-menu>
+
+        <v-menu :key="text" :rounded="rounded" offset-y>
+          <template v-slot:activator="{ attrs, on }">
+            <v-btn
+              :color="colors[index]"
+              class="white--text ma-5"
+              v-bind="attrs"
+              v-on="on"
+            >
+             Home Loan
+            </v-btn>
+          </template>
+
+          <v-list>
+            <links />
+          </v-list>
+        </v-menu>
+
+        <v-menu :key="text" :rounded="rounded" offset-y>
+          <template v-slot:activator="{ attrs, on }">
+            <v-btn
+              :color="colors[index]"
+              class="white--text ma-5"
+              v-bind="attrs"
+              v-on="on"
+            >
+             Mortgage
+            </v-btn>
+          </template>
+
+          <v-list>
+            <v-list-item link to="/">
+              <v-list-item-title> Buy </v-list-item-title>
+            </v-list-item>
+
+            <v-list-item link to="/">
+              <v-list-item-title> Buy Another property </v-list-item-title>
+            </v-list-item>
+            <v-list-item link to="/">
+              <v-list-item-title> Buy Another property </v-list-item-title>
+            </v-list-item>
+            <v-list-item link to="/">
+              <v-list-item-title> Buy Another property </v-list-item-title>
+            </v-list-item>
+            <v-list-item link to="/">
+              <v-list-item-title> Buy Another property </v-list-item-title>
+            </v-list-item>
+            <v-list-item link to="/">
+              <v-list-item-title> Buy Another property </v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </v-row>
+
+      <v-col>
+        <a href="/login" style="text-decoration: none">Login</a>
+      </v-col>
+
       <v-spacer></v-spacer>
       <v-app-bar-nav-icon
         @click="drawer = true"
@@ -98,16 +204,28 @@
 
 <script>
 // import { defineComponent } from '@vue/composition-api'
+import Links from "@/components/Links";
 
 export default {
   name: "MainNaigation",
+  components: {
+    Links,
+  },
   data() {
     return {
       drawer: null,
+      show: false,
       items: [
         { title: "Home", icon: "mdi-view-dashboard" },
         { title: "About", icon: "mdi-forum" },
       ],
+      btns: [
+        ["Removed", "0"],
+        ["Large", "lg"],
+        ["Custom", "b-xl"],
+      ],
+      colors: ["deep-purple accent-4", "error", "teal darken-1"],
+      items: [...Array(4)].map((_, i) => `Item ${i}`),
     };
   },
 };
