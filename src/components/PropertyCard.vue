@@ -1,5 +1,5 @@
 <template>
- <a href="/view" style=" text-decoration:none;">
+ <router-link to="/view" style=" text-decoration:none;">
 <v-card max-width="auto">
    
     <v-card-subtitle class="time">Added {{date}} </v-card-subtitle>
@@ -10,7 +10,7 @@
         <small>{{location}}</small>
          </v-card-subtitle>
 </v-card>
-</a>
+ </router-link>
 </template>
 
 <script>

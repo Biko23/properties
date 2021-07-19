@@ -125,7 +125,7 @@
                 assured to get the best.
               </p>
               <p style="text-align: center">
-                <a href="/property">
+                <router-link to="/property">
                   <v-btn style="background-color: #3b6ef3">
                     <span
                       style="
@@ -142,7 +142,7 @@
                       Rent Now</span
                     >
                   </v-btn>
-                </a>
+                </router-link>
               </p>
               <br />
             </v-text>
@@ -183,7 +183,7 @@
                 got you covered.
               </p>
               <p style="text-align: center">
-                <a href="/register">
+                <router-link to="/register">
                   <v-btn style="background-color: #3b6ef3">
                     <span
                       style="
@@ -200,7 +200,7 @@
                       Sell</span
                     >
                   </v-btn>
-                </a>
+                </router-link>
               </p>
               <br />
             </v-text>

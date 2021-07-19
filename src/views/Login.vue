@@ -53,7 +53,9 @@
                   <v-btn color="white" block large> Apple </v-btn>
                 </v-col>
               </v-row><br>
-              <p style="font-size:0.75rem">Have No Accont? <a href="/signup">Sign up</a></p><br><br>
+              <p style="font-size:0.75rem">Have No Accont? 
+                <router-link to="/signup">Sign up</router-link>
+              </p><br><br>
             </v-container>
           </v-form>
         </v-col>

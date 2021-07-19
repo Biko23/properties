@@ -138,10 +138,13 @@
         </v-col>
       </v-row>
     </v-container>
+    <Footer/>
   </div>
 </template>
 <script>
+import Footer from './Footer.vue';
 export default {
+  components: { Footer },
   name: "LearnComponent",
 };
 </script>
@@ -163,7 +166,7 @@ export default {
   background-color: #f4f5f8;
 }
 #container {
-  background-image: url("https://res.cloudinary.com/diued7ugb/image/upload/v1626370006/google-maps-759_1_zqu50z.png");
+  background-image: url("https://res.cloudinary.com/diued7ugb/image/upload/v1626688778/dillon-kydd-XGvwt544g8k-unsplash_lrvzid.jpg");
   background-size: cover;
   height: 75vh;
   width: 100%;

@@ -105,7 +105,7 @@
         </v-row>
 
         <v-col class="hid-navbar">
-            <a href="/login" style="text-decoration: none">Login</a>
+            <router-link to="/login" style="text-decoration: none">Login</router-link>
         </v-col>
 
         <v-spacer></v-spacer>
@@ -211,7 +211,7 @@ export default {
     display: none;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 947px) {
     .toggle {
         display: block;
     }

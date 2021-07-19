@@ -67,7 +67,9 @@
                   <v-btn color="primary" block> Apple </v-btn>
                 </v-col>
               </v-row><br>
-              <p style="font-size:0.75rem">Have an Accont? <a href="/login">Login</a></p>
+              <p style="font-size:0.75rem">Have an Accont? 
+              <router-link to="/">Login</router-link>
+              </p>
             </v-container>
           </v-form>
         </v-col>

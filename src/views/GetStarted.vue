@@ -120,7 +120,7 @@
       </v-row>
     </v-container>
     <about />
-   <footer />
+   <Footer />
    <h3></h3>
   </div>
 </template>
