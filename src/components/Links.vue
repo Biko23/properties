@@ -1,6 +1,6 @@
 <template>
   <v-list-item link :to="link">
-    <v-list-item-title> {{title}} </v-list-item-title>
+    <v-list-item-title id="link-title"> {{title}} </v-list-item-title>
   </v-list-item>
 </template>
 
@@ -21,4 +21,13 @@ export default {
  
 };
 </script>
+<style scoped>
+  #link-title{
+    color: rgb(50, 50, 250);
+    font-size: 14px;
+  }
+  #link-title:hover{
+    text-decoration: underline;
+  }
+</style>
 

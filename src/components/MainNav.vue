@@ -118,10 +118,10 @@
           </template>
 
           <v-list>
-            <links />
-            <links />
-            <links />
-            <links link="/" title="Home" />
+            <links title="Mortgage Lenders"/>
+            <links title="Mortgage Rates"/>
+            <links title="Mortgage Refinancing"/>
+            <links link="/" title="Mortgage Calculator" />
           </v-list>
         </v-menu>
 
@@ -142,10 +142,10 @@
           </template>
 
           <v-list>
-            <links />
-            <links />
-            <links />
-            <links link="/" title="Home" />
+            <links title="Mortgage Lenders"/>
+            <links title="Mortgage Rates"/>
+            <links title="Mortgage Refinancing"/>
+            <links link="/" title="Mortgage Calculator" />
           </v-list>
         </v-menu>
       </v-row>
