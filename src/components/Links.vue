@@ -22,15 +22,3 @@ export default {
 };
 </script>
 
-<style scoped>
-.time {
-  position: absolute;
-  z-index: 10;
-  top: 10;
-  font-weight: bold;
-  color: #000000;
-  padding: 5px;
-  background-color: #ffffff;
-  display: inline-block;
-}
-</style>

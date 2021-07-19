@@ -21,87 +21,100 @@
       </a>
 
       <v-spacer></v-spacer>
-      <v-row justify="space-around">
+      <v-row justify="space-around" class="hid-navbar">
         <v-menu :key="text" :rounded="rounded" offset-y>
           <template v-slot:activator="{ attrs, on }">
-            <v-btn
-              :color="colors[index]"
-              class="white--text ma-5"
+            <a href="#"
+              color="deep-purple accent-4"
+              class="blue--text ma-7"
               v-bind="attrs"
-              v-on="on"
-            >
-             Buy
-            </v-btn>
+              v-on="on" 
+              style="text-decoration: none"
+              icon @click="show = !show"
+              >Buy
+              <v-icon color="blue accent-3">
+                {{show ? "mdi-chevron-up" : "mdi-chevron-down"}}
+              </v-icon>
+              </a>
           </template>
 
           <v-list>
-            <v-list-item link to="/">
-              <v-list-item-title> Buy </v-list-item-title>
-            </v-list-item>
-
-            <v-list-item link to="/">
-              <v-list-item-title> Buy Another property </v-list-item-title>
-            </v-list-item>
-            <v-list-item link to="/">
-              <v-list-item-title> Buy Another property </v-list-item-title>
-            </v-list-item>
-            <v-list-item link to="/">
-              <v-list-item-title> Buy Another property </v-list-item-title>
-            </v-list-item>
-            <v-list-item link to="/">
-              <v-list-item-title> Buy Another property </v-list-item-title>
-            </v-list-item>
-            <v-list-item link to="/">
-              <v-list-item-title> Buy Another property </v-list-item-title>
-            </v-list-item>
+            <links title="Homes for sale" />
+            <links title="New Constructions" />
+            <links title="For sale by owner" />
+            <links link="/" title="Open houses" />
           </v-list>
         </v-menu>
 
         <v-menu :key="text" :rounded="rounded" offset-y>
           <template v-slot:activator="{ attrs, on }">
-            <v-btn
-              :color="colors[index]"
-              class="white--text ma-5"
+            <a href="#"
+              color="deep-purple accent-4"
+              class="blue--text ma-7"
               v-bind="attrs"
-              v-on="on"
-            >
-             Sell
-            </v-btn>
+              v-on="on" 
+              style="text-decoration: none"
+              icon @click="show = !show"
+              >Sell
+              <v-icon color="blue accent-3">
+                {{show ? "mdi-chevron-up" : "mdi-chevron-down"}}
+              </v-icon>
+              </a>
           </template>
 
           <v-list>
-            <v-list-item link to="/">
-              <v-list-item-title> Buy </v-list-item-title>
-            </v-list-item>
-
-            <v-list-item link to="/">
-              <v-list-item-title> Buy Another property </v-list-item-title>
-            </v-list-item>
-            <v-list-item link to="/">
-              <v-list-item-title> Buy Another property </v-list-item-title>
-            </v-list-item>
-            <v-list-item link to="/">
-              <v-list-item-title> Buy Another property </v-list-item-title>
-            </v-list-item>
-            <v-list-item link to="/">
-              <v-list-item-title> Buy Another property </v-list-item-title>
-            </v-list-item>
-            <v-list-item link to="/">
-              <v-list-item-title> Buy Another property </v-list-item-title>
-            </v-list-item>
+            <links title="Explore your options"/>
+            <links title="Home values"/>
+            <links title="Seller's guide"/>
           </v-list>
         </v-menu>
 
         <v-menu :key="text" :rounded="rounded" offset-y>
           <template v-slot:activator="{ attrs, on }">
-            <v-btn
-              :color="colors[index]"
-              class="white--text ma-5"
+            <a href="#"
+              color="deep-purple accent-4"
+              class="blue--text ma-7"
               v-bind="attrs"
-              v-on="on"
-            >
-             Rent
-            </v-btn>
+              v-on="on" 
+              style="text-decoration: none"
+              icon @click="show = !show"
+              >Rent
+              <v-icon color="blue accent-3">
+                {{show ? "mdi-chevron-up" : "mdi-chevron-down"}}
+              </v-icon>
+              </a>
+          </template>
+          <div style="display: flex; flex-direction: row;">
+          <v-list>
+            <links link="/register" title="Rental Buildings"/>
+            <links link="/login" title="Apartments for Rent"/>
+            <links link="/property" title="Houses for Rent"/>
+            <links link="/description" title="Your Rentals" />
+          </v-list>
+          <v-divider :vertical="divider"></v-divider>
+          <v-list>
+            <links link="/signup" title="Rental Buildings"/>
+            <links link="/signdown" title="Apartments for Rent"/>
+            <links link="/" title="Houses for Rent"/>
+            <links link="/users" title="Your Rentals" />
+          </v-list>
+          </div>
+        </v-menu>
+
+        <v-menu :key="text" :rounded="rounded" offset-y>
+          <template v-slot:activator="{ attrs, on }">
+             <a href="#"
+              color="deep-purple accent-4"
+              class="blue--text ma-7"
+              v-bind="attrs"
+              v-on="on" 
+              style="text-decoration: none"
+              icon @click="show = !show"
+              >Home Loan
+              <v-icon color="blue accent-3">
+                {{show ? "mdi-chevron-up" : "mdi-chevron-down"}}
+              </v-icon>
+              </a>
           </template>
 
           <v-list>
@@ -114,58 +127,30 @@
 
         <v-menu :key="text" :rounded="rounded" offset-y>
           <template v-slot:activator="{ attrs, on }">
-            <v-btn
-              :color="colors[index]"
-              class="white--text ma-5"
+            <a href="#"
+              color="deep-purple accent-4"
+              class="blue--text ma-7"
               v-bind="attrs"
-              v-on="on"
-            >
-             Home Loan
-            </v-btn>
+              v-on="on" 
+              style="text-decoration: none"
+              icon @click="show = !show"
+              >Mortgage
+              <v-icon color="blue accent-3">
+                {{show ? "mdi-chevron-up" : "mdi-chevron-down"}}
+              </v-icon>
+              </a>
           </template>
 
           <v-list>
             <links />
-          </v-list>
-        </v-menu>
-
-        <v-menu :key="text" :rounded="rounded" offset-y>
-          <template v-slot:activator="{ attrs, on }">
-            <v-btn
-              :color="colors[index]"
-              class="white--text ma-5"
-              v-bind="attrs"
-              v-on="on"
-            >
-             Mortgage
-            </v-btn>
-          </template>
-
-          <v-list>
-            <v-list-item link to="/">
-              <v-list-item-title> Buy </v-list-item-title>
-            </v-list-item>
-
-            <v-list-item link to="/">
-              <v-list-item-title> Buy Another property </v-list-item-title>
-            </v-list-item>
-            <v-list-item link to="/">
-              <v-list-item-title> Buy Another property </v-list-item-title>
-            </v-list-item>
-            <v-list-item link to="/">
-              <v-list-item-title> Buy Another property </v-list-item-title>
-            </v-list-item>
-            <v-list-item link to="/">
-              <v-list-item-title> Buy Another property </v-list-item-title>
-            </v-list-item>
-            <v-list-item link to="/">
-              <v-list-item-title> Buy Another property </v-list-item-title>
-            </v-list-item>
+            <links />
+            <links />
+            <links link="/" title="Home" />
           </v-list>
         </v-menu>
       </v-row>
 
-      <v-col>
+      <v-col class="hid-navbar">
         <a href="/login" style="text-decoration: none">Login</a>
       </v-col>
 
@@ -215,17 +200,13 @@ export default {
     return {
       drawer: null,
       show: false,
-      items: [
-        { title: "Home", icon: "mdi-view-dashboard" },
-        { title: "About", icon: "mdi-forum" },
-      ],
+      divider: false,
       btns: [
         ["Removed", "0"],
         ["Large", "lg"],
         ["Custom", "b-xl"],
       ],
-      colors: ["deep-purple accent-4", "error", "teal darken-1"],
-      items: [...Array(4)].map((_, i) => `Item ${i}`),
+      colors: ["deep-purple accent-4", "error", "teal darken-1"]
     };
   },
 };
@@ -238,6 +219,9 @@ export default {
 @media only screen and (max-width: 768px) {
   .toggle {
     display: block;
+  }
+  .hid-navbar{
+    display: none;
   }
 }
 </style>
