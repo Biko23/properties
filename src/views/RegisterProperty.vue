@@ -6,7 +6,7 @@
     <v-container>
       <div style="text-align: center">
         <h3 style="color: white">Add A property</h3>
-        <h4 style="color: #b9cbdb">Step 1/3</h4>
+        <h4 style="color: #b9cbdb">Step 1/2</h4>
       </div>
       <br />
       <v-row id="form-row">
@@ -89,26 +89,79 @@
                 your photos and drag
               </p>
               <v-row>
-                <v-col></v-col>
-                <v-col>
+                <v-col cols="12" md="10">
+                  <v-row>
+                    <v-col cols="12" md="3">
+                      <v-img
+                          src="../assets/houseview1.png"
+                          :lazy-src="`https://picsum.photos/10/6?image=${
+                            n * 5 + 10
+                          }`"
+                          aspect-ratio="1"
+                          class="grey lighten-2"
+                          height="200"
+                        ></v-img>
+                    </v-col>
+                    <v-col cols="12" md="3">
+                      <v-img
+                          src="../assets/houseview1.png"
+                          :lazy-src="`https://picsum.photos/10/6?image=${
+                            n * 5 + 10
+                          }`"
+                          aspect-ratio="1"
+                          class="grey lighten-2"
+                          height="200"
+                        ></v-img>
+                    </v-col>
+                    <v-col cols="12" md="3">
+                      <v-img
+                          src="../assets/houseview1.png"
+                          :lazy-src="`https://picsum.photos/10/6?image=${
+                            n * 5 + 10
+                          }`"
+                          aspect-ratio="1"
+                          class="grey lighten-2"
+                          height="200"
+                        ></v-img>
+                    </v-col>
+                    <v-col cols="12" md="3">
+                      <v-img
+                          src="../assets/houseview1.png"
+                          :lazy-src="`https://picsum.photos/10/6?image=${
+                            n * 5 + 10
+                          }`"
+                          aspect-ratio="1"
+                          class="grey lighten-2"
+                          height="200"
+                        ></v-img>
+                    </v-col>
+                  </v-row>
+                </v-col>
+                <v-col cols="12" md="2">
+                  <div style="margin-left: 50px; margin-top: 80px;">
                   <v-file-input
-                    style="border-radius: 60%; width: 100px; height: 70px"
+                    style="border-radius: 50%; width: 90px; height: 90px"
                     :rules="rules"
                     accept="image/png, image/jpeg, image/bmp"
                     prepend-icon="mdi-camera"
                     solo
                   />
-                  <span style="margin-left: 56px; margin-top: -100px">
-                    <button>
-                      <img
-                        src="https://res.cloudinary.com/diued7ugb/image/upload/v1625948824/lvqxdmbxghuf81nqey5p.png"
-                        alt=""
-                        width="20"
-                        srcset=""
-                        style="margin-top: -71px; position: absolute"
-                      />
-                    </button>
-                  </span>
+              <img
+                src="https://res.cloudinary.com/diued7ugb/image/upload/v1625948824/lvqxdmbxghuf81nqey5p.png"
+                alt=""
+                width="50"
+                style="
+                  position: absolute;
+                  margin-top: -91px;
+                  margin-left: 36px;
+                  background: white;
+                  padding: 10px;
+                  border-radius: 50%;
+                  cursor: pointer;
+                "
+                srcset=""
+              />
+              </div>
                 </v-col>
               </v-row>
 
@@ -118,16 +171,8 @@
               </p>
             </v-col>
           </v-row>
-          <!-- <v-col class="d-flex" cols="12" sm="6" id="description">
-          <v-textarea
-            solo
-            name="input-7-5"
-            label="Property Description"
-            rows="8"
-          ></v-textarea>
-        </v-col> -->
-
-          <v-col>
+          <v-row>
+          <v-col style="display: flex; flex-direction: row; justify-content: flex-end;"> 
             <router-link to="/register2" style="text-decoration: none">
               <v-btn style="background-color: #3b6ef3; width: 200px">
                 <span
@@ -147,6 +192,7 @@
               </v-btn>
             </router-link>
           </v-col>
+          </v-row>
         </v-col>
       </v-row>
       <br />
