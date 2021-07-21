@@ -73,10 +73,12 @@
                 </template>
 
                 <v-list>
+                    <links link="/property" title="Mortgages" />
+                    <links link="/register" title="List A House" />
                     <links title="Mortgage Lenders" />
                     <links title="Mortgage Rates" />
-                    <links title="Mortgage Refinancing" />
-                    <links link="/" title="Mortgage Calculator" />
+                    <!-- <links title="Mortgage Refinancing" />
+                    <links link="/" title="Mortgage Calculator" /> -->
                 </v-list>
             </v-menu>
 
@@ -91,9 +93,6 @@
 
                 <v-list>
                     <links title="As a Landlord" link="/getstarted" />
-                    <links title="Mortgage Rates" />
-                    <links title="Mortgage Refinancing" />
-                    <links link="/" title="Mortgage Calculator" />
                 </v-list>
             </v-menu>
         </v-row>
