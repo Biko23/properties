@@ -55,17 +55,10 @@
                 </template>
                 <div style="display: flex; flex-direction: row;">
                     <v-list>
-                        <links link="/register" title="Rental Buildings" />
-                        <links link="/login" title="Apartments for Rent" />
                         <links link="/property" title="Houses for Rent" />
-                        <links link="/description" title="Your Rentals" />
-                    </v-list>
-                    <v-divider :vertical="divider"></v-divider>
-                    <v-list>
-                        <links link="/signup" title="Rental Buildings" />
-                        <links link="/signdown" title="Apartments for Rent" />
-                        <links link="/" title="Houses for Rent" />
-                        <links link="/users" title="Your Rentals" />
+                        <links link="/register" title="List A Rental" />
+                        <!-- <links link="/login" title="Apartments for Rent" />
+                        <links link="/description" title="Your Rentals" /> -->
                     </v-list>
                 </div>
             </v-menu>

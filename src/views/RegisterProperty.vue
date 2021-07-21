@@ -30,36 +30,24 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col class="d-flex pr-2" cols="12" sm="6">
-              <div style="text-align: center">
-                <h5>Feature Type</h5>
-              </div>
-            </v-col>
-            <v-col class="d-flex pr-2" cols="12" sm="6">
-              <div style="text-align: center; color: #666666">
-                <h5>Feature Description</h5>
-              </div>
-            </v-col>
-          </v-row>
-          <v-row>
             <v-col class="d-flex" cols="12" sm="6">
-              <v-text-field class="custom-label-color" solo></v-text-field>
+              <v-select
+                :items="items"
+                label="Select Feature"
+                solo
+              ></v-select>
             </v-col>
-            <v-col class="d-flex" cols="12" sm="6">
-              <v-text-field class="custom-label-color" solo></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
+
             <v-col
               cols="12"
-              sm="12"
+              sm="6"
               style="
                 display: flex;
                 flex-direction: row;
                 justify-content: flex-end;
               "
             >
-              <p style="position: absolute; margin: -20px 60px 0 0">
+              <p style="position: absolute; margin: 10px 60px 0 0">
                 Add Feature
               </p>
               <img
@@ -68,7 +56,7 @@
                 width="50"
                 style="
                   position: absolute;
-                  margin-top: -30px;
+                  margin-top: 0;
                   background: white;
                   padding: 10px;
                   border-radius: 50%;
