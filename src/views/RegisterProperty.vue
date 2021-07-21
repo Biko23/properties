@@ -6,7 +6,7 @@
     <v-container>
       <div style="text-align: center">
         <h3 style="color: white">Add A property</h3>
-        <h4 style="color: #b9cbdb">Step 1/2</h4>
+        <h4 style="color: #b9cbdb">Step 1/3</h4>
       </div>
       <br />
       <v-row id="form-row">
@@ -172,7 +172,7 @@
             </v-col>
           </v-row>
           <v-row>
-          <v-col style="display: flex; flex-direction: row; justify-content: flex-end;"> 
+          <v-col style="display: flex; flex-direction: row; justify-content: flex-end;">
             <router-link to="/register2" style="text-decoration: none">
               <v-btn style="background-color: #3b6ef3; width: 200px">
                 <span

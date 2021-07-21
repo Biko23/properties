@@ -21,7 +21,7 @@
                 </template>
 
                 <v-list>
-                    <links title="Homes for sale" />
+                    <links title="Properties for sale" link="/properties-for-sale" />
                     <links title="New Constructions" />
                     <links title="For sale by owner" />
                     <links link="/" title="Open houses" />
@@ -38,7 +38,7 @@
                 </template>
 
                  <v-list>
-                    <links title="Sell A Property" link="/sellAProperty" />
+                    <links title="Sell A Property" link="/register" />
                     <links title="Current market trends" />
                     <links title="Seller's guide" link="/learn" />
                     <links title="Price Conversion Calculator" />
