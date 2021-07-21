@@ -71,7 +71,7 @@
                 text-transform: capitalize;
               "
             >
-              Final Step ></span
+              Final Step</span
             >
           </v-btn>
         </v-col> </v-row

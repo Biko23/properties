@@ -5,7 +5,7 @@
       <v-row>
        
         <v-col>
-                 <a href="/" style="color:black;text-align:center;margin-top:140px;margin-left:250px;text-decoration:none;">Back home</a>
+                 <router-link to="/" style="color:black;text-align:center;margin-top:140px;margin-left:250px;text-decoration:none;">Back home</router-link>
           <h1 id="get-started">Welcome Back!</h1>
           <p id="login-into">Login into your account</p>
         </v-col>

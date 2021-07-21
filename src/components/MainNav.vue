@@ -37,10 +37,11 @@
                     </a>
                 </template>
 
-                <v-list>
-                    <links title="Explore your options" />
-                    <links title="Home values" />
-                    <links title="Seller's guide"  link="/learn" />
+                 <v-list>
+                    <links title="Sell A Property" link="/sellAProperty" />
+                    <links title="Current market trends" />
+                    <links title="Seller's guide" link="/learn" />
+                    <links title="Price Conversion Calculator" />
                 </v-list>
             </v-menu>
 
@@ -131,8 +132,9 @@
                     <v-list-item-title>Sell</v-list-item-title>
                 </template>
                 <v-list>
-                    <links title="Explore your options" />
-                    <links title="Home values" />
+                    <links title="Current market trends" />
+                    <links title="Sell A Property" />
+                    <links title="Price Conversion Calculator" />
                     <links title="Seller's guide" link="/learn" />
                 </v-list>
             </v-list-group>
