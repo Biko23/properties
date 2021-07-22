@@ -11,6 +11,7 @@ import Login from '@/views/Login'
 import GetStarted from '@/views/GetStarted'
 import UserProfile from '@/views/UserProfile'
 import ViewProperty from '@/components/ViewProperty'
+import Mortgage from '@/views/Mortgage'
 
 
 Vue.use(VueRouter)
@@ -70,6 +71,11 @@ const routes = [
     path: '/view',
     name: 'ViewProperty',
     component: ViewProperty
+  },
+  {
+    path: '/mortgage',
+    name: 'Mortgage',
+    component: Mortgage
   },
   {
     path: '/about',

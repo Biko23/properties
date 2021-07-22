@@ -73,7 +73,7 @@
                 </template>
 
                 <v-list>
-                    <links title="Mortgage Lenders" />
+                    <links title="Mortgage Lenders" link="/mortgage"/>
                     <links title="Mortgage Rates" />
                     <links title="Mortgage Refinancing" />
                     <links link="/" title="Mortgage Calculator" />

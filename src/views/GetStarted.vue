@@ -20,129 +20,125 @@
     <v-container>
       <v-row>
         <v-col cols="12" sm="12" md="4" xl="4">
-           <router-link to="/profile" style="text-decoration:none;">
-          <v-card class="mx-auto">
-            <v-img
-              class="white--text align-end"
-              height="200px"
-              src="../assets/houseview1.png"
-            >
-            </v-img
-            ><br />
-            <h3 style="text-align: center">I'm a broker</h3>
-            <div style="text-align: center">
-              <v-btn color="primary">Get started</v-btn><br><br>
-            </div>
-          </v-card>
-           </router-link>
+          <router-link to="/profile" style="text-decoration: none">
+            <v-card class="mx-auto">
+              <v-img
+                class="white--text align-end"
+                height="200px"
+                src="../assets/houseview1.png"
+              >
+              </v-img
+              ><br />
+              <h3 style="text-align: center">I'm a broker</h3>
+              <div style="text-align: center">
+                <v-btn color="primary">Get started</v-btn><br /><br />
+              </div>
+            </v-card>
+          </router-link>
         </v-col>
 
         <v-col cols="12" sm="12" md="4" xl="4">
-           <router-link to="/profile" style="text-decoration:none;">
-          <v-card class="mx-auto">
-            <v-img
-              class="white--text align-end"
-              height="200px"
-              src="../assets/houseview2.png"
-            >
-            </v-img>
-            <br />
-            <h3 style="text-align: center">I'm a Landloard</h3>
-            <div style="text-align: center">
-              <v-btn color="primary">Get started</v-btn><br><br>
-            </div>
-     
-          </v-card>
-           </router-link>
+          <router-link to="/profile" style="text-decoration: none">
+            <v-card class="mx-auto">
+              <v-img
+                class="white--text align-end"
+                height="200px"
+                src="../assets/houseview2.png"
+              >
+              </v-img>
+              <br />
+              <h3 style="text-align: center">I'm a Landloard</h3>
+              <div style="text-align: center">
+                <v-btn color="primary">Get started</v-btn><br /><br />
+              </div>
+            </v-card>
+          </router-link>
         </v-col>
         <v-col cols="12" sm="12" md="4" xl="4">
-          <router-link to="/profile" style="text-decoration:none;">
-          <v-card>
-            <v-img
-              class="white--text align-end"
-              height="200px"
-              src="../assets/houseview3.png"
-            >
-            </v-img>
-            <br />
-            <h3 style="text-align: center">I'm a Money Lender</h3>
-            <div style="text-align: center">
-              <v-btn color="primary">Get started</v-btn><br><br>
-            </div>
-     
-          </v-card>
+          <router-link to="/profile" style="text-decoration: none">
+            <v-card>
+              <v-img
+                class="white--text align-end"
+                height="200px"
+                src="../assets/houseview3.png"
+              >
+              </v-img>
+              <br />
+              <h3 style="text-align: center">I'm a Money Lender</h3>
+              <div style="text-align: center">
+                <v-btn color="primary">Get started</v-btn><br /><br />
+              </div>
+            </v-card>
           </router-link>
         </v-col>
       </v-row>
       <v-row>
-          <v-col cols="12" sm="12" md="4" xl="4">
-             <router-link to="/profile" style="text-decoration:none;">
-          <v-card class="mx-auto">
-            <v-img
-              class="white--text align-end"
-              height="200px"
-              src="../assets/houseview3.png"
-            >
-            </v-img
-            ><br />
-            <h3 style="text-align: center">I'm a Photographer</h3>
-            <div style="text-align: center">
-              <v-btn color="primary">Get started</v-btn><br><br>
-            </div>
-          </v-card>
-             </router-link>
+        <v-col cols="12" sm="12" md="4" xl="4">
+          <router-link to="/profile" style="text-decoration: none">
+            <v-card class="mx-auto">
+              <v-img
+                class="white--text align-end"
+                height="200px"
+                src="../assets/houseview3.png"
+              >
+              </v-img
+              ><br />
+              <h3 style="text-align: center">I'm a Photographer</h3>
+              <div style="text-align: center">
+                <v-btn color="primary">Get started</v-btn><br /><br />
+              </div>
+            </v-card>
+          </router-link>
         </v-col>
 
         <v-col cols="12" sm="12" md="4" xl="4">
-           <router-link to="/profile" style="text-decoration:none;">
-          <v-card class="mx-auto">
-            <v-img
-              class="white--text align-end"
-              height="200px"
-              src="../assets/houseview1.png"
-            >
-            </v-img>
-            <br />
-            <h3 style="text-align: center">I'm a builder</h3>
-            <div style="text-align: center">
-              <v-btn color="primary">Get started</v-btn><br><br>
-            </div>
-     
-          </v-card>
-           </router-link>
+          <router-link to="/profile" style="text-decoration: none">
+            <v-card class="mx-auto">
+              <v-img
+                class="white--text align-end"
+                height="200px"
+                src="../assets/houseview1.png"
+              >
+              </v-img>
+              <br />
+              <h3 style="text-align: center">I'm a builder</h3>
+              <div style="text-align: center">
+                <v-btn color="primary">Get started</v-btn><br /><br />
+              </div>
+            </v-card>
+          </router-link>
         </v-col>
         <v-col cols="12" sm="12" md="4" xl="4">
-           <router-link to="/profile" style="text-decoration:none;">
-          <v-card>
-            <v-img
-              class="white--text align-end"
-              height="200px"
-              src="../assets/houseview2.png"
-            >
-            </v-img>
-            <br />
-            <h3 style="text-align: center">I'm a Service provider</h3>
-            <div style="text-align: center">
-              <v-btn color="primary">Get started</v-btn><br><br>
-            </div>
-     
-          </v-card>
-           </router-link>
+          <router-link to="/profile" style="text-decoration: none">
+            <v-card>
+              <v-img
+                class="white--text align-end"
+                height="200px"
+                src="../assets/houseview2.png"
+              >
+              </v-img>
+              <br />
+              <h3 style="text-align: center">I'm a Service provider</h3>
+              <div style="text-align: center">
+                <v-btn color="primary">Get started</v-btn><br /><br />
+              </div>
+            </v-card>
+          </router-link>
         </v-col>
       </v-row>
     </v-container>
     <about />
-   <Footer />
-   <h3></h3>
+    <Footer />
+    <h3></h3>
   </div>
 </template>
 
 <script>
-import BottonNav from '../components/BottonNav.vue';
-import Footer from '../components/Footer.vue';
+import BottonNav from "../components/BottonNav.vue";
+import Footer from "../components/Footer.vue";
 import MainNav from "../components/MainNav.vue";
 import TopNav from "../components/TopNav.vue";
-import About from './About.vue';
+import About from "./About.vue";
 export default {
   components: { TopNav, MainNav, BottonNav, Footer, About },
   name: "GetStarted",

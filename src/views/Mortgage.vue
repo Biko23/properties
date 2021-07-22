@@ -1,7 +1,9 @@
 <template>
   <div>
+      <top-nav />
+      <main-nav />
     <v-container id="container" fluid>
-      <p id="intro">With us you can sell your home with no fear</p>
+      <p id="intro">Financing your next home starts here</p>
       <p id="intro2">Directly to us, through an agent, or yourself</p>
     </v-container>
     <br />
@@ -155,16 +157,18 @@
   </div>
 </template>
 <script>
-import Footer from "./Footer.vue";
+import Footer from "../components/Footer";
+import MainNav from '../components/MainNav.vue';
+import TopNav from '../components/TopNav.vue';
 export default {
-  components: { Footer },
-  name: "LearnComponent",
+  components: { Footer,TopNav, MainNav },
+  name: "Mortgage",
 };
 </script>
 <style scoped>
 #intro {
   color: #ffffff;
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 400;
   text-align: center;
   margin-top: 180px;
