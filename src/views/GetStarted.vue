@@ -118,7 +118,7 @@
               >
               </v-img>
               <br />
-              <h3 style="text-align: center">I'm a Service provider</h3>
+              <h3 style="text-align: center">I'm a Professional Service provider</h3>
               <div style="text-align: center">
                 <v-btn color="primary">Get started</v-btn><br /><br />
               </div>

@@ -12,6 +12,7 @@ import GetStarted from '@/views/GetStarted'
 import UserProfile from '@/views/UserProfile'
 import ViewProperty from '@/components/ViewProperty'
 import Mortgage from '@/views/Mortgage'
+import ServiceProviderComponent from '@/components/ServiceProviderComponent'
 
 
 Vue.use(VueRouter)
@@ -76,6 +77,11 @@ const routes = [
     path: '/mortgage',
     name: 'Mortgage',
     component: Mortgage
+  },
+  {
+    path: '/provider',
+    name: 'ServiceProviderComponent',
+    component: ServiceProviderComponent
   },
   {
     path: '/about',
