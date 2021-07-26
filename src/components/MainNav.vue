@@ -22,9 +22,9 @@
 
                 <v-list>
                     <links title="Properties for sale" link="/properties-for-sale" />
-                    <links title="New Constructions" />
+                    <!-- <links title="New Constructions" />
                     <links title="For sale by owner" />
-                    <links link="/" title="Open houses" />
+                    <links link="/" title="Open houses" /> -->
                 </v-list>
             </v-menu>
 
@@ -39,9 +39,9 @@
 
                  <v-list>
                     <links title="Sell A Property" link="/register" />
-                    <links title="Current market trends" />
+                    <!-- <links title="Current market trends" /> -->
                     <links title="Seller's guide" link="/learn" />
-                    <links title="Price Conversion Calculator" />
+                    <!-- <links title="Price Conversion Calculator" /> -->
                 </v-list>
             </v-menu>
 
@@ -92,7 +92,8 @@
                 </template>
 
                 <v-list>
-                    <links title="As a Landlord" link="/getstarted" />
+                    <links title="Join Us As?" link="/getstarted" />
+                   
                 </v-list>
             </v-menu>
         </v-row>

@@ -68,7 +68,7 @@
                 </v-col>
               </v-row><br>
               <p style="font-size:0.75rem">Have an Accont? 
-              <router-link to="/">Login</router-link>
+              <router-link to="/login">Login</router-link>
               </p>
             </v-container>
           </v-form>
