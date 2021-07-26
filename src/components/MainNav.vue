@@ -2,7 +2,7 @@
 <nav>
     <v-app-bar color="#f2f2f2" dark>
         <div style="">
-            <v-img style="margin-left: auto; margin-right: auto; display: block" lazy-src="https://picsum.photos/id/11/10/6" max-height="45" max-width="45" src="https://res.cloudinary.com/diued7ugb/image/upload/v1625749459/Vector_pebqf0.png"></v-img>
+            <v-img style="margin-left: auto; margin-right: auto; display: block" lazy-src="https://picsum.photos/id/11/10/6" max-height="35" max-width="35" src="https://res.cloudinary.com/diued7ugb/image/upload/v1627026093/MicrosoftTeams-image_1_k1hcm4.png"></v-img>
         </div>
 
         <a href="/" style="text-decoration: none">
@@ -73,12 +73,29 @@
                 </template>
 
                 <v-list>
-                    <links link="/property" title="Mortgages" />
-                    <links link="/register" title="List A House" />
-                    <links title="Mortgage Lenders" />
+                    <links title="Mortgage Lenders" link="/mortgage"/>
                     <links title="Mortgage Rates" />
                     <!-- <links title="Mortgage Refinancing" />
                     <links link="/" title="Mortgage Calculator" /> -->
+                </v-list>
+            </v-menu>
+
+              <v-menu :key="text" :rounded="rounded" offset-y>
+                <template v-slot:activator="{ attrs, on }">
+                    <a href="#" color="deep-purple accent-4" class="blue--text ma-7" v-bind="attrs" v-on="on" style="text-decoration: none" icon @click="show4 = !show4">Find service providers
+                        <v-icon color="blue accent-3">
+                            {{show4 ? "mdi-chevron-up" : "mdi-chevron-down"}}
+                        </v-icon>
+                    </a>
+                </template>
+
+                <v-list>
+                    <links title="Electrical " link="/provider"/>
+                    <links title="Machenical " />
+                    <links title="Research & Development" />
+                    <links link="/provider" title="Architects" />
+                     <links title="Civil Engineers " />
+
                 </v-list>
             </v-menu>
 
