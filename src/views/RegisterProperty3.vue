@@ -31,14 +31,13 @@
               ></v-text-field>
             </v-col>
           </v-row>
-
         </v-col>
         <br />
 
         <v-col cols="12" md="12">
           <v-row>
             <v-col class="d-flex" cols="12" sm="6">
-             <v-select
+              <v-select
                 :items="items"
                 label="Select Landmark Type"
                 solo
@@ -53,56 +52,27 @@
               ></v-text-field>
             </v-col>
           </v-row>
-          <v-row style="margin: 0 5px;">
-                <v-col cols="12" sm="12">
-                    <h3>Add Landmark Photos</h3>
-                    <v-row>
-                        <v-col cols="12" md="10">
-                            <v-row>
-                                <v-col cols="12" md="3">
-                                    <v-img src="../assets/houseview1.png" :lazy-src="`https://picsum.photos/10/6?image=${
-                            n * 5 + 10
-                          }`" aspect-ratio="1" class="grey lighten-2" height="200"></v-img>
-                                </v-col>
-                                <v-col cols="12" md="3">
-                                    <v-img src="../assets/houseview1.png" :lazy-src="`https://picsum.photos/10/6?image=${
-                            n * 5 + 10
-                          }`" aspect-ratio="1" class="grey lighten-2" height="200"></v-img>
-                                </v-col>
-                                <v-col cols="12" md="3">
-                                    <v-img src="../assets/houseview1.png" :lazy-src="`https://picsum.photos/10/6?image=${
-                            n * 5 + 10
-                          }`" aspect-ratio="1" class="grey lighten-2" height="200"></v-img>
-                                </v-col>
-                                <v-col cols="12" md="3">
-                                    <v-img src="../assets/houseview1.png" :lazy-src="`https://picsum.photos/10/6?image=${
-                            n * 5 + 10
-                          }`" aspect-ratio="1" class="grey lighten-2" height="200"></v-img>
-                                </v-col>
-                            </v-row>
-                        </v-col>
-                        <v-col cols="12" md="2">
-                            <div style="margin-left: 50px; margin-top: 80px;">
-                                <v-file-input style="border-radius: 50%; width: 90px; height: 90px" :rules="rules" accept="image/png, image/jpeg, image/bmp" prepend-icon="mdi-camera" solo />
-                                <img src="https://res.cloudinary.com/diued7ugb/image/upload/v1625948824/lvqxdmbxghuf81nqey5p.png" alt="" width="50" style="
-                  position: absolute;
-                  margin-top: -91px;
-                  margin-left: 36px;
-                  background: white;
-                  padding: 10px;
-                  border-radius: 50%;
-                  cursor: pointer;
-                " srcset="" />
-                            </div>
-                        </v-col>
-                    </v-row>
-
-                    <p style="font-size: 12px; margin-right: 100px">
-                        Each picture must not exceed 5 Mb Supported formats are *.jpg,
-                        *.gif and *.png
-                    </p>
-                </v-col>
-            </v-row>
+          <v-row style="margin: 0 5px">
+            <v-col cols="12" sm="12">
+              <h3>Add Landmark Photos</h3>
+              <v-row>
+                  <v-col cols="12" md="12">
+                    <UploadImages
+                      style="background-color: #e7f0ff"
+                      :max="4"
+                      uploadMsg="click or drag n' drop images"
+                      fileError="images files only accepted"
+                      clearAll="Clear"
+                      @changed="handleImages"
+                    />
+                  </v-col>
+              </v-row>
+              <p style="font-size: 12px; margin-right: 100px">
+                Each picture must not exceed 5 Mb Supported formats are *.jpg,
+                *.gif and *.png
+              </p>
+            </v-col>
+          </v-row>
         </v-col>
         <br />
         <v-row>
@@ -142,6 +112,8 @@
 import TopNav from "@/components/TopNav.vue";
 import MainNav from "@/components/MainNav.vue";
 import BottonNav from "../components/BottonNav.vue";
+import { mapActions } from "vuex";
+import UploadImages from "vue-upload-drop-images";
 
 export default {
   name: "RegisterProperty3",
@@ -152,11 +124,18 @@ export default {
         value.size < 2000000 ||
         "Avatar size should be less than 2 MB!",
     ],
+    property: {
+      type: "",
+      location: "",
+      features: [],
+      visuals: []
+    },
   }),
   components: {
     TopNav,
     MainNav,
     BottonNav,
+    UploadImages
   },
 };
 </script>

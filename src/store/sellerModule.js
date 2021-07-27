@@ -3,12 +3,16 @@ import PropertyFeatureService from '@/service/propertyFeatures';
 
 const state = {
     propertyTypes: [],
-    propertyFeatures: []
+    propertyFeatures: [],
+    propertyFirstPageData: null,
+    propertySecondPageData: null
 }
 
 const getters  = {
     allPropertyTypes: (state) => state.propertyTypes,
-    allPropertyFeatures: (state) => state.propertyFeatures
+    allPropertyFeatures: (state) => state.propertyFeatures,
+    allPropertyFirstPageData: (state) => state.propertyFirstPageData,
+    allPropertySecondPageData: (state) => state.propertySecondPageData
 };
 
 const actions = {
@@ -27,6 +31,14 @@ const actions = {
         } catch (error) {
             console.log(error);
         }
+    },
+    addPropertyDataFromPageOne({ commit }, propertyDataOne){
+        commit('setPropertyRegisterFirstData', propertyDataOne);
+        console.log('From global state one', propertyDataOne);
+    },
+    addPropertyDataFromPageTwo({ commit }, propertyDataTwo){
+        commit('setPropertyRegisterTwoData', propertyDataTwo);
+        console.log('From global state two', propertyDataTwo);
     }
 }
 
@@ -42,7 +54,9 @@ const mutations = {
             value: propertyFeature.features_id,
             text: propertyFeature.feature
         }
-    }))
+    })),
+    setPropertyRegisterFirstData: (state, propertyDataOne) => (state.propertyFirstPageData = propertyDataOne),
+    setPropertyRegisterSecondData: (state, propertyDataTwo) => (state.propertySecondPageData = propertyDataTwo)
 }
 
 export default {

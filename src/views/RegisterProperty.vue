@@ -32,7 +32,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col class="d-flex" cols="12" sm="6">
+            <v-col class="d-flex" cols="12" sm="12">
               <v-combobox
                 v-model="property.features"
                 :items="allPropertyFeatures"
@@ -40,34 +40,6 @@
                 multiple
                 solo
               ></v-combobox>
-            </v-col>
-
-            <v-col
-              cols="12"
-              sm="6"
-              style="
-                display: flex;
-                flex-direction: row;
-                justify-content: flex-end;
-              "
-            >
-              <p style="position: absolute; margin: 10px 60px 0 0">
-                Add Feature
-              </p>
-              <img
-                src="https://res.cloudinary.com/diued7ugb/image/upload/v1625948824/lvqxdmbxghuf81nqey5p.png"
-                alt=""
-                width="50"
-                style="
-                  position: absolute;
-                  margin-top: 0;
-                  background: white;
-                  padding: 10px;
-                  border-radius: 50%;
-                  cursor: pointer;
-                "
-                srcset=""
-              />
             </v-col>
           </v-row>
           <v-row>
@@ -81,48 +53,15 @@
                 your photos and drag
               </p>
               <v-row>
-                <v-col cols="12" md="10">
-                  <v-row v-if="(property.visuals).length > 0">
-                    <v-col cols="12" md="3" v-for="(i, propertyImage) in property.visuals" :key="i">
-                      <v-img
-                        :src="propertyImage"
-                        aspect-ratio="1"
-                        class="grey lighten-2"
-                        height="200"
-                      ></v-img>
-                    </v-col>                
-                  </v-row>
-                </v-col>
-                <v-col cols="12" md="2">
-                  <div style="margin-left: 50px; margin-top: 80px">
-                     <!-- :rules="rules" -->
-                    <v-file-input
-                      style="border-radius: 50%; width: 90px; height: 90px"
-                      accept="image/*"
-                      type="file"
-                      multiple
-                      :hide-input="hide"
-                      counter="4"
-                      prepend-icon="mdi-camera"
-                      @change="previewImage"
-                      solo
-                    />
-                    <img
-                      src="https://res.cloudinary.com/diued7ugb/image/upload/v1625948824/lvqxdmbxghuf81nqey5p.png"
-                      alt=""
-                      width="50"
-                      style="
-                        position: absolute;
-                        margin-top: -91px;
-                        margin-left: 36px;
-                        background: white;
-                        padding: 10px;
-                        border-radius: 50%;
-                        cursor: pointer;
-                      "
-                      srcset=""
-                    />
-                  </div>
+                <v-col cols="12" md="12">
+                  <UploadImages 
+                    style="background-color: #E7F0FF;"
+                    :max="4"
+                    uploadMsg="click or drag n' drop images"
+                    fileError="images files only accepted"
+                    clearAll="Clear"
+                    @changed="handleImages"
+                  />
                 </v-col>
               </v-row>
 
@@ -140,8 +79,10 @@
                 justify-content: flex-end;
               "
             >
-              <router-link to="/register2" style="text-decoration: none">
-                <v-btn style="background-color: #3b6ef3; width: 200px">
+                <v-btn
+                  style="background-color: #3b6ef3; width: 200px"
+                  @click="storePropertyData"
+                >
                   <span
                     style="
                       color: #ffffff;
@@ -157,7 +98,6 @@
                     Next Step</span
                   >
                 </v-btn>
-              </router-link>
             </v-col>
           </v-row>
         </v-col>
@@ -174,6 +114,7 @@ import TopNav from "@/components/TopNav.vue";
 import MainNav from "@/components/MainNav.vue";
 import BottonNav from "../components/BottonNav.vue";
 import { mapGetters, mapActions } from "vuex";
+import UploadImages from "vue-upload-drop-images";
 
 export default {
   name: "RegisterProperty",
@@ -188,7 +129,7 @@ export default {
       type: "",
       location: "",
       features: [],
-      visuals: [],
+      visuals: []
     },
     hide: true
   }),
@@ -196,29 +137,46 @@ export default {
     TopNav,
     MainNav,
     BottonNav,
+    UploadImages
   },
   methods: {
-    ...mapActions(["fetchPropertyTypes", "fetchPropertyFeatures"]),
-    previewImage: function (event) {
-      if (event) {
-        console.log(event);
-        this.property.visuals.push(event);
-      }
+    ...mapActions(["fetchPropertyTypes", "fetchPropertyFeatures", "addPropertyDataFromPageOne"]),
+    handleImages(files){
+      this.property.visuals.splice(0, this.property.visuals.length)
+      this.property.visuals.push(...files);
     },
-
-    /**
-     * let formData = new FormData();
-    for( var i = 0; i < this.$refs.file.files.length; i++ ){
-        let file = this.$refs.file.files[i];
-        formData.append('files[' + i + ']', file);
+    storePropertyData(){
+      this.addPropertyDataFromPageOne(this.property)
+        .then(()=> this.$router.push('/register2'))
     }
-    axios.post('/fileupload', formData, {
-        headers: {
-            'Content-Type': 'multipart/form-data'
-        },
-      }
-    )
-    */
+
+    //     submitFiles() {
+    //       console.log(this.property.visuals);
+    //       if (this.property.visuals) {
+    //         let formData = new FormData();
+
+    //         for (let file of this.property.visuals) {
+    //             formData.append("files", file, file.name);
+    //         }
+
+    //         formData.append("location", this.property.location);
+    //        formData.append("features_id", this.property.features);
+
+    //       console.log(formData);
+    //         // axios
+    //         //     .post("/upload-files", formData)
+    //         //     .then(response => {
+    //         //         console.log("Success!");
+    //         //         console.log({ response });
+    //         //     })
+    //         //     .catch(error => {
+    //         //         console.log({ error });
+    //         //     });
+    //     } else {
+    //         console.log("there are no files.");
+    //     }
+    // }
+
   },
   computed: { ...mapGetters(["allPropertyTypes", "allPropertyFeatures"]) },
   created() {
