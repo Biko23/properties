@@ -133,7 +133,7 @@ export default {
     ],
     property: {
       landmark_name: "",
-      distance_from_property: 0,
+      distance_from_property: "",
       landmark_type_id: 0,
       description: "",
       landmarkVisuals: [],

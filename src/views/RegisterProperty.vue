@@ -26,7 +26,7 @@
               <v-text-field
                 v-model="property.location"
                 class="custom-label-color"
-                label="Type Property Location"
+                label="Property Location"
                 solo
               ></v-text-field>
             </v-col>
@@ -54,14 +54,26 @@
               </p>
               <v-row>
                 <v-col cols="12" md="12">
-                  <UploadImages 
-                    style="background-color: #E7F0FF;"
-                    :max="4"
-                    uploadMsg="click or drag n' drop images"
-                    fileError="images files only accepted"
-                    clearAll="Clear"
-                    @changed="handleImages"
-                  />
+                  <v-row>
+                    <v-col cols="12" md="12">
+                      <v-text-field
+                        v-model="property.description"
+                        class="custom-label-color"
+                        label="Visual description"
+                        solo
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" md="12">
+                      <UploadImages
+                        style="background-color: #e7f0ff"
+                        :max="4"
+                        uploadMsg="click or drag n' drop images"
+                        fileError="images files only accepted"
+                        clearAll="Clear"
+                        @changed="handleImages"
+                      />
+                    </v-col>
+                  </v-row>
                 </v-col>
               </v-row>
 
@@ -79,25 +91,25 @@
                 justify-content: flex-end;
               "
             >
-                <v-btn
-                  style="background-color: #3b6ef3; width: 200px"
-                  @click="storePropertyData"
+              <v-btn
+                style="background-color: #3b6ef3; width: 200px"
+                @click="storePropertyData"
+              >
+                <span
+                  style="
+                    color: #ffffff;
+                    font-size: 18px;
+                    font-style: normal;
+                    font-weight: 300;
+                    line-height: 30px;
+                    letter-spacing: 0em;
+                    text-align: center;
+                    text-transform: capitalize;
+                  "
                 >
-                  <span
-                    style="
-                      color: #ffffff;
-                      font-size: 18px;
-                      font-style: normal;
-                      font-weight: 300;
-                      line-height: 30px;
-                      letter-spacing: 0em;
-                      text-align: center;
-                      text-transform: capitalize;
-                    "
-                  >
-                    Next Step</span
-                  >
-                </v-btn>
+                  Next Step</span
+                >
+              </v-btn>
             </v-col>
           </v-row>
         </v-col>
@@ -128,55 +140,33 @@ export default {
     property: {
       type: "",
       location: "",
+      description: "",
       features: [],
-      visuals: []
+      visuals: [],
     },
-    hide: true
+    hide: true,
   }),
   components: {
     TopNav,
     MainNav,
     BottonNav,
-    UploadImages
+    UploadImages,
   },
   methods: {
-    ...mapActions(["fetchPropertyTypes", "fetchPropertyFeatures", "addPropertyDataFromPageOne"]),
-    handleImages(files){
-      this.property.visuals.splice(0, this.property.visuals.length)
+    ...mapActions([
+      "fetchPropertyTypes",
+      "fetchPropertyFeatures",
+      "addPropertyDataFromPageOne",
+    ]),
+    handleImages(files) {
+      this.property.visuals.splice(0, this.property.visuals.length);
       this.property.visuals.push(...files);
     },
-    storePropertyData(){
-      this.addPropertyDataFromPageOne(this.property)
-        .then(()=> this.$router.push('/register2'))
-    }
-
-    //     submitFiles() {
-    //       console.log(this.property.visuals);
-    //       if (this.property.visuals) {
-    //         let formData = new FormData();
-
-    //         for (let file of this.property.visuals) {
-    //             formData.append("files", file, file.name);
-    //         }
-
-    //         formData.append("location", this.property.location);
-    //        formData.append("features_id", this.property.features);
-
-    //       console.log(formData);
-    //         // axios
-    //         //     .post("/upload-files", formData)
-    //         //     .then(response => {
-    //         //         console.log("Success!");
-    //         //         console.log({ response });
-    //         //     })
-    //         //     .catch(error => {
-    //         //         console.log({ error });
-    //         //     });
-    //     } else {
-    //         console.log("there are no files.");
-    //     }
-    // }
-
+    storePropertyData() {
+      this.addPropertyDataFromPageOne(this.property).then(() =>
+        this.$router.push("/register2")
+      );
+    },
   },
   computed: { ...mapGetters(["allPropertyTypes", "allPropertyFeatures"]) },
   created() {

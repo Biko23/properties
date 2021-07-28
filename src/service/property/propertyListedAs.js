@@ -6,7 +6,7 @@ export default {
       const response = await API.propertyApi.get('/property-listed-types')
       return response
     } catch (error) {
-      console.log(error)
+      throw new Error('An error occured when retrieving data');
     }
   },
   async getPropertyListingTypeById (id) {
@@ -14,7 +14,7 @@ export default {
       const response = await API.propertyApi.get(`/property-listed-types/${id}`)
       return response
     } catch (error) {
-      console.log(error)
+      throw new Error('An error occured when retrieving data');
     }
   }
 }

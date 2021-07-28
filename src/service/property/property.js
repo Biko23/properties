@@ -6,15 +6,15 @@ export default {
       const response = await API.propertyApi.get('/properties')
       return response
     } catch (error) {
-      console.log(error)
+      throw new Error('An error occured when retrieving data')
     }
   },
   async getPropertyById (property_id) {
     try {
-      const response = await API.propertyApi.put(`/properties/${property_id}`)
+      const response = await API.propertyApi.get(`/properties/${property_id}`)
       return response
     } catch (error) {
-      console.log(error)
+      throw new Error('An error occured when retrieving data')
     }
   },
   // async postAProperty (property) {
@@ -22,14 +22,14 @@ export default {
   //     const response = await API.propertyApi.post('/properties', property)
   //     return response
   //   } catch (error) {
-  //     console.log(error)
+  //     throw new Error('An error occured when sending data')
   //   }
   // },
   async postAProperty (property) {
     try {
      return property
     } catch (error) {
-      console.log(error)
+      throw new Error('An error occured when sending data')
     }
   },
   async updateAProperty (property) {
@@ -37,15 +37,15 @@ export default {
       const response = await API.propertyApi.put(`/properties/${property.property_id}`, property)
       return response
     } catch (error) {
-      console.log(error)
+      throw new Error('An error occured when updating data')
     }
   },
-  async deleteAServiceCall (property) {
+  async deleteAProperty (property) {
     try {
       const response = await API.propertyApi.delete(`/properties/${property.property_id}`)
       return response
     } catch (error) {
-      console.log(error)
+      throw new Error('An error occured when deleting data')
     }
   }
 }

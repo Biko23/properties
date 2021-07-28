@@ -26,14 +26,26 @@
             <h3>Add Neighborhood Photos</h3>
             <v-row>
               <v-col cols="12" md="12">
-                <UploadImages
-                  style="background-color: #e7f0ff"
-                  :max="4"
-                  uploadMsg="click or drag n' drop images"
-                  fileError="images files only accepted"
-                  clearAll="Clear"
-                  @changed="handleImages"
-                />
+                 <v-row>
+                    <v-col cols="12" md="12">
+                      <v-text-field
+                        v-model="property.description"
+                        class="custom-label-color"
+                        label="Visual description"
+                        solo
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" md="12">
+                      <UploadImages
+                        style="background-color: #e7f0ff"
+                        :max="4"
+                        uploadMsg="click or drag n' drop images"
+                        fileError="images files only accepted"
+                        clearAll="Clear"
+                        @changed="handleImages"
+                      />
+                    </v-col>
+                  </v-row>
               </v-col>
             </v-row>
 
@@ -106,6 +118,7 @@ export default {
     ],
     property: {
       expected_value: "",
+      description: "",
       neighborhoodVisuals: [],
     },
   }),
