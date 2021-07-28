@@ -50,6 +50,7 @@
               <v-row>
                 <v-col cols="12" sm="12" md="12">
                   <v-text-field
+                    v-model="userSignupDetails.name"
                     label="Full name"
                     placeholder="Enter your Full name"
                     solo
@@ -59,6 +60,7 @@
               <v-row>
                 <v-col cols="12" sm="12" md="12">
                   <v-text-field
+                    v-model="userSignupDetails.email"
                     label="Email "
                     placeholder="Enter your email"
                     solo
@@ -68,6 +70,17 @@
               <v-row>
                 <v-col cols="12" sm="12" md="12">
                   <v-text-field
+                    v-model="userSignupDetails.username"
+                    label="Username "
+                    placeholder="Enter Username"
+                    solo
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="12" sm="12" md="12">
+                  <v-text-field
+                    v-model="userSignupDetails.telephone"
                     label="Phone number"
                     placeholder="Enter yourPhone number"
                     solo
@@ -77,6 +90,7 @@
               <v-row>
                 <v-col cols="12" sm="12" md="12">
                   <v-text-field
+                    v-model="userSignupDetails.password"
                     label="Password"
                     placeholder="Enter your password"
                     solo
@@ -85,7 +99,7 @@
               </v-row>
               <v-row>
                 <v-col cols="12" sm="12" md="12">
-                  <v-btn color="primary" block> Sign Up </v-btn>
+                  <v-btn color="primary" @click="postNewUserData" block> Sign Up </v-btn>
                 </v-col>
               </v-row>
               <v-row>
@@ -130,11 +144,36 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import TopNav from "../components/TopNav.vue";
 
 export default {
   name: "SignUp",
+  data:() => ({
+    userSignupDetails: {
+      name: "",
+      email: "",
+      telephone: "",
+      username: "",
+      password: "",
+      created_by: "Isaac",
+      updated_by: "Isaac"
+    }
+  }),
   components: { TopNav },
+  methods: {
+    ...mapActions(["signupANewUser"]),
+    async postNewUserData(){
+      try {
+        const response = await this.signupANewUser(this.userSignupDetails);
+        if(response.data.status == 1){
+          this.$router.push('/login')
+        }
+      } catch (error) {
+        throw new Error("Failed, Please try again");
+      }
+    }
+  }
 };
 </script>
 

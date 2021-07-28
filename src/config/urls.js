@@ -22,6 +22,7 @@ export default {
     similarPropertiesUrl: `http://localhost:8093/${PREFIX}`,
     propertyVisualsUrl: `http://localhost:8094/${PREFIX}`,
     propertyUrl: `http://localhost:8095/${PREFIX}`,
+    userUrl: `http://localhost:8096/${PREFIX}`,
     propertyTypesUrl: `http://localhost:9000/${PREFIX}`,
     propertyNeighborhoodUrl: `http://localhost:9001/${PREFIX}`,
     propertyLegalProtectionUrl: `http://localhost:9002/${PREFIX}`,

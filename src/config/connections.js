@@ -2,6 +2,12 @@ import axios from 'axios';
 import URL, { defaultHeaders } from './urls';
 
 export default {
+    // user route
+    userApi: axios.create({
+        baseURL: URL.userUrl,
+        timeout: 10000,
+        headers: defaultHeaders
+    }),
     // property route
     propertyApi: axios.create({
         baseURL: URL.propertyUrl,
