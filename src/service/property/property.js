@@ -17,10 +17,17 @@ export default {
       console.log(error)
     }
   },
+  // async postAProperty (property) {
+  //   try {
+  //     const response = await API.propertyApi.post('/properties', property)
+  //     return response
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // },
   async postAProperty (property) {
     try {
-      const response = await API.propertyApi.post('/properties', property)
-      return response
+     return property
     } catch (error) {
       console.log(error)
     }

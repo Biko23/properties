@@ -16,6 +16,7 @@
           <v-row>
             <v-col class="d-flex" cols="12" sm="6">
               <v-text-field
+                v-model="property.landmark_name"
                 class="custom-label-color"
                 label="Landmark Name"
                 color="blue"
@@ -24,6 +25,7 @@
             </v-col>
             <v-col class="d-flex" cols="12" sm="6">
               <v-text-field
+                v-model="property.distance_from_property"
                 class="custom-label-color"
                 label="Distance from property"
                 color="blue"
@@ -38,13 +40,15 @@
           <v-row>
             <v-col class="d-flex" cols="12" sm="6">
               <v-select
-                :items="items"
+                v-model="property.landmark_type_id"
+                :items="allPropertyLandmarkTypes"
                 label="Select Landmark Type"
                 solo
               ></v-select>
             </v-col>
             <v-col class="d-flex" cols="12" sm="6">
               <v-text-field
+                v-model="property.description"
                 class="custom-label-color"
                 label="Description"
                 color="blue"
@@ -56,16 +60,16 @@
             <v-col cols="12" sm="12">
               <h3>Add Landmark Photos</h3>
               <v-row>
-                  <v-col cols="12" md="12">
-                    <UploadImages
-                      style="background-color: #e7f0ff"
-                      :max="4"
-                      uploadMsg="click or drag n' drop images"
-                      fileError="images files only accepted"
-                      clearAll="Clear"
-                      @changed="handleImages"
-                    />
-                  </v-col>
+                <v-col cols="12" md="12">
+                  <UploadImages
+                    style="background-color: #e7f0ff"
+                    :max="4"
+                    uploadMsg="click or drag n' drop images"
+                    fileError="images files only accepted"
+                    clearAll="Clear"
+                    @changed="handleImages"
+                  />
+                </v-col>
               </v-row>
               <p style="font-size: 12px; margin-right: 100px">
                 Each picture must not exceed 5 Mb Supported formats are *.jpg,
@@ -84,7 +88,10 @@
               justify-content: flex-end;
             "
           >
-            <v-btn style="background-color: #3b6ef3; width: 200px">
+            <v-btn
+              style="background-color: #3b6ef3; width: 200px"
+              @click="submitFinalData"
+            >
               <span
                 style="
                   color: #ffffff;
@@ -112,7 +119,7 @@
 import TopNav from "@/components/TopNav.vue";
 import MainNav from "@/components/MainNav.vue";
 import BottonNav from "../components/BottonNav.vue";
-import { mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import UploadImages from "vue-upload-drop-images";
 
 export default {
@@ -125,17 +132,44 @@ export default {
         "Avatar size should be less than 2 MB!",
     ],
     property: {
-      type: "",
-      location: "",
-      features: [],
-      visuals: []
+      landmark_name: "",
+      distance_from_property: 0,
+      landmark_type_id: 0,
+      description: "",
+      landmarkVisuals: [],
     },
   }),
   components: {
     TopNav,
     MainNav,
     BottonNav,
-    UploadImages
+    UploadImages,
+  },
+  created() {
+    this.fetchPropertyLandmarkTypes();
+  },
+  methods: {
+    ...mapActions([
+      "fetchPropertyLandmarkTypes",
+      "addPropertyDataFromPageThird",
+      "submitAllPropertyData"
+    ]),
+    handleImages(files) {
+      this.property.landmarkVisuals.splice(
+        0,
+        this.property.landmarkVisuals.length
+      );
+      this.property.landmarkVisuals.push(...files);
+    },
+    submitFinalData() {
+      this.addPropertyDataFromPageThird(this.property).then(() => {
+        this.submitAllPropertyData();
+        this.$router.push("/register");
+      });
+    },
+  },
+  computed: {
+    ...mapGetters(["allPropertyLandmarkTypes"]),
   },
 };
 </script>
