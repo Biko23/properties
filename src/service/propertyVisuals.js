@@ -1,6 +1,14 @@
 import API from '../config/connections'
 // property visuals
 export default {
+  async getAllPropertyVisuals () {
+    try {
+      const response = await API.propertyVisualsApi.get(`/property-visuals`)
+      return response
+    } catch (error) {
+      throw new Error('An error occured when retrieving data')
+    }
+  },
   async getPropertyVisualsById (visuals_id) {
     try {
       const response = await API.propertyVisualsApi.get(`/property-visuals/${visuals_id}`)
@@ -14,7 +22,7 @@ export default {
           if (propertyVisuals) {
             let formData = new FormData();
             for (let file of propertyVisuals.files) {
-              formData.append("files", file, file.name);
+              formData.append("file", file, file.name);
             }
             formData.append("description", propertyVisuals.description);
             formData.append("created_by", propertyVisuals.created_by);

@@ -63,7 +63,9 @@ const actions = {
     async submitAllPropertyData({ state }) {
         try {
             const propertyLocation = {
-                location: state.propertyFirstPageData.location,
+                name: state.propertyFirstPageData.location,
+                latitude: 19393982,
+                longitude: 1959494,
                 created_by: 'Isaac',
                 updated_by: 'Isaac'
             }
