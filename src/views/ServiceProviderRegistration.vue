@@ -5,7 +5,7 @@
     <v-container>
       <v-row>
         <v-col cols="12" sm="12" md="12" xl="12">
-          <h3 style="text-align:center;margin-top:20px;">Your profile</h3>
+          <h3 style="text-align:center;margin-top:20px;">Your profile service provider</h3>
           <v-form id="form" style="background-color: #e7f0ff">
             <v-container>
               <v-row>
@@ -23,10 +23,29 @@
                   <p>Username:</p>
                   <v-text-field
                     label="Username"
-                    placeholder="Placeholder"
+                    placeholder="Username"
                     solo
                   ></v-text-field>
                 </v-col>
+              </v-row>
+                            <v-row>
+                <v-col cols="12" sm="12" md="12">
+                  <p>Telephone:</p>
+                  <v-text-field
+                    label="Telephone"
+                    placeholder="Telephone number"
+                    solo
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+              <v-row>
+                  <v-col  cols="12" sm="12" md="12">
+                         <v-select
+                :items="items"
+                label="Select Category"
+                solo
+              ></v-select>
+                  </v-col>
               </v-row>
               <v-row>
                 <v-col cols="12" sm="12" md="12">
@@ -68,26 +87,10 @@
 
               <v-row>
                 <v-col cols="12" sm="6" md="6">
-                 <v-btn color="#e7f0ff" block large>
-                    <v-img
-                      max-height="30"
-                      max-width="20"
-                      src="https://res.cloudinary.com/diued7ugb/image/upload/v1626938676/flat-color-icons_google_fsmdyf.png"
-                    ></v-img>
-                    <span style="padding-left: 5px"> Google</span>
-                  </v-btn>
+                  <v-btn color="primary" block> Google </v-btn>
                 </v-col>
                 <v-col cols="12" sm="6" md="6">
-                   <v-btn color="white" block large>
-                    <v-img
-                      max-height="34"
-                      max-width="25"
-                      src="https://res.cloudinary.com/diued7ugb/image/upload/v1626939162/Apple_logo_black.svg_rsk1qa.png"
-                    >
-                      
-                    </v-img><span style="padding-left: 10px"></span>
-                    Apple
-                  </v-btn>
+                  <v-btn color="primary" block> Apple </v-btn>
                 </v-col> </v-row
               ><br />
               <p style="font-size: 0.75rem">
@@ -111,7 +114,7 @@ import MainNav from "../components/MainNav.vue";
 import TopNav from "../components/TopNav.vue";
 export default {
   components: { TopNav, MainNav, BottonNav, Footer },
-  name: "UserProfile",
+  name: "VendorProfile",
 };
 </script>
 

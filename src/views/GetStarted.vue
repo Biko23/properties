@@ -109,7 +109,7 @@
           </router-link>
         </v-col>
         <v-col cols="12" sm="12" md="4" xl="4">
-          <router-link to="/profile" style="text-decoration: none">
+          <router-link to="/vendorprofile" style="text-decoration: none">
             <v-card>
               <v-img
                 class="white--text align-end"

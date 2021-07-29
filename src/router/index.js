@@ -10,9 +10,11 @@ import SignUp from '@/views/SignUp'
 import Login from '@/views/Login'
 import GetStarted from '@/views/GetStarted'
 import UserProfile from '@/views/UserProfile'
+import VendorProfile from '@/views/ServiceProviderRegistration'
 import ViewProperty from '@/components/ViewProperty'
 import Mortgage from '@/views/Mortgage'
 import ServiceProviderComponent from '@/components/ServiceProviderComponent'
+
 
 
 Vue.use(VueRouter)
@@ -67,6 +69,11 @@ const routes = [
     path: '/profile',
     name: 'UserProfile',
     component: UserProfile
+  },
+  {
+    path: '/vendorprofile',
+    name: 'VendorProfile',
+    component: VendorProfile
   },
   {
     path: '/view',
