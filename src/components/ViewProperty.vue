@@ -7,9 +7,9 @@
         <v-col cols="12" sm="12" md="8" lg="8">
           <v-carousel>
             <v-carousel-item
-              v-for="(item, i) in items"
-              :key="i"
-              :src="item.src"
+              v-for="propertyVisual in allSinglePropertyVisuals"
+              :key="propertyVisual.visuals_id"
+              :src="'http://localhost:8094/' + propertyVisual.snapshot"
               reverse-transition="fade-transition"
               transition="fade-transition"
             ></v-carousel-item>
@@ -68,28 +68,9 @@
     </v-container>
     <v-container>
       <v-row>
-        <v-col>
+        <v-col v-for="propertyVisual in allSinglePropertyVisuals" :key="propertyVisual.visuals_id">
           <v-img
-            src="../assets/houseview1.png"
-            :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
-            aspect-ratio="1"
-            class="grey lighten-2"
-            height="200"
-          ></v-img>
-        </v-col>
-        <v-col>
-          <v-img
-            src="../assets/houseview2.png"
-            :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
-            aspect-ratio="1"
-            class="grey lighten-2"
-            height="200"
-          ></v-img>
-        </v-col>
-        <v-col>
-          <v-img
-            src="../assets/houseview3.png"
-            :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
+            :src="'http://localhost:8094/' + propertyVisual.snapshot"
             aspect-ratio="1"
             class="grey lighten-2"
             height="200"
@@ -161,7 +142,6 @@
                 <v-card color="basil" flat>
                   <v-card-text>
                     <!-- Content for neighborhood -->
-
                     <v-row>
                       <v-col>
                         <v-img
@@ -249,6 +229,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 import About from '../views/About.vue';
 import Footer from './Footer.vue';
 import MainNav from "./MainNav.vue";
@@ -256,6 +237,7 @@ import TopNav from "./TopNav.vue";
 export default {
   components: { TopNav, MainNav, About, Footer },
   name: "ViewProperty",
+  props: ['propertyId'],
   data: () => ({
     propertyFeatures: [
       {
@@ -318,6 +300,15 @@ export default {
       },
     ],
   }),
+  computed: {
+    ...mapGetters(["allSinglePropertyVisuals"])
+  },
+   methods: {
+     ...mapActions(["fetchSinglePropertyVisuals"])
+  },
+  mounted(){
+    this.fetchSinglePropertyVisuals(this.propertyId);
+  },
 };
 </script>
 

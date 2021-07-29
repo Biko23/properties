@@ -1,7 +1,6 @@
 <template>
- <router-link to="/view" style=" text-decoration:none;">
+ <router-link :to="to" style=" text-decoration:none;">
 <v-card max-width="auto">
-   
     <v-card-subtitle class="time">Added {{date}} </v-card-subtitle>
     <v-img :src="src" height="200px"></v-img>
     <v-card-subtitle>
@@ -37,6 +36,10 @@ export default {
         cost: {
             type: Number,
             default: Math.floor(Math.random() * 100000) + 1
+        },
+        to: {
+            type: String,
+            default: "/view"
         }
     }
 }

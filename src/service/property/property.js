@@ -17,17 +17,10 @@ export default {
       throw new Error('An error occured when retrieving data')
     }
   },
-  // async postAProperty (property) {
-  //   try {
-  //     const response = await API.propertyApi.post('/properties', property)
-  //     return response
-  //   } catch (error) {
-  //     throw new Error('An error occured when sending data')
-  //   }
-  // },
   async postAProperty (property) {
     try {
-     return property
+      const response = await API.propertyApi.post('/properties', property)
+      return response
     } catch (error) {
       throw new Error('An error occured when sending data')
     }

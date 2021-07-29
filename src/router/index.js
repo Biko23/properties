@@ -66,7 +66,8 @@ const routes = [
     component: () => import('@/views/UserProfile')
   },
   {
-    path: '/view',
+    path: '/view/:propertyId',
+    props: true,
     name: 'ViewProperty',
     component: ViewProperty
   },

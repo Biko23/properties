@@ -17,7 +17,7 @@ export default {
     propertyMonthlyCostsUrl: `http://localhost:8088/${PREFIX}`,
     propertyPriceHistoriesUrl: `http://localhost:8089/${PREFIX}`,
     propertyValueUrl: `http://localhost:8090/${PREFIX}`,
-    propertyNearbyLandmarkUrl: `http://localhost:8091/${PREFIX}`,
+    propertyNearbyLandmarkUrl: `http://localhost:8001/${PREFIX}`,
     propertyOwnerUrl: `http://localhost:8092/${PREFIX}`,
     similarPropertiesUrl: `http://localhost:8093/${PREFIX}`,
     propertyVisualsUrl: `http://localhost:8094/${PREFIX}`,
@@ -28,3 +28,4 @@ export default {
     propertyLegalProtectionUrl: `http://localhost:9002/${PREFIX}`,
     neighborhoodVisualsUrl: `http://localhost:9003/${PREFIX}`
 }
+
