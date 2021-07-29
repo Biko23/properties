@@ -1,61 +1,22 @@
 <template>
   <div>
-    <v-app-bar
-      color="#3B6EF3"
-      dense
-      dark
-    >
+    <v-app-bar color="#3B6EF3" dense dark>
       <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
 
-      <v-toolbar-title style="
-font-size: 13px;
-font-style: normal;
-font-weight: 400;
-line-height: 18px;
-letter-spacing: 0em;
-text-align: left;">Mon - Sat 8.00 - 18.00. Sunday CLOSED</v-toolbar-title>
+      <v-toolbar-title
+        class="toolbar-title"
+        >Mon - Sat 8.00 - 18.00. Sunday CLOSED</v-toolbar-title
+      >
+      <a href="http://" class="about-us">About Us</a>
 
       <v-spacer></v-spacer>
 
-<v-toolbar-title style="
-font-size: 13px;
-font-style: normal;
-font-weight: 400;
-line-height: 18px;
-letter-spacing: 0em;
-text-align: left;">Tel No. (+256) 782-456-789</v-toolbar-title>
-      <!-- <v-btn icon>
-        <v-icon>mdi-heart</v-icon>
-      </v-btn>
-
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn> -->
-<!-- 
-      <v-menu
-        left
-        bottom
+      <v-toolbar-title
+        class="telephone"
+        >Tel No. (+256) 782-456-789</v-toolbar-title
       >
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            icon
-            v-bind="attrs"
-            v-on="on"
-          >
-            <v-icon>mdi-dots-vertical</v-icon>
-          </v-btn>
-        </template>
-
-        <v-list>
-          <v-list-item
-            v-for="n in 5"
-            :key="n"
-            @click="() => {}"
-          >
-            <v-list-item-title>Option {{ n }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu> -->
+     <a href="http://" class="sign-in">Sign In</a>
+     
     </v-app-bar>
   </div>
 </template>
@@ -63,7 +24,85 @@ text-align: left;">Tel No. (+256) 782-456-789</v-toolbar-title>
 <script>
 // import { defineComponent } from '@vue/composition-api'
 
-export default ({
-   name:'TopNav'
-})
+export default {
+  name: "TopNav",
+};
 </script>
+<style scoped>
+.toolbar-title{
+          font-size: 13px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 18px;
+          letter-spacing: 0em;
+          text-align: left;
+}
+.about-us{
+          font-size: 13px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 18px;
+          letter-spacing: 0em;
+          text-align: left;
+          color: white;
+          text-decoration: none;
+          display: none;
+}
+.telephone{
+          font-size: 13px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 18px;
+          letter-spacing: 0em;
+          text-align: left;
+}
+.sign-in{
+          font-size: 13px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 18px;
+          letter-spacing: 0em;
+          text-align: left;
+          color: white;
+          text-decoration: none;
+          display: none;
+}
+@media only screen and (max-width: 768px) {
+  .toolbar-title{
+          display: none;
+}
+.about-us{
+          font-size: 13px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 18px;
+          letter-spacing: 0em;
+          text-align: left;
+          color: white;
+          text-decoration: none;
+          display: block;
+}
+.telephone{
+          font-size: 13px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 18px;
+          letter-spacing: 0em;
+          text-align: center;
+          margin-left: auto;
+          margin-right: 65px;
+}
+.sign-in{
+          font-size: 13px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 18px;
+          letter-spacing: 0em;
+          text-align: left;
+          color: white;
+          text-decoration: none;
+          display: block;
+          
+}
+}
+</style>
