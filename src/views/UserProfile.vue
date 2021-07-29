@@ -1,72 +1,64 @@
 <template>
-  <div>
+<div>
     <top-nav />
     <main-nav />
     <v-container>
-      <v-row>
-        <v-col cols="12" sm="12" md="12" xl="12">
-          <h3 style="text-align:center;margin-top:20px;">Your profile</h3>
-          <v-form id="form" style="background-color: #e7f0ff">
-            <v-container>
-              <v-row>
-                <v-col cols="12" sm="12" md="12">
-                  <p>Full name</p>
-                  <v-text-field
-                    label="Full name"
-                    placeholder="Enter your full name"
-                    solo
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="12" sm="12" md="12">
-                  <p>Username:</p>
-                  <v-text-field
-                    label="Username"
-                    placeholder="Placeholder"
-                    solo
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
+        <v-row>
+            <v-col cols="12" sm="12" md="12" xl="12">
+                <h3 style="text-align: center; margin-top: 20px">Your profile</h3>
+                <v-form id="form" style="background-color: #e7f0ff">
+                    <v-text-field v-model="userData.user_id" type="hidden"></v-text-field>
+                    <v-container>
+                        <v-row>
+                            <v-col cols="12" sm="12" md="12">
+                                <p>Secondary Email:</p>
+                                <v-text-field v-model="userData.secondary_email" label="Secondary Email" placeholder="Enter secondary email" solo></v-text-field>
+                            </v-col>
+                        </v-row>
+                        <v-row>
+                            <v-col cols="12" sm="12" md="12">
+                                <p>Secondary Phone:</p>
+                                <v-text-field v-model="userData.secondary_phone" label="Username" placeholder="Placeholder" solo></v-text-field>
+                            </v-col>
+                        </v-row>
+                        <!-- <v-row>
                 <v-col cols="12" sm="12" md="12">
                   <p>Photo</p>
                   <v-text-field solo style="width:60px; border-radius:80%"></v-text-field>
                 </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="12" sm="12" md="12">
-                  <h1>Security information</h1>
-                  <p>Email</p>
-                  <v-text-field
-                    label="Email "
-                    placeholder="forexample@gmail.com"
-                    solo
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="12" sm="12" md="12">
-                  <p>2 step verification</p>
-                  <v-text-field
-                    label="Email "
-                    placeholder="forexample@gmail.com"
-                    solo
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="12" sm="12" md="12">
-                  <v-btn color="primary" block> Sign Up </v-btn>
-                </v-col>
-              </v-row>
-              <v-row>
+              </v-row> -->
+                        <!-- 
+                                  <v-alert
+                        v-model="alert"
+                        border="left"
+                        close-text="Close Alert"
+                        color="deep-purple accent-4"
+                        dark
+                        dismissible
+                      >
+                        Aenean imperdiet. Quisque id odio. Cras dapibus. Pellentesque ut neque. Cras dapibus.
+
+                        Vivamus consectetuer hendrerit lacus. Sed mollis, eros et ultrices tempus, mauris ipsum aliquam libero, non adipiscing dolor urna a orci. Sed mollis, eros et ultrices tempus, mauris ipsum aliquam libero, non adipiscing dolor urna a orci. Curabitur blandit mollis lacus. Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo.
+                      </v-alert>
+                                -->
+                        <v-row>
+                            <v-col cols="12" sm="12" md="12">
+                                <p>Business Location</p>
+                                <v-text-field v-model="userData.business_location" label="Business Location " placeholder="Business location" solo></v-text-field>
+                            </v-col>
+                        </v-row>
+                        <v-row>
+                            <v-col cols="12" sm="12" md="12">
+                                <v-btn color="primary" @click="updateUserDetails" block>Update Your Details</v-btn>
+                            </v-col>
+                        </v-row>
+                        <!-- <v-row>
                 <v-divider></v-divider
                 ><span style="margin-top: -10px">Or</span>
                 <v-divider></v-divider>
-              </v-row>
+              </v-row> -->
 
-              <v-row>
+                        <!-- <v-row>
                 <v-col cols="12" sm="6" md="6">
                   <v-btn color="primary" block> Google </v-btn>
                 </v-col>
@@ -76,41 +68,70 @@
               ><br />
               <p style="font-size: 0.75rem">
                 Have an Accont? <a href="/login">Login</a>
-              </p>
-            </v-container>
-          </v-form>
-        </v-col>
-      </v-row>
+              </p> -->
+                    </v-container>
+                </v-form>
+            </v-col>
+        </v-row>
     </v-container>
 
     <footer />
     <h3></h3>
-  </div>
+</div>
 </template>
 
 <script>
+import {
+    mapActions
+} from "vuex";
 import BottonNav from "../components/BottonNav.vue";
 import Footer from "../components/Footer.vue";
 import MainNav from "../components/MainNav.vue";
 import TopNav from "../components/TopNav.vue";
 export default {
-  components: { TopNav, MainNav, BottonNav, Footer },
-  name: "UserProfile",
+    components: {
+        TopNav,
+        MainNav,
+        BottonNav,
+        Footer
+    },
+    name: "UserProfile",
+    data: () => ({
+        userData: {
+            user_id: 0,
+            secondary_email: "",
+            secondary_phone: "",
+            business_location: "",
+        },
+    }),
+    methods: {
+        ...mapActions(["updateUser"]),
+        async updateUserDetails() {
+            try {
+                const response = await this.updateUser(this.userData);
+                if (response.status == 200) {
+                    this.$router.push("/register");
+                }
+            } catch (error) {
+                throw new Error("Failed, Please try again");
+            }
+        },
+    },
 };
 </script>
 
 <style scoped>
 #form {
-  background-color: #e7f0ff;
-  margin-left: auto;
-  margin-right: auto;
-  width: 900px;
-  border-radius: 6px;
- 
+    background-color: #e7f0ff;
+    margin-left: auto;
+    margin-right: auto;
+    width: 900px;
+    border-radius: 6px;
 }
+
 #reach {
-  text-align: center;
-  font-size: 0.9rem;
-  margin-top: 30px;
+    text-align: center;
+    font-size: 0.9rem;
+    margin-top: 30px;
 }
 </style>

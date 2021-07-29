@@ -67,7 +67,7 @@
                       <UploadImages
                         style="background-color: #e7f0ff"
                         :max="4"
-                        uploadMsg="click or drag n' drop images"
+                        uploadMsg="Drag n' drop. The first image should be the main image"
                         fileError="images files only accepted"
                         clearAll="Clear"
                         @changed="handleImages"
