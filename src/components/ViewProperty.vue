@@ -238,6 +238,7 @@ export default {
   components: { TopNav, MainNav, About, Footer },
   name: "ViewProperty",
   props: ['propertyId'],
+  // $route.params.propertyId
   data: () => ({
     propertyFeatures: [
       {
