@@ -11,7 +11,8 @@ export default {
   },
   async postProfessional (vendorsProfession) {
     try {
-      const response = await API.vendorsApi.post('/vendors', vendorsProfession)
+      const response = await API.vendorsApi.post('/vendors/self-register', vendorsProfession)
+      console.log(response);
       return response
     } catch (error) {
       throw new Error('An error occured when sending data')

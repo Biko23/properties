@@ -16,6 +16,14 @@ const actions = {
         } catch (error) {
             throw new Error("Failed on loading current properties")
         }
+    },
+    async postVendor(_ , newVendor) {
+        try {
+            const response = await vendorsBackOfficeService.postProfessional(newVendor);
+            return response;
+        } catch (error) {
+            throw new Error("Failed on loading current properties")
+        }
     }
 }
 

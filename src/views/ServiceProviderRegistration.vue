@@ -15,6 +15,7 @@
                     label="Full name"
                     placeholder="Enter your full name"
                     solo
+                     v-model="newVendor.vendor_name"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -25,6 +26,7 @@
                     label="Username"
                     placeholder="Username"
                     solo
+                   
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -35,6 +37,7 @@
                     label="Telephone"
                     placeholder="Telephone number"
                     solo
+                    v-model="newVendor.vendor_primary_phone_number"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -44,6 +47,7 @@
                 :items="allVendorsCategories"
                 label="Select Category"
                 solo
+                 v-model="newVendor.category_type"
               ></v-select>
                   </v-col>
               </v-row>
@@ -61,6 +65,7 @@
                     label="Email "
                     placeholder="forexample@gmail.com"
                     solo
+                    v-model="newVendor.vendor_primary_email"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -76,7 +81,7 @@
               </v-row>
               <v-row>
                 <v-col cols="12" sm="12" md="12">
-                  <v-btn color="primary" block> Sign Up </v-btn>
+                  <v-btn color="primary" block @click="postingVendor"> Sign Up </v-btn>
                 </v-col>
               </v-row>
               <v-row>
@@ -208,7 +213,19 @@ export default {
     },
 
     methods: {
-        ...mapActions(['fetchVendorsCategories']),
+        ...mapActions(['fetchVendorsCategories','postVendor']),
+        async postingVendor(){
+            try {
+                const response = await this.postVendor(this.newVendor)
+                if(response.status === 201 || response.status === 200){
+                     this.$router.push('/login')
+                }
+               
+            } catch (error) {
+               console.log(error); 
+            }
+        },
+
         // async fetchVendors() {
         //     try {
         //         const response = await vendorService.getVendors()
