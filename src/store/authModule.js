@@ -17,7 +17,27 @@ const actions = {
         } catch (error) {
             throw new Error("Failed on saved new User")
         }
-    }
+    },
+    async login (_, userDetails) {
+        try {
+          const response = await AuthService.loggingUser(userDetails);
+          if(response.status ===200){
+              localStorage.setItem('token', response.data.token);
+          }
+
+          return response
+        } catch (error) {
+          throw new Error('An error occured when sending data')
+        }
+      },
+      async updateUser (_, userDetails) {
+        try {
+            const response = await AuthService.updateUserProfile(userDetails);
+            return response
+        } catch (error) {
+          throw new Error('An error occured when sending data')
+        }
+      }
 }
 
 const mutations = {
