@@ -2,11 +2,11 @@
 <nav>
     <v-app-bar color="#f2f2f2" dark>
         <div style="">
-            <v-img style="margin-left: auto; margin-right: auto; display: block" lazy-src="https://picsum.photos/id/11/10/6" max-height="35" max-width="35" src="https://res.cloudinary.com/diued7ugb/image/upload/v1627026093/MicrosoftTeams-image_1_k1hcm4.png"></v-img>
+            <v-img style="margin-left: auto; margin-right: auto; display: block" max-height="35" max-width="35" src="../assets/New-Stanbic-Bank-Logo.jpg"></v-img>
         </div>
 
         <a href="/" style="text-decoration: none">
-            <v-toolbar-title style="color: #3b6ef3; margin-top: 8px; text-decoration: none">Stanbic Properties</v-toolbar-title>
+            <v-toolbar-title style="color: #3b6ef3; margin-top: 8px; text-decoration: none;padding-left:5px;">Stanbic Properties</v-toolbar-title>
         </a>
 
         <v-spacer></v-spacer>
@@ -75,8 +75,8 @@
                 <v-list>
                     <links title="Mortgage Lenders" link="/mortgage"/>
                     <links title="Mortgage Rates" />
-                    <links title="Mortgage Refinancing" />
-                    <links link="/" title="Mortgage Calculator" />
+                    <!-- <links title="Mortgage Refinancing" />
+                    <links link="/" title="Mortgage Calculator" /> -->
                 </v-list>
             </v-menu>
 

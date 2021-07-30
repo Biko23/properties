@@ -41,7 +41,7 @@
               <v-row>
                   <v-col  cols="12" sm="12" md="12">
                          <v-select
-                :items="items"
+                :items="allVendorsCategories"
                 label="Select Category"
                 solo
               ></v-select>
@@ -108,6 +108,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 import BottonNav from "../components/BottonNav.vue";
 import Footer from "../components/Footer.vue";
 import MainNav from "../components/MainNav.vue";
@@ -115,6 +116,191 @@ import TopNav from "../components/TopNav.vue";
 export default {
   components: { TopNav, MainNav, BottonNav, Footer },
   name: "VendorProfile",
+
+   data: () => ({
+        search: '',
+        editVendordialog: false,
+        dialogDelete: false,
+        viewDialog: false,
+        newVendorDialog: false,
+        headers: [{
+                text: 'Name',
+                value: 'vendor_name'
+            },
+            {
+                text: 'Primary Phone',
+                value: 'vendor_primary_phone_number'
+            },
+            {
+                text: 'Primary Email',
+                value: 'vendor_primary_email'
+            },
+            {
+                text: 'Category',
+                value: 'vendorCategory.vendor_category_name'
+            },
+            {
+                text: 'Actions',
+                value: 'actions',
+                sortable: false
+            }
+        ],
+        vendors: [],
+        vendorCategories: [],
+        editedIndex: -1,
+        viewedVendor: {
+            vendor_name: '',
+            vendor_primary_phone_number: '',
+            vendor_secondary_phone_number: '',
+            vendor_primary_email: '',
+            vendor_secondary_email: '',
+            category_type: ''
+        },
+        newVendor: {
+            vendor_name: '',
+            vendor_primary_phone_number: '',
+            vendor_secondary_phone_number: '',
+            vendor_primary_email: '',
+            vendor_secondary_email: '',
+            category_type: ''
+        },
+        editedVendor: {
+            vendor_name: '',
+            vendor_primary_phone_number: '',
+            vendor_secondary_phone_number: '',
+            vendor_primary_email: '',
+            vendor_secondary_email: '',
+            category_type: ''
+        },
+        defaultItem: {
+            vendor_name: '',
+            vendor_primary_phone_number: '',
+            vendor_secondary_phone_number: '',
+            vendor_primary_email: '',
+            vendor_secondary_email: '',
+            category_type: ''
+        },
+        valid: true,
+        vendorRules: {
+            required: v => !!v || "Required field",
+            min: v => (v && v.length > 3) || "Value should be greater than 4",
+            phoneLength: v => (v && v.length >= 10) || "Number should not be less than 9",
+            email: v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+        }
+    }),
+    computed: {
+        formTitle() {
+            return this.editedIndex === -1 ? 'Add New Vendor' : 'Edit Item'
+        },
+        ...mapGetters(['allVendorsCategories'])
+    },
+    watch: {
+        dialog(val) {
+            val || this.close()
+        },
+        dialogDelete(val) {
+            val || this.closeDelete()
+        }
+    },
+    created() {
+        // this.fetchVendors()
+         this.fetchVendorsCategories()
+    },
+
+    methods: {
+        ...mapActions(['fetchVendorsCategories']),
+        // async fetchVendors() {
+        //     try {
+        //         const response = await vendorService.getVendors()
+        //         this.vendors = response.data
+        //     } catch (error) {
+        //         console.log(error)
+        //     }
+        // },
+        // async fetchVendorCategories() {
+        //     try {
+        //         const response = await vendorCategoryService.getVendorCategories()
+        //         this.vendorCategories = response.data.map(category => {
+        //             return {
+        //                 value: category.vendor_category_id,
+        //                 text: category.vendor_category_name
+        //             }
+        //         })
+        //     } catch (error) {
+        //         console.log(error)
+        //     }
+        // },
+        async addAVendor() {
+            if (this.$refs.addVendorForm.validate()) {
+                try {
+                    const response = await vendorService.postVendors(this.newVendor)
+                    if (response.status === 201) {
+                        this.vendors.unshift(this.newVendor)
+                        this.newVendor = Object.assign({}, this.defaultItem)
+                        this.newVendorDialog = false
+                    }
+                } catch (error) {
+                    console.log(error)
+                    this.newVendorDialog = false
+                }
+            }
+        },
+        viewItem(item) {
+            this.editedIndex = this.vendors.indexOf(item)
+            this.viewedVendor = Object.assign({}, item)
+            this.viewDialog = true
+        },
+        editVendor(item) {
+            this.editedIndex = this.vendors.indexOf(item)
+            this.editedVendor = Object.assign({}, item)
+            this.editVendordialog = true
+        },
+        deleteItem(item) {
+            this.editedIndex = this.vendors.indexOf(item)
+            this.editedItem = Object.assign({}, item)
+            this.dialogDelete = true
+        },
+        async deleteItemConfirm() {
+            try {
+                const response = await vendorService.deleteAVendor(this.editedItem)
+                if (response.status == 200) {
+                    this.vendors.splice(this.editedIndex, 1)
+                    this.closeDelete()
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        },
+        close() {
+            this.editVendordialog = false
+            this.$nextTick(() => {
+                this.editedItem = Object.assign({}, this.defaultItem)
+                this.editedIndex = -1
+            })
+        },
+        closeDelete() {
+            this.dialogDelete = false
+            this.$nextTick(() => {
+                this.editedItem = Object.assign({}, this.defaultItem)
+                this.editedIndex = -1
+            })
+        },
+        async save() {
+            if (this.$refs.editVendorForm.validate()) {
+                try {
+                    const response = await vendorService.updateAVendor(this.editedVendor)
+                    if (response.status == 200 && this.editedIndex > -1) {
+                        Object.assign(this.vendors[this.editedIndex], this.editedVendor)
+                    } else if (response.status == 200 && this.editedIndex <= -1) {
+                        this.vendors.push(this.editedVendor)
+                    }
+                    this.close()
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+        }
+    }
 };
 </script>
 
