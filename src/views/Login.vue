@@ -51,8 +51,9 @@
               <v-row>
                 <v-col cols="12" sm="12" md="12">
                   <v-text-field
-                    label="Email or Contact"
-                    placeholder="email or account"
+                    v-model="loginDetails.username"
+                    label="Username or Email or phone number"
+                    placeholder="Username or Email or phone number"
                     solo
                   ></v-text-field>
                 </v-col>
@@ -60,6 +61,7 @@
               <v-row>
                 <v-col cols="12" sm="12" md="12">
                   <v-text-field
+                    v-model="loginDetails.password"
                     label="Password"
                     placeholder="password"
                     solo
@@ -68,7 +70,7 @@
               </v-row>
               <v-row>
                 <v-col cols="12" sm="12" md="12">
-                  <v-btn color="primary" large block> Login </v-btn>
+                  <v-btn color="primary" @click="postLoginData" large block> Login </v-btn>
                 </v-col> </v-row
               ><br /><br />
               <v-row>
@@ -114,11 +116,31 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import TopNav from "../components/TopNav.vue";
 
 export default {
   name: "Login",
   components: { TopNav },
+  data: () => ({
+    loginDetails: {
+      username: '',
+      password: ''
+    }
+  }),
+  methods: {
+    ...mapActions(["login"]),
+    async postLoginData (){
+      try {
+         const response = await this.login(this.loginDetails);
+        if(response.status == 200){
+          this.$router.push('/')
+        }
+      } catch (error) {
+        throw new Error("Failed, Please try again");
+      }
+    }
+  }
 };
 </script>
 

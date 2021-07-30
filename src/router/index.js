@@ -6,8 +6,6 @@ import RegisterProperty2 from '../views/RegisterProperty2.vue'
 import RegisterProperty3 from '../views/RegisterProperty3.vue'
 import Property from '@/views/Property'
 import PropertiesForSale from '@/views/PropertiesForSale'
-import SignUp from '@/views/SignUp'
-import Login from '@/views/Login'
 import GetStarted from '@/views/GetStarted'
 import UserProfile from '@/views/UserProfile'
 import VendorProfile from '@/views/ServiceProviderRegistration'
@@ -53,12 +51,12 @@ const routes = [
   {
     path: '/signup',
     name: 'SignUp',
-    component: SignUp
+    component: () => import('@/views/SignUp')
   },
   {
     path: '/login',
     name: 'Login',
-    component: Login
+    component: () => import('@/views/Login')
   },
   {
     path: '/getstarted',
@@ -77,6 +75,8 @@ const routes = [
   },
   {
     path: '/view',
+    path: '/view/:propertyId',
+    props: true,
     name: 'ViewProperty',
     component: ViewProperty
   },

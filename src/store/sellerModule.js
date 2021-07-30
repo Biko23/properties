@@ -14,7 +14,8 @@ const state = {
     propertyLandmarkTypes: [],
     propertyFirstPageData: null,
     propertySecondPageData: null,
-    propertyThirdPageData: null
+    propertyThirdPageData: null,
+    createdProperty: {}
 }
 
 const getters = {
@@ -23,7 +24,8 @@ const getters = {
     allPropertyLandmarkTypes: (state) => state.propertyLandmarkTypes,
     allPropertyFirstPageData: (state) => state.propertyFirstPageData,
     allPropertySecondPageData: (state) => state.propertySecondPageData,
-    allPropertyThirdPageData: (state) => state.propertyThirdPageData
+    allPropertyThirdPageData: (state) => state.propertyThirdPageData,
+    newCreatedProperty: (state) => state.createdProperty
 };
 
 const actions = {
@@ -51,8 +53,20 @@ const actions = {
             console.log(error);
         }
     },
-    addPropertyDataFromPageOne({ commit }, propertyDataOne) {
-        commit('setPropertyRegisterFirstData', propertyDataOne);
+    async addPropertyDataFromPageOne({ commit }, propertyDataOne) {
+            try {
+            await commit('setPropertyRegisterFirstData', propertyDataOne);
+            const newProperty = {
+                isListedForId: propertyDataOne.type,
+                created_by: "Isaac",
+                updated_by: "Isaac"
+            }
+            console.log(propertyDataOne);
+            const response = await PropertyService.postAProperty(newProperty);
+            commit('setCreatedProperty', response.data.result);
+        } catch (error) {
+            throw new Error('Failed to save property details')
+        }
     },
     addPropertyDataFromPageTwo({ commit }, propertyDataTwo) {
         commit('setPropertyRegisterTwoData', propertyDataTwo);
@@ -64,28 +78,30 @@ const actions = {
         try {
             const propertyLocation = {
                 name: state.propertyFirstPageData.location,
+                property_id: state.createdProperty.property_id,
                 latitude: 19393982,
                 longitude: 1959494,
                 created_by: 'Isaac',
                 updated_by: 'Isaac'
             }
-            const propertyType = {
-                property_type_id: state.propertyFirstPageData.type,
-            }
             const selectedPropertyFeatures = {
                 propertyFeatures: state.propertyFirstPageData.features,
+                property_id: state.createdProperty.property_id,
                 created_by: 'Isaac',
                 updated_by: 'Isaac'
             }
             const propertyVisuals = {
                 description: state.propertyFirstPageData.description,
                 files: state.propertyFirstPageData.visuals,
+                property_id: state.createdProperty.property_id,
                 created_by: 'Isaac',
                 updated_by: 'Isaac'
             }
 
+            console.log('visuals', state.propertyFirstPageData.visuals);
             const propertyValue = {
                 actual_value: state.propertySecondPageData.expected_value,
+                property_id: state.createdProperty.property_id,
                 created_by: 'Isaac',
                 updated_by: 'Isaac'
             }
@@ -93,6 +109,7 @@ const actions = {
             const neighborhoodVisuals = {
                 description: state.propertySecondPageData.description,
                 files: state.propertySecondPageData.neighborhoodVisuals,
+                property_id: state.createdProperty.property_id,
                 created_by: "Isaac",
                 updated_by: "Isaac"
             }
@@ -103,23 +120,17 @@ const actions = {
                 landmark_type_id: state.propertyThirdPageData.landmark_type_id,
                 description: state.propertyThirdPageData.description,
                 files: state.propertyThirdPageData.landmarkVisuals,
+                property_id: state.createdProperty.property_id,
                 created_by: "Isaac",
                 updated_by: "Isaac"
             }
 
             // Api calls
-            const locationResponse = await PropertyLocationService.postAPropertyLocation(propertyLocation);
-            const valueResponse = await PropertyValueService.postAPropertyValue(propertyValue);
-            const landmarkResponse = await PropertyNearbyLandmarkService.postAPropertyNearbyLandmark(nearbyLandmarkVisuals);
-            const neighborhoodResponse = await NeighborhoodVisualsService.postNeighborhoodVisuals(neighborhoodVisuals);
-            const propertyVisualResponse = await PropertyVisualsService.postPropertyVisuals(propertyVisuals);
-            // const response = await PropertyService.postAProperty(property);
-            locationResponse ? console.log("location", locationResponse) : ""
-            valueResponse ? console.log("value", valueResponse) : ""
-            landmarkResponse ? console.log("landmark", landmarkResponse) : ""
-            neighborhoodResponse ? console.log("neighborhood", neighborhoodResponse) : ""
-            propertyVisualResponse ? console.log("visuals", propertyVisualResponse) : ""
-
+            await PropertyLocationService.postAPropertyLocation(propertyLocation);
+            await PropertyValueService.postAPropertyValue(propertyValue);
+            await PropertyNearbyLandmarkService.postAPropertyNearbyLandmark(nearbyLandmarkVisuals);
+            await NeighborhoodVisualsService.postNeighborhoodVisuals(neighborhoodVisuals);
+            await PropertyVisualsService.postPropertyVisuals(propertyVisuals);
             // this.$swal('Great!','Movie added successfully!','success');
         } catch (error) {
             // this.$swal('ooh!','Unable to finish!','error');
@@ -148,9 +159,9 @@ const mutations = {
     })),
     setPropertyRegisterFirstData: (state, propertyDataOne) => (state.propertyFirstPageData = propertyDataOne),
     setPropertyRegisterTwoData: (state, propertyDataTwo) => (state.propertySecondPageData = propertyDataTwo),
-    setPropertyRegisterThreeData: (state, propertyDataThree) => (state.propertyThirdPageData = propertyDataThree)
+    setPropertyRegisterThreeData: (state, propertyDataThree) => (state.propertyThirdPageData = propertyDataThree),
+    setCreatedProperty: (state, returnedProperty) => (state.createdProperty = returnedProperty)
 }
-
 
 export default {
     state,
@@ -169,4 +180,4 @@ context : {
     rootGetters // same as `store.getters`, only in modules
   } 
   https://vuex.vuejs.org/api/#mutations
-  */
+*/
