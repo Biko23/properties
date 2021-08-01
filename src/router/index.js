@@ -10,7 +10,6 @@ import ViewProperty from '@/components/ViewProperty'
 import Mortgage from '@/views/Mortgage'
 import ServiceProviderComponent from '@/components/ServiceProviderComponent'
 
-
 Vue.use(VueRouter)
 
 const routes = [
