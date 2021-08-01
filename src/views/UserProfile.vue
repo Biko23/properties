@@ -60,10 +60,26 @@
 
                         <!-- <v-row>
                 <v-col cols="12" sm="6" md="6">
-                  <v-btn color="primary" block> Google </v-btn>
+                 <v-btn color="#e7f0ff" block large>
+                    <v-img
+                      max-height="30"
+                      max-width="20"
+                      src="https://res.cloudinary.com/diued7ugb/image/upload/v1626938676/flat-color-icons_google_fsmdyf.png"
+                    ></v-img>
+                    <span style="padding-left: 5px"> Google</span>
+                  </v-btn>
                 </v-col>
                 <v-col cols="12" sm="6" md="6">
-                  <v-btn color="primary" block> Apple </v-btn>
+                   <v-btn color="white" block large>
+                    <v-img
+                      max-height="34"
+                      max-width="25"
+                      src="https://res.cloudinary.com/diued7ugb/image/upload/v1626939162/Apple_logo_black.svg_rsk1qa.png"
+                    >
+                      
+                    </v-img><span style="padding-left: 10px"></span>
+                    Apple
+                  </v-btn>
                 </v-col> </v-row
               ><br />
               <p style="font-size: 0.75rem">
