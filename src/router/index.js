@@ -6,7 +6,6 @@ import RegisterProperty2 from '../views/RegisterProperty2.vue'
 import RegisterProperty3 from '../views/RegisterProperty3.vue'
 import Property from '@/views/Property'
 import PropertiesForSale from '@/views/PropertiesForSale'
-import GetStarted from '@/views/GetStarted'
 import ViewProperty from '@/components/ViewProperty'
 import Mortgage from '@/views/Mortgage'
 import ServiceProviderComponent from '@/components/ServiceProviderComponent'
@@ -18,22 +17,34 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta: {
+      basicAuth: true
+    }
   },
   {
     path: '/register',
     name: 'RegisterProperty',
-    component: RegisterProperty
+    component: RegisterProperty,
+    meta: {
+      requiresAuth: true
+    },
   },
   {
     path: '/register2',
     name: 'RegisterProperty2',
-    component: RegisterProperty2
+    component: RegisterProperty2,
+    meta: {
+      requiresAuth: true
+    },
   },
   {
     path: '/register3',
     name: 'RegisterProperty3',
-    component: RegisterProperty3
+    component: RegisterProperty3,
+    meta: {
+      requiresAuth: true
+    },
   },
   {
     path: '/property',
@@ -58,12 +69,15 @@ const routes = [
   {
     path: '/getstarted',
     name: 'GetStarted',
-    component: GetStarted
+    component: () => import('@/views/GetStarted')
   },
   {
     path: '/profile',
     name: 'UserProfile',
-    component: () => import('@/views/UserProfile')
+    component: () => import('@/views/UserProfile'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/view/:propertyId',

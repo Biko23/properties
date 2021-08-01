@@ -37,7 +37,6 @@ export default {
             formData.append("property_id", propertyVisuals.property_id);
             formData.append("created_by", propertyVisuals.created_by);
             formData.append("updated_by", propertyVisuals.updated_by);
-            console.log(formData);
             const response = await API.propertyVisualsApi.post('/property-visuals', formData)
             return response
           } else {

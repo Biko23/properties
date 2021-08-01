@@ -25,6 +25,16 @@ export default {
       throw new Error('An error occured when sending data')
     }
   },
+  async fetchLoggedUser(username){
+    try {
+      const response = await API.userApi.get(`/users/user?username=${username}`)
+      console.log(response);
+      return response
+    } catch (error) {
+      console.log(error);
+      throw new Error('An error occured when getting user data')
+    }
+  },
   async updateUserProfile (user) {
     try {
       const response = await API.userApi.put(`/users/${user.user_id}`, user)
