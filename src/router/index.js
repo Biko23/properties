@@ -72,7 +72,10 @@ const routes = [
   {
     path: '/vendorprofile',
     name: 'VendorProfile',
-    component: () => import('@/views/ServiceProviderRegistration')
+    component: () => import('@/views/ServiceProviderRegistration'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/view',

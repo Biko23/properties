@@ -16,7 +16,11 @@ router.beforeEach((to, from, next) => {
   }
 
   if(to.matched.some(record => record.meta.requiresAuth)) {
-    if (!store.getters.loginState) {
+    if (
+      !store.getters.loginState ||
+      (Object.keys(store.getters.currentLoggedinUser).length === 0 && 
+      (store.getters.currentLoggedinUser).constructor === Object)
+    ) {
       sessionStorage.setItem('redirectPath', to.path);
       next('/login')
       return
