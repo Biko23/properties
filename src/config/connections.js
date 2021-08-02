@@ -115,5 +115,13 @@ export default {
         baseURL: URL.neighborhoodVisualsUrl,
         timeout: 10000,
         headers: defaultHeaders
+    }),
+
+
+     // Vendors  route
+       vendorsApi: axios.create({
+        baseURL: URL.vendorUrl,
+        timeout: 10000,
+        headers: defaultHeaders
     })
 }

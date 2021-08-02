@@ -211,4 +211,18 @@ export default {
     border-radius: 6px;
   }
 }
+
+@media only screen and (max-width: 1200px) {
+  #main-div {
+    background-color: #3b6ef3;
+  }
+
+  #form-row {
+    background-color: #e7f0ff;
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 6px;
+  }
+}
 </style>

@@ -1,11 +1,16 @@
-import AuthService from '@/service/authService'
+import AuthService from '@/service/authService';
+import decode from "jwt-decode";
 
 const state = {
-    registeringUser: []
+    registeringUser: [],
+    currentUser: {},
+    isLoggedIn: !!localStorage.getItem('token')
 }
 
 const getters = {
-    currentRegisteringUser: (state) => state.registeringUser
+    currentRegisteringUser: (state) => state.registeringUser,
+    loginState: state => state.isLoggedIn,
+    currentLoggedinUser: state => state.currentUser
 };
 
 const actions = {
@@ -18,30 +23,63 @@ const actions = {
             throw new Error("Failed on saved new User")
         }
     },
-    async login (_, userDetails) {
+    async login({ commit }, userDetails) {
         try {
-          const response = await AuthService.loggingUser(userDetails);
-          if(response.status ===200){
-              localStorage.setItem('token', response.data.token);
-          }
-
-          return response
+            const response = await AuthService.loggingUser(userDetails);
+            if (response.status === 200 || response.status === 201) {
+                localStorage.setItem('token', response.data.token);
+                commit('loginStatus', true);
+            }
+            return response
         } catch (error) {
-          throw new Error('An error occured when sending data')
+            throw new Error('An error occured when sending data')
         }
-      },
-      async updateUser (_, userDetails) {
+    },
+    async updateUser(_, userDetails) {
         try {
             const response = await AuthService.updateUserProfile(userDetails);
             return response
         } catch (error) {
-          throw new Error('An error occured when sending data')
+            throw new Error('An error occured when sending data')
         }
-      }
+    },
+    async fetchLoggedUser({ commit }) {
+        try {
+            const toDecode = localStorage.getItem('token');
+            const decoded = await decode(toDecode);
+            console.log(decoded);
+            const response = await AuthService.fetchLoggedUser(decoded.sub);
+            if (response.status === 200 || response.status === 200) {
+                // localStorage.setItem('user', response.data.result);
+                // to review with solomon
+                const loggedInUser = {
+                    vendor_name: response.data.result.name,
+                    vendor_primary_phone_number:response.data.result.telephone,
+                    category_type: response.data.result.category_type,
+                    vendor_primary_email:response.data.result.email,
+                    vendor_secondary_phone_number: "",
+                    vendor_secondary_email: ""
+                }
+                commit("setCurrentUser", loggedInUser);
+            }
+            return response;
+        } catch (error) {
+            throw new Error(error)
+        }
+    },
+    //   to work on it
+    async logout({ commit }) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        await commit('loginStatus', false);
+        await commit('setCurrentUser', {});
+    }
 }
 
 const mutations = {
-    setRegisteredUser: (state, returnedUser) => (state.registeringUser = returnedUser)
+    setRegisteredUser: (state, returnedUser) => (state.registeringUser = returnedUser),
+    setCurrentUser: (state, currentUser) => state.currentUser = currentUser,
+    loginStatus: (state, status) => state.isLoggedIn = status
 }
 
 export default {

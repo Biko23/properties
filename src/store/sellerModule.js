@@ -61,11 +61,11 @@ const actions = {
                 created_by: "Isaac",
                 updated_by: "Isaac"
             }
-            console.log(propertyDataOne);
             const response = await PropertyService.postAProperty(newProperty);
             commit('setCreatedProperty', response.data.result);
         } catch (error) {
-            throw new Error('Failed to save property details')
+            console.log(error);
+            // throw new Error('Failed to save property details')
         }
     },
     addPropertyDataFromPageTwo({ commit }, propertyDataTwo) {
@@ -98,14 +98,14 @@ const actions = {
                 updated_by: 'Isaac'
             }
 
-            console.log('visuals', state.propertyFirstPageData.visuals);
+            // console.log('visuals', state.propertyFirstPageData.visuals);
             const propertyValue = {
                 actual_value: state.propertySecondPageData.expected_value,
                 property_id: state.createdProperty.property_id,
                 created_by: 'Isaac',
                 updated_by: 'Isaac'
             }
-
+            
             const neighborhoodVisuals = {
                 description: state.propertySecondPageData.description,
                 files: state.propertySecondPageData.neighborhoodVisuals,

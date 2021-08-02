@@ -1,16 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import RegisterProperty from '../views/RegisterProperty.vue'
-import RegisterProperty2 from '../views/RegisterProperty2.vue'
-import RegisterProperty3 from '../views/RegisterProperty3.vue'
-import Property from '@/views/Property'
-import PropertiesForSale from '@/views/PropertiesForSale'
-import GetStarted from '@/views/GetStarted'
-import ViewProperty from '@/components/ViewProperty'
-import Mortgage from '@/views/Mortgage'
-import ServiceProviderComponent from '@/components/ServiceProviderComponent'
-
 
 Vue.use(VueRouter)
 
@@ -18,32 +7,44 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: () => import('@/views/Home.vue'),
+    meta: {
+      basicAuth: true
+    }
   },
   {
     path: '/register',
     name: 'RegisterProperty',
-    component: RegisterProperty
+    component: () => import('@/views/RegisterProperty.vue'),
+    meta: {
+      requiresAuth: true
+    },
   },
   {
     path: '/register2',
     name: 'RegisterProperty2',
-    component: RegisterProperty2
+    component: () => import('@/views/RegisterProperty2.vue'),
+    meta: {
+      requiresAuth: true
+    },
   },
   {
     path: '/register3',
     name: 'RegisterProperty3',
-    component: RegisterProperty3
+    component: () => import('../views/RegisterProperty3.vue'),
+    meta: {
+      requiresAuth: true
+    },
   },
   {
     path: '/property',
     name: 'Property',
-    component: Property
+    component: () => import('@/views/Property')
   },
   {
     path: '/properties-for-sale',
     name: 'properties-for-sale',
-    component: PropertiesForSale
+    component: () => import('@/views/PropertiesForSale')
   },
   {
     path: '/signup',
@@ -58,28 +59,40 @@ const routes = [
   {
     path: '/getstarted',
     name: 'GetStarted',
-    component: GetStarted
+    component: () => import('@/views/GetStarted')
   },
   {
     path: '/profile',
     name: 'UserProfile',
-    component: () => import('@/views/UserProfile')
+    component: () => import('@/views/UserProfile'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
+    path: '/vendorprofile',
+    name: 'VendorProfile',
+    component: () => import('@/views/ServiceProviderRegistration'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/view',
     path: '/view/:propertyId',
     props: true,
     name: 'ViewProperty',
-    component: ViewProperty
+    component: () => import('@/components/ViewProperty')
   },
   {
     path: '/mortgage',
     name: 'Mortgage',
-    component: Mortgage
+    component: () => import('@/views/Mortgage')
   },
   {
     path: '/provider',
     name: 'ServiceProviderComponent',
-    component: ServiceProviderComponent
+    component: () => import('@/components/ServiceProviderComponent')
   },
   {
     path: '/about',

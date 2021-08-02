@@ -129,12 +129,16 @@ export default {
     }
   }),
   methods: {
-    ...mapActions(["login"]),
+    ...mapActions(["login", "fetchLoggedUser"]),
     async postLoginData (){
       try {
          const response = await this.login(this.loginDetails);
-        if(response.status == 200){
-          this.$router.push('/')
+        if(response.status === 200 || response.status === 201){
+          this.fetchLoggedUser()
+            .then(()=>{
+              this.$router.replace(sessionStorage.getItem('redirectPath') || '/');
+              sessionStorage.removeItem('redirectPath');
+          })
         }
       } catch (error) {
         throw new Error("Failed, Please try again");

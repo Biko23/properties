@@ -1,14 +1,19 @@
 import PropertyVisualsService from '@/service/propertyVisuals';
-import PropertyService from '@/service/property/property';
+import PropertyNearbyLandmarkService from '@/service/propertyNearbyLandmark';
+import NeighborhoodVisualsService from '@/service/neighborhoodVisuals';
 
 const state = {
     propertyVisuals: [],
-    singlePropertyVisuals: []
+    singlePropertyVisuals: [],
+    singlePropertyNearbyLandmarkVisuals: [],
+    singleNeighborhoodVisuals: []
 }
 
 const getters = {
     allPropertyVisuals: (state) => state.propertyVisuals,
-    allSinglePropertyVisuals: (state) => state.singlePropertyVisuals
+    allSinglePropertyVisuals: (state) => state.singlePropertyVisuals,
+    allSinglePropertyNearbyLandmarkVisuals: (state) => state.singlePropertyNearbyLandmarkVisuals,
+    allSingleNeighborhoodVisuals: (state) => state.singleNeighborhoodVisuals
 };
 
 const actions = {
@@ -27,12 +32,30 @@ const actions = {
         } catch (error) {
             throw new Error("Failed on loading current property visuals")
         }
+    },
+    async fetchPropertyNearbyLandmarkVisuals({ commit }, property_id){
+        try {
+            const response = await PropertyNearbyLandmarkService.getPropertyNearbyLandmarkByPropertyId(property_id);
+            commit("setSinglePropertyNearbyLandmarkVisuals", response.data.result);
+        } catch (error) {
+            throw new Error("Failed on loading current property visuals")
+        }
+    },
+    async fetchPropertyNeighborhoodVisuals({ commit }, property_id){
+        try {
+            const response = await NeighborhoodVisualsService.getNeighborhoodVisualsByPropertyId(property_id);
+            commit("setSinglePropertyNeighborhoodVisuals", response.data.result);
+        } catch (error) {
+            throw new Error("Failed on loading current property visuals")
+        }
     }
 }
 
 const mutations = {
     setPropertyVisuals: (state, returnedVisuals) => (state.propertyVisuals = returnedVisuals),
-    setSinglePropertyVisuals: (state, returnedSinglePropertyVisuals) => (state.singlePropertyVisuals = returnedSinglePropertyVisuals)
+    setSinglePropertyVisuals: (state, returnedSinglePropertyVisuals) => (state.singlePropertyVisuals = returnedSinglePropertyVisuals),
+    setSinglePropertyNearbyLandmarkVisuals: (state, returnedSinglePropertyLandmarkVisuals) => (state.singlePropertyNearbyLandmarkVisuals = returnedSinglePropertyLandmarkVisuals),
+    setSinglePropertyNeighborhoodVisuals: (state, returnedSinglePropertyNeighborhoodVisuals) => (state.singleNeighborhoodVisuals = returnedSinglePropertyNeighborhoodVisuals)
 }
 
 export default {
