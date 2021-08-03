@@ -7,9 +7,9 @@
         <v-col cols="12" sm="12" md="8" lg="8">
           <v-carousel>
             <v-carousel-item
-              v-for="(item, i) in items"
-              :key="i"
-              :src="item.src"
+              v-for="propertyVisual in allSinglePropertyVisuals"
+              :key="propertyVisual.visuals_id"
+              :src="'http://localhost:8094/' + propertyVisual.snapshot"
               reverse-transition="fade-transition"
               transition="fade-transition"
             ></v-carousel-item>
@@ -19,17 +19,15 @@
           <div style="background-color: #f2f2f2; border-radius: 6px">
             <v-col>
               <p style="color: #3b6ef3">
-                Posted By: <br />
-                <span>Property Owner</span>
+                Posted By: {{allSingleNeighborhoodVisuals[0].created_by}} <br />
+                <span>Property Owner: {{allSingleNeighborhoodVisuals[0].created_by}}</span>
               </p>
             </v-col>
             <v-col>
               <v-btn color="primary" style="width: 160px">Call</v-btn>
               <v-btn color="white" style="margin-left: 10px; width: 160px">
-                <span style="color: #3b6ef3"> Chat</span></v-btn
-              >
+                <span style="color: #3b6ef3"> Chat</span></v-btn>
             </v-col>
-
             <v-col>
               <v-btn color="primary" block>Make an Offer</v-btn>
             </v-col>
@@ -68,28 +66,9 @@
     </v-container>
     <v-container>
       <v-row>
-        <v-col>
+        <v-col v-for="propertyVisual in allSinglePropertyVisuals" :key="propertyVisual.visuals_id">
           <v-img
-            src="../assets/houseview1.png"
-            :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
-            aspect-ratio="1"
-            class="grey lighten-2"
-            height="200"
-          ></v-img>
-        </v-col>
-        <v-col>
-          <v-img
-            src="../assets/houseview2.png"
-            :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
-            aspect-ratio="1"
-            class="grey lighten-2"
-            height="200"
-          ></v-img>
-        </v-col>
-        <v-col>
-          <v-img
-            src="../assets/houseview3.png"
-            :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
+            :src="'http://localhost:8094/' + propertyVisual.snapshot"
             aspect-ratio="1"
             class="grey lighten-2"
             height="200"
@@ -126,6 +105,7 @@
               <v-tab> Features </v-tab>
               <v-tab> Monthly Costs </v-tab>
               <v-tab> Neighborhood </v-tab>
+              <v-tab> Landmarks </v-tab>
               <v-tab> Rating </v-tab>
               <v-tab> Rental Value </v-tab>
             </v-tabs>
@@ -157,60 +137,46 @@
                   </v-card-text>
                 </v-card>
               </v-tab-item>
+              <!-- Neighborhood -->
               <v-tab-item>
                 <v-card color="basil" flat>
                   <v-card-text>
                     <!-- Content for neighborhood -->
-
-                    <v-row>
-                      <v-col>
+                    <v-row v-if="allSingleNeighborhoodVisuals.length > 0">
+                      <v-col v-for="neighborhoodVisual in allSingleNeighborhoodVisuals" :key="neighborhoodVisual.neighborhood_visuals_id">
                         <v-img
-                          src="../assets/houseview1.png"
-                          :lazy-src="`https://picsum.photos/10/6?image=${
-                            n * 5 + 10
-                          }`"
-                          aspect-ratio="1"
-                          class="grey lighten-2"
-                          height="200"
-                        ></v-img>
-                      </v-col>
-                      <v-col>
-                        <v-img
-                          src="../assets/houseview2.png"
-                          :lazy-src="`https://picsum.photos/10/6?image=${
-                            n * 5 + 10
-                          }`"
-                          aspect-ratio="1"
-                          class="grey lighten-2"
-                          height="200"
-                        ></v-img>
-                      </v-col>
-                      <v-col>
-                        <v-img
-                          src="../assets/houseview3.png"
-                          :lazy-src="`https://picsum.photos/10/6?image=${
-                            n * 5 + 10
-                          }`"
-                          aspect-ratio="1"
-                          class="grey lighten-2"
-                          height="200"
-                        ></v-img>
-                      </v-col>
-                      <v-col>
-                        <v-img
-                          src="../assets/houseview3.png"
-                          :lazy-src="`https://picsum.photos/10/6?image=${
-                            n * 5 + 10
-                          }`"
+                          :src="'http://localhost:9003/' + neighborhoodVisual.snapshot"
                           aspect-ratio="1"
                           class="grey lighten-2"
                           height="200"
                         ></v-img>
                       </v-col>
                     </v-row>
+                    <p v-else>No Neighborhood images to display</p>
                   </v-card-text>
                 </v-card>
               </v-tab-item>
+              <!-- Neighborhood -->
+              <!-- Landmark -->
+              <v-tab-item>
+                <v-card color="basil" flat>
+                  <v-card-text>
+                    <!-- Content for neighborhood -->
+                    <v-row v-if="allSinglePropertyNearbyLandmarkVisuals.length > 0">
+                      <v-col v-for="landmarkVisuals in allSinglePropertyNearbyLandmarkVisuals" :key="landmarkVisuals.property_nearby_landmark_id">
+                        <v-img
+                          :src="'http://localhost:8001/' + landmarkVisuals.snapshot"
+                          aspect-ratio="1"
+                          class="grey lighten-2"
+                          height="200"
+                        ></v-img>
+                      </v-col>
+                    </v-row>
+                    <p v-else>No Landmark images to display</p>
+                  </v-card-text>
+                </v-card>
+              </v-tab-item>
+              <!-- Landmarks end -->
               <v-tab-item>
                 <v-card color="basil" flat>
                   <v-card-text class="text-center">
@@ -249,6 +215,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 import About from '../views/About.vue';
 import Footer from './Footer.vue';
 import MainNav from "./MainNav.vue";
@@ -256,6 +223,8 @@ import TopNav from "./TopNav.vue";
 export default {
   components: { TopNav, MainNav, About, Footer },
   name: "ViewProperty",
+  props: ['propertyId'],
+  // $route.params.propertyId
   data: () => ({
     propertyFeatures: [
       {
@@ -318,6 +287,25 @@ export default {
       },
     ],
   }),
+  computed: {
+    ...mapGetters([
+      "allSinglePropertyVisuals",
+      "allSinglePropertyNearbyLandmarkVisuals",
+      "allSingleNeighborhoodVisuals"
+    ])
+  },
+   methods: {
+     ...mapActions([
+       "fetchSinglePropertyVisuals", 
+       "fetchPropertyNearbyLandmarkVisuals", 
+       "fetchPropertyNeighborhoodVisuals"
+    ])
+  },
+  mounted(){
+    this.fetchSinglePropertyVisuals(this.propertyId);
+    this.fetchPropertyNearbyLandmarkVisuals(this.propertyId);
+    this.fetchPropertyNeighborhoodVisuals(this.propertyId);
+  },
 };
 </script>
 

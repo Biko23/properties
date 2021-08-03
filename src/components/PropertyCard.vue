@@ -1,9 +1,8 @@
 <template>
- <router-link to="/view" style=" text-decoration:none;">
+ <router-link :to="to" style=" text-decoration:none;">
 <v-card max-width="auto">
-   
     <v-card-subtitle class="time">Added {{date}} </v-card-subtitle>
-    <v-img src="https://res.cloudinary.com/diued7ugb/image/upload/v1625732723/house1_svrut7.jpg" height="200px"></v-img>
+    <v-img :src="src" height="200px"></v-img>
     <v-card-subtitle>
          <small style="font-weight: bold; color: #000000; margin-bottom: 0;">${{cost}}</small><br>
          <small>{{detail}}</small><br>
@@ -25,12 +24,22 @@ export default {
         location: {
             type: String,
             default: "No available location"
-        }
-    },
-    data() {
-        return {
-            cost: Math.floor(Math.random() * 100000) + 1,
-            date: dateFormat(new Date(), "DDDD")
+        },
+        src: {
+            type: String,
+            default: "https://res.cloudinary.com/diued7ugb/image/upload/v1625732723/house1_svrut7.jpg"
+        },
+        date: {
+            type: String,
+            default: dateFormat(new Date(), "DDDD")
+        },
+        cost: {
+            type: Number,
+            default: Math.floor(Math.random() * 100000) + 1
+        },
+        to: {
+            type: String,
+            default: "/view"
         }
     }
 }

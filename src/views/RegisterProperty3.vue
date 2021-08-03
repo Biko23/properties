@@ -6,7 +6,7 @@
     <v-container>
       <div style="text-align: center">
         <h3 style="color: white">Add A property</h3>
-        <h4 style="color: #b9cbdb">Almost there Step 3/3</h4>
+        <h4 style="color: #b9cbdb">Final Step 3/3</h4>
       </div>
       <br />
 
@@ -16,6 +16,7 @@
           <v-row>
             <v-col class="d-flex" cols="12" sm="6">
               <v-text-field
+                v-model="property.landmark_name"
                 class="custom-label-color"
                 label="Landmark Name"
                 color="blue"
@@ -24,6 +25,7 @@
             </v-col>
             <v-col class="d-flex" cols="12" sm="6">
               <v-text-field
+                v-model="property.distance_from_property"
                 class="custom-label-color"
                 label="Distance from property"
                 color="blue"
@@ -31,21 +33,22 @@
               ></v-text-field>
             </v-col>
           </v-row>
-
         </v-col>
         <br />
 
         <v-col cols="12" md="12">
           <v-row>
             <v-col class="d-flex" cols="12" sm="6">
-             <v-select
-                :items="items"
+              <v-select
+                v-model="property.landmark_type_id"
+                :items="allPropertyLandmarkTypes"
                 label="Select Landmark Type"
                 solo
               ></v-select>
             </v-col>
             <v-col class="d-flex" cols="12" sm="6">
               <v-text-field
+                v-model="property.description"
                 class="custom-label-color"
                 label="Description"
                 color="blue"
@@ -53,56 +56,27 @@
               ></v-text-field>
             </v-col>
           </v-row>
-          <v-row style="margin: 0 5px;">
-                <v-col cols="12" sm="12">
-                    <h3>Add Landmark Photos</h3>
-                    <v-row>
-                        <v-col cols="12" md="10">
-                            <v-row>
-                                <v-col cols="12" md="3">
-                                    <v-img src="../assets/houseview1.png" :lazy-src="`https://picsum.photos/10/6?image=${
-                            n * 5 + 10
-                          }`" aspect-ratio="1" class="grey lighten-2" height="200"></v-img>
-                                </v-col>
-                                <v-col cols="12" md="3">
-                                    <v-img src="../assets/houseview1.png" :lazy-src="`https://picsum.photos/10/6?image=${
-                            n * 5 + 10
-                          }`" aspect-ratio="1" class="grey lighten-2" height="200"></v-img>
-                                </v-col>
-                                <v-col cols="12" md="3">
-                                    <v-img src="../assets/houseview1.png" :lazy-src="`https://picsum.photos/10/6?image=${
-                            n * 5 + 10
-                          }`" aspect-ratio="1" class="grey lighten-2" height="200"></v-img>
-                                </v-col>
-                                <v-col cols="12" md="3">
-                                    <v-img src="../assets/houseview1.png" :lazy-src="`https://picsum.photos/10/6?image=${
-                            n * 5 + 10
-                          }`" aspect-ratio="1" class="grey lighten-2" height="200"></v-img>
-                                </v-col>
-                            </v-row>
-                        </v-col>
-                        <v-col cols="12" md="2">
-                            <div style="margin-left: 50px; margin-top: 80px;">
-                                <v-file-input style="border-radius: 50%; width: 90px; height: 90px" :rules="rules" accept="image/png, image/jpeg, image/bmp" prepend-icon="mdi-camera" solo />
-                                <img src="https://res.cloudinary.com/diued7ugb/image/upload/v1625948824/lvqxdmbxghuf81nqey5p.png" alt="" width="50" style="
-                  position: absolute;
-                  margin-top: -91px;
-                  margin-left: 36px;
-                  background: white;
-                  padding: 10px;
-                  border-radius: 50%;
-                  cursor: pointer;
-                " srcset="" />
-                            </div>
-                        </v-col>
-                    </v-row>
-
-                    <p style="font-size: 12px; margin-right: 100px">
-                        Each picture must not exceed 5 Mb Supported formats are *.jpg,
-                        *.gif and *.png
-                    </p>
+          <v-row style="margin: 0 5px">
+            <v-col cols="12" sm="12">
+              <h3>Add Landmark Photos</h3>
+              <v-row>
+                <v-col cols="12" md="12">
+                  <UploadImages
+                    style="background-color: #e7f0ff"
+                    :max="4"
+                    uploadMsg="click or drag n' drop images"
+                    fileError="images files only accepted"
+                    clearAll="Clear"
+                    @changed="handleImages"
+                  />
                 </v-col>
-            </v-row>
+              </v-row>
+              <p style="font-size: 12px; margin-right: 100px">
+                Each picture must not exceed 5 Mb Supported formats are *.jpg,
+                *.gif and *.png
+              </p>
+            </v-col>
+          </v-row>
         </v-col>
         <br />
         <v-row>
@@ -114,7 +88,10 @@
               justify-content: flex-end;
             "
           >
-            <v-btn style="background-color: #3b6ef3; width: 200px">
+            <v-btn
+              style="background-color: #3b6ef3; width: 200px"
+              @click="submitFinalData"
+            >
               <span
                 style="
                   color: #ffffff;
@@ -142,6 +119,8 @@
 import TopNav from "@/components/TopNav.vue";
 import MainNav from "@/components/MainNav.vue";
 import BottonNav from "../components/BottonNav.vue";
+import { mapGetters, mapActions } from "vuex";
+import UploadImages from "vue-upload-drop-images";
 
 export default {
   name: "RegisterProperty3",
@@ -152,11 +131,45 @@ export default {
         value.size < 2000000 ||
         "Avatar size should be less than 2 MB!",
     ],
+    property: {
+      landmark_name: "",
+      distance_from_property: "",
+      landmark_type_id: 0,
+      description: "",
+      landmarkVisuals: [],
+    },
   }),
   components: {
     TopNav,
     MainNav,
     BottonNav,
+    UploadImages,
+  },
+  created() {
+    this.fetchPropertyLandmarkTypes();
+  },
+  methods: {
+    ...mapActions([
+      "fetchPropertyLandmarkTypes",
+      "addPropertyDataFromPageThird",
+      "submitAllPropertyData"
+    ]),
+    handleImages(files) {
+      this.property.landmarkVisuals.splice(
+        0,
+        this.property.landmarkVisuals.length
+      );
+      this.property.landmarkVisuals.push(...files);
+    },
+    submitFinalData() {
+      this.addPropertyDataFromPageThird(this.property).then(() => {
+        this.submitAllPropertyData();
+        this.$router.push("/register");
+      });
+    },
+  },
+  computed: {
+    ...mapGetters(["allPropertyLandmarkTypes"]),
   },
 };
 </script>
@@ -188,6 +201,20 @@ export default {
   .main-div {
     background-color: #3b6ef3;
     height: auto;
+  }
+
+  #form-row {
+    background-color: #e7f0ff;
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 6px;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  #main-div {
+    background-color: #3b6ef3;
   }
 
   #form-row {

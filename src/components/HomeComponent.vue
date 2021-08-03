@@ -11,6 +11,7 @@
               <input
                 placeholder="Enter Address,Zip code, neighborhood,city"
                 style=""
+                :search="search"
               />
               <span style="margin-left: -50px; padding-top: 300px">
                 <button style="">
@@ -40,7 +41,7 @@
                 text-align: center;
               "
             >
-              <div style="text-align: center">
+              <div style="padding-top:5px;">
                 <v-img
                   style="margin-left: auto; margin-right: auto; display: block"
                   lazy-src="https://picsum.photos/id/11/10/6"
@@ -95,7 +96,7 @@
         <v-col cols="12" md="3" xs="12">
           <v-card max-width="auto" id="card">
             <div style="border-bottom: 2px solid #3b6ef3; height: 50px">
-              <p>
+              <p style="padding-top:8px;">
                 <v-img
                   style="margin-left: auto; margin-right: auto; display: block"
                   max-height="47"
@@ -151,13 +152,13 @@
         <v-col cols="12" md="3" xs="12">
           <v-card max-width="auto" id="card">
             <div style="border-bottom: 2px solid #3b6ef3; height: 50px">
-              <p>
+              <p style="padding-top:8px;">
                 <v-img
                   style="margin-left: auto; margin-right: auto; display: block"
                   lazy-src="https://picsum.photos/id/11/10/6"
                   max-height="45"
-                  max-width="45"
-                  src="https://res.cloudinary.com/diued7ugb/image/upload/v1625749459/Vector_pebqf0.png"
+                  max-width="50"
+                  src="https://res.cloudinary.com/diued7ugb/image/upload/v1626937385/sell_black_24dp_1_hfrwt6.png"
                 ></v-img>
               </p>
             </div>
@@ -182,7 +183,7 @@
                 yourself or via a broker. Whatever option works for you, we have
                 got you covered.
               </p>
-              <p style="text-align: center">
+              <p style="text-align:center;">
                 <router-link to="/register">
                   <v-btn style="background-color: #3b6ef3">
                     <span
@@ -209,13 +210,13 @@
         <v-col cols="12" md="3" xs="12">
           <v-card max-width="auto" id="card">
             <div style="border-bottom: 2px solid #3b6ef3; height: 50px">
-              <p>
+              <p style="padding-top:8px;">
                 <v-img
-                  style="margin-left: auto; margin-right: auto; display: block"
+                  style="margin-left: auto; margin-right: auto; display: block; "
                   lazy-src="https://picsum.photos/id/11/10/6"
                   max-height="45"
                   max-width="45"
-                  src="https://res.cloudinary.com/diued7ugb/image/upload/v1625749459/Vector_pebqf0.png"
+                  src="https://res.cloudinary.com/diued7ugb/image/upload/v1626936488/Vector_7_oi79oa.png"
                 ></v-img>
               </p>
             </div>
@@ -496,6 +497,7 @@ export default {
   name: "Home2",
 
   data: () => ({
+     search: '',
     show: false,
     icons: ["mdi-facebook", "mdi-twitter", "mdi-linkedin", "mdi-instagram"],
   }),
