@@ -22,11 +22,25 @@
 
             <v-col class="d-flex" cols="12" sm="6">
               <!-- Type as you search -->
-              <v-text-field
+              <!--
+                  <v-text-field
                 class="custom-label-color"
                 label="Type Property Location"
                 solo
               ></v-text-field>
+               -->
+              <div>
+                <h5>Location</h5>
+                <vuetify-google-autocomplete
+                  ref="address"
+                  id="map"
+                  classname="form-control"
+                  placeholder="Please type your address"
+                  v-on:placechanged="getAddressData"
+                  country="ug"
+                >
+                </vuetify-google-autocomplete>
+              </div>
             </v-col>
           </v-row>
           <v-row>
@@ -93,75 +107,75 @@
                   <v-row>
                     <v-col cols="12" md="3">
                       <v-img
-                          src="../assets/houseview1.png"
-                          :lazy-src="`https://picsum.photos/10/6?image=${
-                            n * 5 + 10
-                          }`"
-                          aspect-ratio="1"
-                          class="grey lighten-2"
-                          height="200"
-                        ></v-img>
+                        src="../assets/houseview1.png"
+                        :lazy-src="`https://picsum.photos/10/6?image=${
+                          n * 5 + 10
+                        }`"
+                        aspect-ratio="1"
+                        class="grey lighten-2"
+                        height="200"
+                      ></v-img>
                     </v-col>
                     <v-col cols="12" md="3">
                       <v-img
-                          src="../assets/houseview1.png"
-                          :lazy-src="`https://picsum.photos/10/6?image=${
-                            n * 5 + 10
-                          }`"
-                          aspect-ratio="1"
-                          class="grey lighten-2"
-                          height="200"
-                        ></v-img>
+                        src="../assets/houseview1.png"
+                        :lazy-src="`https://picsum.photos/10/6?image=${
+                          n * 5 + 10
+                        }`"
+                        aspect-ratio="1"
+                        class="grey lighten-2"
+                        height="200"
+                      ></v-img>
                     </v-col>
                     <v-col cols="12" md="3">
                       <v-img
-                          src="../assets/houseview1.png"
-                          :lazy-src="`https://picsum.photos/10/6?image=${
-                            n * 5 + 10
-                          }`"
-                          aspect-ratio="1"
-                          class="grey lighten-2"
-                          height="200"
-                        ></v-img>
+                        src="../assets/houseview1.png"
+                        :lazy-src="`https://picsum.photos/10/6?image=${
+                          n * 5 + 10
+                        }`"
+                        aspect-ratio="1"
+                        class="grey lighten-2"
+                        height="200"
+                      ></v-img>
                     </v-col>
                     <v-col cols="12" md="3">
                       <v-img
-                          src="../assets/houseview1.png"
-                          :lazy-src="`https://picsum.photos/10/6?image=${
-                            n * 5 + 10
-                          }`"
-                          aspect-ratio="1"
-                          class="grey lighten-2"
-                          height="200"
-                        ></v-img>
+                        src="../assets/houseview1.png"
+                        :lazy-src="`https://picsum.photos/10/6?image=${
+                          n * 5 + 10
+                        }`"
+                        aspect-ratio="1"
+                        class="grey lighten-2"
+                        height="200"
+                      ></v-img>
                     </v-col>
                   </v-row>
                 </v-col>
                 <v-col cols="12" md="2">
-                  <div style="margin-left: 50px; margin-top: 80px;">
-                  <v-file-input
-                    style="border-radius: 50%; width: 90px; height: 90px"
-                    :rules="rules"
-                    accept="image/png, image/jpeg, image/bmp"
-                    prepend-icon="mdi-camera"
-                    solo
-                  />
-              <img
-                src="https://res.cloudinary.com/diued7ugb/image/upload/v1625948824/lvqxdmbxghuf81nqey5p.png"
-                alt=""
-                width="50"
-                style="
-                  position: absolute;
-                  margin-top: -91px;
-                  margin-left: 36px;
-                  background: white;
-                  padding: 10px;
-                  border-radius: 50%;
-                  cursor: pointer;
-                "
-                srcset=""
-              />
-              </div>
+                  <div style="margin-left: 50px; margin-top: 80px">
+                    <v-file-input
+                      style="border-radius: 50%; width: 90px; height: 90px"
+                      :rules="rules"
+                      accept="image/png, image/jpeg, image/bmp"
+                      prepend-icon="mdi-camera"
+                      solo
+                    />
+                    <img
+                      src="https://res.cloudinary.com/diued7ugb/image/upload/v1625948824/lvqxdmbxghuf81nqey5p.png"
+                      alt=""
+                      width="50"
+                      style="
+                        position: absolute;
+                        margin-top: -91px;
+                        margin-left: 36px;
+                        background: white;
+                        padding: 10px;
+                        border-radius: 50%;
+                        cursor: pointer;
+                      "
+                      srcset=""
+                    />
+                  </div>
                 </v-col>
               </v-row>
 
@@ -172,26 +186,32 @@
             </v-col>
           </v-row>
           <v-row>
-          <v-col style="display: flex; flex-direction: row; justify-content: flex-end;">
-            <router-link to="/register2" style="text-decoration: none">
-              <v-btn style="background-color: #3b6ef3; width: 200px">
-                <span
-                  style="
-                    color: #ffffff;
-                    font-size: 18px;
-                    font-style: normal;
-                    font-weight: 300;
-                    line-height: 30px;
-                    letter-spacing: 0em;
-                    text-align: center;
-                    text-transform: capitalize;
-                  "
-                >
-                  Next Step</span
-                >
-              </v-btn>
-            </router-link>
-          </v-col>
+            <v-col
+              style="
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-end;
+              "
+            >
+              <router-link to="/register2" style="text-decoration: none">
+                <v-btn style="background-color: #3b6ef3; width: 200px">
+                  <span
+                    style="
+                      color: #ffffff;
+                      font-size: 18px;
+                      font-style: normal;
+                      font-weight: 300;
+                      line-height: 30px;
+                      letter-spacing: 0em;
+                      text-align: center;
+                      text-transform: capitalize;
+                    "
+                  >
+                    Next Step</span
+                  >
+                </v-btn>
+              </router-link>
+            </v-col>
           </v-row>
         </v-col>
       </v-row>
@@ -206,10 +226,10 @@
 import TopNav from "@/components/TopNav.vue";
 import MainNav from "@/components/MainNav.vue";
 import BottonNav from "../components/BottonNav.vue";
-
 export default {
   name: "RegisterProperty",
   data: () => ({
+      address: '',
     rules: [
       (value) =>
         !value ||
@@ -220,8 +240,18 @@ export default {
   components: {
     TopNav,
     MainNav,
-    BottonNav,
+    BottonNav
   },
+
+   mounted() {
+            // Here we make focus on the user input
+            this.$refs.address.focus();
+        },
+        methods:{
+            getAddressData: function (addressData, placeResultData, id) {
+                this.address = addressData;
+            }
+        }
 };
 </script>
 

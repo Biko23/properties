@@ -56,7 +56,7 @@
           </div>
           <div>
             <v-col>
-              <h3>House for rent</h3>
+              <h3>Property Details</h3>
               <p style="font-weight: 300">
                 2 beds, 2 bathrooms, 1500 sqft-House for rent <br />
                 plot 3421, Muyenga, Kampala

@@ -3,7 +3,7 @@
     <v-container id="container" fluid>
         <v-row id="property-header">
             <div style="flex:1;">
-                <h3>Properties</h3>
+                <h3>Available Properties for sale</h3>
                 <small style="font-weight: bold;">{{count}} results</small>
             </div>
             <div style="flex:1;">
