@@ -79,7 +79,7 @@ const routes = [
   },
   {
     path: '/view',
-    path: '/view/:propertyId',
+    path: '/view/:property_id',
     props: true,
     name: 'ViewProperty',
     component: () => import('@/components/ViewProperty')

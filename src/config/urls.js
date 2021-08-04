@@ -20,8 +20,8 @@ export default {
     propertyNearbyLandmarkUrl: `http://localhost:8001/${PREFIX}`, //changed port
     propertyOwnerUrl: `http://localhost:8092/${PREFIX}`,
     similarPropertiesUrl: `http://localhost:8093/${PREFIX}`,
-    propertyVisualsUrl: `http://localhost:8094/${PREFIX}`,
-    propertyUrl: `http://localhost:8095/${PREFIX}`,
+    propertyVisualsUrl: `http://localhost:8002/${PREFIX}`,
+    propertyUrl: `http://localhost:8003/${PREFIX}`,
     userUrl: `http://localhost:8096/${PREFIX}`,
     propertyTypesUrl: `http://localhost:9000/${PREFIX}`,
     propertyNeighborhoodUrl: `http://localhost:9001/${PREFIX}`,
