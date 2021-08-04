@@ -1,11 +1,13 @@
 import vendorsBackOfficeService from '@/service/vendors/vendorsBackOfficeService';
 
 const state = {
-    vendorCategories: []
+    vendorCategories: [],
+    vendors:[]
 }
 
 const getters = {
-    allVendorsCategories: (state) => state.vendorCategories
+    allVendorsCategories: (state) => state.vendorCategories,
+    allVendors:(state)=>state.vendors
 };
 
 const actions = {
@@ -14,7 +16,7 @@ const actions = {
             const response = await vendorsBackOfficeService.getVendorsCategories();
             commit('setVendorCategories', response.data);
         } catch (error) {
-            throw new Error("Failed on loading current properties")
+            throw new Error("Failed on loading current Vendors")
         }
     },
     async postVendor(_ , newVendor) {
@@ -24,7 +26,16 @@ const actions = {
         } catch (error) {
             throw new Error("Failed on loading current properties")
         }
-    }
+    },
+
+    async fetchVendors({ commit }) {
+        try {
+            const response = await vendorsBackOfficeService.getVendors();
+            commit('setVendors', response.data);
+        } catch (error) {
+            throw new Error("Failed on loading current Vendors")
+        }
+    },
 }
 
 const mutations = {
@@ -33,7 +44,8 @@ const mutations = {
             value:vendorCategory.vendor_category_id,
             text:vendorCategory.vendor_category_name
         }
-    }))
+    })),
+    setVendors:(state,returnedVendors)=>(state.vendors = returnedVendors)
 }
 
 export default {

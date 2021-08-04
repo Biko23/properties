@@ -34,4 +34,13 @@ export default {
 //       throw new Error('An error occured when deleting data')
 //     }
 //   }
+
+async getVendors () {
+    try {
+      const response = await API.vendorsApi.get(`/vendors/vetted-vendors`)
+      return response
+    } catch (error) {
+      throw new Error('An error occured when retrieving data')
+    }
+  },
 }

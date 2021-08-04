@@ -129,9 +129,9 @@ export default {
   created() {
     this.fetchVendorsCategories();
   },
-mounted(){
-  this.loadVendorData();
-},
+  mounted() {
+    this.loadVendorData();
+  },
   methods: {
     ...mapActions(["fetchVendorsCategories", "postVendor"]),
     async postingVendor() {
@@ -144,9 +144,9 @@ mounted(){
         console.log(error);
       }
     },
-    loadVendorData(){
+    loadVendorData() {
       this.newVendor = Object.assign({}, this.currentLoggedinUser);
-    }
+    },
   },
 };
 </script>
