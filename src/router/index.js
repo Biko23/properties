@@ -47,6 +47,11 @@ const routes = [
     component: () => import('@/views/PropertiesForSale')
   },
   {
+    path: '/property-details',
+    name: 'seller-properties-details',
+    component: () => import('@/views/SellerPropertiesDetails')
+  },
+  {
     path: '/signup',
     name: 'SignUp',
     component: () => import('@/views/SignUp')

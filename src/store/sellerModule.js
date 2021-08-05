@@ -15,7 +15,10 @@ const state = {
     propertyFirstPageData: null,
     propertySecondPageData: null,
     propertyThirdPageData: null,
-    createdProperty: {}
+    createdProperty: {},
+    currentUserListedPropertyVisuals: [],
+    currentUserUnlistedPropertyVisuals: [],
+    currentUserUncertifiedPropertyVisuals: []
 }
 
 const getters = {
@@ -25,7 +28,12 @@ const getters = {
     allPropertyFirstPageData: (state) => state.propertyFirstPageData,
     allPropertySecondPageData: (state) => state.propertySecondPageData,
     allPropertyThirdPageData: (state) => state.propertyThirdPageData,
-    newCreatedProperty: (state) => state.createdProperty
+    newCreatedProperty: (state) => state.createdProperty,
+    
+    // current user getters
+    allCurrentUserListedPropertyVisuals: (state) => state.currentUserListedPropertyVisuals,
+    allCurrentUserUnlistedPropertyVisuals: (state) => state.currentUserUnlistedPropertyVisuals,
+    allCurrentUserUncertifiedPropertyVisuals: (state) => state.currentUserUncertifiedPropertyVisuals
 };
 
 const actions = {
@@ -53,13 +61,13 @@ const actions = {
             console.log(error);
         }
     },
-    async addPropertyDataFromPageOne({ commit }, propertyDataOne) {
+    async addPropertyDataFromPageOne({ commit, rootState }, propertyDataOne) {
             try {
             await commit('setPropertyRegisterFirstData', propertyDataOne);
             const newProperty = {
                 isListedForId: propertyDataOne.type,
-                created_by: "Isaac",
-                updated_by: "Isaac"
+                created_by: rootState.AuthModule.currentUser.username,
+                updated_by: rootState.AuthModule.currentUser.username
             }
             const response = await PropertyService.postAProperty(newProperty);
             commit('setCreatedProperty', response.data.result);
@@ -74,44 +82,44 @@ const actions = {
     addPropertyDataFromPageThird({ commit }, propertyDataFinal) {
         commit('setPropertyRegisterThreeData', propertyDataFinal);
     },
-    async submitAllPropertyData({ state }) {
+    async submitAllPropertyData({ state, rootState }) {
         try {
             const propertyLocation = {
                 name: state.propertyFirstPageData.location,
                 property_id: state.createdProperty.property_id,
                 latitude: 19393982,
                 longitude: 1959494,
-                created_by: 'Isaac',
-                updated_by: 'Isaac'
+                created_by: rootState.AuthModule.currentUser.username,
+                updated_by: rootState.AuthModule.currentUser.username
             }
             const selectedPropertyFeatures = {
                 propertyFeatures: state.propertyFirstPageData.features,
                 property_id: state.createdProperty.property_id,
-                created_by: 'Isaac',
-                updated_by: 'Isaac'
+                created_by: rootState.AuthModule.currentUser.username,
+                updated_by: rootState.AuthModule.currentUser.username
             }
             const propertyVisuals = {
                 description: state.propertyFirstPageData.description,
                 files: state.propertyFirstPageData.visuals,
                 property_id: state.createdProperty.property_id,
-                created_by: 'Isaac',
-                updated_by: 'Isaac'
+                created_by: rootState.AuthModule.currentUser.username,
+                updated_by: rootState.AuthModule.currentUser.username
             }
 
             // console.log('visuals', state.propertyFirstPageData.visuals);
             const propertyValue = {
                 actual_value: state.propertySecondPageData.expected_value,
                 property_id: state.createdProperty.property_id,
-                created_by: 'Isaac',
-                updated_by: 'Isaac'
+                created_by: rootState.AuthModule.currentUser.username,
+                updated_by: rootState.AuthModule.currentUser.username
             }
             
             const neighborhoodVisuals = {
                 description: state.propertySecondPageData.description,
                 files: state.propertySecondPageData.neighborhoodVisuals,
                 property_id: state.createdProperty.property_id,
-                created_by: "Isaac",
-                updated_by: "Isaac"
+                created_by: rootState.AuthModule.currentUser.username,
+                updated_by: rootState.AuthModule.currentUser.username
             }
 
             const nearbyLandmarkVisuals = {
@@ -121,11 +129,12 @@ const actions = {
                 description: state.propertyThirdPageData.description,
                 files: state.propertyThirdPageData.landmarkVisuals,
                 property_id: state.createdProperty.property_id,
-                created_by: "Isaac",
-                updated_by: "Isaac"
+                created_by: rootState.AuthModule.currentUser.username,
+                updated_by: rootState.AuthModule.currentUser.username
             }
 
             // Api calls
+            console.log(propertyLocation);
             await PropertyLocationService.postAPropertyLocation(propertyLocation);
             await PropertyValueService.postAPropertyValue(propertyValue);
             await PropertyNearbyLandmarkService.postAPropertyNearbyLandmark(nearbyLandmarkVisuals);
@@ -135,9 +144,37 @@ const actions = {
         } catch (error) {
             // this.$swal('ooh!','Unable to finish!','error');
         }
+    },
+    async getListedPropertyVisualsByUsername({ commit, rootState }){
+        try {
+            let username = rootState.AuthModule.currentUser.username;
+            const response = await PropertyVisualsService.getListedPropertyVisualsByUsername(username);
+            commit('setCurrentUserListedPropertyVisuals', response.data.result);
+        } catch (error) {
+            throw new Error(error);
+        }
+    },
+    async getUnlistedPropertyVisualsByUsername({ commit, rootState }){
+        try {
+            let username = rootState.AuthModule.currentUser.username;
+            const response = await PropertyVisualsService.getUnlistedPropertyVisualsByUsername(username);
+            commit('setCurrentUserUnlistedPropertyVisuals', response.data.result);
+        } catch (error) {
+            throw new Error(error);
+        }
+    },
+    async getUncertifiedPropertyVisualsByUsername({ commit, rootState }){
+        try {
+            let username = rootState.AuthModule.currentUser.username;
+            const response = await PropertyVisualsService.getUncertifiedPropertyVisualsByUsername(username);
+            commit('setCurrentUserUncertifiedPropertyVisuals', response.data.result);
+        } catch (error) {
+            throw new Error(error);
+        }
     }
 }
 
+// mutations
 const mutations = {
     setPropertyTypes: (state, propertyTypes) => (state.propertyTypes = propertyTypes.map(propertyType => {
         return {
@@ -160,7 +197,10 @@ const mutations = {
     setPropertyRegisterFirstData: (state, propertyDataOne) => (state.propertyFirstPageData = propertyDataOne),
     setPropertyRegisterTwoData: (state, propertyDataTwo) => (state.propertySecondPageData = propertyDataTwo),
     setPropertyRegisterThreeData: (state, propertyDataThree) => (state.propertyThirdPageData = propertyDataThree),
-    setCreatedProperty: (state, returnedProperty) => (state.createdProperty = returnedProperty)
+    setCreatedProperty: (state, returnedProperty) => (state.createdProperty = returnedProperty),
+    setCurrentUserListedPropertyVisuals: (state, returnedCurrentUserListedProperties) => (state.currentUserListedPropertyVisuals = returnedCurrentUserListedProperties),
+    setCurrentUserUnlistedPropertyVisuals: (state, returnedCurrentUserUnlistedProperties) => (state.currentUserUnlistedPropertyVisuals = returnedCurrentUserUnlistedProperties),
+    setCurrentUserUncertifiedPropertyVisuals: (state, returnedCurrentUserUncertifiedProperties) => (state.currentUserUncertifiedPropertyVisuals = returnedCurrentUserUncertifiedProperties)  
 }
 
 export default {

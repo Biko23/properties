@@ -41,6 +41,8 @@
                     <links title="Sell A Property" link="/register" />
                     <!-- <links title="Current market trends" /> -->
                     <links title="Seller's guide" link="/learn" />
+                    <links title="Property Details" link="/property-details" />
+                    <!-- <links title="My Transactions" link="/property-transactions" /> -->
                     <!-- <links title="Price Conversion Calculator" /> -->
                 </v-list>
             </v-menu>
