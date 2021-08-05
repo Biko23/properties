@@ -13,32 +13,45 @@
                     </v-tabs>
                     <v-tabs-items v-model="tab">
                         <v-tab-item>
-                            <!-- return only those where user name, is same as current logged in name -->
-                            <seller-property-details 
-                                :headers="listedHeaders" 
-                                :items="allCurrentUserListedPropertyVisuals" 
-                            >
-                            </seller-property-details>
+                            <v-card color="basil" flat>
+                                <v-card-text>
+                                    <v-data-table :headers="listedHeaders" :items="allCurrentUserListedPropertyVisuals" :items-per-page="5" class="elevation-1">
+                                        <template v-slot:item.actions="{ item }">
+                                            <v-btn @click="changeAvailabilityToNotAvailable(item)">
+                                            <v-icon small class="mr-2">
+                                                mdi-arrow-right-bold
+                                            </v-icon>Unlist
+                                            </v-btn>
+                                        </template>
+                                    </v-data-table>
+                                </v-card-text>
+                            </v-card>
                         </v-tab-item>
                         <v-tab-item>
-                            <seller-property-details 
-                                :headers="listedHeaders"
-                                :items="allCurrentUserUnlistedPropertyVisuals"
-                            />
+                            <v-card color="basil" flat>
+                                <v-card-text>
+                                    <v-data-table :headers="listedHeaders" :items="allCurrentUserUnlistedPropertyVisuals" :items-per-page="5" class="elevation-1">
+                                        <template v-slot:item.actions="{ item }">
+                                            <v-btn @click="-changeAvailabilityToAvailable(item)">
+                                            <v-icon small class="mr-2">
+                                                mdi-arrow-left-bold
+                                            </v-icon>List
+                                            </v-btn>
+                                        </template>
+                                    </v-data-table>
+                                </v-card-text>
+                            </v-card>
                         </v-tab-item>
                         <v-tab-item>
-                            <seller-property-details 
-                                :headers="certifiedHeaders"
-                                :items="allCurrentUserUncertifiedPropertyVisuals"
-                            />
+                            <seller-property-details :headers="certifiedHeaders" :items="allCurrentUserUncertifiedPropertyVisuals" />
                         </v-tab-item>
                     </v-tabs-items>
                 </v-card>
             </v-col>
         </v-row>
     </v-container>
-    <about />
-    <Footer />
+    <!-- <about />
+    <Footer /> -->
 
 </div>
 </template>
@@ -47,8 +60,9 @@
 import TopNav from '@/components/TopNav.vue'
 import MainNav from '@/components/MainNav.vue'
 import SellerPropertyDetails from '@/components/SellerPropertyDetailComponent'
-import About from './About.vue'
-import Footer from '@/components/Footer'
+import Button from '@/components/Button'
+// import About from './About.vue'
+// import Footer from '@/components/Footer'
 import {
     mapActions,
     mapGetters
@@ -60,8 +74,9 @@ export default {
         TopNav,
         MainNav,
         SellerPropertyDetails,
-        Footer,
-        About
+        Button
+        // Footer,
+        // About
     },
     data: () => ({
         tab: null,
@@ -111,8 +126,8 @@ export default {
     }),
     computed: {
         ...mapGetters([
-            "allCurrentUserListedPropertyVisuals", 
-            "allCurrentUserUnlistedPropertyVisuals", 
+            "allCurrentUserListedPropertyVisuals",
+            "allCurrentUserUnlistedPropertyVisuals",
             "allCurrentUserUncertifiedPropertyVisuals"
         ])
     },
@@ -120,10 +135,29 @@ export default {
         ...mapActions([
             "getListedPropertyVisualsByUsername",
             "getUnlistedPropertyVisualsByUsername",
-            "getUncertifiedPropertyVisualsByUsername"
-        ])
+            "getUncertifiedPropertyVisualsByUsername",
+            "updatePropertyVisualAvailabilityStatus",
+            "updatePropertyVisualNotAvailabilityStatus"
+        ]),
+        async changeAvailabilityToNotAvailable(property) {
+            try {
+                await this.updatePropertyVisualAvailabilityStatus(property.property_id)
+                    .then(() => this.getUnlistedPropertyVisualsByUsername());
+
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+        async changeAvailabilityToAvailable(property) {
+            try {
+                await this.updatePropertyVisualNotAvailabilityStatus(property.property_id)
+                    .then(() => this.getListedPropertyVisualsByUsername());
+            } catch (error) {
+                throw new Error(error);
+            }
+        }
     },
-    created(){
+    created() {
         this.getListedPropertyVisualsByUsername();
         this.getUnlistedPropertyVisualsByUsername();
         this.getUncertifiedPropertyVisualsByUsername();

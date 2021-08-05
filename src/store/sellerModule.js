@@ -171,6 +171,26 @@ const actions = {
         } catch (error) {
             throw new Error(error);
         }
+    },
+    async updatePropertyVisualAvailabilityStatus({ commit }, property_id){
+        try {
+            const response = await PropertyVisualsService.updatePropertyVisualAvailabilityStatus(property_id);
+            if(response.visualsResponse.status === 200) {
+                commit('updatePropertyVisualsList', property_id);
+            }
+        } catch (error) {
+            throw new Error(error);
+        }
+    },
+    async updatePropertyVisualNotAvailabilityStatus({ commit }, property_id){
+        try {
+            const response = await PropertyVisualsService.updatePropertyVisualAvailabilityStatus(property_id);
+            if(response.visualsResponse.status === 200) {
+                commit('updatePropertyVisualsUnlist', property_id);
+            }
+        } catch (error) {
+            throw new Error(error);
+        }
     }
 }
 
@@ -200,7 +220,9 @@ const mutations = {
     setCreatedProperty: (state, returnedProperty) => (state.createdProperty = returnedProperty),
     setCurrentUserListedPropertyVisuals: (state, returnedCurrentUserListedProperties) => (state.currentUserListedPropertyVisuals = returnedCurrentUserListedProperties),
     setCurrentUserUnlistedPropertyVisuals: (state, returnedCurrentUserUnlistedProperties) => (state.currentUserUnlistedPropertyVisuals = returnedCurrentUserUnlistedProperties),
-    setCurrentUserUncertifiedPropertyVisuals: (state, returnedCurrentUserUncertifiedProperties) => (state.currentUserUncertifiedPropertyVisuals = returnedCurrentUserUncertifiedProperties)  
+    setCurrentUserUncertifiedPropertyVisuals: (state, returnedCurrentUserUncertifiedProperties) => (state.currentUserUncertifiedPropertyVisuals = returnedCurrentUserUncertifiedProperties),
+    updatePropertyVisualsList: (state, property_id) => state.currentUserListedPropertyVisuals = state.currentUserListedPropertyVisuals.filter(currentUserListedPropertyVisual => currentUserListedPropertyVisual.property_id !== property_id),
+    updatePropertyVisualsUnlist: (state, property_id) => state.currentUserUnlistedPropertyVisuals = state.currentUserUnlistedPropertyVisuals.filter(currentUserUnlistedPropertyVisual => currentUserUnlistedPropertyVisual.property_id !== property_id)
 }
 
 export default {

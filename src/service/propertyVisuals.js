@@ -42,6 +42,22 @@ export default {
       throw new Error(error);
     }
   },
+  async updatePropertyVisualAvailabilityStatus(property_id){
+    try {
+      const visualsResponse = await API.propertyVisualsApi.put(`/property-visuals/property-visual-available-or-unavailable/${property_id}`);
+      const propertyResponse = await API.propertyApi.put(`/properties/change-property-available-status/${property_id}`);
+      if(
+        (visualsResponse.status === 200 || visualsResponse.status === 201) &&
+        (propertyResponse.status === 200 || propertyResponse.status === 201)
+        ){
+          return {
+            visualsResponse, propertyResponse
+          }
+        }
+    } catch (error) {
+      throw new Error(error);
+    }
+  },
   async getPropertyVisualsByPropertyId(property_id) {
     try {
       const response = await API.propertyVisualsApi.get(`/property-visuals/display-by-property-id/${property_id}`)
