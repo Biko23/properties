@@ -138,7 +138,7 @@ export default {
       try {
         const response = await this.postVendor(this.newVendor);
         if (response.status === 201 || response.status === 200) {
-          this.$router.push("/login");
+          this.$router.push("/register");
         }
       } catch (error) {
         console.log(error);

@@ -5,12 +5,12 @@
     <v-container>
       <v-row>
         <v-col style="text-align: center">
-          <h1>List of tusted service providers</h1>
+          <h1>List of trusted service providers</h1>
         </v-col>
       </v-row>
     </v-container>
     <v-container>
-      <v-row>
+      <!-- <v-row>
         <v-col cols="12" sm="12" md="3" lg="3">
           <v-card class="mx-auto" max-width="344">
             <v-img src="../assets/signup.png" height="200px"></v-img>
@@ -155,12 +155,15 @@
             </v-expand-transition>
           </v-card>
         </v-col>
-      </v-row>
+      </v-row> -->
               <v-row id="main-property">
-            <v-col cols="12" xl="2" lg="3" md="4" sm="6" xs="12" v-for="(vendor,vendor_name) in allVendors" :key="vendor_name">
+            <v-col cols="12" xl="2" lg="3" md="4" sm="6" xs="12" v-for="(vendor) in allVendors" :key="vendor.vendor_id">
                 <service-provider-card 
                     :vendor_name="vendor.vendor_name"
                     :vendor_primary_phone_number="vendor.vendor_primary_phone_number"
+                    :vendorCategory="vendor.vendorCategory.vendor_category_name"
+                    :points="vendor.points"
+                    :onClick="likingVendor(item)"
 
                 />
             
@@ -168,14 +171,14 @@
             </v-col>
         </v-row>
     </v-container>
-    <div>
+   
       <!-- <ul>
         <li v-for="(vendor) in vendors"  :key="vendor.vendor_name">
           
          
         </li>
       </ul> -->
-
+<!-- 
       <v-list>
         <v-list-item v-for="(vendor,vendor_name) in allVendors" :key="vendor_name">
             <v-list-item-content>
@@ -183,8 +186,8 @@
           </v-list-item-content>
         </v-list-item
       ></v-list>
-      <h1>hello</h1>
-    </div><br><br><br>
+      <h1>hello</h1> -->
+  
     <Footer />
   </div>
 </template>
@@ -206,12 +209,16 @@ export default {
   computed: {
     ...mapGetters(["allVendors"]),
   },
+  
+
+
   created() {
     this.fetchVendors();
   },
   methods: {
-    ...mapActions(["fetchVendors"]),
-  },
+    ...mapActions(["fetchVendors","likingVendor"]),
+
+  }
 };
 </script>
 

@@ -24,7 +24,15 @@ const actions = {
             const response = await vendorsBackOfficeService.postProfessional(newVendor);
             return response;
         } catch (error) {
-            throw new Error("Failed on loading current properties")
+            throw new Error("Failed on posting new profession sevice")
+        }
+    },
+    async likeVendor(_ , newVendor) {
+        try {
+            const response = await vendorsBackOfficeService.likeAVendor(newVendor);
+            return response;
+        } catch (error) {
+            throw new Error("Failed on liking current vendor")
         }
     },
 
