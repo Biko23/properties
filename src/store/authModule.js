@@ -70,10 +70,15 @@ const actions = {
     },
     //   to work on it
     async logout({ commit }) {
+        try{
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         await commit('loginStatus', false);
         await commit('setCurrentUser', {});
+        }
+        catch(error){
+            console.log(error);
+        }
     }
 }
 
