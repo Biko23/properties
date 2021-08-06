@@ -47,6 +47,11 @@ const routes = [
     component: () => import('@/views/PropertiesForSale')
   },
   {
+    path: '/property-details',
+    name: 'seller-properties-details',
+    component: () => import('@/views/SellerPropertiesDetails')
+  },
+  {
     path: '/signup',
     name: 'SignUp',
     component: () => import('@/views/SignUp')
@@ -79,7 +84,7 @@ const routes = [
   },
   {
     path: '/view',
-    path: '/view/:propertyId',
+    path: '/view/:property_id',
     props: true,
     name: 'ViewProperty',
     component: () => import('@/components/ViewProperty')

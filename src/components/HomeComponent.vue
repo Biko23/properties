@@ -480,20 +480,11 @@
         </v-col>
       </v-row>
     </v-container>
-
-    <about />
-
-
-<!---->
-   <Footer />
   </div>
 </template>
 
 <script>
-import About from '../views/About.vue';
-import Footer from './Footer.vue';
 export default {
-  components: { About, Footer },
   name: "Home2",
 
   data: () => ({

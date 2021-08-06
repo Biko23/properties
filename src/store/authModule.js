@@ -47,12 +47,13 @@ const actions = {
         try {
             const toDecode = localStorage.getItem('token');
             const decoded = await decode(toDecode);
-            console.log(decoded);
             const response = await AuthService.fetchLoggedUser(decoded.sub);
             if (response.status === 200 || response.status === 200) {
                 // localStorage.setItem('user', response.data.result);
                 // to review with solomon
                 const loggedInUser = {
+                    username: response.data.result.username,
+                    user_id: response.data.result.user_id,
                     vendor_name: response.data.result.name,
                     vendor_primary_phone_number:response.data.result.telephone,
                     category_type: response.data.result.category_type,

@@ -15,8 +15,8 @@
                 <property-card 
                     location="Plot 3435, Kyengera-Wakiso"
                     :date="formatDate(propertyVisual.when_created)"
-                    :src="'http://localhost:8094/' + propertyVisual.snapshot"
-                    :to="`/view/${propertyVisual.propertyId}`"
+                    :src="'http://localhost:8002/' + propertyVisual.snapshot"
+                    :to="`/view/${propertyVisual.property_id}`"
                 />
             
                 <!-- C:\Users\A241901\Documents\project\stanbicproperties-marketplace\property-visuals\src\main\resources\uploads -->

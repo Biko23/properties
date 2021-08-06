@@ -28,7 +28,6 @@ export default {
   async fetchLoggedUser(username){
     try {
       const response = await API.userApi.get(`/users/user?username=${username}`)
-      console.log(response);
       return response
     } catch (error) {
       console.log(error);
