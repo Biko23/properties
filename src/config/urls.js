@@ -27,8 +27,6 @@ export default {
     propertyNeighborhoodUrl: `http://localhost:9001/${PREFIX}`,
     propertyLegalProtectionUrl: `http://localhost:9002/${PREFIX}`,
     neighborhoodVisualsUrl: `http://localhost:9003/${PREFIX}`,
-
-
     //From Backoffice
     vendorUrl: `http://localhost:8091/${PREFIX}`,
 

@@ -129,24 +129,24 @@ export default {
   created() {
     this.fetchVendorsCategories();
   },
-mounted(){
-  this.loadVendorData();
-},
+  mounted() {
+    this.loadVendorData();
+  },
   methods: {
     ...mapActions(["fetchVendorsCategories", "postVendor"]),
     async postingVendor() {
       try {
         const response = await this.postVendor(this.newVendor);
         if (response.status === 201 || response.status === 200) {
-          this.$router.push("/login");
+          this.$router.push("/register");
         }
       } catch (error) {
         console.log(error);
       }
     },
-    loadVendorData(){
+    loadVendorData() {
       this.newVendor = Object.assign({}, this.currentLoggedinUser);
-    }
+    },
   },
 };
 </script>
