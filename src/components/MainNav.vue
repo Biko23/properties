@@ -302,10 +302,13 @@ export default {
     ...mapActions(["logout"]),
     async logingOut() {
       try {
-        await this.logout().then(() => {
+        await this.logout()
+        .then(() => {
           this.$router.push("/");
         });
-      } catch (error) {}
+      } catch (error) {
+        throw new Error(error);
+      }
     },
   },
 };

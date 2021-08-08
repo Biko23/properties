@@ -1,9 +1,11 @@
 import AuthService from '@/service/authService';
 import decode from "jwt-decode";
 
+const user = JSON.parse(localStorage.getItem('currentUser')) || {};
+
 const state = {
     registeringUser: [],
-    currentUser: {},
+    currentUser: user,
     isLoggedIn: !!localStorage.getItem('token')
 }
 
@@ -20,7 +22,7 @@ const actions = {
             commit('setRegisteredUser', response.data.result);
             return response;
         } catch (error) {
-            throw new Error("Failed on saved new User")
+            throw new Error("Failed on saved new User");
         }
     },
     async login({ commit }, userDetails) {
@@ -30,17 +32,17 @@ const actions = {
                 localStorage.setItem('token', response.data.token);
                 commit('loginStatus', true);
             }
-            return response
+            return response;
         } catch (error) {
-            throw new Error('An error occured when sending data')
+            throw new Error('An error occured when sending data');
         }
     },
     async updateUser(_, userDetails) {
         try {
             const response = await AuthService.updateUserProfile(userDetails);
-            return response
+            return response;
         } catch (error) {
-            throw new Error('An error occured when sending data')
+            throw new Error('An error occured when sending data');
         }
     },
     async fetchLoggedUser({ commit }) {
@@ -49,8 +51,7 @@ const actions = {
             const decoded = await decode(toDecode);
             const response = await AuthService.fetchLoggedUser(decoded.sub);
             if (response.status === 200 || response.status === 200) {
-                // localStorage.setItem('user', response.data.result);
-                // to review with solomon
+
                 const loggedInUser = {
                     username: response.data.result.username,
                     user_id: response.data.result.user_id,
@@ -61,23 +62,23 @@ const actions = {
                     vendor_secondary_phone_number: "",
                     vendor_secondary_email: ""
                 }
+                localStorage.setItem('currentUser', JSON.stringify(loggedInUser));
                 commit("setCurrentUser", loggedInUser);
             }
             return response;
         } catch (error) {
-            throw new Error(error)
+            throw new Error(error);
         }
     },
-    //   to work on it
     async logout({ commit }) {
         try{
         localStorage.removeItem('token');
-        localStorage.removeItem('user');
+        localStorage.removeItem('currentUser');
         await commit('loginStatus', false);
         await commit('setCurrentUser', {});
         }
         catch(error){
-            console.log(error);
+            throw new Error(error);
         }
     }
 }

@@ -49,17 +49,26 @@ const routes = [
   {
     path: '/property-details',
     name: 'seller-properties-details',
-    component: () => import('@/views/SellerPropertiesDetails')
+    component: () => import('@/views/SellerPropertiesDetails'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/signup',
     name: 'SignUp',
-    component: () => import('@/views/SignUp')
+    component: () => import('@/views/SignUp'),
+    meta: {
+      hideForAuth: true
+    }
   },
   {
     path: '/login',
     name: 'Login',
-    component: () => import('@/views/Login')
+    component: () => import('@/views/Login'),
+    meta: {
+      hideForAuth: true
+    }
   },
   {
     path: '/getstarted',

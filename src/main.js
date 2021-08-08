@@ -30,6 +30,20 @@ router.beforeEach((to, from, next) => {
   } else {
     next()
   }
+
+  if (to.matched.some(record => record.meta.hideForAuth)) {
+    if (
+      store.getters.loginState ||
+      (Object.keys(store.getters.currentLoggedinUser).length !== 0 && 
+      (store.getters.currentLoggedinUser).constructor === Object)
+    ) {
+        next('/');
+    } else {
+        next();
+    }
+} else {
+    next();
+}
 })
 
 // router.beforeEach((to, from, next) => {
