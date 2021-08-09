@@ -7,6 +7,7 @@ import PropertyService from '@/service/property/property';
 import PropertyTypeService from '@/service/property/propertyListedAs';
 import PropertyFeatureService from '@/service/propertyFeatures';
 import PropertyLandmarkTypeService from '@/service/propertyLandmarkTypes';
+import { formatDate } from '@/helpers/helpers';
 
 const state = {
     propertyTypes: [],
@@ -218,9 +219,30 @@ const mutations = {
     setPropertyRegisterTwoData: (state, propertyDataTwo) => (state.propertySecondPageData = propertyDataTwo),
     setPropertyRegisterThreeData: (state, propertyDataThree) => (state.propertyThirdPageData = propertyDataThree),
     setCreatedProperty: (state, returnedProperty) => (state.createdProperty = returnedProperty),
-    setCurrentUserListedPropertyVisuals: (state, returnedCurrentUserListedProperties) => (state.currentUserListedPropertyVisuals = returnedCurrentUserListedProperties),
-    setCurrentUserUnlistedPropertyVisuals: (state, returnedCurrentUserUnlistedProperties) => (state.currentUserUnlistedPropertyVisuals = returnedCurrentUserUnlistedProperties),
-    setCurrentUserUncertifiedPropertyVisuals: (state, returnedCurrentUserUncertifiedProperties) => (state.currentUserUncertifiedPropertyVisuals = returnedCurrentUserUncertifiedProperties),
+    setCurrentUserListedPropertyVisuals: (state, returnedCurrentUserListedProperties) => (state.currentUserListedPropertyVisuals = returnedCurrentUserListedProperties.map(currentProperty => {
+        return {
+            property_id: currentProperty.property_id,
+            description: currentProperty.description,
+            created_by: currentProperty.created_by,
+            when_created: formatDate(currentProperty.when_created)
+        }
+    })),
+    setCurrentUserUnlistedPropertyVisuals: (state, returnedCurrentUserUnlistedProperties) => (state.currentUserUnlistedPropertyVisuals = returnedCurrentUserUnlistedProperties.map(currentProperty => {
+        return {
+            property_id: currentProperty.property_id,
+            description: currentProperty.description,
+            created_by: currentProperty.created_by,
+            when_created: formatDate(currentProperty.when_created)
+        }
+    })),
+    setCurrentUserUncertifiedPropertyVisuals: (state, returnedCurrentUserUncertifiedProperties) => (state.currentUserUncertifiedPropertyVisuals = returnedCurrentUserUncertifiedProperties.map(currentProperty => {
+        return {
+            property_id: currentProperty.property_id,
+            description: currentProperty.description,
+            created_by: currentProperty.created_by,
+            when_created: formatDate(currentProperty.when_created)
+        }
+    })),
     updatePropertyVisualsList: (state, property_id) => state.currentUserListedPropertyVisuals = state.currentUserListedPropertyVisuals.filter(currentUserListedPropertyVisual => currentUserListedPropertyVisual.property_id !== property_id),
     updatePropertyVisualsUnlist: (state, property_id) => state.currentUserUnlistedPropertyVisuals = state.currentUserUnlistedPropertyVisuals.filter(currentUserUnlistedPropertyVisual => currentUserUnlistedPropertyVisual.property_id !== property_id)
 }
