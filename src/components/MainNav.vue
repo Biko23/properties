@@ -4,9 +4,9 @@
       <div style="">
         <v-img
           style="margin-left: auto; margin-right: auto; display: block"
-          max-height="35"
+          max-height="40"
           max-width="35"
-          src="../assets/New-Stanbic-Bank-Logo.jpg"
+          src="../assets/ssss.png"
         ></v-img>
       </div>
 
@@ -72,7 +72,7 @@
             <links title="Sell A Property" link="/register" />
             <!-- <links title="Current market trends" /> -->
             <links title="Seller's guide" link="/learn" />
-            <links title="Property Details" link="/property-details"/>
+            <links title="Property Details" link="/property-details" />
             <!-- <links title="Price Conversion Calculator" /> -->
           </v-list>
         </v-menu>
@@ -149,12 +149,18 @@
           </template>
 
           <v-list>
-            <links title="All " link="/provider" />
+            <links
+              v-for="category in allVendorsCategories"
+              :key="category.vendor_category_id"
+              link="/provider"
+              :title="category.vendor_category_name"
+            />
+            <!-- <links title="All " link="/provider" />
             <links title="Electrical " link="/provider" />
             <links title="Machenical " />
             <links title="Research & Development" />
             <links link="/provider" title="Architects" />
-            <links title="Civil Engineers " />
+            <links title="Civil Engineers " /> -->
           </v-list>
         </v-menu>
 
@@ -273,37 +279,39 @@
 // import { defineComponent } from '@vue/composition-api'
 import Links from "@/components/Links";
 import { mapActions, mapGetters } from "vuex";
+
 export default {
   name: "MainNaigation",
   components: {
     Links,
   },
-  data() {
-    return {
-      drawer: null,
-      show1: false,
-      show2: false,
-      show3: false,
-      show4: false,
-      show5: false,
-      divider: false,
-      btns: [
-        ["Removed", "0"],
-        ["Large", "lg"],
-        ["Custom", "b-xl"],
-      ],
-      colors: ["deep-purple accent-4", "error", "teal darken-1"],
-    };
-  },
+  data: () => ({
+    vendorCategories: [],
+    drawer: null,
+    show1: false,
+    show2: false,
+    show3: false,
+    show4: false,
+    show5: false,
+    divider: false,
+    btns: [
+      ["Removed", "0"],
+      ["Large", "lg"],
+      ["Custom", "b-xl"],
+    ],
+    colors: ["deep-purple accent-4", "error", "teal darken-1"],
+  }),
   computed: {
-    ...mapGetters(["loginState"]),
+    ...mapGetters(["loginState", "allVendorsCategories"]),
+  },
+  created() {
+    this.fetchVendorsCategories();
   },
   methods: {
-    ...mapActions(["logout"]),
+    ...mapActions(["logout", "fetchVendorsCategories"]),
     async logingOut() {
       try {
-        await this.logout()
-        .then(() => {
+        await this.logout().then(() => {
           this.$router.push("/");
         });
       } catch (error) {

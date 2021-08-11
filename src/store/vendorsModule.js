@@ -2,12 +2,14 @@ import vendorsBackOfficeService from '@/service/vendors/vendorsBackOfficeService
 
 const state = {
     vendorCategories: [],
-    vendors:[]
+    vendors: [],
+    isLiked: false
 }
 
 const getters = {
     allVendorsCategories: (state) => state.vendorCategories,
-    allVendors:(state)=>state.vendors
+    allVendors: (state) => state.vendors,
+   // likeState: state => state.isLiked,
 };
 
 const actions = {
@@ -19,7 +21,7 @@ const actions = {
             throw new Error("Failed on loading current Vendors")
         }
     },
-    async postVendor(_ , newVendor) {
+    async postVendor(_, newVendor) {
         try {
             const response = await vendorsBackOfficeService.postProfessional(newVendor);
             return response;
@@ -27,12 +29,30 @@ const actions = {
             throw new Error("Failed on posting new profession sevice")
         }
     },
-    async likeVendor(_ , newVendor) {
+    async likeVendor(_, newVendor) {
         try {
-            const response = await vendorsBackOfficeService.likeAVendor(newVendor);
+            const response = await vendorsBackOfficeService.likeAVendor(newVendor,user_id);
+            if (response.status === 200 || response.status === 201) {
+
+                commit('likeStatus', true);
+               alert("Liked")
+            }
             return response;
         } catch (error) {
             throw new Error("Failed on liking current vendor")
+        }
+    },
+    async unLikeVendor(_, newVendor) {
+        try {
+            const response = await vendorsBackOfficeService.unLikeAVendor(newVendor);
+            if (response.status === 200 || response.status === 201) {
+
+                commit('likeStatus', false);
+            }
+            return response;
+        }
+        catch (error) {
+            throw new Error("Failed on unliking current vendor")
         }
     },
 
@@ -47,13 +67,14 @@ const actions = {
 }
 
 const mutations = {
-    setVendorCategories: (state, returnedVendorsCategories) => (state.vendorCategories = returnedVendorsCategories.map(vendorCategory =>{
-        return{
-            value:vendorCategory.vendor_category_id,
-            text:vendorCategory.vendor_category_name
+    setVendorCategories: (state, returnedVendorsCategories) => (state.vendorCategories = returnedVendorsCategories.map(vendorCategory => {
+        return {
+            value: vendorCategory.vendor_category_id,
+            text: vendorCategory.vendor_category_name
         }
     })),
-    setVendors:(state,returnedVendors)=>(state.vendors = returnedVendors)
+    setVendors: (state, returnedVendors) => (state.vendors = returnedVendors),
+    likeStatus: (state, status) => state.isLiked = status
 }
 
 export default {

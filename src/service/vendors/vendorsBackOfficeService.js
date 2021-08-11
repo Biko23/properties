@@ -28,7 +28,16 @@ async getVendors () {
   },
   async likeAVendor (data) {
     try {
-      const response = await API.vendorsApi.post(`/vendors/add-points/${data.vendor_id}`, data)
+      const response = await API.vendorsApi.post(`/vendors/add-points/${data.vendor_id}/${data.liked_by}`)
+      return response
+    } catch (error) {
+      //console.log(error)
+      alert(error)
+    }
+  },
+  async unLikeAVendor (data) {
+    try {
+      const response = await API.vendorsApi.post(`/vendors/deduct-points/${data.vendor_id}/${data.disliked_by}`)
       return response
     } catch (error) {
       console.log(error)
