@@ -4,7 +4,7 @@
         <v-row id="property-header">
             <div style="flex:1;">
                 <h3>Properties</h3>
-                <small style="font-weight: bold;">{{count}} results</small>
+                <small style="font-weight: bold;">{{allPropertyVisuals.length}} results</small>
             </div>
             <div style="flex:1;">
                 <h3 style="color: #3b6ef3;">BUY PROPERTY HERE</h3>
@@ -35,9 +35,6 @@ export default {
     components: {
         PropertyCard
     },
-    data: () => ({
-        count: Math.floor((Math.random() * 1000) + 1)
-    }),
     methods: {
         ...mapActions(["fetchPropertyVisuals"]),
         formatDate(dateToFormat){
@@ -54,7 +51,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(["allPropertyVisuals"])
+        ...mapGetters(["allPropertyVisuals"]),
     },
     created(){
         this.fetchPropertyVisuals();

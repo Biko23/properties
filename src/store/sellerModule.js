@@ -134,16 +134,17 @@ const actions = {
                 updated_by: rootState.AuthModule.currentUser.username
             }
 
-            // Api calls
-            console.log(propertyLocation);
             await PropertyLocationService.postAPropertyLocation(propertyLocation);
             await PropertyValueService.postAPropertyValue(propertyValue);
             await PropertyNearbyLandmarkService.postAPropertyNearbyLandmark(nearbyLandmarkVisuals);
             await NeighborhoodVisualsService.postNeighborhoodVisuals(neighborhoodVisuals);
-            await PropertyVisualsService.postPropertyVisuals(propertyVisuals);
-            // this.$swal('Great!','Movie added successfully!','success');
+           const propertyVisualResponse = await PropertyVisualsService.postPropertyVisuals(propertyVisuals);
+            if(propertyVisualResponse.status === 200 || propertyVisualResponse.status === 201){
+                return propertyVisualResponse;
+            }
         } catch (error) {
             // this.$swal('ooh!','Unable to finish!','error');
+            throw new Error('Failed to fully create a property');
         }
     },
     async getListedPropertyVisualsByUsername({ commit, rootState }){
