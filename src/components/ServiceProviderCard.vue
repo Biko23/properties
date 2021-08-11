@@ -12,47 +12,39 @@
       ><br />
       <small>Likes: {{ points }}</small>
     </v-card-subtitle>
-    <v-btn style="margin: 5px" @click="onClick">Like</v-btn>
+    <!-- <v-btn style="margin: 5px" @click="onClick">Like</v-btn> -->
+    <slot></slot>
     <!-- <v-btn style="margin: 5px">Deslike</v-btn> -->
   </v-card>
   <!-- </router-link> -->
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+
 export default {
   name: "PropertyCard",
   data: () => ({
     vendorCategories: [],
     editedIndex: -1,
-    newVendor: {
-      vendor_name: "",
-      vendor_primary_phone_number: "",
-      vendor_secondary_phone_number: "",
-      vendor_primary_email: "",
-      vendor_secondary_email: "",
-      category_type: "",
-    },
+   
   }),
-  computed: {
-    ...mapGetters(["currentLoggedinUser"]),
-  },
-  methods: {
-    ...mapActions(["likeVendor"]),
+ 
+//   methods: {
+  
 
-    async likingVendor(item) {
-      console.log(item);
-      try {
-        const response = await this.likeVendor(this.newVendor);
-        console.log(response);
-        if (response.status === 201 || response.status === 200) {
-          this.$router.push("/login");
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    },
-  },
+//     async likingVendor(item) {
+//       console.log(item);
+//       try {
+//         const response = await this.likeVendor(this.newVendor);
+//         console.log(response);
+//         if (response.status === 201 || response.status === 200) {
+//           this.$router.push("/login");
+//         }
+//       } catch (error) {
+//         console.log(error);
+//       }
+//     },
+//   },
   props: {
     vendor_name: {
       type: String,
@@ -72,7 +64,10 @@ export default {
     },
     onClick: {
       type: Function,
-      default: console.log("hello"),
+      default: ()=>{
+          console.log("Hello");
+      }
+
     },
     to: {
       type: String,

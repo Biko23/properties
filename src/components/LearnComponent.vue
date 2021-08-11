@@ -16,9 +16,10 @@
             <v-card-title>Sell your home directly to us </v-card-title>
 
             <v-card-subtitle>
-              I'm a thing. But, like most politicians, he promised more than he
-              could deliver. You won't have time for sleeping, soldier, not with
-              all the bed making you'll be doing.
+              Getting a competitive cash offer from Stanbic Properties is an easy path to
+              sell your home, with more control and less prepwork. You sell your
+              home as-is and get paid with no surprises, while we take care of
+              the rest.
               <h4>See how much we can pay</h4>
               <br />
               <v-row row d-flex>
@@ -63,7 +64,7 @@
           </v-card>
         </v-col>
         <v-col></v-col> </v-row
-      ><br /><br>
+      ><br /><br />
 
       <v-row>
         <v-col></v-col>
@@ -80,9 +81,9 @@
             <v-card-title> Sell your home via a Broker </v-card-title>
 
             <v-card-subtitle>
-              I'm a thing. But, like most politicians, he promised more than he
-              could deliver. You won't have time for sleeping, soldier, not with
-              all the bed making you'll be doing.
+              When you work with a real estate agent, you'll get selling support
+              at every step, from prepping and listing your home to marketing
+              that gets buyers in the door.
 
               <p style="text-align: center; margin-top: 1rem">
                 <v-btn style="background-color: #3b6ef3">
@@ -105,8 +106,8 @@
             </v-card-subtitle>
           </div>
         </v-col>
-        <v-col></v-col>
-      </v-row><br><br>
+        <v-col></v-col> </v-row
+      ><br /><br />
 
       <v-row
         ><br />
@@ -116,9 +117,11 @@
             <v-card-title> Sell your home yourself</v-card-title>
 
             <v-card-subtitle>
-              I'm a thing. But, like most politicians, he promised more than he
-              could deliver. You won't have time for sleeping, soldier, not with
-              all the bed making you'll be doing.
+              Sell your home yourself Deciding to sell your home yourself is
+              referred to as for-sale-by-owner (FSBO). The FSBO process is
+              similar to traditional selling, but without the help of a real
+              estate agent. In this case, you’re responsible for the home prep,
+              marketing, showings, and negotiations.
               <p style="text-align: center; margin-top: 1rem">
                 <v-btn style="background-color: #3b6ef3">
                   <span
