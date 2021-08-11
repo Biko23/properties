@@ -303,7 +303,6 @@ export default {
     ])
   },
   mounted(){
-    console.log(this.property_id);
     this.fetchSinglePropertyVisuals(this.property_id);
     this.fetchPropertyNearbyLandmarkVisuals(this.property_id);
     this.fetchPropertyNeighborhoodVisuals(this.property_id);

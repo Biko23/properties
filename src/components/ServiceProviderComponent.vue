@@ -10,152 +10,6 @@
       </v-row>
     </v-container>
     <v-container>
-      <!-- <v-row>
-        <v-col cols="12" sm="12" md="3" lg="3">
-          <v-card class="mx-auto" max-width="344">
-            <v-img src="../assets/signup.png" height="200px"></v-img>
-
-            <v-card-title> Top western road trips </v-card-title>
-
-            <v-card-subtitle> 1,000 miles of wonder </v-card-subtitle>
-
-            <v-card-actions>
-              <v-btn color="orange lighten-2" text> Explore </v-btn>
-
-              <v-spacer></v-spacer>
-
-              <v-btn icon @click="show = !show">
-                <v-icon>{{
-                  show ? "mdi-chevron-up" : "mdi-chevron-down"
-                }}</v-icon>
-              </v-btn>
-            </v-card-actions>
-
-            <v-expand-transition>
-              <div v-show="show">
-                <v-divider></v-divider>
-
-                <v-card-text>
-                  I'm a thing. But, like most politicians, he promised more than
-                  he could deliver. You won't have time for sleeping, soldier,
-                  not with all the bed making you'll be doing. Then we'll go
-                  with that data file! Hey, you add a one and two zeros to that
-                  or we walk! You're going to do his laundry? I've got to find a
-                  way to escape.
-                </v-card-text>
-              </div>
-            </v-expand-transition>
-          </v-card>
-        </v-col>
-        <v-col cols="12" sm="12" md="3" lg="3">
-          <v-card class="mx-auto" max-width="344">
-            <v-img src="../assets/login.png" height="200px"></v-img>
-
-            <v-card-title> Top western road trips </v-card-title>
-
-            <v-card-subtitle> 1,000 miles of wonder </v-card-subtitle>
-
-            <v-card-actions>
-              <v-btn color="orange lighten-2" text> Explore </v-btn>
-
-              <v-spacer></v-spacer>
-
-              <v-btn icon @click="show = !show">
-                <v-icon>{{
-                  show ? "mdi-chevron-up" : "mdi-chevron-down"
-                }}</v-icon>
-              </v-btn>
-            </v-card-actions>
-
-            <v-expand-transition>
-              <div v-show="show">
-                <v-divider></v-divider>
-
-                <v-card-text>
-                  I'm a thing. But, like most politicians, he promised more than
-                  he could deliver. You won't have time for sleeping, soldier,
-                  not with all the bed making you'll be doing. Then we'll go
-                  with that data file! Hey, you add a one and two zeros to that
-                  or we walk! You're going to do his laundry? I've got to find a
-                  way to escape.
-                </v-card-text>
-              </div>
-            </v-expand-transition>
-          </v-card>
-        </v-col>
-        <v-col cols="12" sm="12" md="3" lg="3">
-          <v-card class="mx-auto" max-width="344">
-            <v-img src="../assets/signup.png" height="200px"></v-img>
-
-            <v-card-title> Top western road trips </v-card-title>
-
-            <v-card-subtitle> 1,000 miles of wonder </v-card-subtitle>
-
-            <v-card-actions>
-              <v-btn color="orange lighten-2" text> Explore </v-btn>
-
-              <v-spacer></v-spacer>
-
-              <v-btn icon @click="show = !show">
-                <v-icon>{{
-                  show ? "mdi-chevron-up" : "mdi-chevron-down"
-                }}</v-icon>
-              </v-btn>
-            </v-card-actions>
-
-            <v-expand-transition>
-              <div v-show="show">
-                <v-divider></v-divider>
-
-                <v-card-text>
-                  I'm a thing. But, like most politicians, he promised more than
-                  he could deliver. You won't have time for sleeping, soldier,
-                  not with all the bed making you'll be doing. Then we'll go
-                  with that data file! Hey, you add a one and two zeros to that
-                  or we walk! You're going to do his laundry? I've got to find a
-                  way to escape.
-                </v-card-text>
-              </div>
-            </v-expand-transition>
-          </v-card>
-        </v-col>
-        <v-col cols="12" sm="12" md="3" lg="3">
-          <v-card class="mx-auto" max-width="344">
-            <v-img src="../assets/login.png" height="200px"></v-img>
-
-            <v-card-title> Top western road trips </v-card-title>
-
-            <v-card-subtitle> 1,000 miles of wonder </v-card-subtitle>
-
-            <v-card-actions>
-              <v-btn color="orange lighten-2" text> Explore </v-btn>
-
-              <v-spacer></v-spacer>
-
-              <v-btn icon @click="show = !show">
-                <v-icon>{{
-                  show ? "mdi-chevron-up" : "mdi-chevron-down"
-                }}</v-icon>
-              </v-btn>
-            </v-card-actions>
-
-            <v-expand-transition>
-              <div v-show="show">
-                <v-divider></v-divider>
-
-                <v-card-text>
-                  I'm a thing. But, like most politicians, he promised more than
-                  he could deliver. You won't have time for sleeping, soldier,
-                  not with all the bed making you'll be doing. Then we'll go
-                  with that data file! Hey, you add a one and two zeros to that
-                  or we walk! You're going to do his laundry? I've got to find a
-                  way to escape.
-                </v-card-text>
-              </div>
-            </v-expand-transition>
-          </v-card>
-        </v-col>
-      </v-row> -->
       <v-row id="main-property">
         <v-col
           cols="12"
@@ -185,23 +39,6 @@
         </v-col>
       </v-row>
     </v-container>
-
-    <!-- <ul>
-        <li v-for="(vendor) in vendors"  :key="vendor.vendor_name">
-          
-         
-        </li>
-      </ul> -->
-    <!-- 
-      <v-list>
-        <v-list-item v-for="(vendor,vendor_name) in allVendors" :key="vendor_name">
-            <v-list-item-content>
-            <v-list-item-title v-text="vendor.vendor_name"></v-list-item-title>   
-          </v-list-item-content>
-        </v-list-item
-      ></v-list>
-      <h1>hello</h1> -->
-
     <Footer />
   </div>
 </template>
@@ -215,11 +52,12 @@ import ServiceProviderCard from "./ServiceProviderCard.vue";
 export default {
   components: { Footer, MainNav, TopNav, ServiceProviderCard },
   name: "ServiceProviderComponent",
-
+  props: ['vendor_category_id'],
   data: () => ({
     show: false,
     like:false,
     vendors: [],
+    // vendor_category_id_to_search_by: this.vendor_category_id,
     newVendor: {
       vendor_name: "",
       vendor_primary_phone_number: "",
@@ -236,9 +74,19 @@ export default {
   created() {
     this.fetchVendors();
   },
+  mounted(){
+    this.logToConsole();
+  },
+  // watch: {
+  //   vendor_category_id_to_search_by: {
+  //     handler: (newTitle, oldTitle) => {
+  //       console.log("Title changed from " + oldTitle + " to " + newTitle)
+  //     },
+  //     immediate: true
+  //   },
+  // },
   methods: {
     ...mapActions(["fetchVendors", "likeVendor", "unLikeVendor"]),
-
     async likingVendor(item) {
       const data = {
         vendor_id: item.vendor_id,

@@ -326,7 +326,7 @@
 
     <v-container>
         <v-row style="display: flex; flex-direction: row; justify-content: space-evenly;">
-           <v-col cols="12" md="3" xs="12" v-for="propertyVisual in allPropertyVisuals.slice(0,4)" :key="propertyVisual.visuals_id">
+           <v-col cols="12" md="3" xs="12" v-for="propertyVisual in allLatestProperties" :key="propertyVisual.visuals_id">
                 <recent-properties-component
                     :description="propertyVisual.description"
                     :created_by="propertyVisual.created_by"
@@ -367,13 +367,13 @@ export default {
         icons: ["mdi-facebook", "mdi-twitter", "mdi-linkedin", "mdi-instagram"],
     }),
     methods: {
-        ...mapActions(["fetchPropertyVisuals"])
+        ...mapActions(["fetchLatestPropertyVisuals"])
     },
     computed: {
-        ...mapGetters(["allPropertyVisuals"])
+        ...mapGetters(["allLatestProperties"])
     },
     created(){
-        this.fetchPropertyVisuals();
+        this.fetchLatestPropertyVisuals();
     }
 };
 </script>

@@ -6,14 +6,16 @@ const state = {
     propertyVisuals: [],
     singlePropertyVisuals: [],
     singlePropertyNearbyLandmarkVisuals: [],
-    singleNeighborhoodVisuals: []
+    singleNeighborhoodVisuals: [],
+    latestProperties: []
 }
 
 const getters = {
     allPropertyVisuals: (state) => state.propertyVisuals,
     allSinglePropertyVisuals: (state) => state.singlePropertyVisuals,
     allSinglePropertyNearbyLandmarkVisuals: (state) => state.singlePropertyNearbyLandmarkVisuals,
-    allSingleNeighborhoodVisuals: (state) => state.singleNeighborhoodVisuals
+    allSingleNeighborhoodVisuals: (state) => state.singleNeighborhoodVisuals,
+    allLatestProperties: (state) => state.latestProperties
 };
 
 const actions = {
@@ -23,6 +25,14 @@ const actions = {
             commit('setPropertyVisuals', response.data.result);
         } catch (error) {
             throw new Error("Failed on loading current properties")
+        }
+    },
+    async fetchLatestPropertyVisuals({ commit }) {
+        try {
+            const response = await PropertyVisualsService.getLatestPropertyVisuals();
+            commit('setLatestPropertyVisuals', response.data.result);
+        } catch (error) {
+            throw new Error("Failed on loading latest properties")
         }
     },
     async fetchSinglePropertyVisuals({ commit }, property_id){
@@ -55,7 +65,8 @@ const mutations = {
     setPropertyVisuals: (state, returnedVisuals) => (state.propertyVisuals = returnedVisuals),
     setSinglePropertyVisuals: (state, returnedSinglePropertyVisuals) => (state.singlePropertyVisuals = returnedSinglePropertyVisuals),
     setSinglePropertyNearbyLandmarkVisuals: (state, returnedSinglePropertyLandmarkVisuals) => (state.singlePropertyNearbyLandmarkVisuals = returnedSinglePropertyLandmarkVisuals),
-    setSinglePropertyNeighborhoodVisuals: (state, returnedSinglePropertyNeighborhoodVisuals) => (state.singleNeighborhoodVisuals = returnedSinglePropertyNeighborhoodVisuals)
+    setSinglePropertyNeighborhoodVisuals: (state, returnedSinglePropertyNeighborhoodVisuals) => (state.singleNeighborhoodVisuals = returnedSinglePropertyNeighborhoodVisuals),
+    setLatestPropertyVisuals: (state, returnedLatestProperties) => (state.latestProperties = returnedLatestProperties)
 }
 
 export default {

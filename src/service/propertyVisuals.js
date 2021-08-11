@@ -10,6 +10,14 @@ export default {
       throw new Error('An error occured when retrieving data')
     }
   },
+  async getLatestPropertyVisuals() {
+    try {
+      const response = await API.propertyVisualsApi.get(`/property-visuals/display-latest-properties`)
+      return response
+    } catch (error) {
+      throw new Error('An error occured when retrieving data')
+    }
+  },
   async getPropertyVisualsById(visuals_id) {
     try {
       const response = await API.propertyVisualsApi.get(`/property-visuals/${visuals_id}`)

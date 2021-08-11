@@ -66,7 +66,7 @@
               flex-direction: row;
               justify-content: space-between;
             ">
-                    <router-link to="/register">
+                    <router-link style="text-decoration: none;" to="/register">
                         <v-btn style="background-color: grey; width: 200px">
                             <span style="
                   color: #ffffff;

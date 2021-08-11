@@ -19,7 +19,12 @@
                             <v-text-field v-model="property.landmark_name" class="custom-label-color" label="Landmark Name" :rules="[propertyRules.landmark_name]" color="blue" solo></v-text-field>
                         </v-col>
                         <v-col class="d-flex" cols="12" sm="6">
-                            <v-text-field v-model="property.distance_from_property" class="custom-label-color" label="Distance from property in kms" :rules="[propertyRules.distance_from_property]" color="blue" suffix="kms" solo></v-text-field>
+                            <v-text-field 
+                            v-model="property.distance_from_property" 
+                            class="custom-label-color" label="Distance from property in kms" 
+                            :rules="[propertyRules.distance_from_property]" color="blue" 
+                            suffix="kms" 
+                            solo></v-text-field>
                         </v-col>
                     </v-row>
                 </v-col>
