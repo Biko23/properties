@@ -18,9 +18,17 @@ const state = {
 }
 
 const getters = {
-    currentRegisteringUser: (state) => state.registeringUser,
+    currentRegisteringUser: state => state.registeringUser,
     loginState: state => state.isLoggedIn,
-    currentLoggedinUser: state => state.currentUser
+    currentLoggedinUser: state => state.currentUser,
+    iAmASeller: state => state.is_seller,
+    iAmAInvestor: state => state.is_investor,
+    iAmAProductDeveloper: state => state.is_product_developer,
+    iAmACertifiedSeller: state => state.is_certified_seller,
+    iAmAProfessionalServiceProvider: state => state.is_professional_service_provider,
+    iAmACertifiedProductDeveloper: state => state.is_certified_product_developer,
+    iAmACertifiedInvestor: state => state.is_certified_investor,
+    iAmACertifiedProfessionalServiceProvider: state => state.is_certified_professional_service_provider
 };
 
 const actions = {

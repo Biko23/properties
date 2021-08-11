@@ -78,8 +78,8 @@
         </v-col>
       </v-row>
     </v-container>
-
-    <footer />
+    <about />
+    <Footer />
     <h3></h3>
   </div>
 </template>
@@ -87,11 +87,12 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import BottonNav from "../components/BottonNav.vue";
+import About from "./About.vue";
 import Footer from "../components/Footer.vue";
 import MainNav from "../components/MainNav.vue";
 import TopNav from "../components/TopNav.vue";
 export default {
-  components: { TopNav, MainNav, BottonNav, Footer },
+  components: { TopNav, MainNav, BottonNav, Footer, About },
   name: "VendorProfile",
 
   data: () => ({

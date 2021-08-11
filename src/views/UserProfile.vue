@@ -37,8 +37,8 @@
             </v-col>
         </v-row>
     </v-container>
-
-    <footer />
+    <about />
+    <Footer />
     <h3></h3>
 </div>
 </template>
@@ -48,6 +48,7 @@ import {
     mapActions, mapGetters
 } from "vuex";
 import BottonNav from "../components/BottonNav.vue";
+import About from "./About.vue";
 import Footer from "../components/Footer.vue";
 import MainNav from "../components/MainNav.vue";
 import TopNav from "../components/TopNav.vue";
@@ -56,6 +57,7 @@ export default {
         TopNav,
         MainNav,
         BottonNav,
+        About,
         Footer
     },
     name: "UserProfile",

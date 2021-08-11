@@ -175,7 +175,8 @@
         </v-row>
         <br />
     </v-container>
-
+    <about />
+    <Footer />
     <botton-nav />
 </div>
 </template>
@@ -184,6 +185,8 @@
 import TopNav from "@/components/TopNav.vue";
 import MainNav from "@/components/MainNav.vue";
 import BottonNav from "../components/BottonNav.vue";
+import About from "./About.vue";
+import Footer from "../components/Footer.vue";
 import {
     mapGetters
 } from 'vuex';
@@ -198,7 +201,9 @@ export default {
     components: {
         TopNav,
         MainNav,
-        BottonNav
+        BottonNav,
+        About,
+        Footer
     },
     methods: {},
     computed: {
