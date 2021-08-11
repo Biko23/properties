@@ -15,12 +15,17 @@
                         <v-tab-item>
                             <v-card color="basil" flat>
                                 <v-card-text>
-                                    <v-data-table :headers="listedHeaders" :items="allCurrentUserListedPropertyVisuals" :items-per-page="5" class="elevation-1">
+                                    <v-data-table 
+                                        :headers="listedHeaders" 
+                                        :items="allCurrentUserListedPropertyVisuals" 
+                                        :items-per-page="5" 
+                                        class="elevation-1"
+                                    >
                                         <template v-slot:item.actions="{ item }">
                                             <v-btn @click="changeAvailabilityToNotAvailable(item)">
-                                            <v-icon small class="mr-2">
-                                                mdi-arrow-right-bold
-                                            </v-icon>Unlist
+                                                <v-icon small class="mr-2">
+                                                    mdi-arrow-right-bold
+                                                </v-icon>Unlist
                                             </v-btn>
                                         </template>
                                     </v-data-table>
@@ -33,9 +38,9 @@
                                     <v-data-table :headers="listedHeaders" :items="allCurrentUserUnlistedPropertyVisuals" :items-per-page="5" class="elevation-1">
                                         <template v-slot:item.actions="{ item }">
                                             <v-btn @click="-changeAvailabilityToAvailable(item)">
-                                            <v-icon small class="mr-2">
-                                                mdi-arrow-left-bold
-                                            </v-icon>List
+                                                <v-icon small class="mr-2">
+                                                    mdi-arrow-left-bold
+                                                </v-icon>List
                                             </v-btn>
                                         </template>
                                     </v-data-table>

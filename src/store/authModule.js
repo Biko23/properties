@@ -6,7 +6,15 @@ const user = JSON.parse(localStorage.getItem('currentUser')) || {};
 const state = {
     registeringUser: [],
     currentUser: user,
-    isLoggedIn: !!localStorage.getItem('token')
+    isLoggedIn: !!localStorage.getItem('token'),
+    is_seller: user.is_seller,
+    is_investor: user.is_investor,
+    is_product_developer: user.is_product_developer,
+    is_certified_seller: user.is_certified_seller,
+    is_professional_service_provider: user.is_professional_service_provider,
+    is_certified_product_developer: user.is_certified_product_developer,
+    is_certified_investor: user.is_certified_investor,
+    is_certified_professional_service_provider: user.is_certified_professional_service_provider
 }
 
 const getters = {
@@ -42,7 +50,8 @@ const actions = {
             const response = await AuthService.updateUserProfile(userDetails);
             return response;
         } catch (error) {
-            throw new Error('An error occured when sending data');
+            console.log(error);
+            // throw new Error('An error occured when sending data');
         }
     },
     async fetchLoggedUser({ commit }) {
@@ -56,11 +65,22 @@ const actions = {
                     username: response.data.result.username,
                     user_id: response.data.result.user_id,
                     vendor_name: response.data.result.name,
-                    vendor_primary_phone_number:response.data.result.telephone,
+                    vendor_primary_phone_number: response.data.result.telephone,
                     category_type: response.data.result.category_type,
-                    vendor_primary_email:response.data.result.email,
-                    vendor_secondary_phone_number: "",
-                    vendor_secondary_email: ""
+                    vendor_primary_email: response.data.result.email,
+                    vendor_secondary_phone_number: response.data.result.secondary_contact,
+                    vendor_secondary_email: response.data.result.secondary_email,
+                    business_location: response.data.result.business_location,
+                    roles: response.data.result.roles,
+                    when_created: response.data.result.when_created,
+                    is_seller: response.data.result._seller,
+                    is_investor: response.data.result._investor,
+                    is_product_developer: response.data.result._product_developer,
+                    is_certified_seller: response.data.result._certified_seller,
+                    is_professional_service_provider: response.data.result._professional_service_provider,
+                    is_certified_product_developer: response.data.result._certified_product_developer,
+                    is_certified_investor: response.data.result._certified_investor,
+                    is_certified_professional_service_provider: response.data.result._certified_professional_service_provider
                 }
                 localStorage.setItem('currentUser', JSON.stringify(loggedInUser));
                 commit("setCurrentUser", loggedInUser);
@@ -71,13 +91,13 @@ const actions = {
         }
     },
     async logout({ commit }) {
-        try{
-        localStorage.removeItem('token');
-        localStorage.removeItem('currentUser');
-        await commit('loginStatus', false);
-        await commit('setCurrentUser', {});
+        try {
+            localStorage.removeItem('token');
+            localStorage.removeItem('currentUser');
+            await commit('loginStatus', false);
+            await commit('setCurrentUser', {});
         }
-        catch(error){
+        catch (error) {
             throw new Error(error);
         }
     }

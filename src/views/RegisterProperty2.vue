@@ -6,7 +6,7 @@
     <v-container>
       <div style="text-align: center">
         <h3 style="color: white">Add A property</h3>
-        <h4 style="color: #b9cbdb">Almost there Step 2/3</h4>
+        <h4 style="color: #b9cbdb">Almost there Step 3/4</h4>
       </div>
       <br />
       <v-row id="form-row">
@@ -89,7 +89,7 @@
                   text-transform: capitalize;
                 "
               >
-                Next Step</span
+                Last Step</span
               >
             </v-btn>
           </v-col>
