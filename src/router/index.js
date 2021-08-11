@@ -13,11 +13,17 @@ const routes = [
     }
   },
   {
+    path: '/property-requirement',
+    name: 'RegisterPropertyRequirement',
+    component: () => import('@/views/RegisterPropertyRequirements.vue'),
+  },
+  {
     path: '/register',
     name: 'RegisterProperty',
     component: () => import('@/views/RegisterProperty.vue'),
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      requireSellerRole: true
     },
   },
   {
@@ -25,7 +31,8 @@ const routes = [
     name: 'RegisterProperty2',
     component: () => import('@/views/RegisterProperty2.vue'),
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      requireSellerRole: true
     },
   },
   {
@@ -33,7 +40,8 @@ const routes = [
     name: 'RegisterProperty3',
     component: () => import('../views/RegisterProperty3.vue'),
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      requireSellerRole: true
     },
   },
   {

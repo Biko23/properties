@@ -6,7 +6,7 @@
     <v-container>
       <div style="text-align: center">
         <h3 style="color: white">Add A property</h3>
-        <h4 style="color: #b9cbdb">Final Step 3/3</h4>
+        <h4 style="color: #b9cbdb">Final Step 4/4</h4>
       </div>
       <br />
 
@@ -104,7 +104,7 @@
                   text-transform: capitalize;
                 "
               >
-                Submit</span
+                Create Property</span
               >
             </v-btn>
           </v-col>

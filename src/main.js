@@ -7,19 +7,19 @@ import vuetify from './plugins/vuetify'
 Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
-  if(to.matched.some(record => record.meta.basicAuth)){
-    if(!store.getters.loginState){
+  if (to.matched.some(record => record.meta.basicAuth)) {
+    if (!store.getters.loginState) {
       next()
     } else {
       next()
     }
   }
 
-  if(to.matched.some(record => record.meta.requiresAuth)) {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
     if (
       !store.getters.loginState ||
-      (Object.keys(store.getters.currentLoggedinUser).length === 0 && 
-      (store.getters.currentLoggedinUser).constructor === Object)
+      (Object.keys(store.getters.currentLoggedinUser).length === 0 &&
+        (store.getters.currentLoggedinUser).constructor === Object)
     ) {
       sessionStorage.setItem('redirectPath', to.path);
       next('/login')
@@ -34,33 +34,28 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.hideForAuth)) {
     if (
       store.getters.loginState ||
-      (Object.keys(store.getters.currentLoggedinUser).length !== 0 && 
-      (store.getters.currentLoggedinUser).constructor === Object)
+      (Object.keys(store.getters.currentLoggedinUser).length !== 0 &&
+        (store.getters.currentLoggedinUser).constructor === Object)
     ) {
-        next('/');
+      next('/');
     } else {
-        next();
+      next();
     }
-} else {
+  } else {
     next();
-}
+  }
 })
 
-// router.beforeEach((to, from, next) => {
-//   const requiresAuth = to.matched.some(x => x.meta.requiresAuth);
-//   const currentUser = firebase.auth().currentUser;
-
-//   if (requiresAuth && !currentUser) {
-//     sessionStorage.setItem('redirectPath', to.path);
-//     next('/login');
-//   } else if (requiresAuth && currentUser) {
-//     next();
+// router.beforeEnter((to, from, next) => {
+//   // check vuex store //
+//   if(to.matched.some(record => record.meta.requireSellerRole)){
+//   if (store.getters.isSeller && store.getters.isCertifiedSeller) {
+//     next('/register')
 //   } else {
-//     next();
+//     next('/property-requirement');
 //   }
-// });
-
-
+// } 
+// })
 
 new Vue({
   router,

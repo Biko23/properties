@@ -39,7 +39,8 @@ export default {
       const response = await API.userApi.put(`/users/${user.user_id}`, user)
       return response
     } catch (error) {
-      throw new Error('An error occured when updating data')
+      console.log(error);
+      // throw new Error('An error occured when updating data')
     }
   },
   async deleteAUserAccount (user) {

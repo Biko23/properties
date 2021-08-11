@@ -69,7 +69,7 @@
           </template>
 
           <v-list>
-            <links title="Sell A Property" link="/register" />
+            <links title="Sell A Property" link="/property-requirement" />
             <!-- <links title="Current market trends" /> -->
             <links title="Seller's guide" link="/learn" />
             <links title="Property Details" link="/property-details"/>
