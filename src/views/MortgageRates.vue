@@ -199,8 +199,8 @@ export default {
 
 @media only screen and (max-width: 768px) {
     #container {
-        height: 30vh;
-        width: 100%;
+        height: auto;
+        width: auto;
     }
 
     #intro {
