@@ -1,5 +1,6 @@
 import PropertyLocationService from '@/service/propertyLocation';
 import PropertyValueService from '@/service/propertyValue';
+import CurrencyService from '@/service/currencies'
 import PropertyNearbyLandmarkService from '@/service/propertyNearbyLandmark';
 import NeighborhoodVisualsService from '@/service/neighborhoodVisuals';
 import PropertyVisualsService from '@/service/propertyVisuals';
@@ -19,18 +20,20 @@ const state = {
     createdProperty: {},
     currentUserListedPropertyVisuals: [],
     currentUserUnlistedPropertyVisuals: [],
-    currentUserUncertifiedPropertyVisuals: []
+    currentUserUncertifiedPropertyVisuals: [],
+    currencies:[]
 }
 
 const getters = {
     allPropertyTypes: (state) => state.propertyTypes,
+    allCurrencies:(state) => state.currencies,
     allPropertyFeatures: (state) => state.propertyFeatures,
     allPropertyLandmarkTypes: (state) => state.propertyLandmarkTypes,
     allPropertyFirstPageData: (state) => state.propertyFirstPageData,
     allPropertySecondPageData: (state) => state.propertySecondPageData,
     allPropertyThirdPageData: (state) => state.propertyThirdPageData,
     newCreatedProperty: (state) => state.createdProperty,
-    
+
     // current user getters
     allCurrentUserListedPropertyVisuals: (state) => state.currentUserListedPropertyVisuals,
     allCurrentUserUnlistedPropertyVisuals: (state) => state.currentUserUnlistedPropertyVisuals,
@@ -42,6 +45,14 @@ const actions = {
         try {
             const response = await PropertyTypeService.getPropertyListingTypes();
             commit('setPropertyTypes', response.data.result);
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    async fetchCurrencies({ commit }) {
+        try {
+            const response = await CurrencyService.getCurrencies();
+            commit('setCurrencies', response.data.result);
         } catch (error) {
             console.log(error);
         }
@@ -111,10 +122,11 @@ const actions = {
             const propertyValue = {
                 actual_value: state.propertySecondPageData.expected_value,
                 property_id: state.createdProperty.property_id,
+                currency_id:state.propertySecondPageData.currency_id,
                 created_by: rootState.AuthModule.currentUser.username,
                 updated_by: rootState.AuthModule.currentUser.username
             }
-            
+
             const neighborhoodVisuals = {
                 description: state.propertySecondPageData.description,
                 files: state.propertySecondPageData.neighborhoodVisuals,
@@ -204,6 +216,13 @@ const mutations = {
             text: propertyType.name
         }
     })),
+    setCurrencies : (state,currencies) => (state.currencies = currencies.map(currencies =>{
+        return{
+            value:currencies.currency_id,
+            text:currencies.currency_code
+        }
+    }))
+    ,
     setPropertyFeatures: (state, propertyFeatures) => (state.propertyFeatures = propertyFeatures.map(propertyFeature => {
         return {
             value: propertyFeature.features_id,
@@ -263,6 +282,6 @@ context : {
     dispatch,   // same as `store.dispatch`
     getters,    // same as `store.getters`, or local getters if in modules
     rootGetters // same as `store.getters`, only in modules
-  } 
+  }
   https://vuex.vuejs.org/api/#mutations
 */

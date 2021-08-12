@@ -11,12 +11,15 @@
         <br />
         <v-form ref="propertyForm2" v-model="valid" lazy-validation>
         <v-row id="form-row">
+             <v-col class="d-flex" cols="12" sm="6">
+            <v-select v-model="property.currency_id"  :items="allCurrencies" label="Select Currency" solo></v-select>
+             </v-col>
             <v-col class="d-flex" cols="12" sm="6">
-                <v-text-field 
-                  class="custom-label-color" 
-                  label="Expected Value" 
-                  color="blue" 
-                  v-model="property.expected_value" 
+                <v-text-field
+                  class="custom-label-color"
+                  label="Expected Value"
+                  color="blue"
+                  v-model="property.expected_value"
                   :rules="[propertyRules.expected_value]"
                   solo
                 ></v-text-field>
@@ -30,10 +33,10 @@
                         <v-col cols="12" md="12">
                             <v-row>
                                 <v-col cols="12" md="12">
-                                    <v-text-field 
-                                      v-model="property.description" 
-                                      class="custom-label-color" 
-                                      label="Visual description" 
+                                    <v-text-field
+                                      v-model="property.description"
+                                      class="custom-label-color"
+                                      label="Visual description"
                                       :rules="[propertyRules.description]"
                                       solo
                                     ></v-text-field>
@@ -81,8 +84,8 @@
                                 Back</span>
                         </v-btn>
                     </router-link>
-                    <v-btn 
-                      style="background-color: #3b6ef3; width: 200px" 
+                    <v-btn
+                      style="background-color: #3b6ef3; width: 200px"
                       :disabled="!valid"
                       @click="storePropertyData"
                     >
@@ -116,7 +119,8 @@ import MainNav from "@/components/MainNav.vue";
 import BottonNav from "../components/BottonNav.vue";
 import UploadImages from "vue-upload-drop-images";
 import {
-    mapActions
+    mapActions,
+    mapGetters
 } from 'vuex';
 import Footer from '../components/Footer.vue';
 import About from './About.vue';
@@ -131,6 +135,7 @@ export default {
             "Avatar size should be less than 2 MB!",
         ],
         property: {
+            currency_id:"",
             expected_value: "",
             description: "",
             neighborhoodVisuals: [],
@@ -150,7 +155,10 @@ export default {
         About
     },
     methods: {
-        ...mapActions(["addPropertyDataFromPageTwo"]),
+        ...mapActions([
+            "addPropertyDataFromPageTwo",
+            "fetchCurrencies"
+            ]),
         handleImages(files) {
             this.property.neighborhoodVisuals.splice(
                 0,
@@ -165,6 +173,12 @@ export default {
                 );
             }
         },
+    },
+     computed: {
+        ...mapGetters(["allCurrencies"])
+    },
+    created() {
+        this.fetchCurrencies();
     },
 };
 </script>

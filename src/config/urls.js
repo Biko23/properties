@@ -30,7 +30,7 @@ export default {
     //From Backoffice
     vendorUrl: `http://localhost:8091/${PREFIX}`,
 
-    
+
 
 }
 
