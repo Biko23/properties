@@ -7,7 +7,7 @@
             <v-col cols="12" sm="12" md="12" xl="12">
                 <h3 style="text-align: center; margin-top: 20px">Your profile</h3>
                 <v-form id="form" style="background-color: #e7f0ff" ref="moreUserDataForm" v-model="valid" lazy-validation>
-                    <v-text-field v-model="userData.user_id" type="hidden"></v-text-field>
+                    <!-- <v-text-field v-model="userData.user_id" type="hidden"></v-text-field> -->
                     <v-container>
                         <v-row>
                             <v-col cols="12" sm="12" md="12">

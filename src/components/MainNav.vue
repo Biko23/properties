@@ -2,14 +2,14 @@
   <nav>
     <v-app-bar color="#f2f2f2" dark>
       <router-link to="/" style="text-decoration: none">
-      <div style="">
-        <v-img
-          style="margin-left: auto; margin-right: auto; display: block"
-          max-height="40"
-          max-width="35"
-          src="../assets/ssss.png"
-        ></v-img>
-      </div>
+        <div style="">
+          <v-img
+            style="margin-left: auto; margin-right: auto; display: block"
+            max-height="40"
+            max-width="35"
+            src="../assets/ssss.png"
+          ></v-img>
+        </div>
       </router-link>
 
       <router-link to="/" style="text-decoration: none">
@@ -151,19 +151,13 @@
           </template>
 
           <v-list>
-            <template  v-for="category in allVendorsCategories">
-            <links
-              :key="category.value"
-              :link="`/provider/${category.value}`"
-              :title="category.text"
-            />
+            <template v-for="category in allVendorsCategories">
+              <links
+                :key="category.value"
+                :link="`/provider/${category.value}`"
+                :title="category.text"
+              />
             </template>
-            <!-- <links title="All " link="/provider" />
-            <links title="Electrical " link="/provider" />
-            <links title="Machenical " />
-            <links title="Research & Development" />
-            <links link="/provider" title="Architects" />
-            <links title="Civil Engineers " /> -->
           </v-list>
         </v-menu>
 
@@ -212,7 +206,17 @@
       ></v-app-bar-nav-icon>
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" absolute temporary>
+    <v-navigation-drawer
+      v-model="drawer"
+      absolute
+      temporary
+      style="
+        margin-left: 10px;
+        height: fit-content;
+        margin-top: 5px;
+        border-radius: 6px;
+      "
+    >
       <mobile-main-nav />
     </v-navigation-drawer>
   </nav>
@@ -221,14 +225,14 @@
 <script>
 // import { defineComponent } from '@vue/composition-api'
 import Links from "@/components/Links";
-import MobileMainNav from './MobileMainNav'
+import MobileMainNav from "./MobileMainNav";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "MainNaigation",
   components: {
     Links,
-    MobileMainNav
+    MobileMainNav,
   },
   data: () => ({
     vendorCategories: [],
