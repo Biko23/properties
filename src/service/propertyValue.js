@@ -33,5 +33,13 @@ export default {
     } catch (error) {
       throw new Error('An error occured when deleting data')
     }
+  },
+  async getPropertyValueByPropertyId (property_id) {
+    try {
+      const response = await API.propertyValueApi.get(`/property-value/by-property-id/${property_id}`)
+      return response
+    } catch (error) {
+      throw new Error('An error occured when retrieving data')
+    }
   }
 }

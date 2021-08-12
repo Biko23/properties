@@ -1,13 +1,18 @@
 import PropertyVisualsService from '@/service/propertyVisuals';
 import PropertyNearbyLandmarkService from '@/service/propertyNearbyLandmark';
 import NeighborhoodVisualsService from '@/service/neighborhoodVisuals';
+import PropertyValueService from '@/service/propertyValue';
+import PropertyPriceHistoryService from '@/service/propertyPriceHistories';
+import { formatDate } from '@/helpers/helpers';
 
 const state = {
     propertyVisuals: [],
     singlePropertyVisuals: [],
     singlePropertyNearbyLandmarkVisuals: [],
     singleNeighborhoodVisuals: [],
-    latestProperties: []
+    latestProperties: [],
+    propertyValue: {},
+    propertyPriceHistory: []
 }
 
 const getters = {
@@ -15,7 +20,9 @@ const getters = {
     allSinglePropertyVisuals: (state) => state.singlePropertyVisuals,
     allSinglePropertyNearbyLandmarkVisuals: (state) => state.singlePropertyNearbyLandmarkVisuals,
     allSingleNeighborhoodVisuals: (state) => state.singleNeighborhoodVisuals,
-    allLatestProperties: (state) => state.latestProperties
+    allLatestProperties: (state) => state.latestProperties,
+    currentPropertyValue: (state) => state.propertyValue,
+    currentPropertyPriceHistory: (state) => state.propertyPriceHistory
 };
 
 const actions = {
@@ -58,6 +65,23 @@ const actions = {
         } catch (error) {
             throw new Error("Failed on loading current property visuals")
         }
+    },
+    async fetchCurrentPropertyValue({ commit }, property_id){
+        try {
+            const response = await PropertyValueService.getPropertyValueByPropertyId(property_id);
+            commit("setSinglePropertyValue", response.data.result);
+        } catch (error) {
+            throw new Error("Failed on loading current property value")
+        }
+    },
+    async fetchPropertyPriceHistories({ commit }, property_id){
+        try {
+            const response = await PropertyPriceHistoryService.getPropertyPriceHistoriesByPropertyId(property_id);
+            console.log(response);
+            commit("setSinglePropertyPriceHistory", response.data.result);
+        } catch (error) {
+            throw new Error("Failed on loading current property price histories")
+        }
     }
 }
 
@@ -66,7 +90,16 @@ const mutations = {
     setSinglePropertyVisuals: (state, returnedSinglePropertyVisuals) => (state.singlePropertyVisuals = returnedSinglePropertyVisuals),
     setSinglePropertyNearbyLandmarkVisuals: (state, returnedSinglePropertyLandmarkVisuals) => (state.singlePropertyNearbyLandmarkVisuals = returnedSinglePropertyLandmarkVisuals),
     setSinglePropertyNeighborhoodVisuals: (state, returnedSinglePropertyNeighborhoodVisuals) => (state.singleNeighborhoodVisuals = returnedSinglePropertyNeighborhoodVisuals),
-    setLatestPropertyVisuals: (state, returnedLatestProperties) => (state.latestProperties = returnedLatestProperties)
+    setLatestPropertyVisuals: (state, returnedLatestProperties) => (state.latestProperties = returnedLatestProperties),
+    setSinglePropertyValue: (state, returnedSinglePropertyValue) => (state.propertyValue = returnedSinglePropertyValue),
+    setSinglePropertyPriceHistory: (state, returnedSinglePropertyPriceHistories) => (state.propertyPriceHistory = returnedSinglePropertyPriceHistories.map(priceHistory => {
+        return {
+            property_id: priceHistory.property_id,
+            event: priceHistory.event,
+            price: priceHistory.price,
+            when_created: formatDate(priceHistory.when_created)
+        }
+    }))
 }
 
 export default {
