@@ -59,7 +59,7 @@
             </v-col>
             <v-col cols="12" md="5">
                 <v-card class="mx-auto" max-width="auto">
-                    <v-img src="https://res.cloudinary.com/diued7ugb/image/upload/v1625732723/house1_svrut7.jpg" height="200px"></v-img>
+                    <v-img src="../assets/construction.jpg" height="250px"></v-img>
                     <v-card-title class="text-h5" style="dsplay: inline; text-align: center; color: blue;">
                         House Construction Loan
                     </v-card-title>
@@ -72,7 +72,7 @@
             <v-col></v-col>
             <v-col cols="12" md="5">
                 <v-card max-width="auto">
-                    <v-img src="https://res.cloudinary.com/diued7ugb/image/upload/v1625732723/house1_svrut7.jpg" height="200px"></v-img>
+                    <v-img src="../assets/housepurchase.jpg" height="250px"></v-img>
                     <v-card-title class="text-h5" style="dsplay: inline; text-align: center; color: blue;">
                         House Purchase Loan
                     </v-card-title>
@@ -142,7 +142,7 @@
             </v-col>
             <v-col cols="12" md="5">
                 <v-card max-width="auto">
-                    <v-img src="https://res.cloudinary.com/diued7ugb/image/upload/v1625732723/house1_svrut7.jpg" height="200px"></v-img>
+                    <v-img src="../assets/finish2.jpg" height="200px"></v-img>
                     <v-card-title class="text-h5" style="dsplay: inline; text-align: center; color: blue;">
                         House Completion Loan
                     </v-card-title>
@@ -234,8 +234,8 @@ export default {
 
 @media only screen and (max-width: 768px) {
     #container {
-        height: 30vh;
-        width: 100%;
+        height: auto;
+        width: auto;
     }
 
     #intro {
