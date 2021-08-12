@@ -16,7 +16,7 @@
                         <v-row>
                             <v-col>
                                 <v-card class="mx-auto" max-width="400">
-                                    <v-img class="white--text align-end" height="200px" src="https://cdn.vuetifyjs.com/images/cards/docks.jpg">
+                                    <v-img class="white--text align-end" height="200px" src="../assets/requirements.jpeg">
                                         <v-card-title>Requirements</v-card-title>
                                     </v-img>
 
@@ -61,7 +61,7 @@
                         <v-row>
                             <v-col>
                                 <v-card class="mx-auto" max-width="400">
-                                    <v-img class="white--text align-end" height="200px" src="https://cdn.vuetifyjs.com/images/cards/docks.jpg">
+                                    <v-img class="white--text align-end" height="200px" src="../assets/sellingsteps.jpg">
                                         <v-card-title>Selling Steps</v-card-title>
                                     </v-img>
 
@@ -105,7 +105,7 @@
                         <v-row>
                             <v-col>
                                 <v-card class="mx-auto" max-width="400">
-                                    <v-img class="white--text align-end" height="200px" src="https://cdn.vuetifyjs.com/images/cards/docks.jpg">
+                                    <v-img class="white--text align-end" height="200px" src="../assets/approved.jpeg">
                                         <v-card-title>Property Approval</v-card-title>
                                     </v-img>
 
