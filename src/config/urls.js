@@ -29,8 +29,5 @@ export default {
     neighborhoodVisualsUrl: `http://localhost:9003/${PREFIX}`,
     //From Backoffice
     vendorUrl: `http://localhost:8091/${PREFIX}`,
-
-    
-
 }
 
