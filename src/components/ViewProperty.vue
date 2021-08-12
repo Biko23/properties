@@ -23,13 +23,15 @@
                 <span>Property Owner: {{allSingleNeighborhoodVisuals[0].created_by}}</span>
               </p> -->
             </v-col>
-            <v-col>
+            <!-- <v-col>
               <v-btn color="primary" style="width: 160px">Call</v-btn>
               <v-btn color="white" style="margin-left: 10px; width: 160px">
                 <span style="color: #3b6ef3"> Chat</span></v-btn>
-            </v-col>
+            </v-col> -->
             <v-col>
-              <v-btn color="primary" block>Make an Offer</v-btn>
+              <a href="mailto:cccug@stanbic.com" style="text-decoration: none;">
+              <v-btn color="primary" block>Email Us</v-btn>
+              </a>
             </v-col>
           </div>
           <br />
@@ -37,19 +39,21 @@
             <v-col>
               <p style="color: #3b6ef3">
                 Price:
-                <span style="color: black; margin-left: 230px">$150,000</span>
+                <span style="color: black; margin-left: 200px">UGX {{currentPropertyValue.actual_value}}</span>
                 <br />
                 <span
                   >Equavalent To:
                   <span style="color: black; margin-left: 140px"
-                    >UGX 400,000</span
+                    >$ {{dollarExchange()}}</span
                   ></span
                 >
               </p>
             </v-col>
 
             <v-col>
-              <v-btn color="primary" block>Make an Offer</v-btn>
+              <a href="tel:+256782456789" style="text-decoration: none;" title="+256782456789">
+                <v-btn color="primary" block>Call Us</v-btn>
+              </a>
             </v-col>
           </div>
           <div>
@@ -198,9 +202,13 @@
               </v-tab-item>
               <v-tab-item>
                 <v-card color="basil" flat>
-                  <v-card-title>Rent Amount</v-card-title>
                   <v-card-text>
-                    <h3>20000000 /=</h3>
+                    <v-data-table
+                      :headers="priceHistoryHeaders"
+                      :items="currentPropertyPriceHistory"
+                      :items-per-page="5"
+                      class="elevation-1"
+                    ></v-data-table>
                   </v-card-text>
                 </v-card>
               </v-tab-item>
@@ -263,6 +271,23 @@ export default {
       { text: "Feature", value: "feature" },
       { text: "Description", value: "description" },
     ],
+    priceHistoryHeaders: [
+      { text: "Event", value: "event" },
+      { text: "Price", value: "price" },
+      { text: "Payment Date", value: "when_created" }
+    ],
+    // propertyPriceHistory: [
+    //   {
+    //     "event": "Sold",
+    //     "price": 5000000,
+    //     "when_created": '2021-10-21'
+    //   },
+    //   {
+    //     "event": "Bought",
+    //     "price": 10000000,
+    //     "when_created": '2021-06-09'
+    //   }
+    // ],
     monthlyCostHeaders: [
       { text: "Principal Plus Interest", value: "principal_plus_interest" },
       { text: "Mortgage Insurance", value: "mortgage_insurance" },
@@ -292,20 +317,29 @@ export default {
     ...mapGetters([
       "allSinglePropertyVisuals",
       "allSinglePropertyNearbyLandmarkVisuals",
-      "allSingleNeighborhoodVisuals"
-    ])
+      "allSingleNeighborhoodVisuals",
+     "currentPropertyValue",
+     "currentPropertyPriceHistory"
+    ]),
+    dollarExchange(){
+      return () => (this.currentPropertyValue.actual_value / 3500).toFixed(2);
+    }
   },
    methods: {
      ...mapActions([
        "fetchSinglePropertyVisuals", 
        "fetchPropertyNearbyLandmarkVisuals", 
-       "fetchPropertyNeighborhoodVisuals"
+       "fetchPropertyNeighborhoodVisuals",
+       "fetchCurrentPropertyValue",
+       "fetchPropertyPriceHistories"
     ])
   },
   mounted(){
     this.fetchSinglePropertyVisuals(this.property_id);
     this.fetchPropertyNearbyLandmarkVisuals(this.property_id);
     this.fetchPropertyNeighborhoodVisuals(this.property_id);
+    this.fetchCurrentPropertyValue(this.property_id);
+    this.fetchPropertyPriceHistories(this.property_id);
   },
 };
 </script>
