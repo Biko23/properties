@@ -69,6 +69,10 @@ export default {
       }
 
     },
+       src: {
+            type: String,
+            default: require("../assets/provider.jpg")
+        },
     to: {
       type: String,
       default: "/view",

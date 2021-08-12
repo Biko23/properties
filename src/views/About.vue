@@ -104,7 +104,7 @@ export default {
   height: 310px;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 796px) {
   .about-us-container {
     background-color: #ebeef2;
     height: auto;

@@ -25,7 +25,7 @@
               <v-img
                 class="white--text align-end"
                 height="200px"
-                src="../assets/houseview1.png"
+                src="../assets/broker.jpg"
               >
               </v-img
               ><br />
@@ -43,7 +43,7 @@
               <v-img
                 class="white--text align-end"
                 height="200px"
-                src="../assets/houseview2.png"
+                src="../assets/landlord.jpg"
               >
               </v-img>
               <br />
@@ -60,7 +60,7 @@
               <v-img
                 class="white--text align-end"
                 height="200px"
-                src="../assets/houseview3.png"
+                src="../assets/mortgage.jpg"
               >
               </v-img>
               <br />
@@ -79,7 +79,7 @@
               <v-img
                 class="white--text align-end"
                 height="200px"
-                src="../assets/houseview3.png"
+                src="../assets/photgrapher.jpg"
               >
               </v-img
               ><br />
@@ -97,7 +97,7 @@
               <v-img
                 class="white--text align-end"
                 height="200px"
-                src="../assets/houseview1.png"
+                src="../assets/builder.jpg"
               >
               </v-img>
               <br />
@@ -114,7 +114,7 @@
               <v-img
                 class="white--text align-end"
                 height="200px"
-                src="../assets/houseview2.png"
+                src="../assets/provider.jpg"
               >
               </v-img>
               <br />
