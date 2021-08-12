@@ -53,6 +53,24 @@
                     </v-row>
                 </v-card>
             </v-col>
+                    <v-col cols="12" md="5">
+          <v-card max-width="auto">
+            <v-img
+              src="../assets/housecompletion.jpg"
+              height="350px"
+            ></v-img>
+          </v-card>
+        </v-col>
+        </v-row>
+        <v-row>
+                    <v-col cols="12" md="5">
+          <v-card max-width="auto">
+            <v-img
+              src="../assets/houseloan.jpg"
+              height="402px"
+            ></v-img>
+          </v-card>
+        </v-col>
             <v-col cols="12" md="6" class="mb-5">
                 <v-card class="mx-auto" max-width="600">
                     <v-card-title style="font-weight: 300; margin-bottom: 10px;" class="text-h4">House Purchase Loan</v-card-title>
@@ -67,6 +85,7 @@
                                 <div style="font-size: 12px;">FLEXIBLE REPAYMENT PERIODS</div>
                             </v-card-text>
                         </v-col>
+                        
                         <v-col cols="12" md="6" sm="12">
                             <v-card-text class="text--primary" style="margin-top: 10px;">
                                 <div style="font-size: 40px; font-weight: 300;">30 Million<sup>UGX</sup></div><br>
@@ -82,6 +101,8 @@
                     </v-row>
                 </v-card>
             </v-col>
+        </v-row>
+        <v-row>
             <v-col cols="12" md="6" class="mb-5">
                 <v-card class="mx-auto" max-width="600">
                     <v-card-title style="font-weight: 300; margin-bottom: 10px;" class="text-h4">Land Purchase Loan</v-card-title>
@@ -111,6 +132,14 @@
                     </v-row>
                 </v-card>
             </v-col>
+                    <v-col cols="12" md="5">
+          <v-card max-width="auto">
+            <v-img
+              src="../assets/land.jpg"
+              height="420px"
+            ></v-img>
+          </v-card>
+        </v-col>
         </v-row><br /><br>
     </v-container>
     <about />
@@ -138,16 +167,7 @@ export default {
                     title: 'Financing your next home starts here.',
                     subTitle: 'Directly to us, through an agent, or yourself'
                 },
-                {
-                    src: 'https://res.cloudinary.com/diued7ugb/image/upload/v1626688778/dillon-kydd-XGvwt544g8k-unsplash_lrvzid.jpg',
-                    title: 'Financing your next home starts here.',
-                    subTitle: 'Directly to us, through an agent, or yourself'
-                },
-                {
-                    src: 'https://res.cloudinary.com/diued7ugb/image/upload/v1626688778/dillon-kydd-XGvwt544g8k-unsplash_lrvzid.jpg',
-                    title: 'Financing your next home starts here.',
-                    subTitle: 'Directly to us, through an agent, or yourself'
-                }
+
             ]
         }
     }

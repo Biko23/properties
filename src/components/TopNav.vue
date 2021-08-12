@@ -15,7 +15,20 @@
         class="telephone"
         >Tel No. (+256) 782-456-789</v-toolbar-title
       >
-     <a href="http://" class="sign-in">Sign In</a>
+     <!-- <a href="http://" class="sign-in">Sign In</a> -->
+      <v-col class="hid-navbar sign-in">
+        <router-link
+        
+          color="primary"
+          style="text-decoration: none;color:white;"
+          v-if="loginState"
+          @click="logingOut"
+          >Logout</router-link
+        >
+        <router-link to="/login" style="text-decoration: none; color:white;" v-else
+          >Login</router-link
+        >
+      </v-col>
      
     </v-app-bar>
   </div>
@@ -23,9 +36,27 @@
 
 <script>
 // import { defineComponent } from '@vue/composition-api'
-
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "TopNav",
+  computed: {
+    ...mapGetters(["loginState", "allVendorsCategories"]),
+  },
+  created() {
+    this.fetchVendorsCategories();
+  },
+  methods: {
+    ...mapActions(["logout", "fetchVendorsCategories"]),
+    async logingOut() {
+      try {
+        await this.logout().then(() => {
+          this.$router.push("/");
+        });
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
+  },
 };
 </script>
 <style scoped>

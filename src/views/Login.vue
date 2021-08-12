@@ -22,7 +22,7 @@
             <v-col>
                 <v-form id="form" ref="loginForm" v-model="valid" lazy-validation>
                     <div>
-                        <v-img style="margin-left: 120px; margin-top: 10px;position:absolute;" lazy-src="https://picsum.photos/id/11/10/6" max-height="45" max-width="45" src="https://res.cloudinary.com/diued7ugb/image/upload/v1625749459/Vector_pebqf0.png"></v-img>
+                        <v-img class="image-logo"  max-height="45" max-width="45" src="https://res.cloudinary.com/diued7ugb/image/upload/v1625749459/Vector_pebqf0.png"></v-img>
                         <span style="color: #3b6ef3; margin-top:23px;margin-left:-55px;position:absolute;">
                             Stanbic Properties
                         </span>
@@ -183,6 +183,9 @@ export default {
     border-radius: 6px;
     text-align: center;
 }
+.image-logo{
+  margin-left: 120px; margin-top: 10px;position:absolute;
+}
 
 @media only screen and (max-width: 768px) {
     #main-container {
@@ -218,5 +221,8 @@ export default {
         margin-left: -100px;
         margin-top: auto
     }
+    .image-logo{
+  margin-left: 90px; margin-top: 10px;position:absolute;
+}
 }
 </style>>
