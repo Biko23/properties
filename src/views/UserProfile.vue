@@ -1,17 +1,15 @@
 <template>
-<div style="background-color: #e7f0ff">
+<div style="background-color: #3b6ef3">
     <top-nav />
     <main-nav />
     <v-container>
         <v-row>
             <v-col cols="12" sm="12" md="12" xl="12">
-                <h3 style="text-align: center; margin-top: 20px">Your profile</h3>
+                <h3 style="color: white; font-weight: 400; text-align: center; margin-top: 20px">Your profile</h3><br>
                 <v-form id="form" style="
                         background-color: rgb(231,240,255); 
-                        border: 1px solid rgba(100, 100, 100, .5); 
-                        box-shadow: 1px 1px rgba(100, 100, 100, .5), -1px -1px rgba(100, 100, 100, .5);
                         " ref="moreUserDataForm" v-model="valid" lazy-validation>
-                    <v-text-field v-model="userData.user_id" type="hidden"></v-text-field>
+                    <v-text-field style="display: none;" v-model="userData.user_id" type="hidden"></v-text-field>
                     <v-container>
                         <v-row>
                             <v-col cols="12" sm="12" md="12">
