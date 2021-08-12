@@ -28,7 +28,6 @@ export default {
   async fetchLoggedUser(username){
     try {
       const response = await API.userApi.get(`/users/user?username=${username}`)
-      console.log(response);
       return response
     } catch (error) {
       console.log(error);
@@ -40,7 +39,8 @@ export default {
       const response = await API.userApi.put(`/users/${user.user_id}`, user)
       return response
     } catch (error) {
-      throw new Error('An error occured when updating data')
+      console.log(error);
+      // throw new Error('An error occured when updating data')
     }
   },
   async deleteAUserAccount (user) {

@@ -3,8 +3,8 @@
     <v-container id="container" fluid>
         <v-row id="property-header">
             <div style="flex:1;">
-                <h3>Available Properties for sale</h3>
-                <small style="font-weight: bold;">{{count}} results</small>
+                <h3>Properties</h3>
+                <small style="font-weight: bold;">{{allPropertyVisuals.length}} results</small>
             </div>
             <div style="flex:1;">
                 <h3 style="color: #3b6ef3;">BUY PROPERTY HERE</h3>
@@ -12,13 +12,13 @@
         </v-row>
         <v-row id="main-property">
             <v-col cols="12" xl="2" lg="3" md="4" sm="6" xs="12" v-for="propertyVisual in allPropertyVisuals" :key="propertyVisual.visuals_id">
-                <property-card 
+                <property-card
                     location="Plot 3435, Kyengera-Wakiso"
                     :date="formatDate(propertyVisual.when_created)"
-                    :src="'http://localhost:8094/' + propertyVisual.snapshot"
-                    :to="`/view/${propertyVisual.propertyId}`"
+                    :src="'http://localhost:8002/' + propertyVisual.snapshot"
+                    :to="`/view/${propertyVisual.property_id}`"
                 />
-            
+
                 <!-- C:\Users\A241901\Documents\project\stanbicproperties-marketplace\property-visuals\src\main\resources\uploads -->
             </v-col>
         </v-row>
@@ -35,9 +35,6 @@ export default {
     components: {
         PropertyCard
     },
-    data: () => ({
-        count: Math.floor((Math.random() * 1000) + 1)
-    }),
     methods: {
         ...mapActions(["fetchPropertyVisuals"]),
         formatDate(dateToFormat){
@@ -54,7 +51,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(["allPropertyVisuals"])
+        ...mapGetters(["allPropertyVisuals"]),
     },
     created(){
         this.fetchPropertyVisuals();

@@ -9,7 +9,7 @@
             <v-carousel-item
               v-for="propertyVisual in allSinglePropertyVisuals"
               :key="propertyVisual.visuals_id"
-              :src="'http://localhost:8094/' + propertyVisual.snapshot"
+              :src="'http://localhost:8002/' + propertyVisual.snapshot"
               reverse-transition="fade-transition"
               transition="fade-transition"
             ></v-carousel-item>
@@ -18,10 +18,10 @@
         <v-col>
           <div style="background-color: #f2f2f2; border-radius: 6px">
             <v-col>
-              <p style="color: #3b6ef3">
+              <!-- <p style="color: #3b6ef3">
                 Posted By: {{allSingleNeighborhoodVisuals[0].created_by}} <br />
                 <span>Property Owner: {{allSingleNeighborhoodVisuals[0].created_by}}</span>
-              </p>
+              </p> -->
             </v-col>
             <v-col>
               <v-btn color="primary" style="width: 160px">Call</v-btn>
@@ -68,7 +68,7 @@
       <v-row>
         <v-col v-for="propertyVisual in allSinglePropertyVisuals" :key="propertyVisual.visuals_id">
           <v-img
-            :src="'http://localhost:8094/' + propertyVisual.snapshot"
+            :src="'http://localhost:8002/' + propertyVisual.snapshot"
             aspect-ratio="1"
             class="grey lighten-2"
             height="200"
@@ -107,7 +107,7 @@
               <v-tab> Neighborhood </v-tab>
               <v-tab> Landmarks </v-tab>
               <v-tab> Rating </v-tab>
-              <v-tab> Rental Value </v-tab>
+              <v-tab> Pricing History</v-tab>
             </v-tabs>
 
             <v-tabs-items v-model="tab">
@@ -170,6 +170,7 @@
                           class="grey lighten-2"
                           height="200"
                         ></v-img>
+                        <p>{{landmarkVisuals.description}}</p>
                       </v-col>
                     </v-row>
                     <p v-else>No Landmark images to display</p>
@@ -223,7 +224,7 @@ import TopNav from "./TopNav.vue";
 export default {
   components: { TopNav, MainNav, About, Footer },
   name: "ViewProperty",
-  props: ['propertyId'],
+  props: ['property_id'],
   // $route.params.propertyId
   data: () => ({
     propertyFeatures: [
@@ -302,9 +303,9 @@ export default {
     ])
   },
   mounted(){
-    this.fetchSinglePropertyVisuals(this.propertyId);
-    this.fetchPropertyNearbyLandmarkVisuals(this.propertyId);
-    this.fetchPropertyNeighborhoodVisuals(this.propertyId);
+    this.fetchSinglePropertyVisuals(this.property_id);
+    this.fetchPropertyNearbyLandmarkVisuals(this.property_id);
+    this.fetchPropertyNeighborhoodVisuals(this.property_id);
   },
 };
 </script>

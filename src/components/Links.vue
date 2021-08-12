@@ -10,11 +10,11 @@ export default {
     props: {
         link: {
             type: String,
-            default: "/register",
+            default: "/",
         },
         title: {
             type: String,
-            default: "Link title",
+            default: "All",
         },
     },
 

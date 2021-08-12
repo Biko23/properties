@@ -18,20 +18,29 @@ export default {
       throw new Error('An error occured when sending data')
     }
   },
-//   async updateAProperty (neighborhoodVisuals) {
-//     try {
-//       const response = await API.neighborhoodVisualsApi.put(`/neighborhood-visuals/${neighborhoodVisuals.neighborhood_visuals_id}`, neighborhoodVisuals)
-//       return response
-//     } catch (error) {
-//       throw new Error('An error occured when updating data')
-//     }
-//   },
-//   async deleteAProperty (neighborhoodVisuals) {
-//     try {
-//       const response = await API.neighborhoodVisualsApi.delete(`/neighborhood-visuals/${neighborhoodVisuals.neighborhood_visuals_id}`)
-//       return response
-//     } catch (error) {
-//       throw new Error('An error occured when deleting data')
-//     }
-//   }
+async getVendors () {
+    try {
+      const response = await API.vendorsApi.get(`/vendors/vetted-vendors`)
+      return response
+    } catch (error) {
+      throw new Error('An error occured when retrieving data')
+    }
+  },
+  async likeAVendor (data) {
+    try {
+      const response = await API.vendorsApi.post(`/vendors/add-points/${data.vendor_id}/${data.liked_by}`)
+      return response
+    } catch (error) {
+      //console.log(error)
+      alert(error)
+    }
+  },
+  async unLikeAVendor (data) {
+    try {
+      const response = await API.vendorsApi.post(`/vendors/deduct-points/${data.vendor_id}/${data.disliked_by}`)
+      return response
+    } catch (error) {
+      console.log(error)
+    }
+  },
 }

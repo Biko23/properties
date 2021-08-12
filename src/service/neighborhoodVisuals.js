@@ -28,7 +28,6 @@ export default {
         formData.append("property_id", neighborhoodVisuals.property_id);
         formData.append("created_by", neighborhoodVisuals.created_by);
         formData.append("updated_by", neighborhoodVisuals.updated_by);
-        console.log("Neighborhood visuals", formData);
         const response = await API.neighborhoodVisualsApi.post('/neighborhood-visuals', formData)
         return response
       } else {

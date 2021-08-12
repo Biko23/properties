@@ -13,11 +13,17 @@ const routes = [
     }
   },
   {
+    path: '/property-requirement',
+    name: 'RegisterPropertyRequirement',
+    component: () => import('@/views/RegisterPropertyRequirements.vue'),
+  },
+  {
     path: '/register',
     name: 'RegisterProperty',
     component: () => import('@/views/RegisterProperty.vue'),
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      requireSellerRole: true
     },
   },
   {
@@ -25,7 +31,8 @@ const routes = [
     name: 'RegisterProperty2',
     component: () => import('@/views/RegisterProperty2.vue'),
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      requireSellerRole: true
     },
   },
   {
@@ -33,7 +40,8 @@ const routes = [
     name: 'RegisterProperty3',
     component: () => import('../views/RegisterProperty3.vue'),
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      requireSellerRole: true
     },
   },
   {
@@ -47,14 +55,28 @@ const routes = [
     component: () => import('@/views/PropertiesForSale')
   },
   {
+    path: '/property-details',
+    name: 'seller-properties-details',
+    component: () => import('@/views/SellerPropertiesDetails'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
     path: '/signup',
     name: 'SignUp',
-    component: () => import('@/views/SignUp')
+    component: () => import('@/views/SignUp'),
+    meta: {
+      hideForAuth: true
+    }
   },
   {
     path: '/login',
     name: 'Login',
-    component: () => import('@/views/Login')
+    component: () => import('@/views/Login'),
+    meta: {
+      hideForAuth: true
+    }
   },
   {
     path: '/getstarted',
@@ -79,7 +101,7 @@ const routes = [
   },
   {
     path: '/view',
-    path: '/view/:propertyId',
+    path: '/view/:property_id',
     props: true,
     name: 'ViewProperty',
     component: () => import('@/components/ViewProperty')
@@ -90,7 +112,13 @@ const routes = [
     component: () => import('@/views/Mortgage')
   },
   {
-    path: '/provider',
+    path: '/mortgage-rates',
+    name: 'MortgageRates',
+    component: () => import('@/views/MortgageRates')
+  },
+  {
+    path: '/provider/:vendor_category_id',
+    props: true,
     name: 'ServiceProviderComponent',
     component: () => import('@/components/ServiceProviderComponent')
   },

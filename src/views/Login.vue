@@ -64,6 +64,7 @@
                     v-model="loginDetails.password"
                     label="Password"
                     placeholder="password"
+                    type="password"
                     solo
                   ></v-text-field>
                 </v-col>

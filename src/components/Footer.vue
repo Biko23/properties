@@ -35,8 +35,9 @@
               color: #fffff;
             "
           >
-            JC Main Road, Near Silnile tower <br />
-            Pin-21542 NewYork US.
+            Stanbic Bank Uganda, Crested Towers <br />
+            Plot 17, Hannington Road, <br /> 
+            Kampala - Uganda
           </p>
           <p
             style="
@@ -48,7 +49,7 @@
               color: #ffff;
             "
           >
-            email@domainname.com
+            cccug@stanbic.com
           </p>
         </v-col>
 

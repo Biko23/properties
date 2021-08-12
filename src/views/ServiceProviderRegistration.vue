@@ -78,8 +78,8 @@
         </v-col>
       </v-row>
     </v-container>
-
-    <footer />
+    <about />
+    <Footer />
     <h3></h3>
   </div>
 </template>
@@ -87,11 +87,12 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import BottonNav from "../components/BottonNav.vue";
+import About from "./About.vue";
 import Footer from "../components/Footer.vue";
 import MainNav from "../components/MainNav.vue";
 import TopNav from "../components/TopNav.vue";
 export default {
-  components: { TopNav, MainNav, BottonNav, Footer },
+  components: { TopNav, MainNav, BottonNav, Footer, About },
   name: "VendorProfile",
 
   data: () => ({
@@ -129,24 +130,24 @@ export default {
   created() {
     this.fetchVendorsCategories();
   },
-mounted(){
-  this.loadVendorData();
-},
+  mounted() {
+    this.loadVendorData();
+  },
   methods: {
     ...mapActions(["fetchVendorsCategories", "postVendor"]),
     async postingVendor() {
       try {
         const response = await this.postVendor(this.newVendor);
         if (response.status === 201 || response.status === 200) {
-          this.$router.push("/login");
+          this.$router.push("/register");
         }
       } catch (error) {
         console.log(error);
       }
     },
-    loadVendorData(){
+    loadVendorData() {
       this.newVendor = Object.assign({}, this.currentLoggedinUser);
-    }
+    },
   },
 };
 </script>
