@@ -135,7 +135,7 @@
                     <v-col cols="12" md="5">
           <v-card max-width="auto">
             <v-img
-              src="../assets/housecompletion.jpg"
+              src="../assets/land.jpg"
               height="420px"
             ></v-img>
           </v-card>
