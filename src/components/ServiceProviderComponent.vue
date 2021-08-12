@@ -23,6 +23,7 @@
         >
           <service-provider-card
             :vendor_name="vendor.vendor_name"
+           
             :vendor_primary_phone_number="vendor.vendor_primary_phone_number"
             :vendorCategory="vendor.vendorCategory.vendor_category_name"
             :points="vendor.points"
