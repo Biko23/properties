@@ -74,12 +74,12 @@
                   <v-btn color="primary" @click="postLoginData" large block> Login </v-btn>
                 </v-col> </v-row
               ><br /><br />
-              <v-row>
+              <!-- <v-row>
                 <v-divider></v-divider><span style="margin-top: -10px">Or</span>
                 <v-divider></v-divider>
-              </v-row>
+              </v-row> -->
 
-              <v-row>
+              <!-- <v-row>
                 <v-col cols="12" sm="6" md="6">
                   <v-btn color="#e7f0ff" block large>
                     <v-img
@@ -101,8 +101,9 @@
                     </v-img><span style="padding-left: 10px"></span>
                     Apple
                   </v-btn>
-                </v-col> </v-row
-              ><br />
+                </v-col> </v-row 
+              >-->
+              <br />
               <p style="font-size: 0.75rem">
                 Have No Accont?
                 <router-link to="/signup">Sign up</router-link>

@@ -24,30 +24,9 @@
             <v-col></v-col>
             <v-col cols="12" md="5" style="background-color: #f2f2f2">
                 <div>
-                    <v-card-title>Stanbic Bank</v-card-title>
+                    <v-card-title>Stanbic Properties</v-card-title>
                     <v-card-subtitle>
                         It can be possible to start constructing your rentals or dream home with House Construction financing today
-                        <!-- <br /> -->
-                        <!-- <v-row row d-flex>
-                            <v-text-field v-model="name" label="Address" required outlined></v-text-field>
-                            <v-btn style="
-                    background-color: #3b6ef3;
-                    margin-top: 0.5em;
-                    margin-left: 0.5em;
-                  ">
-                                <span style="
-                      color: #ffffff;
-                      font-size: 20px;
-                      font-style: normal;
-                      font-weight: 300;
-                      line-height: 30px;
-                      letter-spacing: 0em;
-                      text-align: center;
-                      text-transform: capitalize;
-                    ">
-                                    See Offer</span>
-                            </v-btn>
-                        </v-row> -->
                     </v-card-subtitle>
                     <v-card-subtitle class="loan-heading">MAXIMUM LOAN AMOUNT</v-card-subtitle>
                     <v-card-subtitle class="loan-subheading">UGX 1 Billion</v-card-subtitle>
@@ -80,25 +59,9 @@
             </v-col>
             <v-col cols="12" md="5" style="background-color: #f2f2f2">
                 <div>
-                    <v-card-title>Stanbic Bank</v-card-title>
+                    <v-card-title>Stanbic Properties</v-card-title>
                     <v-card-subtitle>
                         Are you are looking to buy a house or flat? Buy an existing house, condominium or apartment with this great mortgage solution. It can be possible to be a home owner at the best rates on the market. Get your property with reputable developers, with affordable insurance from our trusted partners.
-
-                        <!-- <p style="text-align: center; margin-top: 1rem">
-                            <v-btn style="background-color: #3b6ef3">
-                                <span style="
-                      color: #ffffff;
-                      font-size: 20px;
-                      font-style: normal;
-                      font-weight: 300;
-                      line-height: 30px;
-                      letter-spacing: 0em;
-                      text-align: center;
-                      text-transform: capitalize;
-                    ">
-                                    Get a Broker</span>
-                            </v-btn>
-                        </p> -->
                     </v-card-subtitle>
                     <v-card-subtitle class="loan-heading">MAXIMUM LOAN AMOUNT</v-card-subtitle>
                     <v-card-subtitle class="loan-subheading">UGX 1 Billion</v-card-subtitle>
@@ -113,26 +76,10 @@
             <v-col></v-col>
             <v-col cols="12" md="5" style="background-color: #f2f2f2">
                 <div>
-                    <v-card-title>Stanbic Bank</v-card-title>
+                    <v-card-title>Stanbic Properties</v-card-title>
 
                     <v-card-subtitle>
                         Do you need to complete your dream home? It Can Be possible to meet your goal.
-                        <!-- <p style="text-align: center; margin-top: 1rem">
-                            <v-btn style="background-color: #3b6ef3">
-                                <span style="
-                      color: #ffffff;
-                      font-size: 20px;
-                      font-style: normal;
-                      font-weight: 300;
-                      line-height: 30px;
-                      letter-spacing: 0em;
-                      text-align: center;
-                      text-transform: capitalize;
-                    ">
-                                    Sell
-                                </span>
-                            </v-btn>
-                        </p> -->
                     </v-card-subtitle>
                     <v-card-subtitle class="loan-heading">MAXIMUM LOAN AMOUNT</v-card-subtitle>
                     <v-card-subtitle class="loan-subheading">UGX 1 Billion</v-card-subtitle>
@@ -234,8 +181,8 @@ export default {
 
 @media only screen and (max-width: 768px) {
     #container {
-        height: 30vh;
-        width: 100%;
+        height: auto;
+        width: auto;
     }
 
     #intro {
