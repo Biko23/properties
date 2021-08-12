@@ -124,7 +124,7 @@
 
           <v-list>
             <links title="Mortgage Lenders" link="/mortgage" />
-            <links title="Mortgage Rates" />
+            <links title="Mortgage Rates" link="/mortgage-rates" />
             <!-- <links title="Mortgage Refinancing" />
                     <links link="/" title="Mortgage Calculator" /> -->
           </v-list>
@@ -149,12 +149,13 @@
           </template>
 
           <v-list>
+            <template  v-for="category in allVendorsCategories">
             <links
-              v-for="category in allVendorsCategories"
-              :key="category.vendor_category_id"
-              link="/provider"
-              :title="category.vendor_category_name"
+              :key="category.value"
+              :link="`/provider/${category.value}`"
+              :title="category.text"
             />
+            </template>
             <!-- <links title="All " link="/provider" />
             <links title="Electrical " link="/provider" />
             <links title="Machenical " />

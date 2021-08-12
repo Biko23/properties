@@ -6,30 +6,30 @@
         <v-row>
             <v-col cols="12" sm="12" md="12" xl="12">
                 <h3 style="text-align: center; margin-top: 20px">Your profile</h3>
-                <v-form id="form" style="background-color: #e7f0ff">
+                <v-form id="form" style="background-color: #e7f0ff" ref="moreUserDataForm" v-model="valid" lazy-validation>
                     <v-text-field v-model="userData.user_id" type="hidden"></v-text-field>
                     <v-container>
                         <v-row>
                             <v-col cols="12" sm="12" md="12">
                                 <p>Secondary Email:</p>
-                                <v-text-field v-model="userData.secondary_email" label="Secondary Email" placeholder="Enter secondary email" solo></v-text-field>
+                                <v-text-field :rules="[userRules.secondary_email]" v-model="userData.secondary_email" label="Secondary Email" placeholder="Enter secondary email" solo></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
                             <v-col cols="12" sm="12" md="12">
                                 <p>Secondary Phone:</p>
-                                <v-text-field v-model="userData.secondary_contact" label="Username" placeholder="Placeholder" solo></v-text-field>
+                                <v-text-field :rules="[userRules.secondary_contact]" v-model="userData.secondary_contact" label="Username" placeholder="Placeholder" solo></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
                             <v-col cols="12" sm="12" md="12">
                                 <p>Business Location</p>
-                                <v-text-field v-model="userData.business_location" label="Business Location " placeholder="Business location" solo></v-text-field>
+                                <v-text-field :rules="[userRules.business_location]" v-model="userData.business_location" label="Business Location " placeholder="Business location" solo></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
                             <v-col cols="12" sm="12" md="12">
-                                <v-btn color="primary" @click="updateUserDetails" block>Update Your Details</v-btn>
+                                <v-btn color="primary" :disabled="!valid" @click="updateUserDetails" block>Update Your Details</v-btn>
                             </v-col>
                         </v-row>
                     </v-container>
@@ -62,11 +62,17 @@ export default {
     },
     name: "UserProfile",
     data: () => ({
+        valid: true,
         userData: {
             user_id: 0,
             secondary_email: "",
             secondary_contact: "",
             business_location: ""
+        },
+         userRules: {
+            secondary_email: value => !!value || "Secondary email is required.",
+            secondary_contact: v => (v && v.length >= 7) || "Min characters should be 8",
+            business_location: value => !!value || "Business location is required."
         },
     }),
     computed: {

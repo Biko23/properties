@@ -112,7 +112,13 @@ const routes = [
     component: () => import('@/views/Mortgage')
   },
   {
-    path: '/provider',
+    path: '/mortgage-rates',
+    name: 'MortgageRates',
+    component: () => import('@/views/MortgageRates')
+  },
+  {
+    path: '/provider/:vendor_category_id',
+    props: true,
     name: 'ServiceProviderComponent',
     component: () => import('@/components/ServiceProviderComponent')
   },
