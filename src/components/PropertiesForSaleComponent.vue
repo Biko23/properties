@@ -12,13 +12,13 @@
         </v-row>
         <v-row id="main-property">
             <v-col cols="12" xl="2" lg="3" md="4" sm="6" xs="12" v-for="propertyVisual in allPropertyVisuals" :key="propertyVisual.visuals_id">
-                <property-card 
+                <property-card
                     location="Plot 3435, Kyengera-Wakiso"
                     :date="formatDate(propertyVisual.when_created)"
                     :src="'http://localhost:8002/' + propertyVisual.snapshot"
                     :to="`/view/${propertyVisual.property_id}`"
                 />
-            
+
                 <!-- C:\Users\A241901\Documents\project\stanbicproperties-marketplace\property-visuals\src\main\resources\uploads -->
             </v-col>
         </v-row>
