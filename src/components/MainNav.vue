@@ -212,7 +212,7 @@
       temporary
       style="
         margin-left: 10px;
-        height: fit-content;
+        z-index: 100;
         margin-top: 5px;
         border-radius: 6px;
       "

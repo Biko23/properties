@@ -17,13 +17,11 @@
       >
      <!-- <a href="http://" class="sign-in">Sign In</a> -->
       <v-col class="hid-navbar sign-in">
-        <router-link
-        
-          color="primary"
-          style="text-decoration: none;color:white;"
+        <v-btn
+          style="text-decoration: none;color:white; background-color: transparent;"
           v-if="loginState"
           @click="logingOut"
-          >Logout</router-link
+          >Logout</v-btn
         >
         <router-link to="/login" style="text-decoration: none; color:white;" v-else
           >Login</router-link
@@ -121,7 +119,7 @@ export default {
           letter-spacing: 0em;
           text-align: center;
           margin-left: auto;
-          margin-right: 65px;
+          margin-right: auto;
 }
 .sign-in{
           font-size: 13px;
@@ -133,7 +131,8 @@ export default {
           color: white;
           text-decoration: none;
           display: block;
-          
+          margin-left: auto;
+          margin-right: auto;        
 }
 }
 </style>
