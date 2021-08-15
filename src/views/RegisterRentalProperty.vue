@@ -137,6 +137,7 @@ export default {
         Footer
     },
     methods: {
+        // post rental price to property_rental_value
         ...mapActions([
             "fetchPropertyTypes",
             "fetchPropertyFeatures",

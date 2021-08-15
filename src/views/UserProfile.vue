@@ -78,11 +78,14 @@ export default {
             business_location: value => !!value || "Business location is required."
         },
     }),
+    created(){
+        this.fetchAllUserRoles()
+    },
     computed: {
         ...mapGetters(['currentLoggedinUser'])
     },
     methods: {
-        ...mapActions(["updateUser"]),
+        ...mapActions(["updateUser", "fetchAllUserRoles"]),
         async updateUserDetails() {
             this.userData.user_id = this.currentLoggedinUser.user_id;
             try {
