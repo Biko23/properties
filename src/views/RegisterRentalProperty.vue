@@ -5,7 +5,7 @@
 
     <v-container>
         <div style="text-align: center">
-            <h3 style="color: white">Add A property</h3>
+            <h3 style="color: white">List A rental</h3>
             <h4 style="color: #b9cbdb">Step 2/4</h4>
         </div>
         <br />
@@ -140,7 +140,7 @@ export default {
         ...mapActions([
             "fetchPropertyTypes",
             "fetchPropertyFeatures",
-            "addPropertyDataFromPageOne",
+            "addPropertyForRentDataFromPageOne",
             "fetchPropertyCategories"
         ]),
         handleImages(files) {
@@ -149,7 +149,8 @@ export default {
         },
         storePropertyData() {
           if (this.$refs.propertyForm1.validate()) {
-            this.addPropertyDataFromPageOne(this.property).then(() =>
+            this.addPropertyForRentDataFromPageOne(this.property).then(() => 
+            // discuss with solomon, whether to check the response before proceeding
                 this.$router.push("/register2")
             );
           }

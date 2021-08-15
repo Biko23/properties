@@ -12,6 +12,7 @@ const routes = [
       basicAuth: true
     }
   },
+  // Start sell property and list rental section
   {
     path: '/property-requirement',
     name: 'RegisterPropertyRequirement',
@@ -44,6 +45,22 @@ const routes = [
       requireSellerRole: true
     },
   },
+  // end sale property journey
+  // rental section
+  {
+    path: '/rental-requirement',
+    name: 'RegisterRentalRequirement',
+    component: () => import('@/views/RegisterRentalPropertyRequirements.vue'),
+  },
+  {
+    path: '/register-rental',
+    name: 'RegisterRental',
+    component: () => import('@/views/RegisterRentalProperty.vue'),
+    meta: {
+      requiresAuth: true
+    },
+  },
+  // end rental journey
   {
     path: '/property',
     name: 'Property',
