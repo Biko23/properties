@@ -20,7 +20,7 @@
     <v-container>
       <v-row>
         <v-col cols="12" sm="12" md="4" xl="4">
-          <router-link to="/profile" style="text-decoration: none">
+          <!-- <router-link to="/profile" style="text-decoration: none"> -->
             <v-card class="mx-auto">
               <v-img
                 class="white--text align-end"
@@ -31,14 +31,16 @@
               ><br />
               <h3 style="text-align: center">I'm a broker</h3>
               <div style="text-align: center">
-                <v-btn color="primary">Get started</v-btn><br /><br />
+                 <router-link to="/profile" style="text-decoration: none">
+                <v-btn color="primary">Get started</v-btn>
+                </router-link><br /><br />
               </div>
             </v-card>
-          </router-link>
+          <!-- </router-link> -->
         </v-col>
 
         <v-col cols="12" sm="12" md="4" xl="4">
-          <router-link to="/profile" style="text-decoration: none">
+          <!-- <router-link to="/profile" style="text-decoration: none"> -->
             <v-card class="mx-auto">
               <v-img
                 class="white--text align-end"
@@ -49,13 +51,15 @@
               <br />
               <h3 style="text-align: center">I'm a Landloard</h3>
               <div style="text-align: center">
-                <v-btn color="primary">Get started</v-btn><br /><br />
+                 <router-link to="/profile" style="text-decoration: none">
+                <v-btn color="primary">Get started</v-btn>
+                </router-link><br /><br />
               </div>
             </v-card>
-          </router-link>
+          <!-- </router-link> -->
         </v-col>
         <v-col cols="12" sm="12" md="4" xl="4">
-          <router-link to="/profile" style="text-decoration: none">
+          <!-- <router-link to="/profile" style="text-decoration: none"> -->
             <v-card>
               <v-img
                 class="white--text align-end"
@@ -66,15 +70,18 @@
               <br />
               <h3 style="text-align: center">I'm a Mortgage Lender</h3>
               <div style="text-align: center">
-                <v-btn color="primary">Get started</v-btn><br /><br />
+                 <!-- <router-link to="/profile" style="text-decoration: none"> -->
+                <v-btn color="primary" disabled>Coming Soon</v-btn>
+                <!-- </router-link> -->
+                <br /><br />
               </div>
             </v-card>
-          </router-link>
+          <!-- </router-link> -->
         </v-col>
       </v-row>
       <v-row>
         <v-col cols="12" sm="12" md="4" xl="4">
-          <router-link to="/profile" style="text-decoration: none">
+          <!-- <router-link to="/profile" style="text-decoration: none"> -->
             <v-card class="mx-auto">
               <v-img
                 class="white--text align-end"
@@ -85,14 +92,16 @@
               ><br />
               <h3 style="text-align: center">I'm a Photographer</h3>
               <div style="text-align: center">
-                <v-btn color="primary">Get started</v-btn><br /><br />
+                 <!-- <router-link to="/profile" style="text-decoration: none"> -->
+                <v-btn color="primary" disabled>Coming Soon</v-btn>
+                <!-- </router-link> -->
+                <br /><br />
               </div>
             </v-card>
-          </router-link>
+          <!-- </router-link> -->
         </v-col>
 
         <v-col cols="12" sm="12" md="4" xl="4">
-          <router-link to="/profile" style="text-decoration: none">
             <v-card class="mx-auto">
               <v-img
                 class="white--text align-end"
@@ -103,13 +112,15 @@
               <br />
               <h3 style="text-align: center">I'm a builder</h3>
               <div style="text-align: center">
-                <v-btn color="primary">Get started</v-btn><br /><br />
+                 <!-- <router-link to="/profile" style="text-decoration: none"> -->
+                <v-btn color="primary" disabled>Coming Soon</v-btn>
+                <!-- </router-link> -->
+                <br /><br />
               </div>
             </v-card>
-          </router-link>
+          
         </v-col>
         <v-col cols="12" sm="12" md="4" xl="4">
-          <router-link to="/vendorprofile" style="text-decoration: none">
             <v-card>
               <v-img
                 class="white--text align-end"
@@ -120,10 +131,13 @@
               <br />
               <h3 style="text-align: center">I'm a Professional Service provider</h3>
               <div style="text-align: center">
-                <v-btn color="primary">Get started</v-btn><br /><br />
+               <router-link to="/vendorprofile" style="text-decoration: none">
+                <v-btn color="primary">Get started</v-btn>
+                </router-link>
+                <br /><br />
               </div>
             </v-card>
-          </router-link>
+          
         </v-col>
       </v-row>
     </v-container>

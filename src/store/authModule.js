@@ -7,15 +7,15 @@ const state = {
     registeringUser: [],
     currentUser: user,
     isLoggedIn: !!localStorage.getItem('token'),
-    is_seller: user.is_seller,
-    is_investor: user.is_investor,
-    is_product_developer: user.is_product_developer,
-    is_certified_seller: user.is_certified_seller,
-    is_professional_service_provider: user.is_professional_service_provider,
-    is_certified_product_developer: user.is_certified_product_developer,
-    is_certified_investor: user.is_certified_investor,
-    is_certified_professional_service_provider: user.is_certified_professional_service_provider,
-    roles: []
+    is_seller: !!user.is_seller,
+    is_investor: !!user.is_investor,
+    is_product_developer: !!user.is_product_developer,
+    is_certified_seller: !!user.is_certified_seller,
+    is_professional_service_provider: !!user.is_professional_service_provider,
+    is_certified_product_developer: !!user.is_certified_product_developer,
+    is_certified_investor: !!user.is_certified_investor,
+    is_certified_professional_service_provider: !!user.is_certified_professional_service_provider,
+    roles: user.roles
 }
 
 const getters = {
@@ -96,6 +96,14 @@ const actions = {
                 }
                 localStorage.setItem('currentUser', JSON.stringify(loggedInUser));
                 commit("setCurrentUser", loggedInUser);
+                commit("setIsseller", loggedInUser.is_seller);
+                commit("setIsInvestor", loggedInUser.is_investor);
+                commit("setIsProductDeveloper", loggedInUser.is_product_developer);
+                commit("setIsCertifiedSeller", loggedInUser.is_certified_seller);
+                commit("setIsProfessionalServiceProvider",loggedInUser.is_professional_service_provider);
+                commit("setIsCertifiedProductDeveloper",loggedInUser.is_certified_product_developer);
+                commit("setIsCertifiedInvestor",loggedInUser.is_certified_investor);
+                commit("setIsCertifiedProfessionalServiceProvider",loggedInUser.is_certified_professional_service_provider);
             }
             return response;
         } catch (error) {
@@ -107,6 +115,7 @@ const actions = {
             localStorage.removeItem('token');
             localStorage.removeItem('currentUser');
             await commit('loginStatus', false);
+            await commit('setUserStatus', false);
             await commit('setCurrentUser', {});
         }
         catch (error) {
@@ -128,6 +137,24 @@ const mutations = {
     setRegisteredUser: (state, returnedUser) => (state.registeringUser = returnedUser),
     setCurrentUser: (state, currentUser) => state.currentUser = currentUser,
     loginStatus: (state, status) => state.isLoggedIn = status,
+    setUserStatus: (state, status) => {
+        state.is_seller = status,
+        state.is_investor = status,
+        state.is_product_developer = status,
+        state.is_certified_seller = status,
+        state.is_professional_service_provider = status,
+        state.is_certified_product_developer = status,
+        state.is_certified_investor = status,
+        state.is_certified_professional_service_provider = status
+    },
+    setIsseller: (state, status) => state.is_seller = status,
+    setIsInvestor: (state, status) => state.is_investor = status,
+    setIsProductDeveloper: (state, status) => state.is_product_developer = status,
+    setIsCertifiedSeller: (state, status) => state.is_certified_seller = status,
+    setIsProfessionalServiceProvider: (state, status) => state.is_professional_service_provider = status,
+    setIsCertifiedProductDeveloper: (state, status) => state.is_certified_product_developer = status,
+    setIsCertifiedInvestor: (state, status) => state.is_certified_investor = status,
+    setIsCertifiedProfessionalServiceProvider: (state, status) => state.is_certified_professional_service_provider = status,
     setUserRoles: (state, userRoles) => state.roles = userRoles.map(role => {
         return {
             role_id: role.role_id,

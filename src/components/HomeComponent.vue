@@ -8,7 +8,7 @@
             <v-col cols="12" md="6" xs="12">
                 <form action="">
                     <div>
-                        <input placeholder="Enter Address,Zip code, neighborhood,city" style="" :search="search" />
+                        <input placeholder="Search Properties" style="" :search="search" />
                         <span style="margin-left: -50px; padding-top: 300px">
                             <button style="">
                                 <img src="https://res.cloudinary.com/diued7ugb/image/upload/v1625824148/Vector_jyqs4g.svg" alt="" width="20" srcset="" style="margin-top: -12px; position: absolute" />
@@ -393,7 +393,8 @@ export default {
 ::placeholder {
     color: #3b6ef3;
     font-size: 1rem;
-    font-weight: 500;
+    padding: 30px;
+    font-weight: 250;
 }
 
 .text-field {
@@ -412,6 +413,7 @@ input {
     margin-top: 180px;
     background-color: #f2f2f2;
     height: 50px;
+    padding: 20px;
     width: 500px;
     border-radius: 6px;
 }
@@ -466,8 +468,8 @@ input {
         margin-top: 40px;
         background-color: #f2f2f2;
         height: 50px;
-        width: 350px;
-        margin-left: 20px;
+        width: 320px;
+        margin-left: auto;
         border-radius: 6px;
     }
 
@@ -475,10 +477,14 @@ input {
         color: #3b6ef3;
         font-size: 0.9rem;
         font-weight: 500;
+        padding: 10px;
     }
 
     #col-hiden {
         display: none;
     }
+}
+@media only screen and (max-width: 1080px) {
+
 }
 </style>

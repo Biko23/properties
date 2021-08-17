@@ -84,7 +84,7 @@ export default {
 <style scoped>
 .time {
   position: absolute;
-  z-index: 10;
+  z-index: 1;
   top: 10;
   font-weight: bold;
   color: #000000;
