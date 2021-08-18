@@ -37,18 +37,26 @@ export default {
   async updateUserProfile (user) {
     try {
       const response = await API.userApi.put(`/users/${user.user_id}`, user)
+      const roleResponse = await API.userApi.post(`/users/add-role/${user.user_id}/${user.role_id}`)
       return response
     } catch (error) {
-      console.log(error);
-      // throw new Error('An error occured when updating data')
+      throw new Error('An error occured when updating data')
     }
   },
   async deleteAUserAccount (user) {
     try {
-      const response = await API.userApi.delete(`/property-locations/${user.user_id}`)
+      const response = await API.userApi.delete(`/users/${user.user_id}`)
       return response
     } catch (error) {
       throw new Error('An error occured when deleting data')
+    }
+  },
+  async getAllUserRoles () {
+    try {
+      const response = await API.userApi.get('/roles')
+      return response;
+    } catch (error) {
+      throw new Error('An error occured while fetching user roles')
     }
   }
 }

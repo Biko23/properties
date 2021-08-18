@@ -7,14 +7,15 @@ const state = {
     registeringUser: [],
     currentUser: user,
     isLoggedIn: !!localStorage.getItem('token'),
-    is_seller: user.is_seller,
-    is_investor: user.is_investor,
-    is_product_developer: user.is_product_developer,
-    is_certified_seller: user.is_certified_seller,
-    is_professional_service_provider: user.is_professional_service_provider,
-    is_certified_product_developer: user.is_certified_product_developer,
-    is_certified_investor: user.is_certified_investor,
-    is_certified_professional_service_provider: user.is_certified_professional_service_provider
+    is_seller: !!user.is_seller,
+    is_investor: !!user.is_investor,
+    is_product_developer: !!user.is_product_developer,
+    is_certified_seller: !!user.is_certified_seller,
+    is_professional_service_provider: !!user.is_professional_service_provider,
+    is_certified_product_developer: !!user.is_certified_product_developer,
+    is_certified_investor: !!user.is_certified_investor,
+    is_certified_professional_service_provider: !!user.is_certified_professional_service_provider,
+    roles: user.roles
 }
 
 const getters = {
@@ -28,9 +29,10 @@ const getters = {
     iAmAProfessionalServiceProvider: state => state.is_professional_service_provider,
     iAmACertifiedProductDeveloper: state => state.is_certified_product_developer,
     iAmACertifiedInvestor: state => state.is_certified_investor,
-    iAmACertifiedProfessionalServiceProvider: state => state.is_certified_professional_service_provider
+    iAmACertifiedProfessionalServiceProvider: state => state.is_certified_professional_service_provider,
+    allRoles: state => state.roles
 };
-
+ 
 const actions = {
     async signupANewUser({ commit }, newUser) {
         try {
@@ -55,6 +57,8 @@ const actions = {
     },
     async updateUser(_, userDetails) {
         try {
+            const userRole = state.roles.filter(role => role.name === ("Seller" || "seller" || "SELLER"))
+            userDetails.role_id = userRole[0].role_id
             const response = await AuthService.updateUserProfile(userDetails);
             return response;
         } catch (error) {
@@ -92,6 +96,14 @@ const actions = {
                 }
                 localStorage.setItem('currentUser', JSON.stringify(loggedInUser));
                 commit("setCurrentUser", loggedInUser);
+                commit("setIsseller", loggedInUser.is_seller);
+                commit("setIsInvestor", loggedInUser.is_investor);
+                commit("setIsProductDeveloper", loggedInUser.is_product_developer);
+                commit("setIsCertifiedSeller", loggedInUser.is_certified_seller);
+                commit("setIsProfessionalServiceProvider",loggedInUser.is_professional_service_provider);
+                commit("setIsCertifiedProductDeveloper",loggedInUser.is_certified_product_developer);
+                commit("setIsCertifiedInvestor",loggedInUser.is_certified_investor);
+                commit("setIsCertifiedProfessionalServiceProvider",loggedInUser.is_certified_professional_service_provider);
             }
             return response;
         } catch (error) {
@@ -103,7 +115,17 @@ const actions = {
             localStorage.removeItem('token');
             localStorage.removeItem('currentUser');
             await commit('loginStatus', false);
+            await commit('setUserStatus', false);
             await commit('setCurrentUser', {});
+        }
+        catch (error) {
+            throw new Error(error);
+        }
+    },
+    async fetchAllUserRoles({ commit }) {
+        try {
+            const response = await AuthService.getAllUserRoles();
+            commit('setUserRoles', response.data.result);
         }
         catch (error) {
             throw new Error(error);
@@ -114,7 +136,31 @@ const actions = {
 const mutations = {
     setRegisteredUser: (state, returnedUser) => (state.registeringUser = returnedUser),
     setCurrentUser: (state, currentUser) => state.currentUser = currentUser,
-    loginStatus: (state, status) => state.isLoggedIn = status
+    loginStatus: (state, status) => state.isLoggedIn = status,
+    setUserStatus: (state, status) => {
+        state.is_seller = status,
+        state.is_investor = status,
+        state.is_product_developer = status,
+        state.is_certified_seller = status,
+        state.is_professional_service_provider = status,
+        state.is_certified_product_developer = status,
+        state.is_certified_investor = status,
+        state.is_certified_professional_service_provider = status
+    },
+    setIsseller: (state, status) => state.is_seller = status,
+    setIsInvestor: (state, status) => state.is_investor = status,
+    setIsProductDeveloper: (state, status) => state.is_product_developer = status,
+    setIsCertifiedSeller: (state, status) => state.is_certified_seller = status,
+    setIsProfessionalServiceProvider: (state, status) => state.is_professional_service_provider = status,
+    setIsCertifiedProductDeveloper: (state, status) => state.is_certified_product_developer = status,
+    setIsCertifiedInvestor: (state, status) => state.is_certified_investor = status,
+    setIsCertifiedProfessionalServiceProvider: (state, status) => state.is_certified_professional_service_provider = status,
+    setUserRoles: (state, userRoles) => state.roles = userRoles.map(role => {
+        return {
+            role_id: role.role_id,
+            name: role.name
+        }
+    })
 }
 
 export default {

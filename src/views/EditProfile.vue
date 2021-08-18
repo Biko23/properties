@@ -13,7 +13,7 @@
               margin-top: 20px;
             "
           >
-            Your profile
+           Edit Your profile
           </h3>
           <br />
           <v-form
@@ -29,6 +29,18 @@
               type="hidden"
             ></v-text-field>
             <v-container>
+                <v-row>
+                <v-col cols="12" sm="12" md="12">
+                  <p>Phone Number:</p>
+                  <v-text-field
+                    :rules="[userRules.secondary_email]"
+                    v-model="userData.secondary_email"
+                    label="Phone number"
+                    placeholder="Enter phone number"
+                    solo
+                  ></v-text-field>
+                </v-col>
+              </v-row>
               <v-row>
                 <v-col cols="12" sm="12" md="12">
                   <p>Secondary Email:</p>
@@ -75,7 +87,7 @@
                     >Update Your Details</v-btn
                   >
                 </v-col>
-                <v-col cols="12" sm="12" md="12" style="text-align: center; color: green; font-size: 20px;">
+                <!-- <v-col cols="12" sm="12" md="12" style="text-align: center; color: green; font-size: 20px;">
                   <p v-if="iAmASeller && iAmACertifiedSeller">
                     You are already approved as a seller
                   </p>
@@ -83,7 +95,7 @@
                     You are already a registered seller pending approval
                   </p>
                   <p v-else>Fill in Details above to become a seller</p>
-                </v-col>
+                </v-col> -->
               </v-row>
             </v-container>
           </v-form>
@@ -111,7 +123,7 @@ export default {
     About,
     Footer,
   },
-  name: "UserProfile",
+  name: "EditProfile",
   data: () => ({
     valid: true,
     userData: {

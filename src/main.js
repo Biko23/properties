@@ -16,6 +16,7 @@ router.beforeEach((to, from, next) => {
     }
   }
 
+  // Check authentication
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (
       !store.getters.loginState ||
@@ -32,6 +33,24 @@ router.beforeEach((to, from, next) => {
     next()
   }
 
+  // check if authenticated and a seller as well
+  if (to.matched.some(record => record.meta.requireSellerRole)) {
+    if (store.getters.loginState && store.getters.iAmASeller && store.getters.iAmACertifiedSeller) {
+      next(to.path)
+      return
+    } else if(store.getters.loginState && (store.getters.iAmASeller || !store.getters.iAmASeller) && !store.getters.iAmACertifiedSeller) {
+      const myRoute = sessionStorage.setItem('nextPath', to.path);
+      next(myRoute || '/profile');
+      sessionStorage.removeItem('nextPath');
+      return
+    } else {
+      next('/login')
+    }
+  } else {
+    next()
+  }
+
+// Check if user logged in and dont allow to go back
   if (to.matched.some(record => record.meta.hideForAuth)) {
     if (
       store.getters.loginState ||
@@ -47,16 +66,6 @@ router.beforeEach((to, from, next) => {
   }
 })
 
-// router.beforeEnter((to, from, next) => {
-//   // check vuex store //
-//   if(to.matched.some(record => record.meta.requireSellerRole)){
-//   if (store.getters.isSeller && store.getters.isCertifiedSeller) {
-//     next('/register')
-//   } else {
-//     next('/property-requirement');
-//   }
-// }
-// })
 
 new Vue({
   router,

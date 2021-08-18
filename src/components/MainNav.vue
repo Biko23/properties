@@ -23,15 +23,15 @@
           >Stanbic Properties</v-toolbar-title
         >
       </router-link>
-
       <v-spacer></v-spacer>
-      <v-row justify="space-around" class="hid-navbar">
+      <v-spacer></v-spacer>
+    
+      <v-row class="hid-navbar">
         <v-menu :key="text" :rounded="rounded" offset-y>
           <template v-slot:activator="{ attrs, on }">
             <a
               href="#"
               color="deep-purple accent-4"
-              class="blue--text ma-7"
               v-bind="attrs"
               v-on="on"
               style="text-decoration: none"
@@ -51,13 +51,12 @@
                     <links link="/" title="Open houses" /> -->
           </v-list>
         </v-menu>
-
+        <v-spacer></v-spacer>
         <v-menu :key="text" :rounded="rounded" offset-y>
           <template v-slot:activator="{ attrs, on }">
             <a
               href="#"
               color="deep-purple accent-4"
-              class="blue--text ma-7"
               v-bind="attrs"
               v-on="on"
               style="text-decoration: none"
@@ -78,13 +77,12 @@
             <!-- <links title="Price Conversion Calculator" /> -->
           </v-list>
         </v-menu>
-
+        <v-spacer></v-spacer>
         <v-menu :key="text" :rounded="rounded" offset-y>
           <template v-slot:activator="{ attrs, on }">
             <a
               href="#"
               color="deep-purple accent-4"
-              class="blue--text ma-7"
               v-bind="attrs"
               v-on="on"
               style="text-decoration: none"
@@ -99,19 +97,19 @@
           <div style="display: flex; flex-direction: row">
             <v-list>
               <links link="/property" title="Houses for Rent" />
-              <links link="/register" title="List A Rental" />
+              <!-- Work on logic to return rentals only and its screen to display them -->
+              <links link="/rental-requirement" title="List A Rental" />
               <!-- <links link="/login" title="Apartments for Rent" />
                         <links link="/description" title="Your Rentals" /> -->
             </v-list>
           </div>
         </v-menu>
-
+        <v-spacer></v-spacer>
         <v-menu :key="text" :rounded="rounded" offset-y>
           <template v-slot:activator="{ attrs, on }">
             <a
               href="#"
               color="deep-purple accent-4"
-              class="blue--text ma-7"
               v-bind="attrs"
               v-on="on"
               style="text-decoration: none"
@@ -131,13 +129,12 @@
                     <links link="/" title="Mortgage Calculator" /> -->
           </v-list>
         </v-menu>
-
+        <v-spacer></v-spacer>
         <v-menu :key="text" :rounded="rounded" offset-y>
           <template v-slot:activator="{ attrs, on }">
             <a
               href="#"
               color="deep-purple accent-4"
-              class="blue--text ma-7"
               v-bind="attrs"
               v-on="on"
               style="text-decoration: none"
@@ -160,13 +157,12 @@
             </template>
           </v-list>
         </v-menu>
-
+        <v-spacer></v-spacer>
         <v-menu :key="text" :rounded="rounded" offset-y>
           <template v-slot:activator="{ attrs, on }">
             <a
               href="#"
               color="deep-purple accent-4"
-              class="blue--text ma-7"
               v-bind="attrs"
               v-on="on"
               style="text-decoration: none"
@@ -184,7 +180,8 @@
           </v-list>
         </v-menu>
       </v-row>
-
+ <v-spacer></v-spacer>
+  <v-spacer></v-spacer>
       <v-col class="hid-navbar">
         <v-btn
           color="primary"
@@ -212,7 +209,7 @@
       temporary
       style="
         margin-left: 10px;
-        height: fit-content;
+        z-index: 100;
         margin-top: 5px;
         border-radius: 6px;
       "
@@ -275,14 +272,27 @@ export default {
 .toggle {
   display: none;
 }
+.hid-navbar {
+  padding: 30px;
+}
 
-@media only screen and (max-width: 947px) {
+@media only screen and (max-width: 768px) {
   .toggle {
     display: block;
   }
 
   .hid-navbar {
     display: none;
+  }
+}
+@media only screen and (max-width: 1080) {
+  .toggle {
+    display: block;
+  }
+
+  .hid-navbar {
+    display: block;
+    color: red;
   }
 }
 </style>

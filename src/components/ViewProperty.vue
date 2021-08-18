@@ -37,13 +37,13 @@
           <br />
           <div style="background-color: #f2f2f2; border-radius: 6px">
             <v-col>
-              <p style="color: #3b6ef3">
+              <p style="color: #3b6ef3l display: flex;">
                 Price:
-                <span style="color: black; margin-left: 200px">UGX {{currentPropertyValue.actual_value}}</span>
+                <span style="color: black; margin-left: 190px">UGX {{currentPropertyValue.actual_value}}</span>
                 <br />
                 <span
                   >Equavalent To:
-                  <span style="color: black; margin-left: 140px"
+                  <span style="color: black; margin-left: 154px"
                     >$ {{dollarExchange()}}</span
                   ></span
                 >
