@@ -1,7 +1,7 @@
 <template>
  <router-link :to="to" style=" text-decoration:none;">
 <v-card max-width="auto">
-    <v-card-subtitle class="time">Added {{date}} </v-card-subtitle>
+    <v-card-subtitle class="time" style="z-index: 1;">Added {{date}} </v-card-subtitle>
     <v-img :src="src" height="200px"></v-img>
     <v-card-subtitle>
          <small style="font-weight: bold; color: #000000; margin-bottom: 0;">${{cost}}</small><br>

@@ -98,8 +98,9 @@
           </template>
           <div style="display: flex; flex-direction: row">
             <v-list>
-              <links link="/property" title="Houses for Rent" />
-              <links link="/register" title="List A Rental" />
+              <links link="/property" title="Houses for Rent" /> 
+              <!-- Work on logic to return rentals only and its screen to display them -->
+              <links link="/rental-requirement" title="List A Rental" />
               <!-- <links link="/login" title="Apartments for Rent" />
                         <links link="/description" title="Your Rentals" /> -->
             </v-list>
@@ -212,7 +213,7 @@
       temporary
       style="
         margin-left: 10px;
-        height: fit-content;
+        z-index: 100;
         margin-top: 5px;
         border-radius: 6px;
       "

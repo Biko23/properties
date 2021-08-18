@@ -28,6 +28,7 @@
               letter-spacing: 0em;
               margin-right: 50px;
               color: black;
+              text-align: justify;
             "
           >
             Stanbic properties is building the first modern real estate platform
@@ -43,6 +44,7 @@
               letter-spacing: 0em;
               margin-right: 50px;
               color: black;
+              text-align: justify;
             "
           >
             With an Exprienced team, Stanbic Properties is led by a team of
@@ -63,6 +65,7 @@
               line-height: 20px;
               letter-spacing: 0em;
               margin-right: 50px;
+              text-align: justify;
             "
           >
             As an innovative residential real estate firm, we empower our agents
@@ -78,6 +81,7 @@
               line-height: 20px;
               letter-spacing: 0em;
               margin-right: 50px;
+              text-align: justify;
             "
           >
             To lead the industry requires the smartest tools built by the

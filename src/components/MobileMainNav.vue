@@ -71,7 +71,7 @@
         <links title="Join Us As?" link="/getstarted" />
       </v-list>
     </v-list-group>
-    <!-- <v-col class="hid-navbar">
+    <v-col class="hid-navbar">
         <v-btn
           color="primary"
           style="text-decoration: none"
@@ -82,7 +82,9 @@
         <router-link to="/login" style="text-decoration: none" v-else
           >Login</router-link
         >
-      </v-col> -->
+        OR
+        <router-link to="/signup" style="text-decoration: none">Sign up</router-link>
+      </v-col>
   </v-list>
 </template>
 <script>

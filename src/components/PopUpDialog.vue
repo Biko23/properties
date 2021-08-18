@@ -24,5 +24,15 @@ export default {
             dialog: false
         }
     },
+    props: {
+        title: {
+            type: String,
+            default: "Pop",
+        },
+        title: {
+            type: String,
+            default: "All",
+        },
+    },
 }
 </script>
