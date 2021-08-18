@@ -2,9 +2,37 @@
 <div class="main-div">
     <top-nav />
     <main-nav />
-
     <v-container>
-       <v-alert v-if="responseMessage != ''" type="success" dismissible class="text-center">{{ responseMessage }}</v-alert>
+        <!-- success Dialog -->
+        <v-dialog transition="dialog-top-transition" persistent v-model="messageDialog" max-width="600">
+            <template>
+                <v-card>
+                    <v-toolbar color="success" dark>Success</v-toolbar>
+                    <v-card-text>
+                        {{responseMessage}}
+                    </v-card-text>
+                    <v-card-actions class="justify-end">
+                        <v-btn text @click="closeDialog">close</v-btn>
+                    </v-card-actions>
+                </v-card>
+            </template>
+        </v-dialog>
+        <!-- end Success Dialog -->
+        <!-- failure Dialog -->
+        <v-dialog transition="dialog-top-transition" persistent v-model="failureDialog" max-width="600">
+            <template>
+                <v-card>
+                    <v-toolbar color="red" dark>Error</v-toolbar>
+                    <v-card-text>
+                        {{responseMessage}}
+                    </v-card-text>
+                    <v-card-actions class="justify-end">
+                        <v-btn text @click="closeFailureDialog">close</v-btn>
+                    </v-card-actions>
+                </v-card>
+            </template>
+        </v-dialog>
+        <!-- end Failure Dialog -->
         <div style="text-align: center">
             <h3 style="color: white">Add A property</h3>
             <h4 style="color: #b9cbdb">Final Step 4/4</h4>
@@ -19,12 +47,7 @@
                             <v-text-field v-model="property.landmark_name" class="custom-label-color" label="Landmark Name" :rules="[propertyRules.landmark_name]" color="blue" solo></v-text-field>
                         </v-col>
                         <v-col class="d-flex" cols="12" sm="6">
-                            <v-text-field
-                            v-model="property.distance_from_property"
-                            class="custom-label-color" label="Distance from property in kms"
-                            :rules="[propertyRules.distance_from_property]" color="blue"
-                            suffix="kms"
-                            solo></v-text-field>
+                            <v-text-field v-model.number="property.distance_from_property" class="custom-label-color" label="Distance from property in kms" :rules="[propertyRules.distance_from_property]" color="blue" suffix="kms" solo></v-text-field>
                         </v-col>
                     </v-row>
                 </v-col>
@@ -107,10 +130,7 @@ import MainNav from "@/components/MainNav.vue";
 import About from "./About.vue";
 import Footer from "../components/Footer.vue";
 import BottonNav from "../components/BottonNav.vue";
-import {
-    mapGetters,
-    mapActions
-} from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import UploadImages from "vue-upload-drop-images";
 
 export default {
@@ -118,6 +138,8 @@ export default {
     data: () => ({
         valid: true,
         responseMessage: '',
+        messageDialog: false,
+        failureDialog: false,
         propertyRules: {
             landmark_name: value => !!value || "Name is required.",
             distance_from_property: value => !!value || "Distance is required",
@@ -156,17 +178,33 @@ export default {
             );
             this.property.landmarkVisuals.push(...files);
         },
-       async submitFinalData() {
+        async submitFinalData() {
             if (this.$refs.propertyForm3.validate()) {
                 await this.addPropertyDataFromPageThird(this.property);
-               const response = await this.submitAllPropertyData();
-              if(response.status === 200 || response.status === 201){
-                this.responseMessage = 'Property created successfully. Pending SPL verification';
-                setTimeout(()=>{
-                  this.$router.push("/properties-for-sale");
-                }, 2000);
-              }
+                const response = await this.submitAllPropertyData();
+                if (response.status === 200 || response.status === 201) {
+                    this.messageDialog = true;
+                    this.responseMessage = 'Property created successfully. Now waiting SPL approval!!';
+                    return;
+                }
+
+                if (response.status !== 200 || response.status !== 201) {
+                    this.failureDialog = true;
+                    this.responseMessage = 'Failed to create property. Please try again!!';
+                }
             }
+        },
+        closeDialog() {
+            this.messageDialog = false;
+            setTimeout(() => {
+                this.$router.push("/properties-for-sale");
+            }, 100);
+        },
+        closeFailureDialog() {
+            this.failureDialog = false;
+            setTimeout(() => {
+                this.$router.push("/register");
+            }, 100);
         }
     },
     computed: {

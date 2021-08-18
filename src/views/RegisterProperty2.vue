@@ -19,7 +19,7 @@
                   class="custom-label-color"
                   label="Expected Value"
                   color="blue"
-                  v-model="property.expected_value"
+                  v-model.number="property.expected_value"
                   :rules="[propertyRules.expected_value]"
                   solo
                 ></v-text-field>

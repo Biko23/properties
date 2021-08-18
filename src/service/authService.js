@@ -14,7 +14,7 @@ export default {
       const response = await API.userApi.post('/users', newUser)
       return response
     } catch (error) {
-      throw new Error('An error occured when sending data')
+        throw new Error(error);
     }
   },
   async loggingUser (loginUser) {
