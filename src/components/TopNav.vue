@@ -98,7 +98,7 @@ export default {
           text-decoration: none;
           display: none;
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1080px) {
   .toolbar-title{
           display: none;
 }
@@ -133,6 +133,8 @@ export default {
           color: white;
           text-decoration: none;
           display: block;
+          margin-left: auto;
+          margin-right: auto;
           
 }
 }
