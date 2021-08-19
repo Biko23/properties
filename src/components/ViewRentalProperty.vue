@@ -50,6 +50,7 @@
               <h3>Property Details</h3>
               <p style="font-weight: 300">
                 {{ spreadFeatures }} <br />
+                Location: {{ $route.query.location }}
                 <!-- plot 3421, Muyenga, Kampala -->
               </p>
             </v-col>
@@ -110,7 +111,7 @@
                     <!-- Features content -->
                     <v-data-table
                       :headers="featureHeaders"
-                      :items="propertyFeatures"
+                      :items="allCurrentPropertyFeatures"
                       :items-per-page="5"
                       class="elevation-1"
                     ></v-data-table>
@@ -224,14 +225,14 @@ export default {
   props: ['property_id'],
   // $route.params.propertyId
   data: () => ({
-    propertyFeatures: [
-      {
-        features_id: 1,
-        feature: "2 Bedroom",
-        description: "250 X 230 m",
-      },
-      { features_id: 2, feature: "1 Kitchen", description: "In house" },
-    ],
+    // [
+    //   {
+    //     features_id: 1,
+    //     feature: "2 Bedroom",
+    //     description: "250 X 230 m",
+    //   },
+    //   { features_id: 2, feature: "1 Kitchen", description: "In house" },
+    // ],
     propertyMonthtyCosts: [
       {
         monthly_costs_id: 1,
@@ -251,8 +252,8 @@ export default {
       },
     ],
     featureHeaders: [
-      { text: "Feature", value: "feature" },
-      { text: "Description", value: "description" },
+      { text: "Feature", value: "name" },
+      { text: "Description", value: "name" },
     ],
     priceHistoryHeaders: [
       { text: "Event", value: "event" },
@@ -310,7 +311,15 @@ export default {
     },
     spreadFeatures: function () {
       return this.allCurrentPropertyFeatures.reduce((acc, currentFeature) => acc + "," + currentFeature.name, "").slice(1);
-    }
+    },
+    // featureData: function () {
+    //    allCurrentPropertyFeatures.map(feature => {
+    //   return {
+    //     id: allCurrentPropertyFeatures[feature],
+    //     name: feature.name
+    //   }
+    // })
+    // }
   },
    methods: {
      ...mapActions([

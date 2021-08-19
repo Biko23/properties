@@ -61,7 +61,7 @@
               <h3>Property Details</h3>
               <p style="font-weight: 300">
                 {{ spreadFeatures }} <br />
-                <!-- plot 3421, Muyenga, Kampala -->
+                Location: {{ $route.query.location }}
               </p>
             </v-col>
           </div>
@@ -121,7 +121,7 @@
                     <!-- Features content -->
                     <v-data-table
                       :headers="featureHeaders"
-                      :items="propertyFeatures"
+                      :items="allCurrentPropertyFeatures"
                       :items-per-page="5"
                       class="elevation-1"
                     ></v-data-table>
@@ -235,20 +235,20 @@ export default {
   props: ['property_id'],
   // $route.params.propertyId
   data: () => ({
-    propertyFeatures: [
-      {
-        features_id: 1,
-        feature: "Iron sheets",
-        description: "Roman Tiles Coffee brown",
-      },
-      { features_id: 2, feature: "Floors", description: "4" },
-      {
-        features_id: 3,
-        feature: "Type",
-        description:
-          "3 Bedrooms,1 dinning room, 1 sitting room ,kitchen, and 2 washrooms",
-      },
-    ],
+    // propertyFeatures: [
+    //   {
+    //     features_id: 1,
+    //     feature: "Iron sheets",
+    //     description: "Roman Tiles Coffee brown",
+    //   },
+    //   { features_id: 2, feature: "Floors", description: "4" },
+    //   {
+    //     features_id: 3,
+    //     feature: "Type",
+    //     description:
+    //       "3 Bedrooms,1 dinning room, 1 sitting room ,kitchen, and 2 washrooms",
+    //   },
+    // ],
     propertyMonthtyCosts: [
       {
         monthly_costs_id: 1,
@@ -268,8 +268,8 @@ export default {
       },
     ],
     featureHeaders: [
-      { text: "Feature", value: "feature" },
-      { text: "Description", value: "description" },
+      { text: "Feature", value: "name" },
+      { text: "Description", value: "name" },
     ],
     priceHistoryHeaders: [
       { text: "Event", value: "event" },
