@@ -9,6 +9,7 @@ import PropertyCategoryService from '@/service/property/propertyCategories';
 import PropertyTypeService from '@/service/property/propertyListedAs';
 import PropertyFeatureService from '@/service/propertyFeatures';
 import PropertyLandmarkTypeService from '@/service/propertyLandmarkTypes';
+import FeatureTypeLookupService from '@/service/property/featureTypeLookup';
 import { formatDate } from '@/helpers/helpers';
 
 const state = {
@@ -49,7 +50,7 @@ const getters = {
 const actions = {
     async fetchPropertyCategories({ commit }) { // Sale, Rent
         try {
-            const response = await PropertyCategoryService.getPropertyCategory();
+            const response = await PropertyTypeService.getPropertyListingTypes();
             commit('setRentPropertyCategory', response.data.result);
             commit('setSalePropertyCategory', response.data.result);
         } catch (error) {
@@ -58,7 +59,7 @@ const actions = {
     },
     async fetchPropertyTypes({ commit }) { // Apartments, Houses, land, Banglow,  many more
         try {
-            const response = await PropertyTypeService.getPropertyListingTypes();
+            const response = await PropertyCategoryService.getPropertyCategory();
             commit('setPropertyTypes', response.data.result);
         } catch (error) {
             console.log(error);
@@ -92,8 +93,8 @@ const actions = {
         try {
             await commit('setPropertyRegisterFirstData', propertyDataOne);
             const newProperty = {
-                isListedForId: propertyDataOne.type,
-                property_type_id: state.saleCategory[0].property_type_id,
+                isListedForId: state.saleCategory[0].id,
+                property_type_id:propertyDataOne.type,
                 created_by: rootState.AuthModule.currentUser.username,
                 updated_by: rootState.AuthModule.currentUser.username
             }
@@ -110,8 +111,8 @@ const actions = {
         try {
             await commit('setPropertyRegisterFirstData', rentPropertyDataOne);
             const newProperty = {
-                isListedForId: rentPropertyDataOne.type,
-                property_type_id: state.rentCategory[0].property_type_id,
+                isListedForId: state.rentCategory[0].id, 
+                property_type_id: rentPropertyDataOne.type,
                 created_by: rootState.AuthModule.currentUser.username,
                 updated_by: rootState.AuthModule.currentUser.username
             }
@@ -141,9 +142,9 @@ const actions = {
             }
             const selectedPropertyFeatures = {
                 propertyFeatures: state.propertyFirstPageData.features,
-                property_id: state.createdProperty.property_id,
-                created_by: rootState.AuthModule.currentUser.username,
-                updated_by: rootState.AuthModule.currentUser.username
+                property_id: state.createdProperty.property_id
+                // created_by: rootState.AuthModule.currentUser.username,
+                // updated_by: rootState.AuthModule.currentUser.username
             }
             const propertyVisuals = {
                 description: state.propertyFirstPageData.description,
@@ -183,6 +184,7 @@ const actions = {
 
             await PropertyLocationService.postAPropertyLocation(propertyLocation);
             await PropertyValueService.postAPropertyValue(propertyValue);
+            await FeatureTypeLookupService.postAPropertyFeatures(selectedPropertyFeatures);
             await PropertyNearbyLandmarkService.postAPropertyNearbyLandmark(nearbyLandmarkVisuals);
             await NeighborhoodVisualsService.postNeighborhoodVisuals(neighborhoodVisuals);
             const propertyVisualResponse = await PropertyVisualsService.postPropertyVisuals(propertyVisuals);
@@ -246,14 +248,14 @@ const actions = {
 // mutations
 const mutations = {
     setRentPropertyCategory: (state, rentPropertyCategory) => (state.rentCategory = rentPropertyCategory
-        .filter(rentCategory => rentCategory.property_type === ("Rent" || "rent" || "RENT"))),
+        .filter(rentCategory => rentCategory.name === ("Rent" || "rent" || "RENT"))),
     setSalePropertyCategory: (state, salePropertyCategory) => (state.saleCategory = salePropertyCategory
-        .filter(saleCategory => saleCategory.property_type === ("Sale" || "sale" || "SALE"))),
+        .filter(saleCategory => saleCategory.name === ("Sale" || "sale" || "SALE"))),
     setPropertyTypes: (state, propertyTypes) => (state.propertyTypes = propertyTypes
         .map(propertyType => {
             return {
-                value: propertyType.id,
-                text: propertyType.name
+                value: propertyType.property_type_id,
+                text: propertyType.property_type
             }
         })),
     setCurrencies: (state, currencies) => (state.currencies = currencies

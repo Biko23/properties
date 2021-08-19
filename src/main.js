@@ -36,7 +36,7 @@ router.beforeEach((to, from, next) => {
   // check if authenticated and a seller as well
   if (to.matched.some(record => record.meta.requireSellerRole)) {
     if (store.getters.loginState && store.getters.iAmASeller && store.getters.iAmACertifiedSeller) {
-      next(to.path)
+      next()
       return
     } else if(store.getters.loginState && (store.getters.iAmASeller || !store.getters.iAmASeller) && !store.getters.iAmACertifiedSeller) {
       const myRoute = sessionStorage.setItem('nextPath', to.path);

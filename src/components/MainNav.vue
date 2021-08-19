@@ -73,7 +73,7 @@
             <links title="Sell A Property" link="/property-requirement" />
             <!-- <links title="Current market trends" /> -->
             <links title="Seller's guide" link="/learn" />
-            <links title="Property Details" link="/property-details" />
+            <links v-if="iAmACertifiedSeller" title="Property Details" link="/property-details" />
             <!-- <links title="Price Conversion Calculator" /> -->
           </v-list>
         </v-menu>
@@ -248,7 +248,7 @@ export default {
     colors: ["deep-purple accent-4", "error", "teal darken-1"],
   }),
   computed: {
-    ...mapGetters(["loginState", "allVendorsCategories"]),
+    ...mapGetters(["loginState", "allVendorsCategories", "iAmACertifiedSeller"])
   },
   created() {
     this.fetchVendorsCategories();

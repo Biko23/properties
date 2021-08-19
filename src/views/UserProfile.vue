@@ -47,7 +47,7 @@
                   <v-text-field
                     :rules="[userRules.secondary_contact]"
                     v-model="userData.secondary_contact"
-                    label="Username"
+                    label="secondary contact"
                     placeholder="Placeholder"
                     solo
                   ></v-text-field>
