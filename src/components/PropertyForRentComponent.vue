@@ -13,7 +13,7 @@
         <v-row id="main-property">
             <v-col cols="12" xl="2" lg="3" md="4" sm="6" xs="12" v-for="propertyVisual in allPropertyForRent" :key="propertyVisual.visuals_id">
                 <property-card 
-                    location="Plot 3435, Kyengera-Wakiso"
+                    :location="propertyVisual.name"
                     :date="formatDate(propertyVisual.when_created)"
                     :cost="propertyVisual.actual_value"
                     :postedBy="propertyVisual.created_by"

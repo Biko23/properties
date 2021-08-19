@@ -74,7 +74,11 @@
             <links title="Sell A Property" link="/property-requirement" />
             <!-- <links title="Current market trends" /> -->
             <links title="Seller's guide" link="/learn" />
-            <links v-if="iAmACertifiedSeller" title="Property Details" link="/property-details" />
+            <links
+              v-if="iAmACertifiedSeller"
+              title="Property Details"
+              link="/property-details"
+            />
             <!-- <links title="Price Conversion Calculator" /> -->
           </v-list>
         </v-menu>
@@ -98,7 +102,7 @@
           </template>
           <div style="display: flex; flex-direction: row">
             <v-list>
-              <links link="/properties-for-rent" title="Houses for Rent" /> 
+              <links link="/properties-for-rent" title="Houses for Rent" />
               <!-- Work on logic to return rentals only and its screen to display them -->
               <links link="/rental-requirement" title="List A Rental" />
               <!-- <links link="/login" title="Apartments for Rent" />
@@ -252,13 +256,18 @@ export default {
     colors: ["deep-purple accent-4", "error", "teal darken-1"],
   }),
   computed: {
-    ...mapGetters(["loginState", "allVendorsCategories", "iAmACertifiedSeller"])
+    ...mapGetters([
+      "loginState",
+      "allVendorsCategories",
+      "iAmACertifiedSeller",
+    ]),
   },
   created() {
     this.fetchVendorsCategories();
   },
   methods: {
     ...mapActions(["logout", "fetchVendorsCategories"]),
+    // ...mapActions(["logout", "fetchVendorsCategories", "changeVendorTypeId"]),
     async logingOut() {
       try {
         await this.logout().then(() => {
@@ -269,6 +278,14 @@ export default {
       }
     },
   },
+  // watch: {
+  //     gb(value) {
+  //         this.mb = value * 1024;
+  //     },
+  //     mb(value) {
+  //         this.gb = value / 1024;
+  //     }
+  // }
 };
 </script>
 
