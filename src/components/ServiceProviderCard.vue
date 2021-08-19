@@ -2,7 +2,16 @@
   <!-- <router-link :to="to" style=" text-decoration:none;"> -->
   <v-card max-width="auto">
     <v-card-subtitle class="time">Name {{ vendor_name }} </v-card-subtitle>
-    <v-img :src="src" height="200px"></v-img>
+    <div>
+      <v-img
+      v-if="vendorCategory.text == Mechnical"
+        :src="src2"
+        height="200px"
+        
+      ></v-img>
+      <v-img :src="src" height="200px" v-else></v-img>
+    </div>
+
     <v-card-subtitle>
       <small style="font-weight: bold; color: #000000; margin-bottom: 0">{{
         vendor_primary_phone_number
@@ -20,31 +29,28 @@
 </template>
 
 <script>
-
 export default {
   name: "PropertyCard",
   data: () => ({
     vendorCategories: [],
     editedIndex: -1,
-   
   }),
- 
-//   methods: {
-  
 
-//     async likingVendor(item) {
-//       console.log(item);
-//       try {
-//         const response = await this.likeVendor(this.newVendor);
-//         console.log(response);
-//         if (response.status === 201 || response.status === 200) {
-//           this.$router.push("/login");
-//         }
-//       } catch (error) {
-//         console.log(error);
-//       }
-//     },
-//   },
+  //   methods: {
+
+  //     async likingVendor(item) {
+  //       console.log(item);
+  //       try {
+  //         const response = await this.likeVendor(this.newVendor);
+  //         console.log(response);
+  //         if (response.status === 201 || response.status === 200) {
+  //           this.$router.push("/login");
+  //         }
+  //       } catch (error) {
+  //         console.log(error);
+  //       }
+  //     },
+  //   },
   props: {
     vendor_name: {
       type: String,
@@ -64,15 +70,18 @@ export default {
     },
     onClick: {
       type: Function,
-      default: ()=>{
-          console.log("Hello");
-      }
-
+      default: () => {
+        console.log("Hello");
+      },
     },
-       src: {
-            type: String,
-            default: require("../assets/provider.jpg")
-        },
+    src: {
+      type: String,
+      default: require("../assets/provider.jpg"),
+    },
+    src2: {
+      type: String,
+      default: require("../assets/builder.jpg"),
+    },
     to: {
       type: String,
       default: "/view",
