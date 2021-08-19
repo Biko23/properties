@@ -2,6 +2,36 @@
 <div>
     <top-nav />
     <v-container id="main-container" fluid>
+        <!-- success Dialog -->
+        <v-dialog transition="dialog-top-transition" persistent v-model="messageDialog" max-width="600">
+            <template>
+                <v-card>
+                    <v-toolbar color="success" dark>Success</v-toolbar>
+                    <v-card-text>
+                        {{responseMessage}}
+                    </v-card-text>
+                    <v-card-actions class="justify-end">
+                        <v-btn text @click="closeDialog">close</v-btn>
+                    </v-card-actions>
+                </v-card>
+            </template>
+        </v-dialog>
+        <!-- end Success Dialog -->
+        <!-- failure Dialog -->
+        <v-dialog transition="dialog-top-transition" persistent v-model="failureDialog" max-width="600">
+            <template>
+                <v-card>
+                    <v-toolbar color="red" dark>Error</v-toolbar>
+                    <v-card-text>
+                        {{responseMessage}}
+                    </v-card-text>
+                    <v-card-actions class="justify-end">
+                        <v-btn text @click="closeFailureDialog">close</v-btn>
+                    </v-card-actions>
+                </v-card>
+            </template>
+        </v-dialog>
+        <!-- end Failure Dialog -->
         <v-row>
             <v-col cols="12" sm="12" md="6" lg="6">
                 <router-link to="/" style="
@@ -30,89 +60,43 @@
                     <v-container>
                         <v-row>
                             <v-col cols="12" sm="12" md="12">
-                                <v-text-field 
-                                  v-model="userSignupDetails.name"
-                                  :rules="[rules.required, rules.min]"
-                                  label="Full name"
-                                  placeholder="Enter your Full name" 
-                                  solo
-                                ></v-text-field>
+                                <v-text-field v-model="userSignupDetails.name" :rules="[rules.required, rules.min]" label="Full name" placeholder="Enter your Full name" solo></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
                             <v-col cols="12" sm="12" md="12">
-                                <v-text-field 
-                                  v-model="userSignupDetails.email"
-                                  :rules="emailRules"
-                                  label="Email " 
-                                  placeholder="Enter your email" 
-                                  solo
-                                ></v-text-field>
+                                <v-text-field v-model="userSignupDetails.email" :rules="emailRules" label="Email " placeholder="Enter your email" solo></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
                             <v-col cols="12" sm="12" md="12">
-                                <v-text-field 
-                                  v-model="userSignupDetails.username" 
-                                  :rules="[rules.required, rules.min]"
-                                  label="Username " 
-                                  placeholder="Enter Username" 
-                                  solo
-                                ></v-text-field>
+                                <v-text-field v-model="userSignupDetails.username" :rules="[rules.required, rules.min]" label="Username " placeholder="Enter Username" solo></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
                             <v-col cols="12" sm="12" md="12">
-                                <v-text-field 
-                                  v-model="userSignupDetails.telephone"
-                                  :rules="phoneNumberRules"
-                                  label="Phone number" 
-                                  placeholder="Enter yourPhone number" 
-                                  solo
-                                ></v-text-field>
+                                <v-text-field v-model="userSignupDetails.telephone" :rules="phoneNumberRules" label="Phone number" placeholder="Enter yourPhone number" solo></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
                             <v-col cols="12" sm="12" md="12">
-                                <v-text-field 
-                                  v-model="userSignupDetails.password"
-                                  :rules="[rules.required, rules.min]"
-                                  :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                                  :type="show1 ? 'text' : 'password'" 
-                                  label="Password" 
-                                  hint="At least 7 characters"
-                                  @click:append="show1 = !show1"
-                                  counter
-                                  placeholder="Enter your password" solo></v-text-field>
+                                <v-text-field v-model="userSignupDetails.password" :rules="[rules.required, rules.min]" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :type="show1 ? 'text' : 'password'" label="Password" hint="At least 7 characters" @click:append="show1 = !show1" counter placeholder="Enter your password" solo></v-text-field>
                             </v-col>
                             <v-col cols="12" sm="12" md="12">
-                                <v-text-field 
-                                  v-model="userSignupDetails.confirmPassword" 
-                                  :rules="[rules.required]"
-                                  :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                                  :type="show1 ? 'text' : 'password'" 
-                                  label="Confirm password" 
-                                  @click:append="show1 = !show1"
-                                  counter
-                                  placeholder="Confirm password" solo></v-text-field>
+                                <v-text-field v-model="userSignupDetails.confirmPassword" :rules="[rules.required]" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :type="show1 ? 'text' : 'password'" label="Confirm password" @click:append="show1 = !show1" counter placeholder="Confirm password" solo></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
                             <v-col cols="12" sm="12" md="12">
-                                <v-btn 
-                                  color="primary"
-                                  :disabled="!valid" 
-                                  @click="postNewUserData" 
-                                  block
-                                > Sign Up </v-btn>
+                                <v-btn color="primary" :disabled="!valid" @click="postNewUserData" block> Sign Up </v-btn>
                             </v-col>
                         </v-row>
-                                      <!-- <v-row>
+                        <!-- <v-row>
                               <v-divider></v-divider
                               ><span style="margin-top: -10px">Or</span> <v-divider
                               ></v-divider>
                             </v-row> -->
-                                      <!-- <v-row>
+                        <!-- <v-row>
                               <v-col cols="12" sm="6" md="6">
                                 <v-btn color="#e7f0ff" block large>
                                   <v-img
@@ -158,6 +142,9 @@ export default {
     name: "SignUp",
     data: () => ({
         show1: false,
+        responseMessage: '',
+        messageDialog: false,
+        failureDialog: false,
         valid: true,
         userSignupDetails: {
             name: "",
@@ -173,7 +160,7 @@ export default {
             required: value => !!value || "Required.",
             min: v => (v && v.length >= 7) || "Min 8 characters"
         },
-         emailRules: [
+        emailRules: [
             v => !!v || "Required",
             v => /.+@.+\..+/.test(v) || "E-mail must be valid"
         ],
@@ -191,15 +178,43 @@ export default {
         ...mapActions(["signupANewUser"]),
         async postNewUserData() {
             try {
-              if (this.$refs.signupForm.validate()) {
-                const response = await this.signupANewUser(this.userSignupDetails);
-                if (response.data.status == 1) {
-                    this.$router.push('/login')
+                if (this.$refs.signupForm.validate()) {
+                    const response = await this.signupANewUser(this.userSignupDetails);
+                    if (response.status === 201 || response.status === 200) {
+                        this.messageDialog = true;
+                        this.responseMessage = 'Account created successfully!!';
+                        setTimeout(() => {
+                            this.messageDialog = false;
+                            this.responseMessage = '';
+                            this.$router.push('/login');
+                        }, 2000);
+                        return;
+                    }
+                    
+                    if(response.status !== 201 || response.status !== 200) {
+                        this.failureDialog = true;
+                        this.responseMessage = response.data.message;
+                        setTimeout(() => {
+                            this.failureDialog = false;
+                            this.responseMessage = '';
+                        }, 3000);
+                    }
                 }
-              }
             } catch (error) {
-                throw new Error("Failed, Please try again");
+                this.failureDialog = true;
+                this.responseMessage = error;
+                setTimeout(() => {
+                    this.failureDialog = false;
+                    this.responseMessage = '';
+                }, 1000);
             }
+        },
+        closeDialog() {
+            this.messageDialog = false;
+            this.$router.push('/login')
+        },
+        closeFailureDialog() {
+            this.failureDialog = false;
         }
     },
     computed: {

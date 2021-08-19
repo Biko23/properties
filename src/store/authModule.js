@@ -40,7 +40,7 @@ const actions = {
             commit('setRegisteredUser', response.data.result);
             return response;
         } catch (error) {
-            throw new Error("Failed on saved new User");
+            throw new Error(error);
         }
     },
     async login({ commit }, userDetails) {

@@ -20,7 +20,7 @@
         <links title="Sell A Property" link="/property-requirement" />
         <!-- <links title="Current market trends" /> -->
         <links title="Seller's guide" link="/learn" />
-        <links title="Property Details" link="/property-details" />
+        <links v-if="iAmACertifiedSeller" title="Property Details" link="/property-details" />
         <!-- <links title="Price Conversion Calculator" /> -->
       </v-list>
     </v-list-group>
@@ -83,7 +83,7 @@
           >Login</router-link
         >
         OR
-        <router-link to="/signup" style="text-decoration: none">Sign up</router-link>
+        <router-link to="/signup" v-if="!loginState" style="text-decoration: none">Sign up</router-link>
       </v-col>
   </v-list>
 </template>
@@ -99,7 +99,7 @@ export default {
     vendorCategories: [],
   }),
   computed: {
-    ...mapGetters(["loginState", "allVendorsCategories"]),
+    ...mapGetters(["loginState", "allVendorsCategories", "iAmACertifiedSeller"])
   },
   created() {
     this.fetchVendorsCategories();
