@@ -75,15 +75,6 @@
                     >Update Your Details</v-btn
                   >
                 </v-col>
-                <v-col cols="12" sm="12" md="12" style="text-align: center; color: green; font-size: 20px;">
-                  <p v-if="iAmASeller && iAmACertifiedSeller">
-                    You are already approved as a seller
-                  </p>
-                  <p v-else-if="iAmASeller && !iAmACertifiedSeller">
-                    You are already a registered seller pending approval
-                  </p>
-                  <p v-else>Fill in Details above to become a seller</p>
-                </v-col>
               </v-row>
             </v-container>
           </v-form>
@@ -131,7 +122,7 @@ export default {
     this.fetchAllUserRoles();
   },
   computed: {
-    ...mapGetters(["currentLoggedinUser", "iAmASeller", "iAmACertifiedSeller"]),
+    ...mapGetters(["currentLoggedinUser", "iAmASeller"]),
   },
   methods: {
     ...mapActions(["updateUser", "fetchAllUserRoles", "fetchLoggedUser"]),

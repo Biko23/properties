@@ -72,16 +72,15 @@ const routes = [
       requireSellerRole: true
     },
   },
-  // end rental journey
-  {
-    path: '/property',
-    name: 'Property',
-    component: () => import('@/views/Property')
-  },
   {
     path: '/properties-for-sale',
     name: 'properties-for-sale',
     component: () => import('@/views/PropertiesForSale')
+  },
+  {
+    path: '/properties-for-rent',
+    name: 'properties-for-rent',
+    component: () => import('@/views/PropertiesForRent')
   },
   {
     path: '/property-details',
@@ -129,11 +128,18 @@ const routes = [
     }
   },
   {
-    path: '/view',
+    // path: '/view',
     path: '/view/:property_id',
     props: true,
     name: 'ViewProperty',
     component: () => import('@/components/ViewProperty')
+  },
+  {
+    // path: '/view',
+    path: '/view-rental/:property_id',
+    props: true,
+    name: 'ViewRentalProperty',
+    component: () => import('@/components/ViewRentalProperty')
   },
   {
     path: '/mortgage',

@@ -248,9 +248,9 @@
                 <v-expand-transition>
                     <div v-show="show">
                         <v-divider></v-divider>
-                        <router-link to="/property" class="property-link">Houses for Rent</router-link><br>
+                        <router-link to="/properties-for-rent" class="property-link">Houses for Rent</router-link><br>
                         <router-link to="/register" class="property-link">List A Rental</router-link><br>
-                        <router-link to="/property-details" class="property-link">Property Details</router-link>
+                        <router-link to="/property-details" v-if="iAmACertifiedSeller" class="property-link">Property Details</router-link>
                     </div>
                 </v-expand-transition>
             </v-col>
@@ -306,12 +306,14 @@
                 <v-expand-transition>
                     <div v-show="show">
                         <v-divider></v-divider>
-                        <router-link to="/provider" class="property-link">All</router-link><br>
-                        <router-link to="/provider" class="property-link">Electrical</router-link><br>
-                        <router-link to="/provider" class="property-link">Mechanical</router-link><br>
-                        <router-link to="/provider" class="property-link">Research & Development</router-link><br>
-                        <router-link to="/provider" class="property-link">Architects</router-link><br>
-                        <router-link to="/provider" class="property-link">Civil Engineers</router-link>
+                        <template v-for="category in allVendorsCategories">
+                        <router-link 
+                            :to="`/provider/${category.value}`" 
+                            :key="category.value" 
+                            class="property-link"
+                        >{{category.text}}</router-link>
+                        <br :key="category.value">
+                        </template>
                     </div>
                 </v-expand-transition>
             </v-col>
@@ -370,7 +372,7 @@ export default {
         ...mapActions(["fetchLatestPropertyVisuals"])
     },
     computed: {
-        ...mapGetters(["allLatestProperties"])
+        ...mapGetters(["allLatestProperties", "iAmACertifiedSeller", "allVendorsCategories"])
     },
     created(){
         this.fetchLatestPropertyVisuals();

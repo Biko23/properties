@@ -7,8 +7,8 @@
             <template>
                 <v-card>
                     <v-toolbar color="success" dark>Success</v-toolbar>
-                    <v-card-text>
-                        {{responseMessage}}
+                    <v-card-text class="pt-5">
+                        <p style="font-size: 16px;">{{responseMessage}}</p>
                     </v-card-text>
                     <v-card-actions class="justify-end">
                         <v-btn text @click="closeDialog">close</v-btn>
@@ -22,8 +22,8 @@
             <template>
                 <v-card>
                     <v-toolbar color="red" dark>Error</v-toolbar>
-                    <v-card-text>
-                        {{responseMessage}}
+                    <v-card-text class="pt-5">
+                       <p style="font-size: 16px;">{{responseMessage}}</p>
                     </v-card-text>
                     <v-card-actions class="justify-end">
                         <v-btn text @click="closeFailureDialog">close</v-btn>
@@ -180,7 +180,7 @@ export default {
             try {
                 if (this.$refs.signupForm.validate()) {
                     const response = await this.signupANewUser(this.userSignupDetails);
-                    if (response.status === 201 || response.status === 200) {
+                    if (response.status === 201) {
                         this.messageDialog = true;
                         this.responseMessage = 'Account created successfully!!';
                         setTimeout(() => {
@@ -191,7 +191,7 @@ export default {
                         return;
                     }
                     
-                    if(response.status !== 201 || response.status !== 200) {
+                    if(response.status === 200) {
                         this.failureDialog = true;
                         this.responseMessage = response.data.message;
                         setTimeout(() => {

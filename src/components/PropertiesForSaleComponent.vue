@@ -4,17 +4,20 @@
         <v-row id="property-header">
             <div style="flex:1;">
                 <h3>Properties</h3>
-                <small style="font-weight: bold;">{{allPropertyVisuals.length}} results</small>
+                <small style="font-weight: bold;">{{allPropertyForSale.length}} results</small>
             </div>
             <div style="flex:1;">
                 <h3 style="color: #3b6ef3;">BUY PROPERTY HERE</h3>
             </div>
         </v-row>
         <v-row id="main-property">
-            <v-col cols="12" xl="2" lg="3" md="4" sm="6" xs="12" v-for="propertyVisual in allPropertyVisuals" :key="propertyVisual.visuals_id">
+            <v-col cols="12" xl="2" lg="3" md="4" sm="6" xs="12" v-for="propertyVisual in allPropertyForSale" :key="propertyVisual.visuals_id">
+               <!-- :cost="numberWithCommas(propertyVisual.actual_value)" -->
                 <property-card
-                    location="Plot 3435, Kyengera-Wakiso"
+                    :location="propertyVisual.name"
                     :date="formatDate(propertyVisual.when_created)"
+                    :cost="propertyVisual.actual_value"
+                    :postedBy="propertyVisual.created_by"
                     :src="'http://localhost:8002/' + propertyVisual.snapshot"
                     :to="`/view/${propertyVisual.property_id}`"
                 />
@@ -36,7 +39,7 @@ export default {
         PropertyCard
     },
     methods: {
-        ...mapActions(["fetchPropertyVisuals"]),
+        ...mapActions(["fetchPropertyForSale", "fetchPropertyCategories"]),
         formatDate(dateToFormat){
             let currentDate = new Date();
             let result;
@@ -48,13 +51,22 @@ export default {
                 result = dateFormat(dateToFormat, "dddd, mmmm dS, yyyy");
             }
             return result;
+        },
+        async fetchAllProperties(){
+            try {
+                await this.fetchPropertyCategories()
+                    .then(() => this.fetchPropertyForSale()
+                )
+            } catch (error) {
+               throw new Error('Failed to fetch data'); 
+            }
         }
     },
     computed: {
-        ...mapGetters(["allPropertyVisuals"]),
+        ...mapGetters(["allPropertyForSale"]),
     },
     created(){
-        this.fetchPropertyVisuals();
+        this.fetchAllProperties();
     }
 };
 </script>
