@@ -119,11 +119,18 @@ const routes = [
     }
   },
   {
-    path: '/view',
+    // path: '/view',
     path: '/view/:property_id',
     props: true,
     name: 'ViewProperty',
     component: () => import('@/components/ViewProperty')
+  },
+  {
+    // path: '/view',
+    path: '/view-rental/:property_id',
+    props: true,
+    name: 'ViewRentalProperty',
+    component: () => import('@/components/ViewRentalProperty')
   },
   {
     path: '/mortgage',

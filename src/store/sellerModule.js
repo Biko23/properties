@@ -1,5 +1,6 @@
 import PropertyLocationService from '@/service/propertyLocation';
 import PropertyValueService from '@/service/propertyValue';
+import PropertyRentalValueService from '@/service/propertyRentalValue';
 import CurrencyService from '@/service/currencies'
 import PropertyNearbyLandmarkService from '@/service/propertyNearbyLandmark';
 import NeighborhoodVisualsService from '@/service/neighborhoodVisuals';
@@ -19,6 +20,7 @@ const state = {
     propertyTypes: [], // types like Apartments, Flat, Land
     propertyFeatures: [],
     propertyLandmarkTypes: [],
+    propertySubmissionState: 0, // check whether to submit to the property_rental_value or property_value
     propertyFirstPageData: null,
     propertySecondPageData: null,
     propertyThirdPageData: null,
@@ -40,7 +42,7 @@ const getters = {
     allPropertySecondPageData: (state) => state.propertySecondPageData,
     allPropertyThirdPageData: (state) => state.propertyThirdPageData,
     newCreatedProperty: (state) => state.createdProperty,
-
+    registeredPropertySubmissionState: (state) => state.propertySubmissionState,
     // current user getters
     allCurrentUserListedPropertyVisuals: (state) => state.currentUserListedPropertyVisuals,
     allCurrentUserUnlistedPropertyVisuals: (state) => state.currentUserUnlistedPropertyVisuals,
@@ -92,13 +94,13 @@ const actions = {
     async addPropertyDataFromPageOne({ commit, rootState }, propertyDataOne) {
         try {
             await commit('setPropertyRegisterFirstData', propertyDataOne);
+            await commit('setPropertySubmissionState', 1); // determine value table
             const newProperty = {
                 isListedForId: state.saleCategory[0].id,
                 property_type_id:propertyDataOne.type,
                 created_by: rootState.AuthModule.currentUser.username,
                 updated_by: rootState.AuthModule.currentUser.username
             }
-            console.log(newProperty);
             const response = await PropertyService.postAProperty(newProperty);
             commit('setCreatedProperty', response.data.result);
         } catch (error) {
@@ -110,6 +112,7 @@ const actions = {
     async addPropertyForRentDataFromPageOne({ commit, rootState }, rentPropertyDataOne) {
         try {
             await commit('setPropertyRegisterFirstData', rentPropertyDataOne);
+            await commit('setPropertySubmissionState', 2); // determine value table
             const newProperty = {
                 isListedForId: state.rentCategory[0].id, 
                 property_type_id: rentPropertyDataOne.type,
@@ -163,6 +166,13 @@ const actions = {
                 updated_by: rootState.AuthModule.currentUser.username
             }
 
+            const propertyRentalValue = {
+                rental_value_amt: state.propertySecondPageData.expected_value,
+                property_id: state.createdProperty.property_id,
+                created_by: rootState.AuthModule.currentUser.username,
+                updated_by: rootState.AuthModule.currentUser.username
+            }
+
             const neighborhoodVisuals = {
                 description: state.propertySecondPageData.description,
                 files: state.propertySecondPageData.neighborhoodVisuals,
@@ -183,13 +193,21 @@ const actions = {
             }
 
             await PropertyLocationService.postAPropertyLocation(propertyLocation);
-            await PropertyValueService.postAPropertyValue(propertyValue);
             await FeatureTypeLookupService.postAPropertyFeatures(selectedPropertyFeatures);
             await PropertyNearbyLandmarkService.postAPropertyNearbyLandmark(nearbyLandmarkVisuals);
             await NeighborhoodVisualsService.postNeighborhoodVisuals(neighborhoodVisuals);
-            const propertyVisualResponse = await PropertyVisualsService.postPropertyVisuals(propertyVisuals);
-            if (propertyVisualResponse.status === 200 || propertyVisualResponse.status === 201) {
-                return propertyVisualResponse;
+            await PropertyVisualsService.postPropertyVisuals(propertyVisuals);
+            // Check to either submit to the property_value or property_rental_value
+            let propertyValueResponse = null;
+
+            if(state.propertySubmissionState == 1){
+                propertyValueResponse = await PropertyValueService.postAPropertyValue(propertyValue);
+            } else if(state.propertySubmissionState == 2) {
+               propertyValueResponse = await PropertyRentalValueService.postPropertyRentalValue(propertyRentalValue);
+            }  
+
+            if (propertyValueResponse.status === 200 || propertyValueResponse.status === 201) {
+                return propertyValueResponse;
             }
         } catch (error) {
             // this.$swal('ooh!','Unable to finish!','error');
@@ -312,7 +330,8 @@ const mutations = {
             }
         })),
     updatePropertyVisualsList: (state, property_id) => state.currentUserListedPropertyVisuals = state.currentUserListedPropertyVisuals.filter(currentUserListedPropertyVisual => currentUserListedPropertyVisual.property_id !== property_id),
-    updatePropertyVisualsUnlist: (state, property_id) => state.currentUserUnlistedPropertyVisuals = state.currentUserUnlistedPropertyVisuals.filter(currentUserUnlistedPropertyVisual => currentUserUnlistedPropertyVisual.property_id !== property_id)
+    updatePropertyVisualsUnlist: (state, property_id) => state.currentUserUnlistedPropertyVisuals = state.currentUserUnlistedPropertyVisuals.filter(currentUserUnlistedPropertyVisual => currentUserUnlistedPropertyVisual.property_id !== property_id),
+    setPropertySubmissionState: (state, submissionState) => state.propertySubmissionState = submissionState
 }
 
 export default {
