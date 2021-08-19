@@ -5,6 +5,7 @@ import NeighborhoodVisualsService from '@/service/neighborhoodVisuals';
 import PropertyValueService from '@/service/propertyValue';
 import PropertyRentalValueService from '@/service/propertyRentalValue';
 import PropertyPriceHistoryService from '@/service/propertyPriceHistories';
+import FeatureTypeLookupService from '@/service/property/featureTypeLookup';
 import { formatDate } from '@/helpers/helpers';
 
 const state = {
@@ -16,7 +17,8 @@ const state = {
     latestProperties: [],
     propertyValue: {},
     rentalValue: {},
-    propertyPriceHistory: []
+    propertyPriceHistory: [],
+    currentPropertyFeatures: []
 }
 
 const getters = {
@@ -28,7 +30,8 @@ const getters = {
     allLatestProperties: (state) => state.latestProperties,
     currentPropertyValue: (state) => state.propertyValue,
     currentRentalValue: (state) => state.rentalValue,
-    currentPropertyPriceHistory: (state) => state.propertyPriceHistory
+    currentPropertyPriceHistory: (state) => state.propertyPriceHistory,
+    allCurrentPropertyFeatures: state => state.currentPropertyFeatures
 };
 
 const actions = {
@@ -81,6 +84,15 @@ const actions = {
             commit("setSinglePropertyNeighborhoodVisuals", response.data.result);
         } catch (error) {
             throw new Error("Failed on loading current property visuals")
+        }
+    },
+    async fetchCurrentPropertySelectedFeatures({ commit }, property_id){
+        try {
+            console.log(property_id);
+            const response = await FeatureTypeLookupService.getPropertyFeatureTypesByPropertyId(property_id);
+            commit("setCurrentPropertyFeatures", response.data.result);
+        } catch (error) {
+            throw new Error("Failed on loading current property features")
         }
     },
     async fetchCurrentPropertyValue({ commit }, property_id){
@@ -145,14 +157,18 @@ const mutations = {
     setLatestPropertyVisuals: (state, returnedLatestProperties) => (state.latestProperties = returnedLatestProperties),
     setSinglePropertyValue: (state, returnedSinglePropertyValue) => (state.propertyValue = returnedSinglePropertyValue),
     setSingleRentalValue: (state, returnedSingleRentalValue) => (state.rentalValue = returnedSingleRentalValue),
-    setSinglePropertyPriceHistory: (state, returnedSinglePropertyPriceHistories) => (state.propertyPriceHistory = returnedSinglePropertyPriceHistories.map(priceHistory => {
-        return {
-            property_id: priceHistory.property_id,
-            event: priceHistory.event,
-            price: priceHistory.price,
-            when_created: formatDate(priceHistory.when_created)
+    setSinglePropertyPriceHistory: (state, returnedSinglePropertyPriceHistories) => (state.propertyPriceHistory = returnedSinglePropertyPriceHistories
+        .map(priceHistory => {
+            return {
+                property_id: priceHistory.property_id,
+                event: priceHistory.event,
+                price: priceHistory.price,
+                when_created: formatDate(priceHistory.when_created)
+            }
         }
-    }))
+    )),
+    setCurrentPropertyFeatures: (state, propertySelectedFeatures) => (state.currentPropertyFeatures = propertySelectedFeatures
+        .map(eachFeature => {return {name: eachFeature.name}}))
 }
 
 export default {

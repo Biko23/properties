@@ -19,7 +19,6 @@ export default {
   },
   async getAllPropertyForSale(is_listed_for_id) { //return properties based on Sale id
     try {
-      console.log(is_listed_for_id);
       const response = await API.propertyApi.get(`/properties/search-listed-for/${is_listed_for_id}`)
       return response
     } catch (error) {
