@@ -30,6 +30,15 @@ const routes = [
     }
   },
   {
+    path: '/editprofile',
+    name: 'EditProfile',
+    component: () => import('@/views/EditProfile.vue'),
+    meta: { 
+       requiresAuth: true 
+      // requireSellerRole: true
+    }
+  },
+  {
     path: '/register2',
     name: 'RegisterProperty2',
     component: () => import('@/views/RegisterProperty2.vue'),
