@@ -1,3 +1,4 @@
+import PropertyService from '@/service/property/property';
 import PropertyVisualsService from '@/service/propertyVisuals';
 import PropertyNearbyLandmarkService from '@/service/propertyNearbyLandmark';
 import NeighborhoodVisualsService from '@/service/neighborhoodVisuals';
@@ -6,7 +7,7 @@ import PropertyPriceHistoryService from '@/service/propertyPriceHistories';
 import { formatDate } from '@/helpers/helpers';
 
 const state = {
-    propertyVisuals: [],
+    propertyForSale: [],
     singlePropertyVisuals: [],
     singlePropertyNearbyLandmarkVisuals: [],
     singleNeighborhoodVisuals: [],
@@ -16,7 +17,7 @@ const state = {
 }
 
 const getters = {
-    allPropertyVisuals: (state) => state.propertyVisuals,
+    allPropertyForSale: (state) => state.propertyForSale,
     allSinglePropertyVisuals: (state) => state.singlePropertyVisuals,
     allSinglePropertyNearbyLandmarkVisuals: (state) => state.singlePropertyNearbyLandmarkVisuals,
     allSingleNeighborhoodVisuals: (state) => state.singleNeighborhoodVisuals,
@@ -26,10 +27,12 @@ const getters = {
 };
 
 const actions = {
-    async fetchPropertyVisuals({ commit }) {
+    // fetchPropertyVisuals
+    async fetchPropertyForSale({commit, rootState}) {
         try {
-            const response = await PropertyVisualsService.getAllPropertyVisuals();
-            commit('setPropertyVisuals', response.data.result);
+            const is_listed_for_id = rootState.SellerModule.saleCategory[0].id
+            const response = await PropertyService.getAllPropertyForSale(is_listed_for_id);
+            commit('setPropertyForSale', response.data.result);
         } catch (error) {
             throw new Error("Failed on loading current properties")
         }
@@ -86,7 +89,18 @@ const actions = {
 }
 
 const mutations = {
-    setPropertyVisuals: (state, returnedVisuals) => (state.propertyVisuals = returnedVisuals),
+    setPropertyForSale: (state, returnedPropertyForSale) => (state.propertyForSale = returnedPropertyForSale.map(eachPropertyForSale => {
+        return {
+            property_id: eachPropertyForSale.propertyid_,
+            description: eachPropertyForSale.description_,
+            snapshot: eachPropertyForSale.snapshot_,
+            actual_value: eachPropertyForSale.actualvalue,
+            visuals_id: eachPropertyForSale.visualsid,
+            name: eachPropertyForSale.location_name,
+            when_created: eachPropertyForSale.whencreated,
+            created_by: eachPropertyForSale.createdby
+        }
+    })),
     setSinglePropertyVisuals: (state, returnedSinglePropertyVisuals) => (state.singlePropertyVisuals = returnedSinglePropertyVisuals),
     setSinglePropertyNearbyLandmarkVisuals: (state, returnedSinglePropertyLandmarkVisuals) => (state.singlePropertyNearbyLandmarkVisuals = returnedSinglePropertyLandmarkVisuals),
     setSinglePropertyNeighborhoodVisuals: (state, returnedSinglePropertyNeighborhoodVisuals) => (state.singleNeighborhoodVisuals = returnedSinglePropertyNeighborhoodVisuals),

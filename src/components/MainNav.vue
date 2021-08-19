@@ -98,7 +98,7 @@
           </template>
           <div style="display: flex; flex-direction: row">
             <v-list>
-              <links link="/property" title="Houses for Rent" /> 
+              <links link="/properties-for-rent" title="Houses for Rent" /> 
               <!-- Work on logic to return rentals only and its screen to display them -->
               <links link="/rental-requirement" title="List A Rental" />
               <!-- <links link="/login" title="Apartments for Rent" />

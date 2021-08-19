@@ -30,7 +30,7 @@
         <v-list-item-title>Rent</v-list-item-title>
       </template>
       <v-list>
-        <links link="/property" title="Houses for Rent" />
+        <links link="/properties-for-rent" title="Houses for Rent" />
         <links link="/register" title="List A Rental" />
         <!-- <links link="/login" title="Apartments for Rent" />
                         <links link="/description" title="Your Rentals" /> -->

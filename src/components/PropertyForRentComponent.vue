@@ -31,7 +31,7 @@ import PropertyCard from '@/components/PropertyCard'
 import dateFormat from 'dateformat'
 import { mapActions, mapGetters } from 'vuex';
 export default {
-    name: "PropertyComponent",
+    name: "PropertiesForRentComponent",
     components: {
         PropertyCard
     },

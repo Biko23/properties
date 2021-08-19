@@ -14,8 +14,9 @@ import TopNav from '../components/TopNav.vue'
 import MainNav from '../components/MainNav.vue'
 import Footer from '../components/Footer'
 
-import PropertiesForSaleComponent from '../components/PropertiesForSaleComponent'
+import PropertiesForSaleComponent from '../components/PropertiesForSaleComponent.vue'
 import About from './About.vue'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'Property',

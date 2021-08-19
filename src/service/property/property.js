@@ -17,6 +17,15 @@ export default {
       throw new Error('An error occured when retrieving data')
     }
   },
+  async getAllPropertyForSale(is_listed_for_id) { //return properties based on Sale or Rent
+    try {
+      console.log(is_listed_for_id);
+      const response = await API.propertyApi.get(`/properties/search-listed-for/${is_listed_for_id}`)
+      return response
+    } catch (error) {
+      throw new Error('An error occured when retrieving data')
+    }
+  },
   async postAProperty (property) {
     try {
       const response = await API.propertyApi.post('/properties', property)

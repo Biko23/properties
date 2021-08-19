@@ -4,9 +4,9 @@
     <v-card-subtitle class="time" style="z-index: 1;">Added {{date}} </v-card-subtitle>
     <v-img :src="src" height="200px"></v-img>
     <v-card-subtitle>
-         <small style="font-weight: bold; color: #000000; margin-bottom: 0;">${{cost}}</small><br>
-         <small>{{detail}}</small><br>
-        <small>{{location}}</small>
+         <small style="font-weight: bold; color: #000000; margin-bottom: 0;">UGX: {{cost}}</small><br>
+        <small>Located: {{location}}</small><br>
+        <small>Posted by: {{postedBy}}</small>
          </v-card-subtitle>
 </v-card>
  </router-link>
@@ -17,9 +17,9 @@ import dateFormat from 'dateformat'
 export default {
     name: 'PropertyCard',
     props: {
-        detail: {
+        postedBy: {
             type: String,
-            default: "2 beds, 2 bathrooms, 1,500ft - House for rent"
+            default: "No name"
         },
         location: {
             type: String,
@@ -41,7 +41,13 @@ export default {
             type: String,
             default: "/view"
         }
-    }
+    },
+    // computed: {
+    //     formatAmount : (propertyCost)=> {
+    //         let internationalNumberFormat = new Intl.NumberFormat('en-US');
+    //         return internationalNumberFormat.format(propertyCost);
+    //     }
+    // }
 }
 </script>
 
