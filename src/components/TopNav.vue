@@ -52,8 +52,8 @@
               <router-link to="/editprofile" style="text-decoration:none;">
               <v-btn depressed rounded text> Edit Account </v-btn>
               </router-link>
-              <v-divider class="my-3"></v-divider>
-              <v-btn depressed rounded text> Disconnect </v-btn>
+              <!-- <v-divider class="my-3"></v-divider>
+              <v-btn depressed rounded text> Disconnect </v-btn> -->
             </div>
           </v-list-item-content>
         </v-card>
