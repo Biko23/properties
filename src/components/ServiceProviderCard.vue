@@ -3,13 +3,14 @@
   <v-card max-width="auto">
     <v-card-subtitle class="time">Name {{ vendor_name }} </v-card-subtitle>
     <div>
-      <v-img
+      <!-- <v-img
       v-if="vendorCategory.text == Mechnical"
         :src="src2"
         height="200px"
         
-      ></v-img>
-      <v-img :src="src" height="200px" v-else></v-img>
+      ></v-img> -->
+      <!-- <v-img :src="src" height="200px" v-else></v-img> -->
+      <v-img :src="src" height="200px"></v-img>
     </div>
 
     <v-card-subtitle>

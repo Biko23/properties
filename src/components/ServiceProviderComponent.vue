@@ -25,6 +25,7 @@
             :vendor_name="vendor.vendor_name"
             :vendor_primary_phone_number="vendor.vendor_primary_phone_number"
             :vendorCategory="vendor.vendorCategory.vendor_category_name"
+            :src="'http://localhost:8091/' + vendor.vendorCategory.snapshot"
             :points="vendor.points"
           >
             <div>
