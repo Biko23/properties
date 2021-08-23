@@ -16,7 +16,7 @@
 
       <v-spacer></v-spacer>
 
-      <v-toolbar-title class="telephone"
+      <v-toolbar-title v-if="loginState" class="telephone"
         >Welcome
         <span style="font-size: 1rem; text-transform: capitalize">
           {{ currentLoggedinUser.username }}</span
@@ -27,7 +27,7 @@
     style="height: 300px"
   >
     <v-row justify="center"> -->
-      <v-menu bottom min-width="200px" rounded offset-y>
+      <v-menu v-if="loginState" bottom min-width="200px" rounded offset-y>
         <template v-slot:activator="{ on }">
           <v-btn icon x-large v-on="on">
             <v-avatar color="#3B6EF3" size="38">
@@ -48,6 +48,10 @@
               <p class="text-caption mt-1">
                 {{ currentLoggedinUser.vendor_primary_email }}
               </p>
+               <v-divider class="my-3"></v-divider>
+              <router-link to="/user-settings" style="text-decoration:none;">
+              <v-btn depressed rounded text>View Profile</v-btn>
+              </router-link>
               <v-divider class="my-3"></v-divider>
               <router-link to="/editprofile" style="text-decoration:none;">
               <v-btn depressed rounded text> Edit Account </v-btn>

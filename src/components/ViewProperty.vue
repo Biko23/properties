@@ -60,8 +60,8 @@
             <v-col>
               <h3>Property Details</h3>
               <p style="font-weight: 300">
-                2 beds, 2 bathrooms, 1500 sqft-House for rent <br />
-                plot 3421, Muyenga, Kampala
+                {{ spreadFeatures }} <br />
+                Location: {{ $route.query.location }}
               </p>
             </v-col>
           </div>
@@ -121,7 +121,7 @@
                     <!-- Features content -->
                     <v-data-table
                       :headers="featureHeaders"
-                      :items="propertyFeatures"
+                      :items="allCurrentPropertyFeatures"
                       :items-per-page="5"
                       class="elevation-1"
                     ></v-data-table>
@@ -235,20 +235,20 @@ export default {
   props: ['property_id'],
   // $route.params.propertyId
   data: () => ({
-    propertyFeatures: [
-      {
-        features_id: 1,
-        feature: "Iron sheets",
-        description: "Roman Tiles Coffee brown",
-      },
-      { features_id: 2, feature: "Floors", description: "4" },
-      {
-        features_id: 3,
-        feature: "Type",
-        description:
-          "3 Bedrooms,1 dinning room, 1 sitting room ,kitchen, and 2 washrooms",
-      },
-    ],
+    // propertyFeatures: [
+    //   {
+    //     features_id: 1,
+    //     feature: "Iron sheets",
+    //     description: "Roman Tiles Coffee brown",
+    //   },
+    //   { features_id: 2, feature: "Floors", description: "4" },
+    //   {
+    //     features_id: 3,
+    //     feature: "Type",
+    //     description:
+    //       "3 Bedrooms,1 dinning room, 1 sitting room ,kitchen, and 2 washrooms",
+    //   },
+    // ],
     propertyMonthtyCosts: [
       {
         monthly_costs_id: 1,
@@ -268,8 +268,8 @@ export default {
       },
     ],
     featureHeaders: [
-      { text: "Feature", value: "feature" },
-      { text: "Description", value: "description" },
+      { text: "Feature", value: "name" },
+      { text: "Description", value: "name" },
     ],
     priceHistoryHeaders: [
       { text: "Event", value: "event" },
@@ -319,10 +319,14 @@ export default {
       "allSinglePropertyNearbyLandmarkVisuals",
       "allSingleNeighborhoodVisuals",
      "currentPropertyValue",
-     "currentPropertyPriceHistory"
+     "currentPropertyPriceHistory",
+     "allCurrentPropertyFeatures"
     ]),
     dollarExchange(){
       return () => (this.currentPropertyValue.actual_value / 3500).toFixed(2);
+    },
+    spreadFeatures: function () {
+      return this.allCurrentPropertyFeatures.reduce((acc, currentFeature) => acc + "," + currentFeature.name, "").slice(1);
     }
   },
    methods: {
@@ -331,7 +335,8 @@ export default {
        "fetchPropertyNearbyLandmarkVisuals", 
        "fetchPropertyNeighborhoodVisuals",
        "fetchCurrentPropertyValue",
-       "fetchPropertyPriceHistories"
+       "fetchPropertyPriceHistories",
+       "fetchCurrentPropertySelectedFeatures"
     ])
   },
   mounted(){
@@ -340,7 +345,8 @@ export default {
     this.fetchPropertyNeighborhoodVisuals(this.property_id);
     this.fetchCurrentPropertyValue(this.property_id);
     this.fetchPropertyPriceHistories(this.property_id);
-  },
+    this.fetchCurrentPropertySelectedFeatures(this.property_id);
+  }
 };
 </script>
 

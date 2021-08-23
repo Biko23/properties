@@ -19,7 +19,7 @@
                     :cost="propertyVisual.actual_value"
                     :postedBy="propertyVisual.created_by"
                     :src="'http://localhost:8002/' + propertyVisual.snapshot"
-                    :to="`/view/${propertyVisual.property_id}`"
+                    :to="`/view/${propertyVisual.property_id}?location=${propertyVisual.name}`"
                 />
 
                 <!-- C:\Users\A241901\Documents\project\stanbicproperties-marketplace\property-visuals\src\main\resources\uploads -->

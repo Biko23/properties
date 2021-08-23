@@ -270,7 +270,7 @@
                         <v-divider></v-divider>
                         <router-link to="/property-requirement" class="property-link">Sell A Property</router-link><br>
                         <router-link to="/learn" class="property-link">Seller's guide</router-link><br>
-                        <router-link to="/property-details" class="property-link">Property Details</router-link>
+                        <router-link v-if="iAmACertifiedSeller" to="/property-details" class="property-link">Property Details</router-link>
                     </div>
                 </v-expand-transition>
             </v-col>
