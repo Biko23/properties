@@ -20,8 +20,9 @@ export default {
   },
 async getVendors () {
     try {
-      const response = await API.vendorsApi.get(`/vendors/vetted-vendors`)
-      return response
+      const response = await API.vendorsApi.get(`/vendors/vendors-by-category/${id}`)
+      console.log(response);
+     // return response
     } catch (error) {
       throw new Error('An error occured when retrieving data')
     }

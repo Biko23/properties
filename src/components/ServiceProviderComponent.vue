@@ -78,6 +78,12 @@ export default {
   mounted(){
     this.logToConsole();
   },
+  watch: {
+   '$route' (to, from){
+     alert(to.params.vendor_id)
+     }
+  },
+
   // watch: {
   //   vendor_category_id_to_search_by: {
   //     handler: (newTitle, oldTitle) => {
