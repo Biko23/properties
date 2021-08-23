@@ -39,6 +39,15 @@ const routes = [
     }
   },
   {
+    path: '/user-settings',
+    name: 'UserSettings',
+    component: () => import('@/views/ViewUserProfile.vue'),
+    meta: { 
+       requiresAuth: true 
+      // requireSellerRole: true
+    }
+  },
+  {
     path: '/register2',
     name: 'RegisterProperty2',
     component: () => import('@/views/RegisterProperty2.vue'),

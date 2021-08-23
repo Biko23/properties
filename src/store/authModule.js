@@ -47,10 +47,8 @@ const actions = {
         try {
             const response = await AuthService.loggingUser(userDetails);
             if (response.status === 200 && response.data.hasOwnProperty('token')) {
-                console.log(response.data.token);
                 localStorage.setItem('token', response.data.token);
                 commit('loginStatus', true);
-                return;
             } else if (response.status === 200 && response.data.hasOwnProperty('status')) {
                 commit('loginStatus', false);
             }

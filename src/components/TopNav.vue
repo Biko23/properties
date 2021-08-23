@@ -48,6 +48,10 @@
               <p class="text-caption mt-1">
                 {{ currentLoggedinUser.vendor_primary_email }}
               </p>
+               <v-divider class="my-3"></v-divider>
+              <router-link to="/user-settings" style="text-decoration:none;">
+              <v-btn depressed rounded text>View Profile</v-btn>
+              </router-link>
               <v-divider class="my-3"></v-divider>
               <router-link to="/editprofile" style="text-decoration:none;">
               <v-btn depressed rounded text> Edit Account </v-btn>
