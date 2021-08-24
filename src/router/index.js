@@ -14,6 +14,13 @@ const routes = [
       basicAuth: true
     }
   },
+  {
+    path: '/search-result',
+    // path: '/search-result/:keyword',
+    // props: true,
+    name: 'SearchResult',
+    component: () => import('@/views/SearchedResults.vue')
+  },
   // Start sell property and list rental section
   {
     path: '/property-requirement',
@@ -137,14 +144,12 @@ const routes = [
     }
   },
   {
-    // path: '/view',
     path: '/view/:property_id',
     props: true,
     name: 'ViewProperty',
     component: () => import('@/components/ViewProperty')
   },
   {
-    // path: '/view',
     path: '/view-rental/:property_id',
     props: true,
     name: 'ViewRentalProperty',

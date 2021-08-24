@@ -18,7 +18,9 @@ const state = {
     propertyValue: {},
     rentalValue: {},
     propertyPriceHistory: [],
-    currentPropertyFeatures: []
+    currentPropertyFeatures: [],
+    searchedResults: [],
+    searchKeyword: ''
 }
 
 const getters = {
@@ -31,7 +33,9 @@ const getters = {
     currentPropertyValue: (state) => state.propertyValue,
     currentRentalValue: (state) => state.rentalValue,
     currentPropertyPriceHistory: (state) => state.propertyPriceHistory,
-    allCurrentPropertyFeatures: state => state.currentPropertyFeatures
+    allCurrentPropertyFeatures: state => state.currentPropertyFeatures,
+    currentSearchKeyword: state => state.searchKeyword,
+    allSearchedResults: state => state.searchedResults
 };
 
 const actions = {
@@ -114,10 +118,21 @@ const actions = {
     async fetchPropertyPriceHistories({ commit }, property_id){
         try {
             const response = await PropertyPriceHistoryService.getPropertyPriceHistoriesByPropertyId(property_id);
-            console.log(response);
             commit("setSinglePropertyPriceHistory", response.data.result);
         } catch (error) {
             throw new Error("Failed on loading current property price histories")
+        }
+    },
+    loadSearchKeywordIntoGlobalState({ commit }, keyword){
+        commit("setSearchKey", keyword);
+        return "ok";
+    },
+    async fetchPropertiesBySearchKeyword({ commit }){
+        try {
+            const response = await PropertyService.getSearchedProperties(state.searchKeyword);
+            commit("setSearchedPropertyResult", response.data.result);
+        } catch (error) {
+            throw new Error("Failed to fetch your data");
         }
     }
 }
@@ -168,7 +183,19 @@ const mutations = {
         }
     )),
     setCurrentPropertyFeatures: (state, propertySelectedFeatures) => (state.currentPropertyFeatures = propertySelectedFeatures
-        .map(eachFeature => {return {name: eachFeature.name}}))
+        .map(eachFeature => {return {name: eachFeature.name}})),
+    setSearchKey: (state, searchKeyword) => state.searchKeyword = searchKeyword,
+    setSearchedPropertyResult: (state, returnedResults) => state.searchedResults = returnedResults.map(eachResult => {
+        return {
+            property_id: eachResult.property_id_,
+            snapshot: eachResult.property_visual,
+            actual_value: eachResult.actual_value_,
+            name: eachResult.location_name,
+            when_created: eachResult.when_created_,
+            created_by: eachResult.created_by_
+        }
+        // description: eachPropertyForRent.description_,
+    })
 }
 
 export default {

@@ -33,6 +33,15 @@ export default {
       throw new Error('An error occured when retrieving data')
     }
   },
+  async getSearchedProperties(keyword) {
+    try {
+      const response = await API.propertyApi.get(`/properties/search-properties?key=${keyword}`);
+      console.log('Search', response);
+      return response;
+    } catch (error) {
+      throw new Error('An error occured when fetching data')
+    }
+  },
   async postAProperty (property) {
     try {
       const response = await API.propertyApi.post('/properties', property)
