@@ -150,7 +150,6 @@
           <v-list>
             <template v-for="category in allVendorsCategories">
               <links
-              
                 :key="category.value"
                 :link="`/provider/${category.value}`"
                 :title="category.text"
