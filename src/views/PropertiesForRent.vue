@@ -2,7 +2,7 @@
 <div>
   <top-nav />
   <main-nav />
-  <property-component />
+  <PropertyForRentComponent />
   <about />
   <Footer />
 
@@ -14,16 +14,16 @@ import TopNav from '../components/TopNav.vue'
 import MainNav from '../components/MainNav.vue'
 import Footer from '../components/Footer'
 
-import PropertyComponent from '../components/PropertyComponent'
+import PropertyForRentComponent from '@/components/PropertyForRentComponent'
 import About from './About.vue'
 
 export default {
-  name: 'Property',
+  name: 'PropertiesForRent',
 
   components: {
     TopNav,
     MainNav,
-    PropertyComponent,
+    PropertyForRentComponent,
     Footer,
     About
   }

@@ -6,16 +6,16 @@
                 <p id="intro">Are You looking for your dream house or property?</p>
             </v-col>
             <v-col cols="12" md="6" xs="12">
-                <form action="">
+                <!-- <form action=""> -->
                     <div>
-                        <input placeholder="Search Properties" style="" :search="search" />
+                        <input placeholder="Search Properties" v-model="keyword" />
                         <span style="margin-left: -50px; padding-top: 300px">
-                            <button style="">
+                            <button @click="searchProperties">
                                 <img src="https://res.cloudinary.com/diued7ugb/image/upload/v1625824148/Vector_jyqs4g.svg" alt="" width="20" srcset="" style="margin-top: -12px; position: absolute" />
                             </button>
                         </span>
                     </div>
-                </form>
+                <!-- </form> -->
             </v-col>
         </v-row>
     </v-container>
@@ -248,9 +248,9 @@
                 <v-expand-transition>
                     <div v-show="show">
                         <v-divider></v-divider>
-                        <router-link to="/property" class="property-link">Houses for Rent</router-link><br>
+                        <router-link to="/properties-for-rent" class="property-link">Houses for Rent</router-link><br>
                         <router-link to="/register" class="property-link">List A Rental</router-link><br>
-                        <router-link to="/property-details" class="property-link">Property Details</router-link>
+                        <router-link to="/property-details" v-if="iAmACertifiedSeller" class="property-link">Property Details</router-link>
                     </div>
                 </v-expand-transition>
             </v-col>
@@ -270,7 +270,7 @@
                         <v-divider></v-divider>
                         <router-link to="/property-requirement" class="property-link">Sell A Property</router-link><br>
                         <router-link to="/learn" class="property-link">Seller's guide</router-link><br>
-                        <router-link to="/property-details" class="property-link">Property Details</router-link>
+                        <router-link v-if="iAmACertifiedSeller" to="/property-details" class="property-link">Property Details</router-link>
                     </div>
                 </v-expand-transition>
             </v-col>
@@ -306,12 +306,14 @@
                 <v-expand-transition>
                     <div v-show="show">
                         <v-divider></v-divider>
-                        <router-link to="/provider" class="property-link">All</router-link><br>
-                        <router-link to="/provider" class="property-link">Electrical</router-link><br>
-                        <router-link to="/provider" class="property-link">Mechanical</router-link><br>
-                        <router-link to="/provider" class="property-link">Research & Development</router-link><br>
-                        <router-link to="/provider" class="property-link">Architects</router-link><br>
-                        <router-link to="/provider" class="property-link">Civil Engineers</router-link>
+                        <template v-for="category in allVendorsCategories">
+                        <router-link 
+                            :to="`/provider/${category.value}`" 
+                            :key="category.value" 
+                            class="property-link"
+                        >{{category.text}}</router-link>
+                        <br :key="category.value">
+                        </template>
                     </div>
                 </v-expand-transition>
             </v-col>
@@ -362,15 +364,19 @@ export default {
       RecentPropertiesComponent
     },
     data: () => ({
-        search: '',
+        keyword: '',
         show: false,
         icons: ["mdi-facebook", "mdi-twitter", "mdi-linkedin", "mdi-instagram"],
     }),
     methods: {
-        ...mapActions(["fetchLatestPropertyVisuals"])
+        ...mapActions(["fetchLatestPropertyVisuals", "fetchPropertiesBySearchKeyword", "loadSearchKeywordIntoGlobalState"]),
+        searchProperties(){
+            this.loadSearchKeywordIntoGlobalState(this.keyword)
+                .then(()=> this.$router.push(`/search-result`));
+        }
     },
     computed: {
-        ...mapGetters(["allLatestProperties"])
+        ...mapGetters(["allLatestProperties", "iAmACertifiedSeller", "allVendorsCategories"])
     },
     created(){
         this.fetchLatestPropertyVisuals();
@@ -416,6 +422,19 @@ input {
     padding: 20px;
     width: 500px;
     border-radius: 6px;
+}
+
+input:focus { 
+    outline: none !important;
+    border-color: #1261b6;
+    border: 2px solid #0f6ed4;
+    box-shadow: 0 0 50px #0f6ed4;
+}
+textarea:focus { 
+    outline: none !important;
+    border-color: #0a56a7;
+    border: 2px solid #0f6ed4;
+    box-shadow: 0 0 40px #0b59ac;
 }
 
 #card {

@@ -40,7 +40,7 @@ router.beforeEach((to, from, next) => {
       return
     } else if(store.getters.loginState && (store.getters.iAmASeller || !store.getters.iAmASeller) && !store.getters.iAmACertifiedSeller) {
       const myRoute = sessionStorage.setItem('nextPath', to.path);
-      next(myRoute || '/profile');
+      next(myRoute || '/getstarted');
       sessionStorage.removeItem('nextPath');
       return
     } else {

@@ -18,11 +18,11 @@ export default {
       throw new Error('An error occured when sending data')
     }
   },
-async getVendors () {
+async getVendors (vendor_category_id) {
     try {
-      const response = await API.vendorsApi.get(`/vendors/vendors-by-category/${id}`)
-      console.log(response);
-     // return response
+      // const response = await API.vendorsApi.get(`/vendors/vetted-vendors`)
+      const response = await API.vendorsApi.get(`/vendors/vendors-by-category/${vendor_category_id}`)
+      return response
     } catch (error) {
       throw new Error('An error occured when retrieving data')
     }

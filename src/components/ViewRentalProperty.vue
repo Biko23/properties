@@ -18,17 +18,6 @@
         <v-col>
           <div style="background-color: #f2f2f2; border-radius: 6px">
             <v-col>
-              <!-- <p style="color: #3b6ef3">
-                Posted By: {{allSingleNeighborhoodVisuals[0].created_by}} <br />
-                <span>Property Owner: {{allSingleNeighborhoodVisuals[0].created_by}}</span>
-              </p> -->
-            </v-col>
-            <!-- <v-col>
-              <v-btn color="primary" style="width: 160px">Call</v-btn>
-              <v-btn color="white" style="margin-left: 10px; width: 160px">
-                <span style="color: #3b6ef3"> Chat</span></v-btn>
-            </v-col> -->
-            <v-col>
               <a href="mailto:cccug@stanbic.com" style="text-decoration: none;">
               <v-btn color="primary" block>Email Us</v-btn>
               </a>
@@ -39,7 +28,7 @@
             <v-col>
               <p style="color: #3b6ef3l display: flex;">
                 Price:
-                <span style="color: black; margin-left: 190px">UGX {{currentPropertyValue.actual_value}}</span>
+                <span style="color: black; margin-left: 190px">UGX {{currentRentalValue.rental_value_amt}}</span>
                 <br />
                 <span
                   >Equavalent To:
@@ -62,6 +51,7 @@
               <p style="font-weight: 300">
                 {{ spreadFeatures }} <br />
                 Location: {{ $route.query.location }}
+                <!-- plot 3421, Muyenga, Kampala -->
               </p>
             </v-col>
           </div>
@@ -231,23 +221,17 @@ import MainNav from "./MainNav.vue";
 import TopNav from "./TopNav.vue";
 export default {
   components: { TopNav, MainNav, About, Footer },
-  name: "ViewProperty",
+  name: "ViewRentalProperty",
   props: ['property_id'],
   // $route.params.propertyId
   data: () => ({
-    // propertyFeatures: [
+    // [
     //   {
     //     features_id: 1,
-    //     feature: "Iron sheets",
-    //     description: "Roman Tiles Coffee brown",
+    //     feature: "2 Bedroom",
+    //     description: "250 X 230 m",
     //   },
-    //   { features_id: 2, feature: "Floors", description: "4" },
-    //   {
-    //     features_id: 3,
-    //     feature: "Type",
-    //     description:
-    //       "3 Bedrooms,1 dinning room, 1 sitting room ,kitchen, and 2 washrooms",
-    //   },
+    //   { features_id: 2, feature: "1 Kitchen", description: "In house" },
     // ],
     propertyMonthtyCosts: [
       {
@@ -318,23 +302,31 @@ export default {
       "allSinglePropertyVisuals",
       "allSinglePropertyNearbyLandmarkVisuals",
       "allSingleNeighborhoodVisuals",
-     "currentPropertyValue",
+     "currentRentalValue",
      "currentPropertyPriceHistory",
      "allCurrentPropertyFeatures"
     ]),
     dollarExchange(){
-      return () => (this.currentPropertyValue.actual_value / 3500).toFixed(2);
+      return () => (this.currentRentalValue.rental_value_amt / 3500).toFixed(2);
     },
     spreadFeatures: function () {
       return this.allCurrentPropertyFeatures.reduce((acc, currentFeature) => acc + "," + currentFeature.name, "").slice(1);
-    }
+    },
+    // featureData: function () {
+    //    allCurrentPropertyFeatures.map(feature => {
+    //   return {
+    //     id: allCurrentPropertyFeatures[feature],
+    //     name: feature.name
+    //   }
+    // })
+    // }
   },
    methods: {
      ...mapActions([
        "fetchSinglePropertyVisuals", 
        "fetchPropertyNearbyLandmarkVisuals", 
        "fetchPropertyNeighborhoodVisuals",
-       "fetchCurrentPropertyValue",
+       "fetchPropertyRentalValue",
        "fetchPropertyPriceHistories",
        "fetchCurrentPropertySelectedFeatures"
     ])
@@ -343,10 +335,10 @@ export default {
     this.fetchSinglePropertyVisuals(this.property_id);
     this.fetchPropertyNearbyLandmarkVisuals(this.property_id);
     this.fetchPropertyNeighborhoodVisuals(this.property_id);
-    this.fetchCurrentPropertyValue(this.property_id);
+    this.fetchPropertyRentalValue(this.property_id);
     this.fetchPropertyPriceHistories(this.property_id);
     this.fetchCurrentPropertySelectedFeatures(this.property_id);
-  }
+  },
 };
 </script>
 

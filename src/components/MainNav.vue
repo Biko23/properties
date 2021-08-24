@@ -25,7 +25,7 @@
       </router-link>
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>
-    
+
       <v-row class="hid-navbar">
         <v-menu :key="text" :rounded="rounded" offset-y>
           <template v-slot:activator="{ attrs, on }">
@@ -73,7 +73,11 @@
             <links title="Sell A Property" link="/property-requirement" />
             <!-- <links title="Current market trends" /> -->
             <links title="Seller's guide" link="/learn" />
-            <links title="Property Details" link="/property-details" />
+            <links
+              v-if="iAmACertifiedSeller"
+              title="Property Details"
+              link="/property-details"
+            />
             <!-- <links title="Price Conversion Calculator" /> -->
           </v-list>
         </v-menu>
@@ -96,7 +100,7 @@
           </template>
           <div style="display: flex; flex-direction: row">
             <v-list>
-              <links link="/property" title="Houses for Rent" />
+              <links link="/properties-for-rent" title="Houses for Rent" />
               <!-- Work on logic to return rentals only and its screen to display them -->
               <links link="/rental-requirement" title="List A Rental" />
               <!-- <links link="/login" title="Apartments for Rent" />
@@ -146,13 +150,13 @@
               </v-icon>
             </a>
           </template>
-
           <v-list>
             <template v-for="category in allVendorsCategories">
               <links
                 :key="category.value"
                 :link="`/provider/${category.value}`"
                 :title="category.text"
+                @click.native="sendIdToGlobalState(category.value)"
               />
             </template>
           </v-list>
@@ -179,8 +183,8 @@
           </v-list>
         </v-menu>
       </v-row>
- <v-spacer></v-spacer>
-  <v-spacer></v-spacer>
+      <v-spacer></v-spacer>
+      <v-spacer></v-spacer>
       <v-col class="hid-navbar">
         <v-btn
           color="primary"
@@ -247,13 +251,17 @@ export default {
     colors: ["deep-purple accent-4", "error", "teal darken-1"],
   }),
   computed: {
-    ...mapGetters(["loginState", "allVendorsCategories"]),
+    ...mapGetters([
+      "loginState",
+      "allVendorsCategories",
+      "iAmACertifiedSeller",
+    ]),
   },
   created() {
     this.fetchVendorsCategories();
   },
   methods: {
-    ...mapActions(["logout", "fetchVendorsCategories"]),
+    ...mapActions(["logout", "fetchVendorsCategories", "changeServiceProviderCategoryId"]),
     async logingOut() {
       try {
         await this.logout().then(() => {
@@ -263,7 +271,10 @@ export default {
         throw new Error(error);
       }
     },
-  },
+    async sendIdToGlobalState(vendor_category_id) {
+      await this.changeServiceProviderCategoryId(vendor_category_id);
+    }
+  }
 };
 </script>
 

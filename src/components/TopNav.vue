@@ -6,28 +6,25 @@
       <v-toolbar-title class="toolbar-title"
         >Mon - Sat 8.00 - 18.00. Sunday CLOSED</v-toolbar-title
       >
-      <a href="http://" class="about-us">About Us</a>
 
       <v-spacer></v-spacer>
+       <v-spacer></v-spacer>
 
       <v-toolbar-title class="telephone"
         >Tel No. (+256) 782-456-789</v-toolbar-title
       >
 
       <v-spacer></v-spacer>
+      <v-spacer></v-spacer>
 
-      <v-toolbar-title class="telephone"
+      <v-toolbar-title v-if="loginState" class="telephone2"
         >Welcome
         <span style="font-size: 1rem; text-transform: capitalize">
           {{ currentLoggedinUser.username }}</span
         >
       </v-toolbar-title>
-      <!-- <v-container
-    fluid
-    style="height: 300px"
-  >
-    <v-row justify="center"> -->
-      <v-menu bottom min-width="200px" rounded offset-y>
+
+      <v-menu v-if="loginState" bottom min-width="200px" rounded offset-y class="av">
         <template v-slot:activator="{ on }">
           <v-btn icon x-large v-on="on">
             <v-avatar color="#3B6EF3" size="38">
@@ -49,11 +46,21 @@
                 {{ currentLoggedinUser.vendor_primary_email }}
               </p>
               <v-divider class="my-3"></v-divider>
-              <router-link to="/editprofile" style="text-decoration:none;">
-              <v-btn depressed rounded text> Edit Account </v-btn>
+              <router-link to="/user-settings" style="text-decoration: none">
+                <v-btn depressed rounded text>View Profile</v-btn>
               </router-link>
-              <!-- <v-divider class="my-3"></v-divider>
-              <v-btn depressed rounded text> Disconnect </v-btn> -->
+              <v-divider class="my-3"></v-divider>
+              <router-link to="/editprofile" style="text-decoration: none">
+                <v-btn depressed rounded text> Edit Account </v-btn>
+              </router-link>
+              <v-divider class="my-3"></v-divider>
+              <router-link to="/recentactivities" style="text-decoration: none">
+                <v-btn depressed rounded text> Recent Activities </v-btn>
+              </router-link>
+              <v-divider class="my-3"></v-divider>
+              <router-link to="/logs" style="text-decoration: none">
+                <v-btn depressed rounded text> Activity Logs </v-btn>
+              </router-link>
             </div>
           </v-list-item-content>
         </v-card>
@@ -140,6 +147,14 @@ export default {
   letter-spacing: 0em;
   text-align: left;
 }
+.telephone2 {
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0em;
+  text-align: left;
+}
 .sign-in {
   font-size: 13px;
   font-style: normal;
@@ -151,7 +166,7 @@ export default {
   text-decoration: none;
   display: none;
 }
-@media only screen and (max-width: 1080px) {
+@media only screen and (max-width: 768px) {
   .toolbar-title {
     display: none;
   }
@@ -174,13 +189,23 @@ export default {
     letter-spacing: 0em;
     text-align: center;
     margin-left: auto;
-    margin-right: 65px;
+    margin-right: auto;
+  }
+  .telephone2 {
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin-left: 10px;
+    margin-right: auto;
   }
   .sign-in {
     font-size: 13px;
     font-style: normal;
     font-weight: 400;
-    line-height: 18px;
+
     letter-spacing: 0em;
     text-align: left;
     color: white;
@@ -188,6 +213,10 @@ export default {
     display: block;
     margin-left: auto;
     margin-right: auto;
+  }
+  .av{
+    padding-left: 40px;
+    position: absolute;
   }
 }
 </style>

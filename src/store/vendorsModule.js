@@ -3,12 +3,14 @@ import vendorsBackOfficeService from '@/service/vendors/vendorsBackOfficeService
 const state = {
     vendorCategories: [],
     vendors: [],
-    isLiked: false
+    isLiked: false,
+    vendor_category_id: 0
 }
 
 const getters = {
     allVendorsCategories: (state) => state.vendorCategories,
     allVendors: (state) => state.vendors,
+    vendorCategoryId: state => state.vendor_category_id
    // likeState: state => state.isLiked,
 };
 
@@ -55,10 +57,16 @@ const actions = {
             throw new Error("Failed on unliking current vendor")
         }
     },
-
-    async fetchVendors({ commit }) {
+    async changeServiceProviderCategoryId({ commit }, vendor_category_id) {
+       commit('setGlobalVendorCategoryId', vendor_category_id);
+    },
+    async fetchVendors({ commit }, vendor_category_id) {
+    // async fetchVendors({ commit, state }, vendor_category_id) {
         try {
-            const response = await vendorsBackOfficeService.getVendors();
+            // const id = state.vendor_category_id || vendor_category_id;
+            // const response = await vendorsBackOfficeService.getVendors(id);
+            // const response = await vendorsBackOfficeService.getVendors();
+            const response = await vendorsBackOfficeService.getVendors(vendor_category_id);
             commit('setVendors', response.data);
             console.log(response.data);
         } catch (error) {
@@ -75,7 +83,8 @@ const mutations = {
         }
     })),
     setVendors: (state, returnedVendors) => (state.vendors = returnedVendors),
-    likeStatus: (state, status) => state.isLiked = status
+    likeStatus: (state, status) => state.isLiked = status,
+    setGlobalVendorCategoryId: (state, vendor_category_id) => state.vendor_category_id = vendor_category_id
 }
 
 export default {

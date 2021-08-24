@@ -2,6 +2,22 @@
 <div>
     <top-nav />
     <v-container id="main-container" fluid>
+        <!-- failure Dialog -->
+        <v-dialog transition="dialog-top-transition" persistent v-model="failureDialog" max-width="600">
+            <template>
+                <v-card>
+                    <v-toolbar color="red" dark>Error</v-toolbar>
+                    <v-card-text class="pt-5">
+                        <p style="font-size: 16px">{{ responseMessage }}</p>
+                    </v-card-text>
+                    <v-card-actions class="justify-end">
+                        <v-btn text @click="closeFailureDialog">close</v-btn>
+                    </v-card-actions>
+                </v-card>
+            </template>
+        </v-dialog>
+        <!-- end Failure Dialog -->
+
         <v-row>
             <v-col cols="12" sm="12" md="6" lg="6">
                 <router-link to="/" style="
@@ -22,43 +38,39 @@
             <v-col>
                 <v-form id="form" ref="loginForm" v-model="valid" lazy-validation>
                     <div>
-                        <v-img class="image-logo"  max-height="45" max-width="45" src="https://res.cloudinary.com/diued7ugb/image/upload/v1625749459/Vector_pebqf0.png"></v-img>
-                        <span style="color: #3b6ef3; margin-top:23px;margin-left:-55px;position:absolute;">
+                        <v-img class="image-logo" max-height="45" max-width="45" src="https://res.cloudinary.com/diued7ugb/image/upload/v1625749459/Vector_pebqf0.png"></v-img>
+                        <span style="
+                  color: #3b6ef3;
+                  margin-top: 23px;
+                  margin-left: -55px;
+                  position: absolute;
+                ">
                             Stanbic Properties
                         </span>
-                    </div><br><br>
+                    </div>
+                    <br /><br />
 
                     <v-container>
                         <v-row>
                             <v-col cols="12" sm="12" md="12">
-                                <v-text-field 
-                                  v-model="loginDetails.username" 
-                                  :rules="[rules.required, rules.min]" 
-                                  label="Username or Email or phone number" 
-                                  placeholder="Username or Email or phone number" 
-                                  solo
-                                ></v-text-field>
+                                <v-text-field v-model="loginDetails.username" :rules="[rules.required, rules.min]" label="Username or Email or phone number" placeholder="Username or Email or phone number" solo></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
                             <v-col cols="12" sm="12" md="12">
-                                <v-text-field 
-                                  v-model="loginDetails.password" 
-                                  :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" 
-                                  :rules="[rules.required]" 
-                                  @click:append="show1 = !show1" 
-                                  label="Password" 
-                                  placeholder="password" 
-                                  :type="show1 ? 'text' : 'password'" 
-                                  solo
-                                ></v-text-field>
+                                <v-text-field v-model="loginDetails.password" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :rules="[rules.required]" @click:append="show1 = !show1" label="Password" placeholder="password" :type="show1 ? 'text' : 'password'" solo></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
                             <v-col cols="12" sm="12" md="12">
-                                <v-btn color="primary" :disabled="!valid" @click="postLoginData" large block> Login </v-btn>
+                                <v-btn color="primary" :disabled="!valid" @click="postLoginData" large block>
+                                    Login
+                                </v-btn>
                             </v-col>
-                        </v-row><br /><br />
+                        </v-row>
+                        <!-- <br v-if="responseMessage != ''"> -->
+                        <span v-if="responseMessage != ''" style="color: red;">{{responseMessage}}</span>
+                        <br /><br />
                         <!-- <v-row>
                 <v-divider></v-divider><span style="margin-top: -10px">Or</span>
                 <v-divider></v-divider>
@@ -105,25 +117,27 @@
 <script>
 import {
     mapActions
-} from 'vuex';
+} from "vuex";
 import TopNav from "../components/TopNav.vue";
 
 export default {
     name: "Login",
     components: {
-        TopNav
+        TopNav,
     },
     data: () => ({
         show1: false,
         valid: true,
+        responseMessage: "",
+        failureDialog: false,
         rules: {
-            required: value => !!value || "Required.",
-            min: v => (v && v.length >= 2) || "Min 3 characters"
+            required: (value) => !!value || "Required.",
+            min: (v) => (v && v.length >= 2) || "Min 3 characters",
         },
         loginDetails: {
-            username: '',
-            password: ''
-        }
+            username: "",
+            password: "",
+        },
     }),
     methods: {
         ...mapActions(["login", "fetchLoggedUser"]),
@@ -131,19 +145,33 @@ export default {
             try {
                 if (this.$refs.loginForm.validate()) {
                     const response = await this.login(this.loginDetails);
-                    if (response.status === 200 || response.status === 201) {
-                        this.fetchLoggedUser()
-                            .then(() => {
-                                this.$router.replace(sessionStorage.getItem('redirectPath') || '/');
-                                sessionStorage.removeItem('redirectPath');
-                            })
+                    if (response.status === 200) {
+                        if (response.data.hasOwnProperty("token")) {
+                            this.fetchLoggedUser().then(() => {
+                                this.$router.replace(
+                                    sessionStorage.getItem("redirectPath") || "/"
+                                );
+                                sessionStorage.removeItem("redirectPath");
+                            });
+                        } else if (response.data.status === 0) {
+                            this.failureDialog = true;
+                            this.responseMessage = "Wrong Username and/ or password.";
+                            setTimeout(() => {
+                                this.failureDialog = false;
+                                this.responseMessage = "";
+                            }, 3000);
+                        }
                     }
                 }
             } catch (error) {
                 throw new Error("Failed, Please try again");
             }
-        }
-    }
+        },
+        closeFailureDialog() {
+            this.failureDialog = false;
+            this.responseMessage = "";
+        },
+    },
 };
 </script>
 
@@ -165,7 +193,7 @@ export default {
 
 .back-home {
     margin-left: -100px;
-    margin-top: 100px
+    margin-top: 100px;
 }
 
 #login-into {
@@ -183,8 +211,11 @@ export default {
     border-radius: 6px;
     text-align: center;
 }
-.image-logo{
-  margin-left: 120px; margin-top: 10px;position:absolute;
+
+.image-logo {
+    margin-left: 120px;
+    margin-top: 10px;
+    position: absolute;
 }
 
 @media only screen and (max-width: 768px) {
@@ -219,10 +250,13 @@ export default {
 
     .back-home {
         margin-left: -100px;
-        margin-top: auto
+        margin-top: auto;
     }
-    .image-logo{
-  margin-left: 90px; margin-top: 10px;position:absolute;
-}
+
+    .image-logo {
+        margin-left: 90px;
+        margin-top: 10px;
+        position: absolute;
+    }
 }
 </style>>

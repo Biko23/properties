@@ -4,25 +4,22 @@
         <v-row id="property-header">
             <div style="flex:1;">
                 <h3>Properties</h3>
-                <small style="font-weight: bold;">{{allPropertyForSale.length}} results</small>
+                <small style="font-weight: bold;">{{allSearchedResults.length}} results</small>
             </div>
             <div style="flex:1;">
                 <h3 style="color: #3b6ef3;">BUY PROPERTY HERE</h3>
             </div>
         </v-row>
         <v-row id="main-property">
-            <v-col cols="12" xl="2" lg="3" md="4" sm="6" xs="12" v-for="propertyVisual in allPropertyForSale" :key="propertyVisual.visuals_id">
-               <!-- :cost="numberWithCommas(propertyVisual.actual_value)" -->
+            <v-col cols="12" xl="2" lg="3" md="4" sm="6" xs="12" v-for="(currentProperty, index) in allSearchedResults" :key="index">
                 <property-card
-                    :location="propertyVisual.name"
-                    :date="formatDate(propertyVisual.when_created)"
-                    :cost="propertyVisual.actual_value"
-                    :postedBy="propertyVisual.created_by"
-                    :src="'http://localhost:8002/' + propertyVisual.snapshot"
-                    :to="`/view/${propertyVisual.property_id}?location=${propertyVisual.name}`"
+                    :location="currentProperty.name"
+                    :date="formatDate(currentProperty.when_created)"
+                    :cost="currentProperty.actual_value"
+                    :postedBy="currentProperty.created_by"
+                    :src="'http://localhost:8002/' + currentProperty.snapshot"
+                    :to="`/view/${currentProperty.property_id}?location=${currentProperty.name}`"
                 />
-
-                <!-- C:\Users\A241901\Documents\project\stanbicproperties-marketplace\property-visuals\src\main\resources\uploads -->
             </v-col>
         </v-row>
     </v-container><br />
@@ -34,12 +31,13 @@ import PropertyCard from '@/components/PropertyCard'
 import dateFormat from 'dateformat'
 import { mapActions, mapGetters } from 'vuex';
 export default {
-    name: "PropertiesForSaleComponent",
+    name: "SearchPropertiesComponent",
     components: {
         PropertyCard
     },
+    props: ["keyword"],
     methods: {
-        ...mapActions(["fetchPropertyForSale", "fetchPropertyCategories"]),
+        ...mapActions(["fetchPropertiesBySearchKeyword"]),
         formatDate(dateToFormat){
             let currentDate = new Date();
             let result;
@@ -52,21 +50,15 @@ export default {
             }
             return result;
         },
-        async fetchAllProperties(){
-            try {
-                await this.fetchPropertyCategories()
-                    .then(() => this.fetchPropertyForSale()
-                )
-            } catch (error) {
-               throw new Error('Failed to fetch data'); 
-            }
+        logKeyword(){
+            console.log(this.keyword);
         }
     },
     computed: {
-        ...mapGetters(["allPropertyForSale"]),
+        ...mapGetters(["allSearchedResults"]),
     },
     created(){
-        this.fetchAllProperties();
+        this.fetchPropertiesBySearchKeyword();
     }
 };
 </script>

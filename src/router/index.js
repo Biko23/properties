@@ -14,6 +14,13 @@ const routes = [
       basicAuth: true
     }
   },
+  {
+    path: '/search-result',
+    // path: '/search-result/:keyword',
+    // props: true,
+    name: 'SearchResult',
+    component: () => import('@/views/SearchedResults.vue')
+  },
   // Start sell property and list rental section
   {
     path: '/property-requirement',
@@ -33,6 +40,15 @@ const routes = [
     path: '/editprofile',
     name: 'EditProfile',
     component: () => import('@/views/EditProfile.vue'),
+    meta: { 
+       requiresAuth: true 
+      // requireSellerRole: true
+    }
+  },
+  {
+    path: '/user-settings',
+    name: 'UserSettings',
+    component: () => import('@/views/ViewUserProfile.vue'),
     meta: { 
        requiresAuth: true 
       // requireSellerRole: true
@@ -72,16 +88,15 @@ const routes = [
       requireSellerRole: true
     },
   },
-  // end rental journey
-  {
-    path: '/property',
-    name: 'Property',
-    component: () => import('@/views/Property')
-  },
   {
     path: '/properties-for-sale',
     name: 'properties-for-sale',
     component: () => import('@/views/PropertiesForSale')
+  },
+  {
+    path: '/properties-for-rent',
+    name: 'properties-for-rent',
+    component: () => import('@/views/PropertiesForRent')
   },
   {
     path: '/property-details',
@@ -129,11 +144,16 @@ const routes = [
     }
   },
   {
-    path: '/view',
     path: '/view/:property_id',
     props: true,
     name: 'ViewProperty',
     component: () => import('@/components/ViewProperty')
+  },
+  {
+    path: '/view-rental/:property_id',
+    props: true,
+    name: 'ViewRentalProperty',
+    component: () => import('@/components/ViewRentalProperty')
   },
   {
     path: '/mortgage',
@@ -168,6 +188,11 @@ const routes = [
     path:'/recentactivities',
     name:'Recent',
     component:() => import(/* webpackChunkName: "about" */ '../views/Recent.vue')
+  },
+  {
+    path:'/logs',
+    name:'UserlogActivities',
+    component:() => import(/* webpackChunkName: "about" */ '../views/UserlogActivities.vue')
   }
 ]
 

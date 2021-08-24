@@ -4,19 +4,21 @@
         <v-row id="property-header">
             <div style="flex:1;">
                 <h3>Rentals</h3>
-                <small style="font-weight: bold;">{{allPropertyVisuals.length}} results</small>
+                <small style="font-weight: bold;">{{allPropertyForRent.length}} results</small>
             </div>
             <div style="flex:1;">
                 <h3 style="color: #3b6ef3;">RENT PROPERTY HERE</h3>
             </div>
         </v-row>
         <v-row id="main-property">
-            <v-col cols="12" xl="2" lg="3" md="4" sm="6" xs="12" v-for="propertyVisual in allPropertyVisuals" :key="propertyVisual.visuals_id">
+            <v-col cols="12" xl="2" lg="3" md="4" sm="6" xs="12" v-for="propertyVisual in allPropertyForRent" :key="propertyVisual.visuals_id">
                 <property-card 
-                    location="Plot 3435, Kyengera-Wakiso"
+                    :location="propertyVisual.name"
                     :date="formatDate(propertyVisual.when_created)"
+                    :cost="propertyVisual.actual_value"
+                    :postedBy="propertyVisual.created_by"
                     :src="'http://localhost:8002/' + propertyVisual.snapshot"
-                    :to="`/view/${propertyVisual.property_id}`"
+                    :to="`/view-rental/${propertyVisual.property_id}?location=${propertyVisual.name}`"
                 />
             
                 <!-- C:\Users\A241901\Documents\project\stanbicproperties-marketplace\property-visuals\src\main\resources\uploads -->
@@ -31,12 +33,12 @@ import PropertyCard from '@/components/PropertyCard'
 import dateFormat from 'dateformat'
 import { mapActions, mapGetters } from 'vuex';
 export default {
-    name: "PropertyComponent",
+    name: "PropertiesForRentComponent",
     components: {
         PropertyCard
     },
      methods: {
-        ...mapActions(["fetchPropertyVisuals"]),
+        ...mapActions(["fetchPropertyForRent", "fetchPropertyCategories"]),
         formatDate(dateToFormat){
             let currentDate = new Date();
             let result;
@@ -48,13 +50,22 @@ export default {
                 result = dateFormat(dateToFormat, "dddd, mmmm dS, yyyy");
             }
             return result;
+        },
+        async fetchAllRentalProperties(){
+            try {
+                await this.fetchPropertyCategories()
+                    .then(() => this.fetchPropertyForRent()
+                )
+            } catch (error) {
+               throw new Error('Failed to fetch data'); 
+            }
         }
     },
     computed: {
-        ...mapGetters(["allPropertyVisuals"]),
+        ...mapGetters(["allPropertyForRent"]),
     },
     created(){
-        this.fetchPropertyVisuals();
+        this.fetchAllRentalProperties();
     }
 };
 </script>

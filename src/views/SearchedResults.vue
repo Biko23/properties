@@ -2,7 +2,7 @@
 <div>
   <top-nav />
   <main-nav />
-  <PropertiesForSaleComponent/>
+  <SearchProperitiesComponent/>
   <about />
   <Footer />
 
@@ -14,16 +14,16 @@ import TopNav from '../components/TopNav.vue'
 import MainNav from '../components/MainNav.vue'
 import Footer from '../components/Footer'
 
-import PropertiesForSaleComponent from '../components/PropertiesForSaleComponent.vue'
+import SearchProperitiesComponent from '../components/SearchPropertiesComponent.vue'
 import About from './About.vue'
 
 export default {
-  name: 'Property',
+  name: 'SearchResults',
 
   components: {
     TopNav,
     MainNav,
-    PropertiesForSaleComponent,
+    SearchProperitiesComponent,
     Footer,
     About
   }
