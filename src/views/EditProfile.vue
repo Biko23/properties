@@ -7,7 +7,7 @@
         <v-dialog transition="dialog-top-transition" persistent v-model="messageDialog" max-width="600">
             <template>
                 <v-card>
-                    <v-toolbar color="success" dark>Success</v-toolbar>
+                    <v-toolbar color="primary" dark>Success</v-toolbar>
                     <v-card-text class="pt-5">
                         <p style="font-size: 16px">{{ responseMessage }}</p>
                     </v-card-text>

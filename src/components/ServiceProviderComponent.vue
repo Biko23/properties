@@ -63,9 +63,8 @@ export default {
   data: () => ({
     show: false,
     like: false,
-    // vendor_type_id: this.global_vendor_category_id || 0,
+    // vendorCategoryId: this.global_vendor_category_id || this.vendor_category_id,
     vendors: [],
-    // vendor_category_id_to_search_by: this.vendor_category_id,
     newVendor: {
       vendor_name: "",
       vendor_primary_phone_number: "",
@@ -84,19 +83,11 @@ export default {
     this.fetchVendors();
     // this.fetchVendors(this.vendor_category_id);
   },
-  // watch: {
-  //     vendor_type_id: (newId, oldId) => {
-  //       if(newId !== oldId){
-  //         return this.fetchVendors(newId);
-  //       }
-  //     }
-  //     // vendor_category_id_to_search_by: {
-  //     //   handler: (newTitle, oldTitle) => {
-  //     //     console.log("Title changed from " + oldTitle + " to " + newTitle)
-  //     //   },
-  //     //   immediate: true
-  //     // },
-  // },
+  watch: {
+      vendorCategoryId: function(){
+        this.fetchVendors(this.vendorCategoryId);
+      }
+  },
   methods: {
     ...mapActions(["fetchVendors", "likeVendor", "unLikeVendor"]),
     async likingVendor(item) {

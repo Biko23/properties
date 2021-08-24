@@ -16,7 +16,6 @@ import Footer from '../components/Footer'
 
 import PropertiesForSaleComponent from '../components/PropertiesForSaleComponent.vue'
 import About from './About.vue'
-import { mapActions } from 'vuex'
 
 export default {
   name: 'Property',
