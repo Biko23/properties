@@ -6,16 +6,16 @@
                 <p id="intro">Are You looking for your dream house or property?</p>
             </v-col>
             <v-col cols="12" md="6" xs="12">
-                <form action="">
+                <!-- <form action=""> -->
                     <div>
-                        <input placeholder="Search Properties" style="" :search="search" />
+                        <input placeholder="Search Properties" v-model="keyword" />
                         <span style="margin-left: -50px; padding-top: 300px">
-                            <button style="">
+                            <button @click="searchProperties">
                                 <img src="https://res.cloudinary.com/diued7ugb/image/upload/v1625824148/Vector_jyqs4g.svg" alt="" width="20" srcset="" style="margin-top: -12px; position: absolute" />
                             </button>
                         </span>
                     </div>
-                </form>
+                <!-- </form> -->
             </v-col>
         </v-row>
     </v-container>
@@ -364,12 +364,16 @@ export default {
       RecentPropertiesComponent
     },
     data: () => ({
-        search: '',
+        keyword: '',
         show: false,
         icons: ["mdi-facebook", "mdi-twitter", "mdi-linkedin", "mdi-instagram"],
     }),
     methods: {
-        ...mapActions(["fetchLatestPropertyVisuals"])
+        ...mapActions(["fetchLatestPropertyVisuals", "fetchPropertiesBySearchKeyword", "loadSearchKeywordIntoGlobalState"]),
+        searchProperties(){
+            this.loadSearchKeywordIntoGlobalState(this.keyword)
+                .then(()=> this.$router.push(`/search-result`));
+        }
     },
     computed: {
         ...mapGetters(["allLatestProperties", "iAmACertifiedSeller", "allVendorsCategories"])

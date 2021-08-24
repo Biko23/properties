@@ -150,7 +150,6 @@
               </v-icon>
             </a>
           </template>
-
           <v-list>
             <template v-for="category in allVendorsCategories">
               <links
