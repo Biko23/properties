@@ -63,29 +63,21 @@ export default {
   data: () => ({
     show: false,
     like: false,
-    // vendorCategoryId: this.global_vendor_category_id || this.vendor_category_id,
-    vendors: [],
-    newVendor: {
-      vendor_name: "",
-      vendor_primary_phone_number: "",
-      vendor_secondary_phone_number: "",
-      vendor_primary_email: "",
-      vendor_secondary_email: "",
-      category_type: "",
-    },
+    currentVendorCategoryId: this.vendorCategoryId || this.vendor_category_id,
   }),
   computed: {
-    ...mapGetters(["allVendors", "currentLoggedinUser", "likeState"]),
-    // ...mapGetters(["allVendors", "currentLoggedinUser", "likeState", "global_vendor_category_id"]),
+    ...mapGetters(["allVendors", "currentLoggedinUser", "likeState", "vendorCategoryId"]),
   },
-
   created() {
-    this.fetchVendors();
-    // this.fetchVendors(this.vendor_category_id);
+    this.fetchVendors(this.vendor_category_id);
   },
   watch: {
-      vendorCategoryId: function(){
-        this.fetchVendors(this.vendorCategoryId);
+      vendorCategoryId: async function(){
+        try {
+          await this.fetchVendors(this.vendorCategoryId);
+        } catch (error) {
+          console.log(error);
+        }
       }
   },
   methods: {
