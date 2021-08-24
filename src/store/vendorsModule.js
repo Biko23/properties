@@ -4,13 +4,13 @@ const state = {
     vendorCategories: [],
     vendors: [],
     isLiked: false,
-    // vendor_category_id: 0
+    vendor_category_id: 0
 }
 
 const getters = {
     allVendorsCategories: (state) => state.vendorCategories,
     allVendors: (state) => state.vendors,
-    // global_vendor_category_id: state => state.vendor_category_id
+    vendorCategoryId: state => state.vendor_category_id
    // likeState: state => state.isLiked,
 };
 
@@ -57,15 +57,16 @@ const actions = {
             throw new Error("Failed on unliking current vendor")
         }
     },
-    // async changeVendorTypeId({ commit }, vendor_type_id) {
-    //    commit('setGlobalVendorCategoryId', vendor_type_id);
-    // },
-    async fetchVendors({ commit }) {
+    async changeServiceProviderCategoryId({ commit }, vendor_category_id) {
+       commit('setGlobalVendorCategoryId', vendor_category_id);
+    },
+    async fetchVendors({ commit }, vendor_category_id) {
     // async fetchVendors({ commit, state }, vendor_category_id) {
         try {
             // const id = state.vendor_category_id || vendor_category_id;
             // const response = await vendorsBackOfficeService.getVendors(id);
-            const response = await vendorsBackOfficeService.getVendors();
+            // const response = await vendorsBackOfficeService.getVendors();
+            const response = await vendorsBackOfficeService.getVendors(vendor_category_id);
             commit('setVendors', response.data);
         } catch (error) {
             throw new Error("Failed on loading current Vendors")
@@ -82,7 +83,7 @@ const mutations = {
     })),
     setVendors: (state, returnedVendors) => (state.vendors = returnedVendors),
     likeStatus: (state, status) => state.isLiked = status,
-    // setGlobalVendorCategoryId: (state, id) => state.global_vendor_category_id = id
+    setGlobalVendorCategoryId: (state, vendor_category_id) => state.vendor_category_id = vendor_category_id
 }
 
 export default {

@@ -25,7 +25,7 @@
       </router-link>
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>
-    
+
       <v-row class="hid-navbar">
         <v-menu :key="text" :rounded="rounded" offset-y>
           <template v-slot:activator="{ attrs, on }">
@@ -157,6 +157,7 @@
                 :key="category.value"
                 :link="`/provider/${category.value}`"
                 :title="category.text"
+                @click.native="sendIdToGlobalState(category.value)"
               />
             </template>
           </v-list>
@@ -183,8 +184,8 @@
           </v-list>
         </v-menu>
       </v-row>
- <v-spacer></v-spacer>
-  <v-spacer></v-spacer>
+      <v-spacer></v-spacer>
+      <v-spacer></v-spacer>
       <v-col class="hid-navbar">
         <v-btn
           color="primary"
@@ -261,8 +262,7 @@ export default {
     this.fetchVendorsCategories();
   },
   methods: {
-    ...mapActions(["logout", "fetchVendorsCategories"]),
-    // ...mapActions(["logout", "fetchVendorsCategories", "changeVendorTypeId"]),
+    ...mapActions(["logout", "fetchVendorsCategories", "changeServiceProviderCategoryId"]),
     async logingOut() {
       try {
         await this.logout().then(() => {
@@ -272,15 +272,10 @@ export default {
         throw new Error(error);
       }
     },
-  },
-  // watch: {
-  //     gb(value) {
-  //         this.mb = value * 1024;
-  //     },
-  //     mb(value) {
-  //         this.gb = value / 1024;
-  //     }
-  // }
+    async sendIdToGlobalState(vendor_category_id) {
+      await this.changeServiceProviderCategoryId(vendor_category_id);
+    }
+  }
 };
 </script>
 
