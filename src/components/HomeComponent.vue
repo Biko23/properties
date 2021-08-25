@@ -1,23 +1,57 @@
 <template>
 <div>
-    <v-container id="container" fluid>
+    <!-- 
+         <v-container id="container" fluid>
         <v-row >
             <v-col cols="12" sm="6" md="6" xs="12">
                 <p id="intro">Are You looking for your dream house or property?</p>
             </v-col>
             <v-col cols="12" sm="6" md="6" xs="12" >
-                <!-- <form action=""> -->
-                
+
                         <input placeholder="Search Properties" v-model="keyword" />
                         <span style="margin-left: -50px; padding-top: 300px">
                             <button @click="searchProperties">
                                 <img src="https://res.cloudinary.com/diued7ugb/image/upload/v1625824148/Vector_jyqs4g.svg" alt="" width="20" srcset="" style="margin-top: -12px; position: absolute" />
                             </button>
                         </span>
-                    
-                <!-- </form> -->
             </v-col>
         </v-row>
+    </v-container>
+     -->
+    <v-container id="container" fluid>
+        <div id="search-section">
+            <div style="flex: 1">
+                <p id="intro">Are You looking for your dream house or property?</p>
+
+            </div>
+            <div id="search-field" style="position: relative;">
+                <v-autocomplete 
+                    background-color="white" 
+                    filled 
+                    :outlined="true"
+                    append-icon=""
+                    :autofocus="true" 
+                    cache-items
+                    auto-select-first
+                    placeholder="Search Properties" 
+                    :items="allAutocompletedList"
+                    v-model="keyword" 
+                />
+                <v-icon small class="mr-2" 
+                    style="
+                        font-size: 40px; 
+                        color: blue; 
+                        position: absolute;
+                        right: 0;
+                        top: 10%;
+                        z-index: 100;
+                    "
+                @click.stop="searchProperties"
+                >
+                    mdi-magnify
+                </v-icon>
+            </div>
+        </div>
     </v-container>
 
     <v-container id="second-container">
@@ -52,9 +86,9 @@
                             need within and around Kampala.
                         </p>
                         <p style="text-align: center">
-                          <router-link to="/properties-for-sale">
-                            <v-btn style="background-color: #3b6ef3">
-                                <span style="
+                            <router-link to="/properties-for-sale">
+                                <v-btn style="background-color: #3b6ef3">
+                                    <span style="
                       color: #ffffff;
                       font-size: 20px;
                       font-style: normal;
@@ -64,9 +98,9 @@
                       text-align: center;
                       text-transform: capitalize;
                     ">
-                                    Find More</span>
-                            </v-btn>
-                          </router-link>
+                                        Find More</span>
+                                </v-btn>
+                            </router-link>
                         </p>
                         <br />
                     </v-text>
@@ -191,9 +225,9 @@
                             come true. You are just a few steps away from achieving this.
                         </p>
                         <p style="text-align: center">
-                          <router-link to="/mortgage">
-                            <v-btn style="background-color: #3b6ef3">
-                                <span style="
+                            <router-link to="/mortgage">
+                                <v-btn style="background-color: #3b6ef3">
+                                    <span style="
                       color: #ffffff;
                       font-size: 20px;
                       font-style: normal;
@@ -203,9 +237,9 @@
                       text-align: center;
                       text-transform: capitalize;
                     ">
-                                    Get Mortgage</span>
-                            </v-btn>
-                          </router-link>
+                                        Get Mortgage</span>
+                                </v-btn>
+                            </router-link>
                         </p>
                         <br />
                     </v-text>
@@ -307,12 +341,8 @@
                     <div v-show="show">
                         <v-divider></v-divider>
                         <template v-for="category in allVendorsCategories">
-                        <router-link 
-                            :to="`/provider/${category.value}`" 
-                            :key="category.value" 
-                            class="property-link"
-                        >{{category.text}}</router-link>
-                        <br :key="category.value">
+                            <router-link :to="`/provider/${category.value}`" :key="category.value" class="property-link">{{category.text}}</router-link>
+                            <br :key="category.value">
                         </template>
                     </div>
                 </v-expand-transition>
@@ -328,14 +358,10 @@
 
     <v-container>
         <v-row style="display: flex; flex-direction: row; justify-content: space-evenly;">
-           <v-col cols="12" md="3" xs="12" v-for="propertyVisual in allLatestProperties" :key="propertyVisual.visuals_id">
-                <recent-properties-component
-                    :description="propertyVisual.description"
-                    :created_by="propertyVisual.created_by"
-                    :src="'http://localhost:8002/' + propertyVisual.snapshot"
-                />
+            <v-col cols="12" md="3" xs="12" v-for="propertyVisual in allLatestProperties" :key="propertyVisual.visuals_id">
+                <recent-properties-component :description="propertyVisual.description" :created_by="propertyVisual.created_by" :src="'http://localhost:8002/' + propertyVisual.snapshot" />
             </v-col>
-           
+
             <!-- <v-col cols="12" md="3" xs="12">
                 <v-card max-width="auto">
                     <v-img src="https://res.cloudinary.com/diued7ugb/image/upload/v1625732723/house1_svrut7.jpg" height="200px"></v-img>
@@ -357,11 +383,14 @@
 
 <script>
 import RecentPropertiesComponent from './RecentPropertiesComponent'
-import { mapActions, mapGetters } from 'vuex';
+import {
+    mapActions,
+    mapGetters
+} from 'vuex';
 export default {
     name: "Home2",
     components: {
-      RecentPropertiesComponent
+        RecentPropertiesComponent
     },
     data: () => ({
         keyword: '',
@@ -369,22 +398,51 @@ export default {
         icons: ["mdi-facebook", "mdi-twitter", "mdi-linkedin", "mdi-instagram"],
     }),
     methods: {
-        ...mapActions(["fetchLatestPropertyVisuals", "fetchPropertiesBySearchKeyword", "loadSearchKeywordIntoGlobalState"]),
-        searchProperties(){
+        ...mapActions([
+            "fetchLatestPropertyVisuals", 
+            "fetchPropertiesBySearchKeyword", 
+            "loadSearchKeywordIntoGlobalState",
+            "fetchAutoCompleteWords"]),
+        searchProperties() {
             this.loadSearchKeywordIntoGlobalState(this.keyword)
-                .then(()=> this.$router.push(`/search-result`));
+                .then(() => {
+                    this.$router.push(`/search-result`);
+                    this.keyword = "";
+                });
         }
     },
     computed: {
-        ...mapGetters(["allLatestProperties", "iAmACertifiedSeller", "allVendorsCategories"])
+        ...mapGetters([
+            "allLatestProperties", 
+            "iAmACertifiedSeller", 
+            "allVendorsCategories", 
+            "allAutocompletedList"
+        ])
     },
-    created(){
+    created() {
         this.fetchLatestPropertyVisuals();
+        this.fetchAutoCompleteWords();
     }
 };
 </script>
 
 <style scoped>
+/* isaac styles */
+#search-section {
+    display: flex; 
+    flex: 1;
+    flex-direction: row;
+    flex-wrap: wrap; 
+    align-items: center;
+}
+
+#search-field {
+    flex: 1; 
+    display: flex;
+    justify-content: flex-start;
+}
+
+/* end isaac styles */
 .property-link {
     text-decoration: none;
     color: rgb(50, 50, 250);
@@ -396,10 +454,10 @@ export default {
     text-decoration: underline;
 }
 
-::placeholder {
+#input ::placeholder {
     color: #3b6ef3;
     font-size: 1rem;
-    padding: 30px;
+    padding: 2px;
     font-weight: 250;
 }
 
@@ -408,33 +466,19 @@ export default {
 }
 
 #intro {
-    color: #ffffff;
-    font-size: 1.5rem;
+    color: #ffffff; 
+    font-size: 1.5rem; 
     font-weight: 400;
     text-align: center;
-    margin-top: 180px;
 }
 
-input {
+#input {
     margin-top: 180px;
     background-color: #f2f2f2;
     height: 50px;
     padding: 20px;
     width: 500px;
     border-radius: 6px;
-}
-
-input:focus { 
-    outline: none !important;
-    border-color: #1261b6;
-    border: 2px solid #0f6ed4;
-    box-shadow: 0 0 50px #0f6ed4;
-}
-textarea:focus { 
-    outline: none !important;
-    border-color: #0a56a7;
-    border: 2px solid #0f6ed4;
-    box-shadow: 0 0 40px #0b59ac;
 }
 
 #card {
@@ -445,6 +489,7 @@ textarea:focus {
     background-image: url("https://res.cloudinary.com/diued7ugb/image/upload/v1626688591/vj-von-art-BP1Ze0qcp-c-unsplash_tlgt7k.jpg");
     /* background-image: url("https://res.cloudinary.com/diued7ugb/image/upload/v1626688778/dillon-kydd-XGvwt544g8k-unsplash_lrvzid.jpg"); */
     background-size: cover;
+    display: flex;
     height: 75vh;
     width: 100%;
 }
@@ -485,9 +530,17 @@ textarea:focus {
 
 @media only screen and (max-width: 768px) {
     #container {
-
+        display: flex;
         height: auto;
         width: auto;
+    }
+
+     #search-section {
+        flex-direction: column;
+    }
+
+    #search-field {
+        flex: 4;
     }
 
     #second-container {
@@ -500,19 +553,15 @@ textarea:focus {
     }
 
     #intro {
-        color: #ffffff;
         font-size: 0.95rem;
-        font-weight: 400;
-        text-align: center;
-        margin-top: auto;
     }
 
-    input {
+    #input {
         margin-top: 40px;
         background-color: #f2f2f2;
         height: 50px;
         width: 350px;
-       
+
         border-radius: 6px;
     }
 
@@ -557,7 +606,7 @@ textarea:focus {
         background-color: #f2f2f2;
         height: 50px;
         width: 350px;
-     
+
         border-radius: 6px;
     }
 
@@ -572,5 +621,4 @@ textarea:focus {
         display: none;
     }
 } */
-
 </style>

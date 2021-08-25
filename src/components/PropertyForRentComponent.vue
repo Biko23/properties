@@ -41,13 +41,31 @@ export default {
         ...mapActions(["fetchPropertyForRent", "fetchPropertyCategories"]),
         formatDate(dateToFormat){
             let currentDate = new Date();
+            let returnedFormattedDate = new Date(dateToFormat);
+            let difference = Math.abs(returnedFormattedDate - currentDate);
+            let days = (difference/(1000 * 3600 * 24)).toFixed(0);
+            console.log(days);
+
             let result;
-            const formattedDate = dateFormat(currentDate, "isoDateTime");
-                console.log("formatedDate", formattedDate, "dateToFormat", dateToFormat);
-            if(dateToFormat == formattedDate || dateToFormat == (formattedDate - 1)){
-                result = dateFormat(dateToFormat, "DDDD");
-            } else {
-                result = dateFormat(dateToFormat, "dddd, mmmm dS, yyyy");
+            switch(+days){
+                case 0:
+                    result = "Added now"; break;
+                case 1:
+                    result = "1 days ago"; break;
+                case 2:
+                    result = "2 days ago"; break;
+                case 3:
+                    result = "3 days ago"; break;
+                case 4:
+                    result = "4 days ago"; break;
+                case 5:
+                    result = "5 days ago"; break;
+                case 6:
+                    result = "6 days ago"; break;
+                case 7:
+                    result = "7 days ago"; break;
+                default: 
+                   result = dateFormat(returnedFormattedDate, "dddd, mmmm dS, yyyy"); break;
             }
             return result;
         },

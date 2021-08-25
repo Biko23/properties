@@ -61,11 +61,7 @@ const actions = {
        commit('setGlobalVendorCategoryId', vendor_category_id);
     },
     async fetchVendors({ commit }, vendor_category_id) {
-    // async fetchVendors({ commit, state }, vendor_category_id) {
         try {
-            // const id = state.vendor_category_id || vendor_category_id;
-            // const response = await vendorsBackOfficeService.getVendors(id);
-            // const response = await vendorsBackOfficeService.getVendors();
             const response = await vendorsBackOfficeService.getVendors(vendor_category_id);
             commit('setVendors', response.data);
             console.log(response.data);

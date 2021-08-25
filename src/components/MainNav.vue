@@ -259,9 +259,10 @@ export default {
   },
   created() {
     this.fetchVendorsCategories();
+    this.fetchPropertyCategories();
   },
   methods: {
-    ...mapActions(["logout", "fetchVendorsCategories", "changeServiceProviderCategoryId"]),
+    ...mapActions(["logout", "fetchVendorsCategories", "changeServiceProviderCategoryId", "fetchPropertyCategories"]),
     async logingOut() {
       try {
         await this.logout().then(() => {

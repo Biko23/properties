@@ -1,7 +1,7 @@
 <template>
   <!-- <router-link :to="to" style=" text-decoration:none;"> -->
   <v-card max-width="auto">
-    <v-card-subtitle class="time">Name {{ vendor_name }} </v-card-subtitle>
+    <v-card-subtitle class="time">{{ vendor_name }} </v-card-subtitle>
     <div>
       <!-- <v-img
       v-if="vendorCategory.text == Mechnical"
