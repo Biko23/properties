@@ -45,6 +45,7 @@ export default {
             let result;
             const formattedDate = dateFormat(currentDate, "isoDateTime");
                 console.log("formatedDate", formattedDate, "dateToFormat", dateToFormat);
+                // current date - date-returned
             if(dateToFormat == formattedDate || dateToFormat == (formattedDate - 1)){
                 result = dateFormat(dateToFormat, "DDDD");
             } else {
