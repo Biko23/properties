@@ -424,6 +424,19 @@ input {
     border-radius: 6px;
 }
 
+input:focus { 
+    outline: none !important;
+    border-color: #1261b6;
+    border: 2px solid #0f6ed4;
+    box-shadow: 0 0 50px #0f6ed4;
+}
+textarea:focus { 
+    outline: none !important;
+    border-color: #0a56a7;
+    border: 2px solid #0f6ed4;
+    box-shadow: 0 0 40px #0b59ac;
+}
+
 #card {
     background-color: #f4f5f8;
 }
