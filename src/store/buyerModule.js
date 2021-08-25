@@ -6,6 +6,9 @@ import PropertyValueService from '@/service/propertyValue';
 import PropertyRentalValueService from '@/service/propertyRentalValue';
 import PropertyPriceHistoryService from '@/service/propertyPriceHistories';
 import FeatureTypeLookupService from '@/service/property/featureTypeLookup';
+import PropertyLocationService from '@/service/propertyLocation';
+import PropertyLandmarkTypeService from '@/service/propertyLandmarkTypes';
+
 import { formatDate } from '@/helpers/helpers';
 
 const state = {
@@ -20,7 +23,8 @@ const state = {
     propertyPriceHistory: [],
     currentPropertyFeatures: [],
     searchedResults: [],
-    searchKeyword: ''
+    searchKeyword: '',
+    autocompleteList: []
 }
 
 const getters = {
@@ -35,12 +39,13 @@ const getters = {
     currentPropertyPriceHistory: (state) => state.propertyPriceHistory,
     allCurrentPropertyFeatures: state => state.currentPropertyFeatures,
     currentSearchKeyword: state => state.searchKeyword,
-    allSearchedResults: state => state.searchedResults
+    allSearchedResults: state => state.searchedResults,
+    allAutocompletedList: state => state.autocompleteList
 };
 
 const actions = {
     // fetchPropertyVisuals
-    async fetchPropertyForSale({commit, rootState}) {
+    async fetchPropertyForSale({ commit, rootState }) {
         try {
             const is_listed_for_id = rootState.SellerModule.saleCategory[0].id
             const response = await PropertyService.getAllPropertyForSale(is_listed_for_id);
@@ -49,7 +54,7 @@ const actions = {
             throw new Error("Failed on loading current properties")
         }
     },
-    async fetchPropertyForRent({commit, rootState}) {
+    async fetchPropertyForRent({ commit, rootState }) {
         try {
             const is_listed_for_id = rootState.SellerModule.rentCategory[0].id
             const response = await PropertyService.getAllPropertyForRent(is_listed_for_id);
@@ -66,7 +71,7 @@ const actions = {
             throw new Error("Failed on loading latest properties")
         }
     },
-    async fetchSinglePropertyVisuals({ commit }, property_id){
+    async fetchSinglePropertyVisuals({ commit }, property_id) {
         try {
             const response = await PropertyVisualsService.getPropertyVisualsByPropertyId(property_id);
             commit("setSinglePropertyVisuals", response.data.result);
@@ -74,7 +79,7 @@ const actions = {
             throw new Error("Failed on loading current property visuals")
         }
     },
-    async fetchPropertyNearbyLandmarkVisuals({ commit }, property_id){
+    async fetchPropertyNearbyLandmarkVisuals({ commit }, property_id) {
         try {
             const response = await PropertyNearbyLandmarkService.getPropertyNearbyLandmarkByPropertyId(property_id);
             commit("setSinglePropertyNearbyLandmarkVisuals", response.data.result);
@@ -82,7 +87,7 @@ const actions = {
             throw new Error("Failed on loading current property visuals")
         }
     },
-    async fetchPropertyNeighborhoodVisuals({ commit }, property_id){
+    async fetchPropertyNeighborhoodVisuals({ commit }, property_id) {
         try {
             const response = await NeighborhoodVisualsService.getNeighborhoodVisualsByPropertyId(property_id);
             commit("setSinglePropertyNeighborhoodVisuals", response.data.result);
@@ -90,7 +95,7 @@ const actions = {
             throw new Error("Failed on loading current property visuals")
         }
     },
-    async fetchCurrentPropertySelectedFeatures({ commit }, property_id){
+    async fetchCurrentPropertySelectedFeatures({ commit }, property_id) {
         try {
             console.log(property_id);
             const response = await FeatureTypeLookupService.getPropertyFeatureTypesByPropertyId(property_id);
@@ -99,7 +104,7 @@ const actions = {
             throw new Error("Failed on loading current property features")
         }
     },
-    async fetchCurrentPropertyValue({ commit }, property_id){
+    async fetchCurrentPropertyValue({ commit }, property_id) {
         try {
             const response = await PropertyValueService.getPropertyValueByPropertyId(property_id);
             commit("setSinglePropertyValue", response.data.result);
@@ -107,7 +112,7 @@ const actions = {
             throw new Error("Failed on loading current property value")
         }
     },
-    async fetchPropertyRentalValue({ commit }, property_id){
+    async fetchPropertyRentalValue({ commit }, property_id) {
         try {
             const response = await PropertyRentalValueService.getPropertyRentalValueByPropertyId(property_id);
             commit("setSingleRentalValue", response.data.result);
@@ -115,7 +120,7 @@ const actions = {
             throw new Error("Failed on loading current property value")
         }
     },
-    async fetchPropertyPriceHistories({ commit }, property_id){
+    async fetchPropertyPriceHistories({ commit }, property_id) {
         try {
             const response = await PropertyPriceHistoryService.getPropertyPriceHistoriesByPropertyId(property_id);
             commit("setSinglePropertyPriceHistory", response.data.result);
@@ -123,21 +128,50 @@ const actions = {
             throw new Error("Failed on loading current property price histories")
         }
     },
-    loadSearchKeywordIntoGlobalState({ commit }, keyword){
+    loadSearchKeywordIntoGlobalState({ commit }, keyword) {
         commit("setSearchKey", keyword);
         return "ok";
     },
-    async fetchPropertiesBySearchKeyword({ commit }, currentSearchKeyword){
+    async fetchPropertiesBySearchKeyword({ commit }, currentSearchKeyword) {
         try {
             let keyword;
-            if(currentSearchKeyword === "" || currentSearchKeyword === undefined || currentSearchKeyword === null){
+            if (currentSearchKeyword === "" || currentSearchKeyword === undefined || currentSearchKeyword === null) {
                 keyword = state.searchKeyword;
             } else {
                 keyword = currentSearchKeyword;
             }
-            
+
             const response = await PropertyService.getSearchedProperties(keyword);
             commit("setSearchedPropertyResult", response.data.result);
+        } catch (error) {
+            throw new Error("Failed to fetch your data");
+        }
+    },
+    async fetchAutoCompleteWords({ commit }) {
+        try {
+            const locationResponse = await PropertyLocationService.getAllPropertyLocations();
+            const landmarkTypeResponse = await PropertyLandmarkTypeService.getAllPropertyLandmarkTypes();
+            const valueResponse = await PropertyValueService.getPropertyValue();
+
+            const locationList = (locationResponse.data.result).map(location => {
+                return {
+                    option: location.name
+                }
+            })
+            const landmarkList = (landmarkTypeResponse.data.result).map(landmark => {
+                return {
+                    option: landmark.landmark_type
+                }
+            })
+            const valueList = (valueResponse.data.result).map(value => {
+                return {
+                    option: value.actual_value
+                }
+            })
+
+            const mergedList = [...locationList, ...landmarkList, ...valueList];
+            const searchList = mergedList.map(eachItem => eachItem.option);
+            commit("setSearchList", searchList);
         } catch (error) {
             throw new Error("Failed to fetch your data");
         }
@@ -158,7 +192,7 @@ const mutations = {
                 created_by: eachPropertyForSale.createdby
             }
         }
-    )),
+        )),
     setPropertyForRent: (state, returnedPropertyForRent) => (state.propertyForRent = returnedPropertyForRent
         .map(eachPropertyForRent => {
             return {
@@ -172,7 +206,7 @@ const mutations = {
                 created_by: eachPropertyForRent.createdby
             }
         }
-    )),
+        )),
     setSinglePropertyVisuals: (state, returnedSinglePropertyVisuals) => (state.singlePropertyVisuals = returnedSinglePropertyVisuals),
     setSinglePropertyNearbyLandmarkVisuals: (state, returnedSinglePropertyLandmarkVisuals) => (state.singlePropertyNearbyLandmarkVisuals = returnedSinglePropertyLandmarkVisuals),
     setSinglePropertyNeighborhoodVisuals: (state, returnedSinglePropertyNeighborhoodVisuals) => (state.singleNeighborhoodVisuals = returnedSinglePropertyNeighborhoodVisuals),
@@ -188,9 +222,9 @@ const mutations = {
                 when_created: formatDate(priceHistory.when_created)
             }
         }
-    )),
+        )),
     setCurrentPropertyFeatures: (state, propertySelectedFeatures) => (state.currentPropertyFeatures = propertySelectedFeatures
-        .map(eachFeature => {return {name: eachFeature.name}})),
+        .map(eachFeature => { return { name: eachFeature.name } })),
     setSearchKey: (state, searchKeyword) => state.searchKeyword = searchKeyword,
     setSearchedPropertyResult: (state, returnedResults) => state.searchedResults = returnedResults.map(eachResult => {
         return {
@@ -202,7 +236,8 @@ const mutations = {
             created_by: eachResult.created_by_
         }
         // description: eachPropertyForRent.description_,
-    })
+    }),
+    setSearchList: (state, returnedSearchOptionsList) => state.autocompleteList = [...new Set(returnedSearchOptionsList)]
 }
 
 export default {

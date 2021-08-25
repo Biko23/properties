@@ -24,19 +24,31 @@
                 <p id="intro">Are You looking for your dream house or property?</p>
 
             </div>
-            <div id="search-field">
+            <div id="search-field" style="position: relative;">
                 <v-autocomplete 
-                    style="width: 100%" 
                     background-color="white" 
                     filled 
-                    outlined="blue"
+                    :outlined="true"
                     append-icon=""
                     :autofocus="true" 
-                    append="mdi-magnify" 
-                    auto-select-first 
+                    auto-select-first
                     placeholder="Search Properties" 
+                    :items="allAutocompletedList"
                     v-model="keyword" 
                 />
+                <v-icon small class="mr-2" 
+                    style="
+                        font-size: 40px; 
+                        color: blue; 
+                        position: absolute;
+                        right: 0;
+                        top: 10%;
+                        z-index: 100;
+                    "
+                @click.stop="searchProperties"
+                >
+                    mdi-magnify
+                </v-icon>
             </div>
         </div>
     </v-container>
@@ -385,17 +397,30 @@ export default {
         icons: ["mdi-facebook", "mdi-twitter", "mdi-linkedin", "mdi-instagram"],
     }),
     methods: {
-        ...mapActions(["fetchLatestPropertyVisuals", "fetchPropertiesBySearchKeyword", "loadSearchKeywordIntoGlobalState"]),
+        ...mapActions([
+            "fetchLatestPropertyVisuals", 
+            "fetchPropertiesBySearchKeyword", 
+            "loadSearchKeywordIntoGlobalState",
+            "fetchAutoCompleteWords"]),
         searchProperties() {
             this.loadSearchKeywordIntoGlobalState(this.keyword)
-                .then(() => this.$router.push(`/search-result`));
+                .then(() => {
+                    this.$router.push(`/search-result`);
+                    this.keyword = "";
+                });
         }
     },
     computed: {
-        ...mapGetters(["allLatestProperties", "iAmACertifiedSeller", "allVendorsCategories"])
+        ...mapGetters([
+            "allLatestProperties", 
+            "iAmACertifiedSeller", 
+            "allVendorsCategories", 
+            "allAutocompletedList"
+        ])
     },
     created() {
         this.fetchLatestPropertyVisuals();
+        this.fetchAutoCompleteWords();
     }
 };
 </script>

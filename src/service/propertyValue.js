@@ -2,6 +2,14 @@ import API from '../config/connections'
 // propertyValueApi
 
 export default {
+  async getPropertyValue () {
+    try {
+      const response = await API.propertyValueApi.get(`/property-value`)
+      return response
+    } catch (error) {
+      throw new Error('An error occured when retrieving data')
+    }
+  },
   async getPropertyValueById (property_value_id) {
     try {
       const response = await API.propertyValueApi.get(`/property-value/${property_value_id}`)
