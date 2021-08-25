@@ -147,15 +147,15 @@ const actions = {
             throw new Error("Failed to fetch your data");
         }
     },
-    async fetchAutoCompleteWords({ commit }) {
+    async fetchAutoCompleteWords({ commit , rootState }) {
         try {
-            const locationResponse = await PropertyLocationService.getAllPropertyLocations();
+            const locationResponse = await PropertyLocationService.getAllLocationsForApprovedProperties(rootState.SellerModule.saleCategory[0].id);
             const landmarkTypeResponse = await PropertyLandmarkTypeService.getAllPropertyLandmarkTypes();
-            const valueResponse = await PropertyValueService.getPropertyValue();
+            const valueResponse = await PropertyValueService.getApprovedPropertyValue(rootState.SellerModule.saleCategory[0].id);
 
             const locationList = (locationResponse.data.result).map(location => {
                 return {
-                    option: location.name
+                    option: location.name_
                 }
             })
             const landmarkList = (landmarkTypeResponse.data.result).map(landmark => {
@@ -165,7 +165,7 @@ const actions = {
             })
             const valueList = (valueResponse.data.result).map(value => {
                 return {
-                    option: value.actual_value
+                    option: value.actualvalue
                 }
             })
 

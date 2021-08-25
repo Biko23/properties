@@ -31,6 +31,7 @@
                     :outlined="true"
                     append-icon=""
                     :autofocus="true" 
+                    cache-items
                     auto-select-first
                     placeholder="Search Properties" 
                     :items="allAutocompletedList"

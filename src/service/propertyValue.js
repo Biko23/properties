@@ -10,6 +10,14 @@ export default {
       throw new Error('An error occured when retrieving data')
     }
   },
+  async getApprovedPropertyValue(is_listed_for_id){
+    try {
+      const response = await API.propertyValueApi.get(`/property-value/approved-property-values/${is_listed_for_id}`)
+      return response
+    } catch (error) {
+      throw new Error('An error occured when retrieving data')
+    }
+  },
   async getPropertyValueById (property_value_id) {
     try {
       const response = await API.propertyValueApi.get(`/property-value/${property_value_id}`)

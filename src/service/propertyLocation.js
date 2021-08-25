@@ -9,6 +9,14 @@ export default {
       throw new Error('An error occured when retrieving data')
     }
   },
+  async getAllLocationsForApprovedProperties (is_listed_for_id) {
+    try {
+      const response = await API.propertyLocationApi.get(`/property-locations/approved-property-location/${is_listed_for_id}`)
+      return response
+    } catch (error) {
+      throw new Error('An error occured when retrieving data')
+    }
+  },
   async getPropertyLocationById (location_id) {
     try {
       const response = await API.propertyLocationApi.get(`/property-locations/${location_id}`)
