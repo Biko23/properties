@@ -1,15 +1,27 @@
 <template>
- <router-link :to="to" style=" text-decoration:none;">
 <v-card max-width="auto">
-    <v-card-subtitle class="time" style="z-index: 1;">{{date}} </v-card-subtitle>
-    <v-img :src="src" height="200px"></v-img>
-    <v-card-subtitle>
-         <small style="font-weight: bold; color: #000000; margin-bottom: 0;">UGX: {{cost}}</small><br>
-        <small>Located: {{location}}</small><br>
-        <small>Posted by: {{postedBy}}</small>
-         </v-card-subtitle>
+    <router-link :to="to" style=" text-decoration:none;">
+        <v-card-subtitle class="time" style="z-index: 1;">{{date}} </v-card-subtitle>
+        <v-img :src="src" height="200px"></v-img>
+    </router-link>
+    <div style="display: flex; flex-direction: row; justify-content: space-between;">
+        <v-card-subtitle>
+            <small style="font-weight: bold; color: #000000; margin-bottom: 0;">UGX: {{cost}}</small><br>
+            <small>Category: {{category}}</small><br>
+            <small>Located: {{location}}</small><br>
+            <small>Posted by: {{postedBy}}</small>
+        </v-card-subtitle>
+
+        <div style="display: flex; align-items: center; justify-content: center;">
+            <v-icon small class="mr-2" style="font-size: 40px; color: blue; z-index: 100" @click="onClick">
+                {{icon}}
+            </v-icon>
+            <!-- <v-icon small class="mr-2" style="font-size: 40px; color: black;">
+            mdi-heart-outline
+        </v-icon> -->
+        </div>
+    </div>
 </v-card>
- </router-link>
 </template>
 
 <script>
@@ -20,6 +32,18 @@ export default {
         postedBy: {
             type: String,
             default: "No name"
+        },
+        onClick: {
+            type: Function
+            // required: true
+        },
+        icon: {
+            type: String,
+            default: 'mdi-heart-outline'
+        },
+        category: {
+            type: String,
+            default: "Category missing"
         },
         location: {
             type: String,
@@ -41,7 +65,7 @@ export default {
             type: String,
             default: "/view"
         }
-    },
+    }
     // computed: {
     //     formatAmount : (propertyCost)=> {
     //         let internationalNumberFormat = new Intl.NumberFormat('en-US');

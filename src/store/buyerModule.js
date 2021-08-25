@@ -127,9 +127,16 @@ const actions = {
         commit("setSearchKey", keyword);
         return "ok";
     },
-    async fetchPropertiesBySearchKeyword({ commit }){
+    async fetchPropertiesBySearchKeyword({ commit }, currentSearchKeyword){
         try {
-            const response = await PropertyService.getSearchedProperties(state.searchKeyword);
+            let keyword;
+            if(currentSearchKeyword === "" || currentSearchKeyword === undefined || currentSearchKeyword === null){
+                keyword = state.searchKeyword;
+            } else {
+                keyword = currentSearchKeyword;
+            }
+            
+            const response = await PropertyService.getSearchedProperties(keyword);
             commit("setSearchedPropertyResult", response.data.result);
         } catch (error) {
             throw new Error("Failed to fetch your data");
