@@ -7,7 +7,15 @@
                 <small style="font-weight: bold;">{{allSearchedResults.length}} results</small>
             </div>
             <div style="flex:1;">
-                <h3 style="color: #3b6ef3;">BUY PROPERTY HERE</h3>
+                <!-- <h3 style="color: #3b6ef3;">BUY PROPERTY HERE</h3> -->
+                    <div>
+                        <input placeholder="Search Properties"/>
+                        <span style="margin-left: -50px; padding-top: 300px">
+                            <button>
+                                <img src="https://res.cloudinary.com/diued7ugb/image/upload/v1625824148/Vector_jyqs4g.svg" alt="" width="20" srcset="" style="margin-top: -12px; position: absolute" />
+                            </button>
+                        </span>
+                    </div>
             </div>
         </v-row>
         <v-row id="main-property">
@@ -74,5 +82,27 @@ export default {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+}
+
+::placeholder {
+    color: #3b6ef3;
+    font-size: 1rem;
+    padding: 30px;
+    font-weight: 250;
+}
+input {
+    /* margin-top: 180px; */
+    background-color: #f2f2f2;
+    height: 50px;
+    padding: 20px;
+    width: 500px;
+    border-radius: 6px;
+}
+
+input:focus { 
+    outline: none !important;
+    border-color: #1261b6;
+    border: 1px solid #0f6ed4;
+    box-shadow: 0 0 10px #0f6ed4;
 }
 </style>
