@@ -33,10 +33,10 @@ const actions = {
     },
     async likeVendor(_, newVendor) {
         try {
-            const response = await vendorsBackOfficeService.likeAVendor(newVendor,user_id);
+            const response = await vendorsBackOfficeService.likeAVendor(newVendor);
             if (response.status === 200 || response.status === 201) {
 
-                commit('likeStatus', true);
+                // commit('likeStatus', true);
                alert("Liked")
             }
             return response;
@@ -68,6 +68,7 @@ const actions = {
             // const response = await vendorsBackOfficeService.getVendors();
             const response = await vendorsBackOfficeService.getVendors(vendor_category_id);
             commit('setVendors', response.data);
+            console.log(response.data);
         } catch (error) {
             throw new Error("Failed on loading current Vendors")
         }
