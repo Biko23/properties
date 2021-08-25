@@ -1,20 +1,20 @@
 <template>
 <div>
     <v-container id="container" fluid>
-        <v-row no-gutters>
-            <v-col cols="12" md="6" xs="12">
+        <v-row >
+            <v-col cols="12" sm="6" md="6" xs="12">
                 <p id="intro">Are You looking for your dream house or property?</p>
             </v-col>
-            <v-col cols="12" md="6" xs="12">
+            <v-col cols="12" sm="6" md="6" xs="12" >
                 <!-- <form action=""> -->
-                    <div>
+                
                         <input placeholder="Search Properties" v-model="keyword" />
                         <span style="margin-left: -50px; padding-top: 300px">
                             <button @click="searchProperties">
                                 <img src="https://res.cloudinary.com/diued7ugb/image/upload/v1625824148/Vector_jyqs4g.svg" alt="" width="20" srcset="" style="margin-top: -12px; position: absolute" />
                             </button>
                         </span>
-                    </div>
+                    
                 <!-- </form> -->
             </v-col>
         </v-row>
@@ -459,11 +459,35 @@ textarea:focus {
     height: 310px;
 }
 
+/* @media only screen and (min-width: 320px) {
+        input {
+        margin-top: 40px;
+        background-color: #f2f2f2;
+        height: 50px;
+        width: auto;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 6px;
+    }
+}
+
+@media only screen and (max-width: 414px) {
+        input {
+        margin-top: 40px;
+        background-color: #f2f2f2;
+        height: 50px;
+        width: 350px;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 6px;
+    }
+} */
+
 @media only screen and (max-width: 768px) {
     #container {
 
-        height: 30vh;
-        width: 100%;
+        height: auto;
+        width: auto;
     }
 
     #second-container {
@@ -487,8 +511,8 @@ textarea:focus {
         margin-top: 40px;
         background-color: #f2f2f2;
         height: 50px;
-        width: 320px;
-        margin-left: auto;
+        width: 350px;
+       
         border-radius: 6px;
     }
 
@@ -503,7 +527,50 @@ textarea:focus {
         display: none;
     }
 }
-@media only screen and (max-width: 1080px) {
 
-}
+/* @media only screen and (max-width: 978px) {
+    #container {
+
+        height: auto;
+        width: auto;
+    }
+
+    #second-container {
+        margin-top: auto;
+    }
+
+    .about-us-container {
+        background-color: #ebeef2;
+        height: auto;
+    }
+
+    #intro {
+        color: #ffffff;
+        font-size: 0.95rem;
+        font-weight: 400;
+        text-align: center;
+        margin-top: auto;
+    }
+
+    input {
+        margin-top: 40px;
+        background-color: #f2f2f2;
+        height: 50px;
+        width: 350px;
+     
+        border-radius: 6px;
+    }
+
+    ::placeholder {
+        color: #3b6ef3;
+        font-size: 0.9rem;
+        font-weight: 500;
+        padding: 10px;
+    }
+
+    #col-hiden {
+        display: none;
+    }
+} */
+
 </style>
