@@ -8,7 +8,7 @@
               <thead>
                 <tr>
                   <th class="text-left">Last Activity</th>
-                  <th class="text-left">Time</th>
+                  <th class="text-left">Date and Time</th>
                 </tr>
               </thead>
               <tbody>
