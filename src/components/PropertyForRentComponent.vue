@@ -15,6 +15,7 @@
                 <property-card 
                     :location="propertyVisual.name"
                     :date="formatDate(propertyVisual.when_created)"
+                    :category="propertyVisual.category"
                     :cost="propertyVisual.actual_value"
                     :postedBy="propertyVisual.created_by"
                     :src="'http://localhost:8002/' + propertyVisual.snapshot"
@@ -65,7 +66,7 @@ export default {
                 case 7:
                     result = "7 days ago"; break;
                 default: 
-                   result = dateFormat(returnedFormattedDate, "dddd, mmmm dS, yyyy"); break;
+                   result = dateFormat(returnedFormattedDate, "ddd, mmm dS, yyyy"); break;
             }
             return result;
         },

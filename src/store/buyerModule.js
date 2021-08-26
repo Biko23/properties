@@ -8,6 +8,7 @@ import PropertyPriceHistoryService from '@/service/propertyPriceHistories';
 import FeatureTypeLookupService from '@/service/property/featureTypeLookup';
 import PropertyLocationService from '@/service/propertyLocation';
 import PropertyLandmarkTypeService from '@/service/propertyLandmarkTypes';
+import ViewedPropertiesService from '@/service/property/viewedProperties';
 
 import { formatDate } from '@/helpers/helpers';
 
@@ -24,7 +25,10 @@ const state = {
     currentPropertyFeatures: [],
     searchedResults: [],
     searchKeyword: '',
-    autocompleteList: []
+    autocompleteList: [],
+    viewedProperty: false,
+    recentViewedRentals: [],
+    recentViewedSales: []
 }
 
 const getters = {
@@ -40,7 +44,10 @@ const getters = {
     allCurrentPropertyFeatures: state => state.currentPropertyFeatures,
     currentSearchKeyword: state => state.searchKeyword,
     allSearchedResults: state => state.searchedResults,
-    allAutocompletedList: state => state.autocompleteList
+    allAutocompletedList: state => state.autocompleteList,
+    currentViewedProperty: state => state.viewedProperty,
+    allRecentViewedRentals: state => state.recentViewedRentals,
+    allRecentViewedProperties: state => state.recentViewedSales
 };
 
 const actions = {
@@ -97,7 +104,6 @@ const actions = {
     },
     async fetchCurrentPropertySelectedFeatures({ commit }, property_id) {
         try {
-            console.log(property_id);
             const response = await FeatureTypeLookupService.getPropertyFeatureTypesByPropertyId(property_id);
             commit("setCurrentPropertyFeatures", response.data.result);
         } catch (error) {
@@ -147,7 +153,7 @@ const actions = {
             throw new Error("Failed to fetch your data");
         }
     },
-    async fetchAutoCompleteWords({ commit , rootState }) {
+    async fetchAutoCompleteWords({ commit, rootState }) {
         try {
             const locationResponse = await PropertyLocationService.getAllLocationsForApprovedProperties(rootState.SellerModule.saleCategory[0].id);
             const landmarkTypeResponse = await PropertyLandmarkTypeService.getAllPropertyLandmarkTypes();
@@ -175,6 +181,45 @@ const actions = {
         } catch (error) {
             throw new Error("Failed to fetch your data");
         }
+    },
+    async addAViewedProperty({ rootState }, property_id) {
+        try {
+            const propertyViewed = {
+                property_id,
+                viewed_by: rootState.AuthModule.currentUser.username
+            }
+            let response = null;
+            if (rootState.AuthModule.isLoggedIn === true) {
+                response = await ViewedPropertiesService.postViewedProperty(propertyViewed);
+                if (response.status === 201) {
+                    commit('setViewedProperty', true);
+                }
+            } else {
+                commit('setViewedProperty', false);
+            }
+        } catch (error) {
+            throw new Error("Failed to post your data");
+        }
+    },
+    async fetchViewedRentalProperties({ commit, rootState }){
+        try {
+            const response = await ViewedPropertiesService.getViewedPropertyForRent(rootState.AuthModule.currentUser.username);
+            if(response.status === 200){
+                commit('setRecentViewedRentals', response.data.result);
+            }
+        } catch (error) {
+            throw new Error("Failed to post your data");
+        }
+    },
+    async fetchViewedSaleProperties({ commit, rootState }){
+        try {
+            const response = await ViewedPropertiesService.getViewedPropertyForSale(rootState.AuthModule.currentUser.username);
+            if(response.status === 200){
+                commit('setRecentViewedSale', response.data.result);
+            }
+        } catch (error) {
+            throw new Error("Failed to post your data");
+        }
     }
 }
 
@@ -185,6 +230,7 @@ const mutations = {
                 property_id: eachPropertyForSale.propertyid_,
                 description: eachPropertyForSale.description_,
                 snapshot: eachPropertyForSale.snapshot_,
+                category: eachPropertyForSale.property_type_,
                 actual_value: eachPropertyForSale.actualvalue,
                 visuals_id: eachPropertyForSale.visualsid,
                 name: eachPropertyForSale.location_name,
@@ -199,6 +245,7 @@ const mutations = {
                 property_id: eachPropertyForRent.propertyid_,
                 description: eachPropertyForRent.description_,
                 snapshot: eachPropertyForRent.snapshot_,
+                category: eachPropertyForRent.property_type_,
                 actual_value: eachPropertyForRent.rental_value,
                 visuals_id: eachPropertyForRent.visualsid,
                 name: eachPropertyForRent.location_name,
@@ -231,13 +278,37 @@ const mutations = {
             property_id: eachResult.property_id_,
             snapshot: eachResult.property_visual,
             actual_value: eachResult.actual_value_,
+            category: eachResult.property_type_,
             name: eachResult.location_name,
             when_created: eachResult.when_created_,
             created_by: eachResult.created_by_
         }
         // description: eachPropertyForRent.description_,
     }),
-    setSearchList: (state, returnedSearchOptionsList) => state.autocompleteList = [...new Set(returnedSearchOptionsList)]
+    setSearchList: (state, returnedSearchOptionsList) => state.autocompleteList = [...new Set(returnedSearchOptionsList)],
+    setViewedProperty: (state, viewedProperty) => state.viewedProperty = viewedProperty,
+    setRecentViewedRentals: (state, returnedViewedRentals) => state.recentViewedRentals = returnedViewedRentals.map(eachRental => {
+        return {
+             property_id: eachRental.propertyid_,
+            snapshot: eachRental.snapshot_,
+            actual_value: eachRental.rental_value,
+            category: eachRental.property_type_,
+            name: eachRental.location_name,
+            last_viewed: eachRental.when_viewed_,
+            created_by: eachRental.property_created_by
+        }
+    }),
+    setRecentViewedSale: (state, returnedViewedSale) => state.recentViewedSales = returnedViewedSale.map(eachSale => {
+        return {
+            property_id: eachSale.propertyid_,
+            snapshot: eachSale.snapshot_,
+            actual_value: eachSale.actualvalue,
+            category: eachSale.property_type_,
+            name: eachSale.location_name,
+            last_viewed: eachSale.when_viewed_,
+            created_by: eachSale.property_created_by
+        }
+    })
 }
 
 export default {

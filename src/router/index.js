@@ -16,8 +16,6 @@ const routes = [
   },
   {
     path: '/search-result',
-    // path: '/search-result/:keyword',
-    // props: true,
     name: 'SearchResult',
     component: () => import('@/views/SearchedResults.vue')
   },
@@ -26,6 +24,11 @@ const routes = [
     path: '/property-requirement',
     name: 'RegisterPropertyRequirement',
     component: () => import('@/views/RegisterPropertyRequirements.vue'),
+  },
+  {
+    path: '/user-favorite-properties',
+    name: 'FavoriteProperties',
+    component: () => import('@/views/FavoriteProperties.vue')
   },
   {
     path: '/register',

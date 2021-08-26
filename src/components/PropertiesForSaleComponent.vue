@@ -1,7 +1,7 @@
 <template>
-<div>
+  <div>
     <v-container id="container" fluid>
-        <v-row id="property-header">
+      <!-- <v-row id="property-header">
             <div style="flex:1;">
                 <h3>Properties</h3>
                 <small style="font-weight: bold;">{{allPropertyForSale.length}} results</small>
@@ -9,124 +9,182 @@
             <div style="flex:1;">
                 <h3 style="color: #3b6ef3;">BUY PROPERTY HERE</h3>
             </div>
-        </v-row>
-        <v-row id="main-property">
-            <v-col cols="12" xl="2" lg="3" md="4" sm="6" xs="12" v-for="(propertyVisual, index) in allPropertyForSale" :key="index">
-                <!-- :cost="numberWithCommas(propertyVisual.actual_value)" -->
-                <property-card 
-                    :location="propertyVisual.name" 
-                    :date="formatDate(propertyVisual.when_created)" 
-                    :cost="propertyVisual.actual_value" 
-                    :postedBy="propertyVisual.created_by" 
-                    :src="'http://localhost:8002/' + propertyVisual.snapshot" 
-                    :to="`/view/${propertyVisual.property_id}?location=${propertyVisual.name}`"
-                    :onClick="changeIcon"
-                    :icon="myIcon"
-                >
-                    <!-- <v-icon small class="mr-2" style="font-size: 40px; color: blue; z-index: 100" @click="changeIcon(index)">
-                        {{myIcon}}
-                    </v-icon> -->
-                </property-card>
+        </v-row> -->
 
-                <!-- C:\Users\A241901\Documents\project\stanbicproperties-marketplace\property-visuals\src\main\resources\uploads -->
-            </v-col>
-        </v-row>
-    </v-container><br />
-</div>
+      <v-row id="property-header">
+        <div id="result-total">
+          <h3>Properties</h3>
+          <small style="font-weight: bold"
+            >{{ allPropertyForSale.length }} results</small
+          >
+        </div>
+        <div id="search-field">
+          <!-- v-model="property.type" -->
+          <!-- :rules="[propertyRules.type]" -->
+          <v-btn depressed rounded style="margin: 10px 5px 0 0; " color="primary">All</v-btn>
+          <v-select
+            :items="['Apartments', 'Condominum']"
+            label="Category"
+            solo
+          ></v-select>
+          <v-select
+            :items="['1000000', '500000']"
+            label="Price"
+            solo
+          ></v-select>
+          <v-select
+            :items="['Nsangi', 'Kyengera']"
+            label="Landmark"
+            solo
+          ></v-select>
+        </div>
+      </v-row>
+
+      <v-row id="main-property">
+        <v-col
+          cols="12"
+          xl="2"
+          lg="3"
+          md="4"
+          sm="6"
+          xs="12"
+          v-for="(propertyVisual, index) in allPropertyForSale"
+          :key="index"
+        >
+          <property-card
+            :location="propertyVisual.name"
+            :date="formatDate(propertyVisual.when_created)"
+            :category="propertyVisual.category"
+            :cost="propertyVisual.actual_value"
+            :postedBy="propertyVisual.created_by"
+            :src="'http://localhost:8002/' + propertyVisual.snapshot"
+            :to="`/view/${propertyVisual.property_id}?location=${propertyVisual.name}`"
+            :onClick="changeIcon"
+            :icon="myIcon"
+          >
+          </property-card>
+        </v-col>
+      </v-row>
+    </v-container>
+    <br />
+  </div>
 </template>
 
 <script>
-import PropertyCard from '@/components/PropertyCard'
-import dateFormat from 'dateformat'
+import PropertyCard from "@/components/PropertyCard";
+import dateFormat from "dateformat";
 // import { formatDate } from '@/helpers/helpers'
-import {
-    mapActions,
-    mapGetters
-} from 'vuex';
+import { mapActions, mapGetters } from "vuex";
 export default {
-    name: "PropertiesForSaleComponent",
-    components: {
-        PropertyCard
-    },
-     data(){
-        return {
-            myIcon: 'mdi-heart'
-        }
-    },
-    methods: {
-        ...mapActions(["fetchPropertyForSale", "fetchPropertyCategories"]),
-        // refactoring needed
-        formatDate(dateToFormat) {
-            let currentDate = new Date();
-            let returnedFormattedDate = new Date(dateToFormat);
-            let difference = Math.abs(returnedFormattedDate - currentDate);
-            let days = (difference / (1000 * 3600 * 24)).toFixed(0);
-            console.log(days);
+  name: "PropertiesForSaleComponent",
+  components: {
+    PropertyCard,
+  },
+  data() {
+    return {
+      myIcon: "mdi-heart",
+    };
+  },
+  methods: {
+    ...mapActions(["fetchPropertyForSale", "fetchPropertyCategories"]),
+    // refactoring needed
+    formatDate(dateToFormat) {
+      let currentDate = new Date();
+      let returnedFormattedDate = new Date(dateToFormat);
+      let difference = Math.abs(returnedFormattedDate - currentDate);
+      let days = (difference / (1000 * 3600 * 24)).toFixed(0);
 
-            let result;
-            switch (+days) {
-                case 0:
-                    result = "Added now";
-                    break;
-                case 1:
-                    result = "1 days ago";
-                    break;
-                case 2:
-                    result = "2 days ago";
-                    break;
-                case 3:
-                    result = "3 days ago";
-                    break;
-                case 4:
-                    result = "4 days ago";
-                    break;
-                case 5:
-                    result = "5 days ago";
-                    break;
-                case 6:
-                    result = "6 days ago";
-                    break;
-                case 7:
-                    result = "7 days ago";
-                    break;
-                default:
-                    result = dateFormat(returnedFormattedDate, "dddd, mmmm dS, yyyy");
-                    break;
-            }
-            return result;
-        },
-        changeIcon(){
-            this.myIcon === 'mdi-heart' ? this.myIcon = 'mdi-heart-outline' :  this.myIcon = 'mdi-heart';
-        },
-        async fetchAllProperties() {
-            try {
-                await this.fetchPropertyCategories()
-                    .then(() => this.fetchPropertyForSale())
-            } catch (error) {
-                throw new Error('Failed to fetch data');
-            }
-        }
+      let result;
+      switch (+days) {
+        case 0:
+          result = "Added now";
+          break;
+        case 1:
+          result = "1 days ago";
+          break;
+        case 2:
+          result = "2 days ago";
+          break;
+        case 3:
+          result = "3 days ago";
+          break;
+        case 4:
+          result = "4 days ago";
+          break;
+        case 5:
+          result = "5 days ago";
+          break;
+        case 6:
+          result = "6 days ago";
+          break;
+        case 7:
+          result = "7 days ago";
+          break;
+        default:
+          result = dateFormat(returnedFormattedDate, "ddd, mmm dS, yyyy");
+          break;
+      }
+      return result;
     },
-    computed: {
-        ...mapGetters(["allPropertyForSale"])
+    changeIcon() {
+      this.myIcon === "mdi-heart"
+        ? (this.myIcon = "mdi-heart-outline")
+        : (this.myIcon = "mdi-heart");
     },
-    created() {
-        this.fetchAllProperties();
-    }
+    async fetchAllProperties() {
+      try {
+        await this.fetchPropertyCategories().then(() =>
+          this.fetchPropertyForSale()
+        );
+      } catch (error) {
+        throw new Error("Failed to fetch data");
+      }
+    },
+  },
+  computed: {
+    ...mapGetters(["allPropertyForSale"]),
+  },
+  created() {
+    this.fetchAllProperties();
+  },
 };
 </script>
 
 <style scoped>
 #property-header {
-    margin: 0 10px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  margin: 0 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 #main-property {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+#result-total {
+  flex: 1;
+}
+
+#search-field {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+}
+
+@media only screen and (max-width: 768px) {
+  #property-header {
+    flex-direction: column;
+  }
+
+  #search-field {
+    order: 1;
+  }
+
+  #result-total {
+    order: 2;
+  }
 }
 </style>

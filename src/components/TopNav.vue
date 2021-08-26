@@ -8,7 +8,7 @@
       >
 
       <v-spacer></v-spacer>
-       <v-spacer></v-spacer>
+      <v-spacer></v-spacer>
 
       <v-toolbar-title class="telephone"
         >Tel No. (+256) 782-456-789</v-toolbar-title
@@ -16,15 +16,30 @@
 
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>
+      <v-btn icon v-if="loginState" @click="navigateToFavoriteScreen" title="favorites" style="margin-right: 10px;">
+        <v-badge color="red" content="1" overlap>
+          <v-icon small class="mr-2" style="font-size: 24px; color: white;">
+            mdi-heart
+          </v-icon>
+        </v-badge>
+      </v-btn>
 
       <v-toolbar-title v-if="loginState" class="telephone2"
-        >Welcome
+        >
+        <!-- Welcome -->
         <span style="font-size: 1rem; text-transform: capitalize">
           {{ currentLoggedinUser.username }}</span
         >
       </v-toolbar-title>
 
-      <v-menu v-if="loginState" bottom min-width="200px" rounded offset-y class="av">
+      <v-menu
+        v-if="loginState"
+        bottom
+        min-width="200px"
+        rounded
+        offset-y
+        class="av"
+      >
         <template v-slot:activator="{ on }">
           <v-btn icon x-large v-on="on">
             <v-avatar color="#3B6EF3" size="38">
@@ -35,8 +50,8 @@
             </v-avatar>
           </v-btn>
         </template>
-        <v-card>
-          <v-list-item-content class="justify-center">
+        <v-card style="z-index: 500;">
+          <v-list-item-content class="justify-center" style="z-index: 600;">
             <div class="mx-auto text-center">
               <v-avatar color="brown">
                 <span class="white--text text-h5">{{ user.initials }}</span>
@@ -116,6 +131,9 @@ export default {
         throw new Error(error);
       }
     },
+    navigateToFavoriteScreen(){
+      this.$router.push('/user-favorite-properties')
+    }
   },
 };
 </script>
@@ -214,7 +232,7 @@ export default {
     margin-left: auto;
     margin-right: auto;
   }
-  .av{
+  .av {
     padding-left: 40px;
     position: absolute;
   }

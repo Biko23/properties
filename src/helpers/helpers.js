@@ -29,7 +29,7 @@ export const formatDate = (dateToFormat) => {
         case 7:
             result = "7 days ago"; break;
         default: 
-           result = dateFormat(returnedFormattedDate, "dddd, mmmm dS, yyyy"); break;
+           result = dateFormat(returnedFormattedDate, "ddd, mmm dS, yyyy"); break;
     }
     return result;
 }
