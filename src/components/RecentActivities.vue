@@ -1,85 +1,96 @@
 <template>
-  <div>
-    <top-nav />
-    <main-nav />
+<div>
     <v-container>
-      <v-row>
-        <v-col style="text-align: center">
-          <h1>Recent Activities</h1>
-        </v-col>
-      </v-row>
+        <v-row>
+            <v-col style="text-align: center">
+                <h1>Recently Viewed</h1>
+            </v-col>
+        </v-row>
     </v-container>
     <v-container>
-      <v-row id="main-property">
-        <v-col cols="12" xl="2" lg="3" md="4" sm="6" xs="12">
-          <v-card class="mx-auto" max-width="344">
-            <v-img
-              src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-              height="200px"
-            ></v-img>
-
-            <v-card-title> Searched property </v-card-title>
-
-            <v-card-subtitle> 2 days ago </v-card-subtitle>
-          </v-card>
-        </v-col>
-        <v-col cols="12" xl="2" lg="3" md="4" sm="6" xs="12">
-          <v-card class="mx-auto" max-width="344">
-            <v-img
-              src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-              height="200px"
-            ></v-img>
-
-            <v-card-title> Updated profile </v-card-title>
-
-            <v-card-subtitle> 2 days ago </v-card-subtitle>
-          </v-card>
-        </v-col>
-        <v-col cols="12" xl="2" lg="3" md="4" sm="6" xs="12">
-          <v-card class="mx-auto" max-width="344">
-            <v-img
-              src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-              height="200px"
-            ></v-img>
-
-            <v-card-title> Listed property </v-card-title>
-
-            <v-card-subtitle> 2 days ago </v-card-subtitle>
-          </v-card>
-        </v-col>
-        <v-col cols="12" xl="2" lg="3" md="4" sm="6" xs="12">
-          <v-card class="mx-auto" max-width="344">
-            <v-img
-              src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-              height="200px"
-            ></v-img>
-
-            <v-card-title> Rented property </v-card-title>
-
-            <v-card-subtitle> 2 days ago </v-card-subtitle>
-          </v-card>
-        </v-col>
-      </v-row>
+        <v-row>
+            <!--  -->
+            <v-col cols="12" md="6" xs="12">
+                <p>Properties For Sale</p>
+                <v-row>
+                    <v-col cols="12" xl="2" md="6" xs="12" v-for="(viewedSaleProperty, index) in allRecentViewedProperties" :key="index">
+                        <BaseViewedCard :src="'http://localhost:8002/' + viewedSaleProperty.snapshot" :date="formatDate(viewedSaleProperty.last_viewed)" :cost="viewedSaleProperty.actual_value" :category="viewedSaleProperty.category" :location="viewedSaleProperty.name" :postedBy="viewedSaleProperty.created_by" />
+                    </v-col>
+                </v-row>
+            </v-col>
+            <v-col cols="12" md="6" xs="12">
+                <p>Properties For Rent</p>
+                <v-row>
+                    <v-col cols="12" xl="2" md="6" xs="12" v-for="(viewedRentProperty, index) in allRecentViewedRentals" :key="index">
+                        <BaseViewedCard :src="'http://localhost:8002/' + viewedRentProperty.snapshot" :date="formatDate(viewedRentProperty.last_viewed)" :cost="viewedRentProperty.actual_value" :category="viewedRentProperty.category" :location="viewedRentProperty.name" :postedBy="viewedRentProperty.created_by" />
+                    </v-col>
+                </v-row>
+            </v-col>
+            <!--  -->
+        </v-row>
     </v-container>
-    <Footer />
-  </div>
+</div>
 </template>
 
 <script>
-import Footer from "./Footer.vue";
-import MainNav from "./MainNav.vue";
-import TopNav from "./TopNav.vue";
-
+import {
+    mapActions,
+    mapGetters
+} from "vuex";
+import BaseViewedCard from "./BaseViewedCard.vue";
 export default {
-  components: { Footer, MainNav, TopNav },
-  name: "RecentActivities",
+    name: "RecentActivities",
+    components: {
+        BaseViewedCard,
+    },
+    methods: {
+        ...mapActions(["fetchViewedRentalProperties", "fetchViewedSaleProperties"]),
+        formatDate(dateToFormat) {
+            let currentDate = new Date();
+            let returnedFormattedDate = new Date(dateToFormat);
+            let difference = Math.abs(returnedFormattedDate - currentDate);
+            let days = (difference / (1000 * 3600 * 24)).toFixed(0);
 
-  data: () => ({
-    show: false,
-    like: false,
-    vendors: [],
-    // vendor_category_id_to_search_by: this.vendor_category_id,
-  }),
+            let result;
+            switch (+days) {
+                case 0:
+                    result = "today";
+                    break;
+                case 1:
+                    result = "a day ago";
+                    break;
+                case 2:
+                    result = "2 days ago";
+                    break;
+                case 3:
+                    result = "3 days ago";
+                    break;
+                case 4:
+                    result = "4 days ago";
+                    break;
+                case 5:
+                    result = "5 days ago";
+                    break;
+                case 6:
+                    result = "6 days ago";
+                    break;
+                case 7:
+                    result = "7 days ago";
+                    break;
+                default:
+                    result = dateFormat(returnedFormattedDate, "ddd, mmm dS, yyyy");
+                    break;
+            }
+            return result;
+        },
+    },
+    computed: {
+        ...mapGetters(["allRecentViewedRentals", "allRecentViewedProperties"]),
+    },
+    created() {
+        this.fetchViewedRentalProperties();
+        this.fetchViewedSaleProperties();
+    },
 };
 </script>
 

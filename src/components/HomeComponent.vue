@@ -25,29 +25,15 @@
 
             </div>
             <div id="search-field" style="position: relative;">
-                <v-autocomplete 
-                    background-color="white" 
-                    filled 
-                    :outlined="true"
-                    append-icon=""
-                    :autofocus="true" 
-                    cache-items
-                    auto-select-first
-                    placeholder="Search Properties" 
-                    :items="allAutocompletedList"
-                    v-model="keyword" 
-                />
-                <v-icon small class="mr-2" 
-                    style="
+                <v-autocomplete background-color="white" filled :outlined="true" append-icon="" :autofocus="true" cache-items auto-select-first placeholder="Search Properties" :items="allAutocompletedList" v-model="keyword" :search-input.sync="search" />
+                <v-icon small class="mr-2" style="
                         font-size: 40px; 
                         color: blue; 
                         position: absolute;
                         right: 0;
                         top: 10%;
-                        z-index: 100;
-                    "
-                @click.stop="searchProperties"
-                >
+                        z-index: 50;
+                    " @click.stop="searchProperties">
                     mdi-magnify
                 </v-icon>
             </div>
@@ -394,34 +380,49 @@ export default {
     },
     data: () => ({
         keyword: '',
+        search: null,
+        searchKey: "",
         show: false,
         icons: ["mdi-facebook", "mdi-twitter", "mdi-linkedin", "mdi-instagram"],
     }),
     methods: {
         ...mapActions([
-            "fetchLatestPropertyVisuals", 
-            "fetchPropertiesBySearchKeyword", 
+            "fetchLatestPropertyVisuals",
+            "fetchPropertiesBySearchKeyword",
             "loadSearchKeywordIntoGlobalState",
-            "fetchAutoCompleteWords"]),
+            "fetchAutoCompleteWords",
+            "fetchPropertyCategories"
+        ]),
         searchProperties() {
-            this.loadSearchKeywordIntoGlobalState(this.keyword)
+            if (this.search != null) {
+                this.searchKey = this.search;
+            } else {
+                this.searchKey = this.keyword;
+            }
+            this.loadSearchKeywordIntoGlobalState(this.searchKey)
                 .then(() => {
                     this.$router.push(`/search-result`);
                     this.keyword = "";
+                    this.search = null;
                 });
         }
     },
     computed: {
         ...mapGetters([
-            "allLatestProperties", 
-            "iAmACertifiedSeller", 
-            "allVendorsCategories", 
+            "allLatestProperties",
+            "iAmACertifiedSeller",
+            "allVendorsCategories",
             "allAutocompletedList"
         ])
     },
+    mounted() {
+        this.fetchAutoCompleteWords();
+    },
+    beforeCreate(){
+        this.fetchPropertyCategories();
+    },
     created() {
         this.fetchLatestPropertyVisuals();
-        this.fetchAutoCompleteWords();
     }
 };
 </script>
@@ -429,15 +430,15 @@ export default {
 <style scoped>
 /* isaac styles */
 #search-section {
-    display: flex; 
+    display: flex;
     flex: 1;
     flex-direction: row;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
     align-items: center;
 }
 
 #search-field {
-    flex: 1; 
+    flex: 1;
     display: flex;
     justify-content: flex-start;
 }
@@ -466,8 +467,8 @@ export default {
 }
 
 #intro {
-    color: #ffffff; 
-    font-size: 1.5rem; 
+    color: #ffffff;
+    font-size: 1.5rem;
     font-weight: 400;
     text-align: center;
 }
@@ -535,7 +536,7 @@ export default {
         width: auto;
     }
 
-     #search-section {
+    #search-section {
         flex-direction: column;
     }
 

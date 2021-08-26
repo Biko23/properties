@@ -1,9 +1,7 @@
 <template>
 <v-card max-width="auto">
-    <router-link :to="to" style=" text-decoration:none;">
-        <v-card-subtitle class="time" style="z-index: 1;">{{date}} </v-card-subtitle>
-        <v-img :src="src" :lazy-src="lazy" height="200px"></v-img>
-    </router-link>
+    <v-card-subtitle class="time" style="z-index: 1;">Viewed {{date}} </v-card-subtitle>
+    <v-img :src="src" :lazy-src="lazy" height="200px"></v-img>
     <div style="display: flex; flex-direction: row; justify-content: space-between;">
         <v-card-subtitle>
             <small style="font-weight: bold; color: #000000; margin-bottom: 0;">UGX: {{cost}}</small><br>
@@ -11,10 +9,6 @@
             <small>Located: {{location}}</small><br>
             <small>Posted by: {{postedBy}}</small>
         </v-card-subtitle>
-
-        <div style="display: flex; align-items: center; justify-content: center;">
-           <slot></slot>
-        </div>
     </div>
 </v-card>
 </template>
@@ -22,7 +16,7 @@
 <script>
 import dateFormat from 'dateformat'
 export default {
-    name: 'PropertyCard',
+    name: 'BaseViewedCard',
     props: {
         postedBy: {
             type: String,
@@ -51,18 +45,8 @@ export default {
         cost: {
             type: Number,
             default: Math.floor(Math.random() * 100000) + 1
-        },
-        to: {
-            type: String,
-            default: "/view"
         }
     }
-    // computed: {
-    //     formatAmount : (propertyCost)=> {
-    //         let internationalNumberFormat = new Intl.NumberFormat('en-US');
-    //         return internationalNumberFormat.format(propertyCost);
-    //     }
-    // }
 }
 </script>
 

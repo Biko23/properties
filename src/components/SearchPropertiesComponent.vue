@@ -3,7 +3,7 @@
     <v-container id="container" fluid>
       <v-row id="property-header">
         <div id="result-total">
-          <h3>Properties</h3>
+          <h3>Properties for Sale</h3>
           <small style="font-weight: bold"
             >{{ allSearchedResults.length }} results</small
           >
@@ -20,6 +20,7 @@
             placeholder="Search Properties"
             :items="allAutocompletedList"
             v-model="searchKeyword"
+            :search-input.sync="search"
           />
           <v-icon
             small
@@ -53,12 +54,33 @@
             :location="currentProperty.name"
             :date="formatDate(currentProperty.when_created)"
             :cost="currentProperty.actual_value"
+            :category="currentProperty.category"
             :postedBy="currentProperty.created_by"
             :src="'http://localhost:8002/' + currentProperty.snapshot"
             :to="`/view/${currentProperty.property_id}?location=${currentProperty.name}`"
-            :onClick="changeIcon"
-            :icon="myIcon"
-          />
+          >
+            <template v-if="currentLoggedinUser.username !== currentProperty.created_by">
+              <v-icon
+              v-if="allCurrentUserFavoriteProperties.includes(propertyVisual.property_id)"
+                small
+                class="mr-2"
+                style="font-size: 40px; color: blue; z-index: 100"
+                @click="onAdd"
+              >
+                mdi-heart
+              </v-icon>
+              <v-icon
+                v-else
+                small
+                class="mr-2"
+                style="font-size: 40px; color: black; z-index: 100"
+                @click="onRemove"
+              >
+                mdi-heart-outline
+              </v-icon>
+            </template>
+            <template v-else />
+          </property-card>
         </v-col>
       </v-row> </v-container
     ><br />
@@ -81,16 +103,17 @@ export default {
   props: ["keyword"],
   data: () => ({
     searchKeyword: "",
+    search: null,
+    searchKey: "",
     myIcon: "mdi-heart",
   }),
   methods: {
-    ...mapActions(["fetchPropertiesBySearchKeyword", "fetchAutoCompleteWords"]),
+    ...mapActions(["fetchPropertiesBySearchKeyword", "fetchAutoCompleteWords", "fetchFavoritePropertiesForComparision"]),
     formatDate(dateToFormat) {
       let currentDate = new Date();
       let returnedFormattedDate = new Date(dateToFormat);
       let difference = Math.abs(returnedFormattedDate - currentDate);
       let days = (difference / (1000 * 3600 * 24)).toFixed(0);
-      console.log(days);
 
       let result;
       switch (+days) {
@@ -119,15 +142,22 @@ export default {
           result = "7 days ago";
           break;
         default:
-          result = dateFormat(returnedFormattedDate, "dddd, mmmm dS, yyyy");
+          result = dateFormat(returnedFormattedDate, "ddd, mmm dS, yyyy");
           break;
       }
       return result;
-    },
+    },onRemove() {},
+    onAdd() {},
     async searchProperties() {
       try {
-        await this.fetchPropertiesBySearchKeyword(this.searchKeyword);
+        if (this.search != null) {
+          this.searchKey = this.search;
+        } else {
+          this.searchKey = this.searchKeyword;
+        }
+        await this.fetchPropertiesBySearchKeyword(this.searchKey);
         this.searchKeyword = "";
+        this.search = null;
       } catch (error) {
         console.log(error);
       }
@@ -139,11 +169,12 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["allSearchedResults", "allAutocompletedList"]),
+    ...mapGetters(["allSearchedResults", "allAutocompletedList","currentLoggedinUser", "allCurrentUserFavoriteProperties"]),
   },
   created() {
     this.fetchPropertiesBySearchKeyword();
     this.fetchAutoCompleteWords();
+    this.fetchFavoritePropertiesForComparision();
   },
 };
 </script>
@@ -157,21 +188,15 @@ export default {
 }
 
 #result-total {
-    flex: 1
+  flex: 1;
 }
-/* #search-section {
-    display: flex; 
-    flex: 1;
-    flex-direction: row;
-    flex-wrap: wrap; 
-    align-items: center;
-} */
 
 #search-field {
   flex: 1;
   display: flex;
   justify-content: flex-start;
 }
+
 #main-property {
   display: flex;
   flex-direction: row;
@@ -186,14 +211,16 @@ export default {
 }
 
 @media only screen and (max-width: 768px) {
-    #property-header {
-        flex-direction: column;
-    }
-    #search-field {
-        order: 1;
-    }
-    #result-total {
-        order: 2;
-    }
+  #property-header {
+    flex-direction: column;
+  }
+
+  #search-field {
+    order: 1;
+  }
+
+  #result-total {
+    order: 2;
+  }
 }
 </style>

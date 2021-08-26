@@ -336,16 +336,18 @@ export default {
        "fetchPropertyNeighborhoodVisuals",
        "fetchCurrentPropertyValue",
        "fetchPropertyPriceHistories",
-       "fetchCurrentPropertySelectedFeatures"
+       "fetchCurrentPropertySelectedFeatures",
+       "addAViewedProperty"
     ])
   },
   mounted(){
+    this.addAViewedProperty(this.property_id);
     this.fetchSinglePropertyVisuals(this.property_id);
     this.fetchPropertyNearbyLandmarkVisuals(this.property_id);
     this.fetchPropertyNeighborhoodVisuals(this.property_id);
     this.fetchCurrentPropertyValue(this.property_id);
-    this.fetchPropertyPriceHistories(this.property_id);
     this.fetchCurrentPropertySelectedFeatures(this.property_id);
+    this.fetchPropertyPriceHistories(this.property_id);
   }
 };
 </script>
