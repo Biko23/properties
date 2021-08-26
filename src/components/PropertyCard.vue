@@ -2,7 +2,7 @@
 <v-card max-width="auto">
     <router-link :to="to" style=" text-decoration:none;">
         <v-card-subtitle class="time" style="z-index: 1;">{{date}} </v-card-subtitle>
-        <v-img :src="src" height="200px"></v-img>
+        <v-img :src="src" :lazy-src="lazy" height="200px"></v-img>
     </router-link>
     <div style="display: flex; flex-direction: row; justify-content: space-between;">
         <v-card-subtitle>
@@ -13,12 +13,7 @@
         </v-card-subtitle>
 
         <div style="display: flex; align-items: center; justify-content: center;">
-            <v-icon small class="mr-2" style="font-size: 40px; color: blue; z-index: 100" @click="onClick">
-                {{icon}}
-            </v-icon>
-            <!-- <v-icon small class="mr-2" style="font-size: 40px; color: black;">
-            mdi-heart-outline
-        </v-icon> -->
+           <slot></slot>
         </div>
     </div>
 </v-card>
@@ -33,14 +28,6 @@ export default {
             type: String,
             default: "No name"
         },
-        onClick: {
-            type: Function
-            // required: true
-        },
-        icon: {
-            type: String,
-            default: 'mdi-heart-outline'
-        },
         category: {
             type: String,
             default: "Category missing"
@@ -52,6 +39,10 @@ export default {
         src: {
             type: String,
             default: "https://res.cloudinary.com/diued7ugb/image/upload/v1625732723/house1_svrut7.jpg"
+        },
+        lazy: {
+            type: String,
+            default: require('../assets/lazy.jpg')
         },
         date: {
             type: String,

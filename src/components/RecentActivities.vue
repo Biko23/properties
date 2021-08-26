@@ -3,7 +3,7 @@
     <v-container>
         <v-row>
             <v-col style="text-align: center">
-                <h1>Recent Viewed</h1>
+                <h1>Recently Viewed</h1>
             </v-col>
         </v-row>
     </v-container>

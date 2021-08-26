@@ -16,8 +16,13 @@
 
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>
-      <v-btn icon v-if="loginState" @click="navigateToFavoriteScreen" title="favorites" style="margin-right: 10px;">
-        <v-badge color="red" content="1" overlap>
+      <v-btn icon 
+        v-if="loginState && currentUserFavoriteTotalCount > 0" 
+        @click="navigateToFavoriteScreen" 
+        title="favorites" 
+        style="margin-right: 10px;"
+      >
+        <v-badge color="red" :content="currentUserFavoriteTotalCount" overlap>
           <v-icon small class="mr-2" style="font-size: 24px; color: white;">
             mdi-heart
           </v-icon>
@@ -115,13 +120,14 @@ export default {
     },
   }),
   computed: {
-    ...mapGetters(["loginState", "currentLoggedinUser"]),
+    ...mapGetters(["loginState", "currentLoggedinUser", "currentUserFavoriteTotalCount"]),
   },
   created() {
     this.fetchVendorsCategories();
+    this.fetchTotalFavoriteCount();
   },
   methods: {
-    ...mapActions(["logout", "fetchVendorsCategories"]),
+    ...mapActions(["logout", "fetchVendorsCategories", "fetchTotalFavoriteCount"]),
     async logingOut() {
       try {
         await this.logout().then(() => {

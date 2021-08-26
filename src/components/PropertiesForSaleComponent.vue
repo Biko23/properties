@@ -21,7 +21,9 @@
         <div id="search-field">
           <!-- v-model="property.type" -->
           <!-- :rules="[propertyRules.type]" -->
-          <v-btn depressed rounded style="margin: 10px 5px 0 0; " color="primary">All</v-btn>
+          <v-btn depressed rounded style="margin: 10px 5px 0 0" color="primary"
+            >All</v-btn
+          >
           <v-select
             :items="['Apartments', 'Condominum']"
             label="Category"
@@ -59,9 +61,30 @@
             :postedBy="propertyVisual.created_by"
             :src="'http://localhost:8002/' + propertyVisual.snapshot"
             :to="`/view/${propertyVisual.property_id}?location=${propertyVisual.name}`"
-            :onClick="changeIcon"
-            :icon="myIcon"
           >
+            <template
+              v-if="currentLoggedinUser.username !== propertyVisual.created_by"
+            >
+              <v-icon
+                v-if="allCurrentUserFavoriteProperties.includes(propertyVisual.property_id)"
+                small
+                class="mr-2"
+                style="font-size: 40px; color: blue; z-index: 100"
+                @click="onAdd"
+              >
+                mdi-heart
+              </v-icon>
+              <v-icon
+                v-else
+                small
+                class="mr-2"
+                style="font-size: 40px; color: black; z-index: 100"
+                @click="onRemove"
+              >
+                mdi-heart-outline
+              </v-icon>
+            </template>
+            <template v-else />
           </property-card>
         </v-col>
       </v-row>
@@ -82,11 +105,15 @@ export default {
   },
   data() {
     return {
-      myIcon: "mdi-heart",
+      match: false,
     };
   },
   methods: {
-    ...mapActions(["fetchPropertyForSale", "fetchPropertyCategories"]),
+    ...mapActions([
+      "fetchPropertyForSale",
+      "fetchPropertyCategories",
+      "fetchFavoritePropertiesForComparision",
+    ]),
     // refactoring needed
     formatDate(dateToFormat) {
       let currentDate = new Date();
@@ -126,11 +153,8 @@ export default {
       }
       return result;
     },
-    changeIcon() {
-      this.myIcon === "mdi-heart"
-        ? (this.myIcon = "mdi-heart-outline")
-        : (this.myIcon = "mdi-heart");
-    },
+    onRemove() {},
+    onAdd() {},
     async fetchAllProperties() {
       try {
         await this.fetchPropertyCategories().then(() =>
@@ -142,10 +166,16 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["allPropertyForSale"]),
+    ...mapGetters([
+      "allPropertyForSale",
+      "loginState",
+      "currentLoggedinUser",
+      "allCurrentUserFavoriteProperties",
+    ]),
   },
   created() {
     this.fetchAllProperties();
+    this.fetchFavoritePropertiesForComparision();
   },
 };
 </script>

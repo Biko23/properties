@@ -9,6 +9,7 @@ import FeatureTypeLookupService from '@/service/property/featureTypeLookup';
 import PropertyLocationService from '@/service/propertyLocation';
 import PropertyLandmarkTypeService from '@/service/propertyLandmarkTypes';
 import ViewedPropertiesService from '@/service/property/viewedProperties';
+import FavoritePropertiesService from '@/service/property/favoriteProperties';
 
 import { formatDate } from '@/helpers/helpers';
 
@@ -28,7 +29,9 @@ const state = {
     autocompleteList: [],
     viewedProperty: false,
     recentViewedRentals: [],
-    recentViewedSales: []
+    recentViewedSales: [],
+    totalFavoriteCount: 0,
+    currentUserFavoriteProperties: []
 }
 
 const getters = {
@@ -47,7 +50,9 @@ const getters = {
     allAutocompletedList: state => state.autocompleteList,
     currentViewedProperty: state => state.viewedProperty,
     allRecentViewedRentals: state => state.recentViewedRentals,
-    allRecentViewedProperties: state => state.recentViewedSales
+    allRecentViewedProperties: state => state.recentViewedSales,
+    currentUserFavoriteTotalCount: state => state.totalFavoriteCount,
+    allCurrentUserFavoriteProperties: state => state.currentUserFavoriteProperties
 };
 
 const actions = {
@@ -182,6 +187,7 @@ const actions = {
             throw new Error("Failed to fetch your data");
         }
     },
+    // Viewed Properties
     async addAViewedProperty({ rootState }, property_id) {
         try {
             const propertyViewed = {
@@ -220,7 +226,29 @@ const actions = {
         } catch (error) {
             throw new Error("Failed to post your data");
         }
-    }
+    },
+
+    // Favorites
+    async fetchTotalFavoriteCount({ commit, rootState }){
+        try {
+            const response = await FavoritePropertiesService.getTotalCountOfFavoriteProperties(rootState.AuthModule.currentUser.username);
+            if(response.data.status == 1){
+                commit('setTotalFavoriteCount', response.data.result);
+            } else if(response.data.status == 0){
+                commit('setTotalFavoriteCount', 0);
+            }
+        } catch (error) {
+            throw new Error("Failed to post your data");
+        }
+    },
+    async fetchFavoritePropertiesForComparision({ commit, rootState }){
+        try {
+            const response = await FavoritePropertiesService.getFavoritePropertiesForComparision(rootState.AuthModule.currentUser.username);
+            commit("setCurrentUserFavoriteProperties", response.data.result);
+        } catch (error) {
+            throw new Error("Failed to fetch your data");
+        }
+    }  
 }
 
 const mutations = {
@@ -298,17 +326,21 @@ const mutations = {
             created_by: eachRental.property_created_by
         }
     }),
-    setRecentViewedSale: (state, returnedViewedSale) => state.recentViewedSales = returnedViewedSale.map(eachSale => {
-        return {
-            property_id: eachSale.propertyid_,
-            snapshot: eachSale.snapshot_,
-            actual_value: eachSale.actualvalue,
-            category: eachSale.property_type_,
-            name: eachSale.location_name,
-            last_viewed: eachSale.when_viewed_,
-            created_by: eachSale.property_created_by
-        }
-    })
+    setRecentViewedSale: (state, returnedViewedSale) => state.recentViewedSales = returnedViewedSale
+        .map(eachSale => {
+            return {
+                property_id: eachSale.propertyid_,
+                snapshot: eachSale.snapshot_,
+                actual_value: eachSale.actualvalue,
+                category: eachSale.property_type_,
+                name: eachSale.location_name,
+                last_viewed: eachSale.when_viewed_,
+                created_by: eachSale.property_created_by
+            }
+    }),
+    setTotalFavoriteCount: (state, returnedTotalCount) => state.totalFavoriteCount = returnedTotalCount,
+    setCurrentUserFavoriteProperties: (state, returnedCurrentUserFavoriteProperties) => state.currentUserFavoriteProperties = returnedCurrentUserFavoriteProperties
+        .map(eachFavorite => eachFavorite.property_id)
 }
 
 export default {
