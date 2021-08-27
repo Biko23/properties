@@ -108,7 +108,7 @@
                 small
                 class="mr-2"
                 style="font-size: 40px; color: black; z-index: 100"
-                @click="navigateToLogin"
+                @click="showLoginMessage"
               >
                 mdi-heart-outline
               </v-icon>
@@ -143,8 +143,7 @@ export default {
       "fetchPropertyCategories",
       "fetchFavoritePropertiesForComparision",
       "addPropertyToFavorites",
-      "removePropertyFromFavorites",
-      "fetchTotalFavoriteCount"
+      "removePropertyFromFavorites"
     ]),
     // refactoring needed
     formatDate(dateToFormat) {
@@ -191,7 +190,7 @@ export default {
     onAdd(property_id) {
      this.addPropertyToFavorites(property_id);
     },
-    navigateToLogin() {
+    showLoginMessage() {
       this.favoriteDialog = true;
       this.alertMessage = "Please login to add this property to your favorites";
       setTimeout(() => {

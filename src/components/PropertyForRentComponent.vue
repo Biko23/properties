@@ -1,6 +1,26 @@
 <template>
   <div>
     <v-container id="container" fluid>
+      <!-- favorite Dialog -->
+      <v-dialog
+        transition="dialog-top-transition"
+        persistent
+        v-model="favoriteDialog"
+        max-width="600"
+      >
+        <template>
+          <v-card>
+            <v-toolbar color="blue" dark>Warning</v-toolbar>
+            <v-card-text class="pt-5">
+              <p style="font-size: 16px">{{ alertMessage }}</p>
+            </v-card-text>
+            <v-card-actions class="justify-end">
+              <v-btn text @click="closeFavoriteDialog">ok</v-btn>
+            </v-card-actions>
+          </v-card>
+        </template>
+      </v-dialog>
+      <!-- end favorite Dialog -->
       <v-row id="property-header">
         <div style="flex: 1">
           <h3>Rentals</h3>
@@ -32,27 +52,49 @@
             :src="'http://localhost:8002/' + propertyVisual.snapshot"
             :to="`/view-rental/${propertyVisual.property_id}?location=${propertyVisual.name}`"
           >
-            <template v-if="currentLoggedinUser.username !== propertyVisual.created_by">
-                <v-icon
-               v-if="allCurrentUserFavoriteProperties.includes(propertyVisual.property_id)"
-                small
-                class="mr-2"
-                style="font-size: 40px; color: #3b6ef3; z-index: 100"
-                @click="onAdd"
+            <!--  -->
+            <template v-if="loginState">
+              <template
+                v-if="
+                  currentLoggedinUser.username !== propertyVisual.created_by
+                "
               >
-                mdi-heart
-              </v-icon>
+                <v-icon
+                  v-if="
+                    allCurrentUserFavoriteProperties.includes(
+                      propertyVisual.property_id
+                    )
+                  "
+                  small
+                  class="mr-2"
+                  style="font-size: 40px; color: #3b6ef3; z-index: 100"
+                  @click="onRemove(propertyVisual.property_id)"
+                >
+                  mdi-heart
+                </v-icon>
+                <v-icon
+                  v-else
+                  small
+                  class="mr-2"
+                  style="font-size: 40px; color: black; z-index: 100"
+                  @click="onAdd(propertyVisual.property_id)"
+                >
+                  mdi-heart-outline
+                </v-icon>
+              </template>
+              <template v-else />
+            </template>
+            <template v-else>
               <v-icon
-                v-else
                 small
                 class="mr-2"
-                style="font-size: 40px; color: #3b6ef3; z-index: 100"
-                @click="onRemove"
+                style="font-size: 40px; color: black; z-index: 100"
+                @click="showLoginMessage"
               >
                 mdi-heart-outline
               </v-icon>
             </template>
-            <template v-else />
+            <!--  -->
           </property-card>
 
           <!-- C:\Users\A241901\Documents\project\stanbicproperties-marketplace\property-visuals\src\main\resources\uploads -->
@@ -71,8 +113,20 @@ export default {
   components: {
     PropertyCard,
   },
+  data() {
+    return {
+      favoriteDialog: "",
+      alertMessage: false,
+    };
+  },
   methods: {
-    ...mapActions(["fetchPropertyForRent", "fetchPropertyCategories", "fetchFavoritePropertiesForComparision"]),
+    ...mapActions([
+      "fetchPropertyForRent",
+      "fetchPropertyCategories",
+      "fetchFavoritePropertiesForComparision",
+      "removePropertyFromFavorites",
+      "addPropertyToFavorites",
+    ]),
     formatDate(dateToFormat) {
       let currentDate = new Date();
       let returnedFormattedDate = new Date(dateToFormat);
@@ -112,8 +166,24 @@ export default {
       }
       return result;
     },
-    onRemove() {},
-    onAdd() {},
+    onRemove(property_id) {
+      this.removePropertyFromFavorites(property_id);
+    },
+    onAdd(property_id) {
+      this.addPropertyToFavorites(property_id);
+    },
+    showLoginMessage() {
+      this.favoriteDialog = true;
+      this.alertMessage = "Please login to add this property to your favorites";
+      setTimeout(() => {
+        this.favoriteDialog = false;
+        this.alertMessage = "";
+      }, 1500);
+    },
+    closeFavoriteDialog() {
+      this.favoriteDialog = false;
+      this.alertMessage = "";
+    },
     async fetchAllRentalProperties() {
       try {
         await this.fetchPropertyCategories().then(() =>
@@ -125,7 +195,12 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["allPropertyForRent", "currentLoggedinUser", "allCurrentUserFavoriteProperties"]),
+    ...mapGetters([
+      "loginState",
+      "allPropertyForRent",
+      "currentLoggedinUser",
+      "allCurrentUserFavoriteProperties",
+    ]),
   },
   created() {
     this.fetchAllRentalProperties();

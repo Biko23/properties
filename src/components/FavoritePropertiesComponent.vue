@@ -1,129 +1,137 @@
 <template>
-<div>
+  <div>
     <v-container id="container" fluid>
-        <v-row id="property-header">
-            <div style="flex:1;">
-                <h3>Properties</h3>
-                <!-- <small style="font-weight: bold;">{{allPropertyForSale.length}} results</small> -->
-            </div>
-            <div style="flex:1;">
-                <h3 style="color: #3b6ef3;">Favorite List</h3>
-            </div>
-        </v-row>
-        <v-row id="main-property">
-            <!-- <v-col cols="12" xl="2" lg="3" md="4" sm="6" xs="12" v-for="(propertyVisual, index) in allPropertyForSale" :key="index">
-                <property-card 
-                    :location="propertyVisual.name" 
-                    :date="formatDate(propertyVisual.when_created)" 
-                    :category="propertyVisual.category"
-                    :cost="propertyVisual.actual_value" 
-                    :postedBy="propertyVisual.created_by" 
-                    :src="'http://localhost:8002/' + propertyVisual.snapshot" 
-                    :to="`/view/${propertyVisual.property_id}?location=${propertyVisual.name}`"
-                    :onClick="changeIcon"
-                    :icon="myIcon"
-                >
-                </property-card>
-            </v-col> -->
-        </v-row>
-    </v-container><br />
-</div>
+      <v-row id="property-header">
+        <div style="flex: 1">
+          <h3>Properties</h3>
+          <small style="font-weight: bold"
+            >{{ allProperties().length }} results</small
+          >
+        </div>
+        <div style="flex: 1">
+          <h3 style="color: #3b6ef3">Favorite List</h3>
+        </div>
+      </v-row>
+      <v-row id="main-property">
+        <v-col
+          cols="12"
+          xl="2"
+          lg="3"
+          md="4"
+          sm="6"
+          xs="12"
+          v-for="(favoriteProperty, index) in allProperties()"
+          :key="index"
+        >
+          <property-card
+            :location="favoriteProperty.name"
+            :date="formatDate(favoriteProperty.when_saved)"
+            :category="favoriteProperty.category"
+            :cost="favoriteProperty.actual_value"
+            :postedBy="favoriteProperty.created_by"
+            :src="'http://localhost:8002/' + favoriteProperty.snapshot"
+            :to="`/view/${favoriteProperty.property_id}?location=${favoriteProperty.name}`"
+          >
+          </property-card>
+        </v-col>
+      </v-row> </v-container
+    ><br />
+  </div>
 </template>
 
 <script>
-/**
-import PropertyCard from '@/components/PropertyCard'
-import dateFormat from 'dateformat'
+import PropertyCard from "@/components/PropertyCard";
+import dateFormat from "dateformat";
 // import { formatDate } from '@/helpers/helpers'
-import {
-    mapActions,
-    mapGetters
-} from 'vuex';
+import { mapActions, mapGetters } from "vuex";
 export default {
-    name: "PropertiesForSaleComponent",
-    components: {
-        PropertyCard
-    },
-     data(){
-        return {
-            myIcon: 'mdi-heart'
-        }
-    },
-    methods: {
-        ...mapActions(["fetchPropertyForSale", "fetchPropertyCategories"]),
-        // refactoring needed
-        formatDate(dateToFormat) {
-            let currentDate = new Date();
-            let returnedFormattedDate = new Date(dateToFormat);
-            let difference = Math.abs(returnedFormattedDate - currentDate);
-            let days = (difference / (1000 * 3600 * 24)).toFixed(0);
-            console.log(days);
+  name: "PropertiesForSaleComponent",
+  components: {
+    PropertyCard,
+  },
+  data() {
+    return {
+      myIcon: "mdi-heart",
+    };
+  },
+  methods: {
+    ...mapActions([
+      "fetchAllCurrentUserSaleProperties",
+      "fetchAllCurrentUserRentalProperties",
+    ]),
+    // refactoring needed
+    formatDate(dateToFormat) {
+      let currentDate = new Date();
+      let returnedFormattedDate = new Date(dateToFormat);
+      let difference = Math.abs(returnedFormattedDate - currentDate);
+      let days = (difference / (1000 * 3600 * 24)).toFixed(0);
+      console.log(days);
 
-            let result;
-            switch (+days) {
-                case 0:
-                    result = "Added now";
-                    break;
-                case 1:
-                    result = "1 days ago";
-                    break;
-                case 2:
-                    result = "2 days ago";
-                    break;
-                case 3:
-                    result = "3 days ago";
-                    break;
-                case 4:
-                    result = "4 days ago";
-                    break;
-                case 5:
-                    result = "5 days ago";
-                    break;
-                case 6:
-                    result = "6 days ago";
-                    break;
-                case 7:
-                    result = "7 days ago";
-                    break;
-                default:
-                    result = dateFormat(returnedFormattedDate, "dddd, mmmm dS, yyyy");
-                    break;
-            }
-            return result;
-        },
-        changeIcon(){
-            this.myIcon === 'mdi-heart' ? this.myIcon = 'mdi-heart-outline' :  this.myIcon = 'mdi-heart';
-        },
-        async fetchAllProperties() {
-            try {
-                await this.fetchPropertyCategories()
-                    .then(() => this.fetchPropertyForSale())
-            } catch (error) {
-                throw new Error('Failed to fetch data');
-            }
-        }
+      let result;
+      switch (+days) {
+        case 0:
+          result = "Saved today";
+          break;
+        case 1:
+          result = "Saved a day ago";
+          break;
+        case 2:
+          result = "Saved 2 days ago";
+          break;
+        case 3:
+          result = "Saved 3 days ago";
+          break;
+        case 4:
+          result = "Saved 4 days ago";
+          break;
+        case 5:
+          result = "Saved 5 days ago";
+          break;
+        case 6:
+          result = "Saved 6 days ago";
+          break;
+        case 7:
+          result = "Saved 7 days ago";
+          break;
+        default:
+          result =
+            "Saved on " +
+            dateFormat(returnedFormattedDate, "dddd, mmmm dS, yyyy");
+          break;
+      }
+      return result;
     },
-    computed: {
-        ...mapGetters(["allPropertyForSale"])
+  },
+  computed: {
+    ...mapGetters([
+      "allCurrentUserFavoriteSaleList",
+      "allCurrentUserFavoriteRentList",
+    ]),
+    allProperties() {
+      return () => [
+        ...this.allCurrentUserFavoriteSaleList,
+        ...this.allCurrentUserFavoriteRentList,
+      ];
     },
-    created() {
-        this.fetchAllProperties();
-    }
+  },
+  created() {
+    this.fetchAllCurrentUserSaleProperties();
+    this.fetchAllCurrentUserRentalProperties();
+  },
 };
-*/
 </script>
 
 <style scoped>
 #property-header {
-    margin: 0 10px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  margin: 0 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 #main-property {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 </style>
