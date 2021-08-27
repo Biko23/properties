@@ -279,6 +279,16 @@ const actions = {
             throw new Error("Failed to fetch your data");
         }
     },
+    async removePropertyFromFavoriteSection({ commit, rootState }, property_id){
+        const user = {
+            username: rootState.AuthModule.currentUser.username,
+            property_id
+        }
+        const response = await FavoritePropertiesService.removeAPropertyFromFavorites(user);
+        if (response.status == 200 && response.data.status == 1) {
+            commit("setRemoveCurrentUserFavoritePropertyFromListAndFavoriteScreen", user.property_id);
+        }
+    },
     async fetchAllDetailedCurrentUserProperties({ commit, rootState }) {
         try {
             const responseSale = await FavoritePropertiesService.getAllCurrentUserFavoriteSaleProperties(rootState.AuthModule.currentUser.username);
@@ -421,7 +431,12 @@ const mutations = {
             .filter(favoriteProperty => favoriteProperty !== property_id),
         state.totalFavoriteCount = state.totalFavoriteCount - 1
     ),
-    setDetailedCurrentUserFavoriteList: (state, returnedFavorites) => state.detailedCurrentUserFavoriteList = returnedFavorites
+    setDetailedCurrentUserFavoriteList: (state, returnedFavorites) => state.detailedCurrentUserFavoriteList = returnedFavorites,
+    setRemoveCurrentUserFavoritePropertyFromListAndFavoriteScreen: (state, returnedPropertyId) => (
+        state.currentUserFavoriteProperties = state.currentUserFavoriteProperties.filter(favoriteProperty => favoriteProperty !== returnedPropertyId),
+        state.detailedCurrentUserFavoriteList = state.detailedCurrentUserFavoriteList.filter(currentUserFavorite => currentUserFavorite.property_id !== returnedPropertyId),
+        state.totalFavoriteCount = state.totalFavoriteCount - 1
+    )
 }
 
 export default {

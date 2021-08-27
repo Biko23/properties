@@ -30,8 +30,20 @@
             :cost="favoriteProperty.actual_value"
             :postedBy="favoriteProperty.created_by"
             :src="'http://localhost:8002/' + favoriteProperty.snapshot"
-            :to="`/view/${favoriteProperty.property_id}?location=${favoriteProperty.name}`"
+            :to="favoriteProperty.islistedforid === 1 ? 
+                `/view-rental/${favoriteProperty.property_id}?location=${favoriteProperty.name}` : 
+                `/view/${favoriteProperty.property_id}?location=${favoriteProperty.name}`"
           >
+          <template>
+              <v-icon
+                  small
+                  class="mr-2"
+                  style="font-size: 40px; color: #3b6ef3; z-index: 100"
+                  @click="onRemove(favoriteProperty.property_id)"
+                >
+                  mdi-heart
+                </v-icon>
+          </template>
           </property-card>
         </v-col>
       </v-row> </v-container
@@ -56,7 +68,8 @@ export default {
   },
   methods: {
     ...mapActions([
-      "fetchAllDetailedCurrentUserProperties"
+      "fetchAllDetailedCurrentUserProperties",
+      "removePropertyFromFavoriteSection"
     ]),
     // refactoring needed
     formatDate(dateToFormat) {
@@ -100,6 +113,9 @@ export default {
       }
       return result;
     },
+    onRemove(property_id){
+        this.removePropertyFromFavoriteSection(property_id);
+    }
   },
   computed: {
     ...mapGetters([
