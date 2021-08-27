@@ -17,14 +17,9 @@ export default {
     },
     async removeAPropertyFromFavorites(favoriteProperty) {
         try {
+            console.log(favoriteProperty);
             const response = await API.propertyApi.post(`/saved-properties/remove-favorite-property`, favoriteProperty)
-            return response 
-            // response.status == 200 && response.data.status == 1 success
-            // response.status == 200 && response.data.status == 0 Property not in favorites
-            // {
-            //     "username":"alexkisoro",
-            //     "property_id":89
-            // }
+            return response
         } catch (error) {
             throw new Error('An error occured when posting data')
         }

@@ -13,7 +13,7 @@ export const formatDate = (dateToFormat) => {
     let result;
     switch(+days){
         case 0:
-            result = "Added now"; break;
+            result = "Added today"; break;
         case 1:
             result = "1 days ago"; break;
         case 2:

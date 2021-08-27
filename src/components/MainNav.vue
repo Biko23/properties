@@ -187,8 +187,8 @@
       <v-spacer></v-spacer>
       <v-col class="hid-navbar">
         <v-btn
-          color="primary"
-          style="text-decoration: none"
+          color="#3b6ef3"
+          style="text-decoration: none;"
           v-if="loginState"
           @click="logingOut"
           >Logout</v-btn

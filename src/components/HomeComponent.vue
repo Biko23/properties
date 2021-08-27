@@ -118,7 +118,7 @@
                             assured to get the best.
                         </p>
                         <p style="text-align: center">
-                            <router-link to="/property">
+                            <router-link to="/properties-for-rent">
                                 <v-btn style="background-color: #3b6ef3">
                                     <span style="
                         color: #ffffff;
@@ -269,7 +269,7 @@
                     <div v-show="show">
                         <v-divider></v-divider>
                         <router-link to="/properties-for-rent" class="property-link">Houses for Rent</router-link><br>
-                        <router-link to="/register" class="property-link">List A Rental</router-link><br>
+                        <router-link to="/rental-requirement" class="property-link">List A Rental</router-link><br>
                         <router-link to="/property-details" v-if="iAmACertifiedSeller" class="property-link">Property Details</router-link>
                     </div>
                 </v-expand-transition>
@@ -405,6 +405,15 @@ export default {
                     this.keyword = "";
                     this.search = null;
                 });
+        },
+        async fetchAutoCompleteWordsDelay(){
+            try {
+                await setTimeout(()=>{
+                    this.fetchAutoCompleteWords();
+                },200);
+            } catch (error) {
+                console.log(error);
+            }
         }
     },
     computed: {
@@ -416,12 +425,10 @@ export default {
         ])
     },
     mounted() {
-        this.fetchAutoCompleteWords();
-    },
-    beforeCreate(){
-        this.fetchPropertyCategories();
+        this.fetchAutoCompleteWordsDelay();
     },
     created() {
+        this.fetchPropertyCategories();
         this.fetchLatestPropertyVisuals();
     }
 };
