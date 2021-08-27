@@ -61,10 +61,10 @@
           >
             <template v-if="currentLoggedinUser.username !== currentProperty.created_by">
               <v-icon
-              v-if="allCurrentUserFavoriteProperties.includes(propertyVisual.property_id)"
+              v-if="allCurrentUserFavoriteProperties.includes(currentProperty.property_id)"
                 small
                 class="mr-2"
-                style="font-size: 40px; color: blue; z-index: 100"
+                style="font-size: 40px; color: #3b6ef3; z-index: 100"
                 @click="onAdd"
               >
                 mdi-heart
@@ -73,7 +73,7 @@
                 v-else
                 small
                 class="mr-2"
-                style="font-size: 40px; color: black; z-index: 100"
+                style="font-size: 40px; color: #3b6ef3; z-index: 100"
                 @click="onRemove"
               >
                 mdi-heart-outline
@@ -118,7 +118,7 @@ export default {
       let result;
       switch (+days) {
         case 0:
-          result = "Added now";
+          result = "Added today";
           break;
         case 1:
           result = "1 days ago";

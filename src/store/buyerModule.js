@@ -248,7 +248,40 @@ const actions = {
         } catch (error) {
             throw new Error("Failed to fetch your data");
         }
-    }  
+    },
+    async addPropertyToFavorites({ commit, rootState }, property_id){
+        try {
+            const user = {
+                username: rootState.AuthModule.currentUser.username,
+                property_id
+            }
+            const response = await FavoritePropertiesService.postAFavoriteProperty(user);
+            if(response.status == 201 && response.data.status == 1){
+                commit("setAddCurrentUserFavoriteProperty", user.property_id);
+            }
+        } catch (error) {
+            throw new Error("Failed to fetch your data");
+        }
+    },
+    async removePropertyFromFavorites({ commit, rootState }, property_id){
+        try {
+            const user = {
+                username: rootState.AuthModule.currentUser.username,
+                property_id
+            }
+            const response = await FavoritePropertiesService.removeAPropertyFromFavorites(user);
+            if(response.status == 200 && response.data.status == 1){
+                commit("setRemoveCurrentUserFavoriteProperty", user.property_id);
+            }
+        } catch (error) {
+            throw new Error("Failed to fetch your data");
+        }
+    },
+    /**
+     *     },
+getAllCurrentUserFavoriteRentalProperties
+getAllCurrentUserFavoriteSaleProperties
+    */
 }
 
 const mutations = {
@@ -340,7 +373,16 @@ const mutations = {
     }),
     setTotalFavoriteCount: (state, returnedTotalCount) => state.totalFavoriteCount = returnedTotalCount,
     setCurrentUserFavoriteProperties: (state, returnedCurrentUserFavoriteProperties) => state.currentUserFavoriteProperties = returnedCurrentUserFavoriteProperties
-        .map(eachFavorite => eachFavorite.property_id)
+        .map(eachFavorite => eachFavorite.property_id),
+    setAddCurrentUserFavoriteProperty: (state, property_id) => (
+        state.currentUserFavoriteProperties = [...state.currentUserFavoriteProperties, property_id],
+        state.totalFavoriteCount = state.totalFavoriteCount+1
+    ), 
+    setRemoveCurrentUserFavoriteProperty: (state, property_id) => (
+        state.currentUserFavoriteProperties =  state.currentUserFavoriteProperties
+            .filter(favoriteProperty =>  favoriteProperty !== property_id),
+            state.totalFavoriteCount = state.totalFavoriteCount-1
+    )
 }
 
 export default {

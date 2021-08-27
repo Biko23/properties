@@ -11,6 +11,22 @@
             </div>
         </v-row> -->
 
+        <!-- favorite Dialog -->
+        <v-dialog transition="dialog-top-transition" persistent v-model="favoriteDialog" max-width="600">
+            <template>
+                <v-card>
+                    <v-toolbar color="blue" dark>Warning</v-toolbar>
+                    <v-card-text class="pt-5">
+                        <p style="font-size: 16px">{{ alertMessage }}</p>
+                    </v-card-text>
+                    <v-card-actions class="justify-end">
+                        <v-btn text @click="closeFavoriteDialog">ok</v-btn>
+                    </v-card-actions>
+                </v-card>
+            </template>
+        </v-dialog>
+        <!-- end favorite Dialog -->
+
       <v-row id="property-header">
         <div id="result-total">
           <h3>Properties</h3>
@@ -21,8 +37,8 @@
         <div id="search-field">
           <!-- v-model="property.type" -->
           <!-- :rules="[propertyRules.type]" -->
-          <v-btn depressed rounded style="margin: 10px 5px 0 0" color="primary"
-            >All</v-btn
+          <v-btn depressed rounded style="margin: 10px 5px 0 0" color="#3b6ef3"
+            ><span style="color: white;">All</span></v-btn
           >
           <v-select
             :items="['Apartments', 'Condominum']"
@@ -62,6 +78,7 @@
             :src="'http://localhost:8002/' + propertyVisual.snapshot"
             :to="`/view/${propertyVisual.property_id}?location=${propertyVisual.name}`"
           >
+          <template v-if="loginState">
             <template
               v-if="currentLoggedinUser.username !== propertyVisual.created_by"
             >
@@ -69,8 +86,8 @@
                 v-if="allCurrentUserFavoriteProperties.includes(propertyVisual.property_id)"
                 small
                 class="mr-2"
-                style="font-size: 40px; color: blue; z-index: 100"
-                @click="onAdd"
+                style="font-size: 40px; color: #3b6ef3; z-index: 100"
+                @click="onRemove(propertyVisual.property_id)"
               >
                 mdi-heart
               </v-icon>
@@ -79,12 +96,23 @@
                 small
                 class="mr-2"
                 style="font-size: 40px; color: black; z-index: 100"
-                @click="onRemove"
+                @click="onAdd(propertyVisual.property_id)"
               >
                 mdi-heart-outline
               </v-icon>
             </template>
             <template v-else />
+          </template>
+          <template v-else>
+             <v-icon
+                small
+                class="mr-2"
+                style="font-size: 40px; color: black; z-index: 100"
+                @click="navigateToLogin"
+              >
+                mdi-heart-outline
+              </v-icon>
+          </template>
           </property-card>
         </v-col>
       </v-row>
@@ -105,7 +133,8 @@ export default {
   },
   data() {
     return {
-      match: false,
+      favoriteDialog: "",
+      alertMessage: false
     };
   },
   methods: {
@@ -113,6 +142,9 @@ export default {
       "fetchPropertyForSale",
       "fetchPropertyCategories",
       "fetchFavoritePropertiesForComparision",
+      "addPropertyToFavorites",
+      "removePropertyFromFavorites",
+      "fetchTotalFavoriteCount"
     ]),
     // refactoring needed
     formatDate(dateToFormat) {
@@ -124,7 +156,7 @@ export default {
       let result;
       switch (+days) {
         case 0:
-          result = "Added now";
+          result = "Added today";
           break;
         case 1:
           result = "1 days ago";
@@ -153,8 +185,24 @@ export default {
       }
       return result;
     },
-    onRemove() {},
-    onAdd() {},
+    onRemove(property_id) {
+      this.removePropertyFromFavorites(property_id);
+    },
+    onAdd(property_id) {
+     this.addPropertyToFavorites(property_id);
+    },
+    navigateToLogin() {
+      this.favoriteDialog = true;
+      this.alertMessage = "Please login to add this property to your favorites";
+      setTimeout(() => {
+          this.favoriteDialog = false;
+          this.alertMessage = "";
+      }, 1500);
+    },
+    closeFavoriteDialog(){
+      this.favoriteDialog = false;
+      this.alertMessage = "";
+    },
     async fetchAllProperties() {
       try {
         await this.fetchPropertyCategories().then(() =>
