@@ -5,7 +5,7 @@
         <div style="flex: 1">
           <h3>Properties</h3>
           <small style="font-weight: bold"
-            >{{ allProperties().length }} results</small
+            >{{ allDetailedCurrentFavoriteList.length }} results</small
           >
         </div>
         <div style="flex: 1">
@@ -20,7 +20,7 @@
           md="4"
           sm="6"
           xs="12"
-          v-for="(favoriteProperty, index) in allProperties()"
+          v-for="(favoriteProperty, index) in allDetailedCurrentFavoriteList"
           :key="index"
         >
           <property-card
@@ -56,8 +56,7 @@ export default {
   },
   methods: {
     ...mapActions([
-      "fetchAllCurrentUserSaleProperties",
-      "fetchAllCurrentUserRentalProperties",
+      "fetchAllDetailedCurrentUserProperties"
     ]),
     // refactoring needed
     formatDate(dateToFormat) {
@@ -104,19 +103,11 @@ export default {
   },
   computed: {
     ...mapGetters([
-      "allCurrentUserFavoriteSaleList",
-      "allCurrentUserFavoriteRentList",
+      "allDetailedCurrentFavoriteList"
     ]),
-    allProperties() {
-      return () => [
-        ...this.allCurrentUserFavoriteSaleList,
-        ...this.allCurrentUserFavoriteRentList,
-      ];
-    },
   },
   created() {
-    this.fetchAllCurrentUserSaleProperties();
-    this.fetchAllCurrentUserRentalProperties();
+    this.fetchAllDetailedCurrentUserProperties();
   },
 };
 </script>
