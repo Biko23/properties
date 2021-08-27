@@ -30,7 +30,7 @@
             :cost="favoriteProperty.actual_value"
             :postedBy="favoriteProperty.created_by"
             :src="'http://localhost:8002/' + favoriteProperty.snapshot"
-            :to="favoriteProperty.islistedforid === 1 ? 
+            :to="favoriteProperty.listed_for_name == ('Rent' || 'rent' ||'RENT') ? 
                 `/view-rental/${favoriteProperty.property_id}?location=${favoriteProperty.name}` : 
                 `/view/${favoriteProperty.property_id}?location=${favoriteProperty.name}`"
           >
