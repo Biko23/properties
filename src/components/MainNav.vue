@@ -27,7 +27,7 @@
       <v-spacer></v-spacer>
 
       <v-row class="hid-navbar">
-        <v-menu :key="text" :rounded="rounded" offset-y>
+        <v-menu text offset-y>
           <template v-slot:activator="{ attrs, on }">
             <a
               href="#"
@@ -52,7 +52,7 @@
           </v-list>
         </v-menu>
         <v-spacer></v-spacer>
-        <v-menu :key="text" :rounded="rounded" offset-y>
+        <v-menu text offset-y>
           <template v-slot:activator="{ attrs, on }">
             <a
               href="#"
@@ -82,7 +82,7 @@
           </v-list>
         </v-menu>
         <v-spacer></v-spacer>
-        <v-menu :key="text" :rounded="rounded" offset-y>
+        <v-menu text offset-y>
           <template v-slot:activator="{ attrs, on }">
             <a
               href="#"
@@ -109,7 +109,7 @@
           </div>
         </v-menu>
         <v-spacer></v-spacer>
-        <v-menu :key="text" :rounded="rounded" offset-y>
+        <v-menu text offset-y>
           <template v-slot:activator="{ attrs, on }">
             <a
               href="#"
@@ -134,7 +134,7 @@
           </v-list>
         </v-menu>
         <v-spacer></v-spacer>
-        <v-menu :key="text" :rounded="rounded" offset-y>
+        <v-menu text offset-y>
           <template v-slot:activator="{ attrs, on }">
             <a
               href="#"
@@ -162,7 +162,7 @@
           </v-list>
         </v-menu>
         <v-spacer></v-spacer>
-        <v-menu :key="text" :rounded="rounded" offset-y>
+        <v-menu text offset-y>
           <template v-slot:activator="{ attrs, on }">
             <a
               href="#"

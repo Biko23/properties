@@ -57,20 +57,24 @@
           <br />
           <div style="background-color: #f2f2f2; border-radius: 6px">
             <v-col>
-              <p style="color: #3b6ef3l display: flex;">
-                Price:
-                <span style="color: black; margin-left: 180px"
-                  >UGX
-                  {{ commaFormatted(currentPropertyValue.actual_value) }}</span
-                >
-                <br />
-                <span
-                  >Equavalent To:
-                  <span style="color: black; margin-left: 154px"
-                    >$ {{ dollarExchange() }}</span
-                  ></span
-                >
-              </p>
+              <div style="display: flex; flex-direction: column;">
+              <span style="flex: 1; display: flex; flex-direction: row; justify-content: space-between; flex-wrap: wrap;">
+                <span>
+                  Price:
+                </span>
+                <span>
+                  UGX {{ commaFormatted(currentPropertyValue.actual_value) }}
+                </span>
+              </span>
+              <span style="flex: 1; display: flex; flex-direction: row; justify-content: space-between; flex-wrap: wrap;">
+                <span>
+                  Equavalent To:
+                </span>
+                <span>
+                  $ {{ dollarExchange() }}
+                </span>
+              </span>
+              </div>
             </v-col>
 
             <v-col>
@@ -167,7 +171,6 @@
         <v-col cols="12" md="4">
           <v-img
             src="https://res.cloudinary.com/diued7ugb/image/upload/v1626370006/google-maps-759_1_zqu50z.png"
-            :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
             aspect-ratio="1"
             class="grey lighten-2"
             height="200"
@@ -381,7 +384,7 @@ export default {
       "currentPropertyPriceHistory",
       "allCurrentPropertyFeatures",
       "allCurrentUserFavoriteProperties",
-      "loginState",
+      "loginState"
     ]),
     dollarExchange() {
       // const USCost = (this.currentPropertyValue.actual_value / 3500).toFixed(2);
@@ -406,6 +409,11 @@ export default {
       "removePropertyFromFavorites",
       "addPropertyToFavorites",
     ]),
+    addUserView(){
+      if(this.loginState === true){
+        this.addAViewedProperty(this.property_id);
+      }
+    },
     commaFormatted(amount) {
       let price = amount.toLocaleString("en-US");
       return price;
@@ -430,7 +438,7 @@ export default {
     },
   },
   mounted() {
-    this.addAViewedProperty(this.property_id);
+    this.addUserView();
     this.fetchSinglePropertyVisuals(this.property_id);
     this.fetchPropertyNearbyLandmarkVisuals(this.property_id);
     this.fetchPropertyNeighborhoodVisuals(this.property_id);

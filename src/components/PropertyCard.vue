@@ -50,8 +50,8 @@ export default {
             default: dateFormat(new Date(), "DDDD")
         },
         cost: {
-            type: Number,
-            default: Math.floor(Math.random() * 100000) + 1
+            type: String,
+            default: (Math.floor(Math.random() * 100000) + 1).toString()
         },
         to: {
             type: String,

@@ -53,7 +53,7 @@
                             <v-img style="margin-left: auto; margin-right: auto; display: block" lazy-src="https://picsum.photos/id/11/10/6" max-height="45" max-width="45" src="https://res.cloudinary.com/diued7ugb/image/upload/v1625749459/Vector_pebqf0.png"></v-img>
                         </div>
                     </div>
-                    <v-text>
+                    <div>
                         <h3 style="color: #3b6ef3; text-align: center; font-weight: 500">
                             BUY
                         </h3>
@@ -89,7 +89,7 @@
                             </router-link>
                         </p>
                         <br />
-                    </v-text>
+                    </div>
                 </v-card>
             </v-col>
             <v-col cols="12" md="3" xs="12">
@@ -99,7 +99,8 @@
                             <v-img style="margin-left: auto; margin-right: auto; display: block" max-height="47" max-width="45" src="https://res.cloudinary.com/diued7ugb/image/upload/v1625749472/Vector_1_lyvwc5.png"></v-img>
                         </p>
                     </div>
-                    <v-text>
+                    <!--  -->
+                    <div>
                         <h3 style="color: #3b6ef3; text-align: center; font-weight: 500">
                             RENT
                         </h3>
@@ -135,7 +136,8 @@
                             </router-link>
                         </p>
                         <br />
-                    </v-text>
+                    </div>
+                    <!--  -->
                 </v-card>
             </v-col>
             <v-col cols="12" md="3" xs="12">
@@ -145,7 +147,7 @@
                             <v-img style="margin-left: auto; margin-right: auto; display: block" lazy-src="https://picsum.photos/id/11/10/6" max-height="45" max-width="50" src="https://res.cloudinary.com/diued7ugb/image/upload/v1626937385/sell_black_24dp_1_hfrwt6.png"></v-img>
                         </p>
                     </div>
-                    <v-text>
+                    <div>
                         <h3 style="color: #3b6ef3; text-align: center; font-weight: 500">
                             SELL
                         </h3>
@@ -182,7 +184,7 @@
                             </router-link>
                         </p>
                         <br />
-                    </v-text>
+                    </div>
                 </v-card>
             </v-col>
             <v-col cols="12" md="3" xs="12">
@@ -192,7 +194,7 @@
                             <v-img style="margin-left: auto; margin-right: auto; display: block; " lazy-src="https://picsum.photos/id/11/10/6" max-height="45" max-width="45" src="https://res.cloudinary.com/diued7ugb/image/upload/v1626936488/Vector_7_oi79oa.png"></v-img>
                         </p>
                     </div>
-                    <v-text>
+                    <div>
                         <h3 style="color: #3b6ef3; text-align: center; font-weight: 500">
                             MORTGAGE
                         </h3>
@@ -228,7 +230,7 @@
                             </router-link>
                         </p>
                         <br />
-                    </v-text>
+                    </div>
                 </v-card>
             </v-col>
         </v-row>
@@ -326,9 +328,9 @@
                 <v-expand-transition>
                     <div v-show="show">
                         <v-divider></v-divider>
-                        <template v-for="category in allVendorsCategories">
+                        <template v-for="(category, index) in allVendorsCategories">
                             <router-link :to="`/provider/${category.value}`" :key="category.value" class="property-link">{{category.text}}</router-link>
-                            <br :key="category.value">
+                            <br :key="index + 10000000">
                         </template>
                     </div>
                 </v-expand-transition>
@@ -410,7 +412,7 @@ export default {
             try {
                 await setTimeout(()=>{
                     this.fetchAutoCompleteWords();
-                },200);
+                },500);
             } catch (error) {
                 console.log(error);
             }
