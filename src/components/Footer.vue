@@ -3,8 +3,7 @@
     <v-divider></v-divider><br />
     <v-container fluid style="background-color: #3b6ef3">
       <v-row>
-        <!-- <v-footer color="#3b6ef3"> -->
-        <v-col>
+        <!-- <v-col>
           <v-card-text style="text-align: center">
             <v-btn
               v-for="icon in icons"
@@ -17,7 +16,7 @@
               </v-icon>
             </v-btn>
           </v-card-text>
-        </v-col>
+        </v-col> -->
       </v-row>
     </v-container>
 
@@ -117,7 +116,6 @@
         <v-col cols="12" md="3" id="col-hiden">
          <v-img
             src="https://res.cloudinary.com/diued7ugb/image/upload/v1626370006/google-maps-759_1_zqu50z.png"
-            :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
             aspect-ratio="1"
             class="grey lighten-2"
             height="200"

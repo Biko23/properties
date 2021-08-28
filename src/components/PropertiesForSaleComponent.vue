@@ -35,24 +35,30 @@
           >
         </div>
         <div id="search-field">
-          <!-- v-model="property.type" -->
-          <!-- :rules="[propertyRules.type]" -->
-          <v-btn depressed rounded style="margin: 10px 5px 0 0" color="#3b6ef3"
+          <v-btn 
+            depressed 
+            rounded 
+            style="margin: 10px 5px 0 0" 
+            color="#3b6ef3"
+            @click="resetSelection"
             ><span style="color: white;">All</span></v-btn
           >
           <v-select
-            :items="['Apartments', 'Condominum']"
+            v-model="selection"
+            :items="propertyCategories()"
             label="Category"
             solo
           ></v-select>
           <v-select
-            :items="['1000000', '500000']"
+            v-model="selection"
+            :items="propertyCost()"
             label="Price"
             solo
           ></v-select>
           <v-select
-            :items="['Nsangi', 'Kyengera']"
-            label="Landmark"
+            v-model="selection"
+            :items="propertyLocation()"
+            label="Location"
             solo
           ></v-select>
         </div>
@@ -66,14 +72,14 @@
           md="4"
           sm="6"
           xs="12"
-          v-for="(propertyVisual, index) in allPropertyForSale"
+          v-for="(propertyVisual, index) in filteredProperties()"
           :key="index"
         >
           <property-card
             :location="propertyVisual.name"
             :date="formatDate(propertyVisual.when_created)"
             :category="propertyVisual.category"
-            :cost="propertyVisual.actual_value"
+            :cost="commaFormatted(propertyVisual.actual_value)"
             :postedBy="propertyVisual.created_by"
             :src="'http://localhost:8002/' + propertyVisual.snapshot"
             :to="`/view/${propertyVisual.property_id}?location=${propertyVisual.name}`"
@@ -134,7 +140,8 @@ export default {
   data() {
     return {
       favoriteDialog: "",
-      alertMessage: false
+      alertMessage: false,
+      selection: null
     };
   },
   methods: {
@@ -145,6 +152,10 @@ export default {
       "addPropertyToFavorites",
       "removePropertyFromFavorites"
     ]),
+    commaFormatted(amount) {
+      let price = amount.toLocaleString("en-US");
+      return price;
+    },
     // refactoring needed
     formatDate(dateToFormat) {
       let currentDate = new Date();
@@ -211,6 +222,11 @@ export default {
         throw new Error("Failed to fetch data");
       }
     },
+    resetSelection(){
+      if(this.selection != null){
+        this.selection = null;
+      }
+    }
   },
   computed: {
     ...mapGetters([
@@ -219,6 +235,22 @@ export default {
       "currentLoggedinUser",
       "allCurrentUserFavoriteProperties",
     ]),
+    filteredProperties(){
+      if(this.selection === null){
+        return () => this.allPropertyForSale;
+      } else {
+        return () => this.allPropertyForSale = this.allPropertyForSale.filter(property => ((property.category == this.selection) || (property.name == this.selection) || (property.actual_value == this.selection)));
+      }
+    },
+    propertyCategories(){
+      return () => (this.allPropertyForSale).map(property => property.category);
+    },
+    propertyLocation(){
+      return () => (this.allPropertyForSale).map(property => property.name);
+    },
+     propertyCost(){
+      return () => (this.allPropertyForSale).map(property => property.actual_value);
+    }
   },
   created() {
     this.fetchAllProperties();

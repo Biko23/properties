@@ -73,7 +73,7 @@
           <property-card
             :location="currentProperty.name"
             :date="formatDate(currentProperty.when_created)"
-            :cost="currentProperty.actual_value"
+            :cost="commaFormatted(currentProperty.actual_value)"
             :category="currentProperty.category"
             :postedBy="currentProperty.created_by"
             :src="'http://localhost:8002/' + currentProperty.snapshot"
@@ -145,7 +145,7 @@ export default {
   props: ["keyword"],
   data: () => ({
     favoriteDialog: "",
-      alertMessage: false,
+    alertMessage: false,
     searchKeyword: "",
     search: null,
     searchKey: "",
@@ -159,6 +159,10 @@ export default {
       "removePropertyFromFavorites",
       "addPropertyToFavorites",
     ]),
+    commaFormatted(amount) {
+      let price = amount.toLocaleString("en-US");
+      return price;
+    },
     formatDate(dateToFormat) {
       let currentDate = new Date();
       let returnedFormattedDate = new Date(dateToFormat);
@@ -241,7 +245,7 @@ export default {
       "allAutocompletedList",
       "currentLoggedinUser",
       "allCurrentUserFavoriteProperties",
-      "loginState"
+      "loginState",
     ]),
   },
   created() {

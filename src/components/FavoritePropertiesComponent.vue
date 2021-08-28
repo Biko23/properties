@@ -23,28 +23,39 @@
           v-for="(favoriteProperty, index) in allDetailedCurrentFavoriteList"
           :key="index"
         >
+        <transition name="slide-fade">
+           <!-- v-if="favoriteProperty.property_id ? hide : ''" -->
+           <!-- v-if="hide" -->
           <property-card
             :location="favoriteProperty.name"
             :date="formatDate(favoriteProperty.when_saved)"
             :category="favoriteProperty.category"
-            :cost="favoriteProperty.actual_value"
+            :cost="commaFormatted(favoriteProperty.actual_value)"
             :postedBy="favoriteProperty.created_by"
             :src="'http://localhost:8002/' + favoriteProperty.snapshot"
-            :to="favoriteProperty.listed_for_name == ('Rent' || 'rent' ||'RENT') ? 
-                `/view-rental/${favoriteProperty.property_id}?location=${favoriteProperty.name}` : 
-                `/view/${favoriteProperty.property_id}?location=${favoriteProperty.name}`"
+            :to="
+              favoriteProperty.listed_for_name == ('Rent' || 'rent' || 'RENT')
+                ? `/view-rental/${favoriteProperty.property_id}?location=${favoriteProperty.name}`
+                : `/view/${favoriteProperty.property_id}?location=${favoriteProperty.name}`
+            "
           >
-          <template>
+            <template v-slot:type>
+              <small style="font-size: 14px"
+                >Type: <b>{{ favoriteProperty.listed_for_name }}</b></small
+              ><br />
+            </template>
+            <template v-slot:default>
               <v-icon
-                  small
-                  class="mr-2"
-                  style="font-size: 40px; color: #3b6ef3; z-index: 100"
-                  @click="onRemove(favoriteProperty.property_id)"
-                >
-                  mdi-heart
-                </v-icon>
-          </template>
+                small
+                class="mr-2"
+                style="font-size: 40px; color: #3b6ef3; z-index: 100"
+                @click="onRemove(favoriteProperty.property_id)"
+              >
+                mdi-heart
+              </v-icon>
+            </template>
           </property-card>
+           </transition>
         </v-col>
       </v-row> </v-container
     ><br />
@@ -64,12 +75,13 @@ export default {
   data() {
     return {
       myIcon: "mdi-heart",
+      hide: true
     };
   },
   methods: {
     ...mapActions([
       "fetchAllDetailedCurrentUserProperties",
-      "removePropertyFromFavoriteSection"
+      "removePropertyFromFavoriteSection",
     ]),
     // refactoring needed
     formatDate(dateToFormat) {
@@ -113,14 +125,17 @@ export default {
       }
       return result;
     },
-    onRemove(property_id){
-        this.removePropertyFromFavoriteSection(property_id);
-    }
+    commaFormatted(amount) {
+      let price = amount.toLocaleString("en-US");
+      return price;
+    },
+    onRemove(property_id) {
+      this.removePropertyFromFavoriteSection(property_id);
+      this.hide = false;
+    },
   },
   computed: {
-    ...mapGetters([
-      "allDetailedCurrentFavoriteList"
-    ]),
+    ...mapGetters(["allDetailedCurrentFavoriteList"]),
   },
   created() {
     this.fetchAllDetailedCurrentUserProperties();
@@ -140,5 +155,13 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+}
+
+.slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-leave-to {
+  transform: translateX(10px);
+  opacity: 0;
 }
 </style>

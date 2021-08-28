@@ -6,7 +6,8 @@
     </router-link>
     <div style="display: flex; flex-direction: row; justify-content: space-between;">
         <v-card-subtitle>
-            <small style="font-weight: bold; color: #000000; margin-bottom: 0;">UGX: {{cost}}</small><br>
+            <small style="font-weight: bold; color: #000000; margin-bottom: 0; font-size: 18px;">UGX: {{cost}}</small><br>
+            <slot name="type"></slot>
             <small>Category: {{category}}</small><br>
             <small>Located: {{location}}</small><br>
             <small>Posted by: {{postedBy}}</small>
@@ -49,8 +50,8 @@ export default {
             default: dateFormat(new Date(), "DDDD")
         },
         cost: {
-            type: Number,
-            default: Math.floor(Math.random() * 100000) + 1
+            type: String,
+            default: (Math.floor(Math.random() * 100000) + 1).toString()
         },
         to: {
             type: String,
