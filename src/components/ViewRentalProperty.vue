@@ -3,6 +3,21 @@
     <top-nav />
     <main-nav />
     <v-container>
+       <!-- favorite Dialog -->
+        <v-dialog transition="dialog-top-transition" persistent v-model="favoriteDialog" max-width="600">
+            <template>
+                <v-card>
+                    <v-toolbar color="blue" dark>Warning</v-toolbar>
+                    <v-card-text class="pt-5">
+                        <p style="font-size: 16px">{{ alertMessage }}</p>
+                    </v-card-text>
+                    <v-card-actions class="justify-end">
+                        <v-btn text @click="closeFavoriteDialog">ok</v-btn>
+                    </v-card-actions>
+                </v-card>
+            </template>
+        </v-dialog>
+        <!-- end favorite Dialog -->
       <v-row>
         <v-col cols="12" sm="12" md="8" lg="8">
           <v-carousel>
@@ -18,8 +33,8 @@
         <v-col>
           <div style="background-color: #f2f2f2; border-radius: 6px">
             <v-col>
-              <a href="mailto:cccug@stanbic.com" style="text-decoration: none;">
-              <v-btn color="primary" block>Email Us</v-btn>
+              <a href="mailto:cccug@stanbic.com" style="text-decoration: none">
+                <v-btn color="primary" block>Email Us</v-btn>
               </a>
             </v-col>
           </div>
@@ -28,24 +43,40 @@
             <v-col>
               <p style="color: #3b6ef3l display: flex;">
                 Price:
-                <span style="color: black; margin-left: 190px">UGX {{currentRentalValue.rental_value_amt}}</span>
+                <span style="color: black; margin-left: 180px"
+                  >UGX
+                  {{
+                    commaFormatted(currentRentalValue.rental_value_amt)
+                  }}</span
+                >
                 <br />
                 <span
                   >Equavalent To:
                   <span style="color: black; margin-left: 154px"
-                    >$ {{dollarExchange()}}</span
+                    >$ {{ dollarExchange() }}</span
                   ></span
                 >
               </p>
             </v-col>
 
             <v-col>
-              <a href="tel:+256782456789" style="text-decoration: none;" title="+256782456789">
+              <a
+                href="tel:+256782456789"
+                style="text-decoration: none"
+                title="+256782456789"
+              >
                 <v-btn color="primary" block>Call Us</v-btn>
               </a>
             </v-col>
           </div>
-          <div>
+          <div
+            style="
+              display: flex;
+              flex-direction: row;
+              flex-wrap: wrap;
+              justify-content: space-around;
+            "
+          >
             <v-col>
               <h3>Property Details</h3>
               <p style="font-weight: 300">
@@ -54,13 +85,65 @@
                 <!-- plot 3421, Muyenga, Kampala -->
               </p>
             </v-col>
+            <v-col
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+              "
+            >
+              <template v-if="loginState">
+                <template
+                  v-if="
+                    currentLoggedinUser.username !==
+                    allSinglePropertyVisuals[0].created_by
+                  "
+                >
+                  <v-icon
+                    v-if="
+                      allCurrentUserFavoriteProperties.includes(
+                        allSinglePropertyVisuals[0].property_id
+                      )
+                    "
+                    small
+                    style="font-size: 40px; color: #3b6ef3"
+                    @click.stop="
+                      onRemove(allSinglePropertyVisuals[0].property_id)
+                    "
+                  >
+                    mdi-heart
+                  </v-icon>
+                  <v-icon
+                    v-else
+                    small
+                    style="font-size: 40px; color: black"
+                    @click.stop="onAdd(allSinglePropertyVisuals[0].property_id)"
+                  >
+                    mdi-heart-outline
+                  </v-icon>
+                </template>
+                <template v-else />
+              </template>
+              <template v-else>
+                <v-icon
+                  small
+                  style="font-size: 40px; color: black; z-index: 100"
+                  @click.stop="showLoginMessage"
+                >
+                  mdi-heart-outline
+                </v-icon>
+              </template>
+            </v-col>
           </div>
         </v-col>
       </v-row>
     </v-container>
     <v-container>
       <v-row>
-        <v-col v-for="propertyVisual in allSinglePropertyVisuals" :key="propertyVisual.visuals_id">
+        <v-col
+          v-for="propertyVisual in allSinglePropertyVisuals"
+          :key="propertyVisual.visuals_id"
+        >
           <v-img
             :src="'http://localhost:8002/' + propertyVisual.snapshot"
             aspect-ratio="1"
@@ -137,9 +220,15 @@
                   <v-card-text>
                     <!-- Content for neighborhood -->
                     <v-row v-if="allSingleNeighborhoodVisuals.length > 0">
-                      <v-col v-for="neighborhoodVisual in allSingleNeighborhoodVisuals" :key="neighborhoodVisual.neighborhood_visuals_id">
+                      <v-col
+                        v-for="neighborhoodVisual in allSingleNeighborhoodVisuals"
+                        :key="neighborhoodVisual.neighborhood_visuals_id"
+                      >
                         <v-img
-                          :src="'http://localhost:9003/' + neighborhoodVisual.snapshot"
+                          :src="
+                            'http://localhost:9003/' +
+                            neighborhoodVisual.snapshot
+                          "
                           aspect-ratio="1"
                           class="grey lighten-2"
                           height="200"
@@ -156,15 +245,22 @@
                 <v-card color="basil" flat>
                   <v-card-text>
                     <!-- Content for neighborhood -->
-                    <v-row v-if="allSinglePropertyNearbyLandmarkVisuals.length > 0">
-                      <v-col v-for="landmarkVisuals in allSinglePropertyNearbyLandmarkVisuals" :key="landmarkVisuals.property_nearby_landmark_id">
+                    <v-row
+                      v-if="allSinglePropertyNearbyLandmarkVisuals.length > 0"
+                    >
+                      <v-col
+                        v-for="landmarkVisuals in allSinglePropertyNearbyLandmarkVisuals"
+                        :key="landmarkVisuals.property_nearby_landmark_id"
+                      >
                         <v-img
-                          :src="'http://localhost:8001/' + landmarkVisuals.snapshot"
+                          :src="
+                            'http://localhost:8001/' + landmarkVisuals.snapshot
+                          "
                           aspect-ratio="1"
                           class="grey lighten-2"
                           height="200"
                         ></v-img>
-                        <p>{{landmarkVisuals.description}}</p>
+                        <p>{{ landmarkVisuals.description }}</p>
                       </v-col>
                     </v-row>
                     <p v-else>No Landmark images to display</p>
@@ -208,31 +304,24 @@
       </v-row>
     </v-container>
     <about />
-  <Footer />
-
+    <Footer />
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
-import About from '../views/About.vue';
-import Footer from './Footer.vue';
+import { mapActions, mapGetters } from "vuex";
+import About from "../views/About.vue";
+import Footer from "./Footer.vue";
 import MainNav from "./MainNav.vue";
 import TopNav from "./TopNav.vue";
 export default {
   components: { TopNav, MainNav, About, Footer },
   name: "ViewRentalProperty",
-  props: ['property_id'],
+  props: ["property_id"],
   // $route.params.propertyId
   data: () => ({
-    // [
-    //   {
-    //     features_id: 1,
-    //     feature: "2 Bedroom",
-    //     description: "250 X 230 m",
-    //   },
-    //   { features_id: 2, feature: "1 Kitchen", description: "In house" },
-    // ],
+   favoriteDialog: "",
+    alertMessage: false,
     propertyMonthtyCosts: [
       {
         monthly_costs_id: 1,
@@ -258,7 +347,7 @@ export default {
     priceHistoryHeaders: [
       { text: "Event", value: "event" },
       { text: "Price", value: "price" },
-      { text: "Payment Date", value: "when_created" }
+      { text: "Payment Date", value: "when_created" },
     ],
     // propertyPriceHistory: [
     //   {
@@ -302,44 +391,65 @@ export default {
       "allSinglePropertyVisuals",
       "allSinglePropertyNearbyLandmarkVisuals",
       "allSingleNeighborhoodVisuals",
-     "currentRentalValue",
-     "currentPropertyPriceHistory",
-     "allCurrentPropertyFeatures"
+      "currentRentalValue",
+      "currentPropertyPriceHistory",
+      "allCurrentPropertyFeatures",
+      "loginState",
+      "currentLoggedinUser",
+      "allCurrentUserFavoriteProperties"
     ]),
-    dollarExchange(){
+    dollarExchange() {
       return () => (this.currentRentalValue.rental_value_amt / 3500).toFixed(2);
     },
     spreadFeatures: function () {
-      return this.allCurrentPropertyFeatures.reduce((acc, currentFeature) => acc + "," + currentFeature.name, "").slice(1);
+      return this.allCurrentPropertyFeatures
+        .reduce((acc, currentFeature) => acc + "," + currentFeature.name, "")
+        .slice(1);
+    }
+  },
+  methods: {
+    ...mapActions([
+      "fetchSinglePropertyVisuals",
+      "fetchPropertyNearbyLandmarkVisuals",
+      "fetchPropertyNeighborhoodVisuals",
+      "fetchPropertyRentalValue",
+      "fetchPropertyPriceHistories",
+      "fetchCurrentPropertySelectedFeatures",
+      "addAViewedProperty",
+      "removePropertyFromFavorites",
+      "addPropertyToFavorites"
+    ]),
+    commaFormatted(amount) {
+      let price = amount.toLocaleString("en-US");
+      return price;
     },
-    // featureData: function () {
-    //    allCurrentPropertyFeatures.map(feature => {
-    //   return {
-    //     id: allCurrentPropertyFeatures[feature],
-    //     name: feature.name
-    //   }
-    // })
-    // }
+     onRemove(property_id) {
+      this.removePropertyFromFavorites(property_id);
+    },
+    onAdd(property_id) {
+     this.addPropertyToFavorites(property_id);
+    },
+    showLoginMessage() {
+      this.favoriteDialog = true;
+      this.alertMessage = "Please login to add this property to your favorites";
+      setTimeout(() => {
+          this.favoriteDialog = false;
+          this.alertMessage = "";
+      }, 1500);
+    },
+    closeFavoriteDialog(){
+      this.favoriteDialog = false;
+      this.alertMessage = "";
+    }
   },
-   methods: {
-     ...mapActions([
-       "fetchSinglePropertyVisuals", 
-       "fetchPropertyNearbyLandmarkVisuals", 
-       "fetchPropertyNeighborhoodVisuals",
-       "fetchPropertyRentalValue",
-       "fetchPropertyPriceHistories",
-       "fetchCurrentPropertySelectedFeatures",
-       "addAViewedProperty"
-    ])
-  },
-  mounted(){
+  mounted() {
     this.addAViewedProperty(this.property_id);
     this.fetchSinglePropertyVisuals(this.property_id);
     this.fetchPropertyNearbyLandmarkVisuals(this.property_id);
     this.fetchPropertyNeighborhoodVisuals(this.property_id);
     this.fetchPropertyRentalValue(this.property_id);
     this.fetchCurrentPropertySelectedFeatures(this.property_id);
-    this.fetchPropertyPriceHistories(this.property_id);    
+    this.fetchPropertyPriceHistories(this.property_id);
   },
 };
 </script>

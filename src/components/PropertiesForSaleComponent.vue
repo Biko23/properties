@@ -73,7 +73,7 @@
             :location="propertyVisual.name"
             :date="formatDate(propertyVisual.when_created)"
             :category="propertyVisual.category"
-            :cost="propertyVisual.actual_value"
+            :cost="commaFormatted(propertyVisual.actual_value)"
             :postedBy="propertyVisual.created_by"
             :src="'http://localhost:8002/' + propertyVisual.snapshot"
             :to="`/view/${propertyVisual.property_id}?location=${propertyVisual.name}`"
@@ -145,6 +145,10 @@ export default {
       "addPropertyToFavorites",
       "removePropertyFromFavorites"
     ]),
+    commaFormatted(amount) {
+      let price = amount.toLocaleString("en-US");
+      return price;
+    },
     // refactoring needed
     formatDate(dateToFormat) {
       let currentDate = new Date();
