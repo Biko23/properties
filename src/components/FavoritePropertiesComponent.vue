@@ -23,6 +23,9 @@
           v-for="(favoriteProperty, index) in allDetailedCurrentFavoriteList"
           :key="index"
         >
+        <transition name="slide-fade">
+           <!-- v-if="favoriteProperty.property_id ? hide : ''" -->
+           <!-- v-if="hide" -->
           <property-card
             :location="favoriteProperty.name"
             :date="formatDate(favoriteProperty.when_saved)"
@@ -52,6 +55,7 @@
               </v-icon>
             </template>
           </property-card>
+           </transition>
         </v-col>
       </v-row> </v-container
     ><br />
@@ -71,6 +75,7 @@ export default {
   data() {
     return {
       myIcon: "mdi-heart",
+      hide: true
     };
   },
   methods: {
@@ -126,6 +131,7 @@ export default {
     },
     onRemove(property_id) {
       this.removePropertyFromFavoriteSection(property_id);
+      this.hide = false;
     },
   },
   computed: {
@@ -149,5 +155,13 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+}
+
+.slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-leave-to {
+  transform: translateX(10px);
+  opacity: 0;
 }
 </style>
