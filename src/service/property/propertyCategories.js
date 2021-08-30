@@ -1,7 +1,7 @@
 import API from '../../config/connections'
 
 export default {
-  async getPropertyCategory () {
+  async getPropertyCategory () { //Flat, Apartments, Land
     try {
       const response = await API.propertyTypesApi.get('/property-types')
       return response

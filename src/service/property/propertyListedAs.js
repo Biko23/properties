@@ -1,7 +1,7 @@
 import API from '../../config/connections'
 
 export default {
-  async getPropertyListingTypes () {
+  async getPropertyListingTypes () { //Sale, Rent
     try {
       const response = await API.propertyApi.get('/property-listed-types')
       return response
