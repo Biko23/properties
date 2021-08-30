@@ -1,18 +1,9 @@
 <template>
-  <!-- <router-link :to="to" style=" text-decoration:none;"> -->
   <v-card max-width="auto">
     <v-card-subtitle class="time">{{ vendor_name }} </v-card-subtitle>
     <div>
-      <!-- <v-img
-      v-if="vendorCategory.text == Mechnical"
-        :src="src2"
-        height="200px"
-        
-      ></v-img> -->
-      <!-- <v-img :src="src" height="200px" v-else></v-img> -->
       <v-img :src="src" height="200px"></v-img>
     </div>
-
     <v-card-subtitle>
       <small style="font-weight: bold; color: #000000; margin-bottom: 0">{{
         vendor_primary_phone_number
@@ -22,11 +13,8 @@
       ><br />
       <small>Likes: {{ points }}</small>
     </v-card-subtitle>
-    <!-- <v-btn style="margin: 5px" @click="onClick">Like</v-btn> -->
     <slot></slot>
-    <!-- <v-btn style="margin: 5px">Deslike</v-btn> -->
   </v-card>
-  <!-- </router-link> -->
 </template>
 
 <script>
@@ -36,22 +24,6 @@ export default {
     vendorCategories: [],
     editedIndex: -1,
   }),
-
-  //   methods: {
-
-  //     async likingVendor(item) {
-  //       console.log(item);
-  //       try {
-  //         const response = await this.likeVendor(this.newVendor);
-  //         console.log(response);
-  //         if (response.status === 201 || response.status === 200) {
-  //           this.$router.push("/login");
-  //         }
-  //       } catch (error) {
-  //         console.log(error);
-  //       }
-  //     },
-  //   },
   props: {
     vendor_name: {
       type: String,
@@ -69,12 +41,6 @@ export default {
       type: Number,
       default: 0,
     },
-    onClick: {
-      type: Function,
-      default: () => {
-        console.log("Hello");
-      },
-    },
     src: {
       type: String,
       default: require("../assets/provider.jpg"),
@@ -82,12 +48,8 @@ export default {
     src2: {
       type: String,
       default: require("../assets/builder.jpg"),
-    },
-    to: {
-      type: String,
-      default: "/view",
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -3,6 +3,7 @@ import PropertyVisualsService from '@/service/propertyVisuals';
 import PropertyNearbyLandmarkService from '@/service/propertyNearbyLandmark';
 import NeighborhoodVisualsService from '@/service/neighborhoodVisuals';
 import PropertyValueService from '@/service/propertyValue';
+import PropertyCategoryService from '@/service/property/propertyCategories';
 import PropertyRentalValueService from '@/service/propertyRentalValue';
 import PropertyPriceHistoryService from '@/service/propertyPriceHistories';
 import FeatureTypeLookupService from '@/service/property/featureTypeLookup';
@@ -165,12 +166,20 @@ const actions = {
             const locationResponse = await PropertyLocationService.getAllLocationsForApprovedProperties(rootState.SellerModule.saleCategory[0].id);
             const landmarkTypeResponse = await PropertyLandmarkTypeService.getAllPropertyLandmarkTypes();
             const valueResponse = await PropertyValueService.getApprovedPropertyValue(rootState.SellerModule.saleCategory[0].id);
+            const categoryResponse = await PropertyCategoryService.getPropertyCategory();
 
             const locationList = (locationResponse.data.result).map(location => {
                 return {
                     option: location.name_
                 }
             })
+
+            const categoryList = (categoryResponse.data.result).map(category => {
+                return {
+                    option: category.property_type
+                }
+            })
+
             const landmarkList = (landmarkTypeResponse.data.result).map(landmark => {
                 return {
                     option: landmark.landmark_type
@@ -182,7 +191,7 @@ const actions = {
                 }
             })
 
-            const mergedList = [...locationList, ...landmarkList, ...valueList];
+            const mergedList = [...locationList, ...categoryList, ...landmarkList, ...valueList];
             const searchList = mergedList.map(eachItem => eachItem.option);
             commit("setSearchList", searchList);
         } catch (error) {

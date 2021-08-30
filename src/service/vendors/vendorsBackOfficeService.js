@@ -32,8 +32,8 @@ async getVendors (vendor_category_id) {
       const response = await API.vendorsApi.post(`/vendors/add-points/${data.vendor_id}/${data.liked_by}`)
       return response
     } catch (error) {
-      //console.log(error)
-      alert(error)
+      console.log(error);
+      // throw new Error('Failed to add a like')
     }
   },
   async unLikeAVendor (data) {
@@ -41,7 +41,24 @@ async getVendors (vendor_category_id) {
       const response = await API.vendorsApi.post(`/vendors/deduct-points/${data.vendor_id}/${data.disliked_by}`)
       return response
     } catch (error) {
+      console.log(error);
+      // throw new Error('Failed to dislike this provider')
+    }
+  },
+  async getListOfLikedVendorsByUserId (liked_by) {
+    try {
+      const response = await API.vendorsApi.get(`/vendors/liked-by/${liked_by}`)
+      return response
+    } catch (error) {
       console.log(error)
     }
   },
+  async getListOfUnlikedVendorsByUserId (disliked_by) {
+    try {
+      const response = await API.vendorsApi.get(`/vendors/disliked-by/${disliked_by}`)
+      return response
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }

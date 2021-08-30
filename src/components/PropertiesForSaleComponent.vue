@@ -1,16 +1,6 @@
 <template>
   <div>
     <v-container id="container" fluid>
-      <!-- <v-row id="property-header">
-            <div style="flex:1;">
-                <h3>Properties</h3>
-                <small style="font-weight: bold;">{{allPropertyForSale.length}} results</small>
-            </div>
-            <div style="flex:1;">
-                <h3 style="color: #3b6ef3;">BUY PROPERTY HERE</h3>
-            </div>
-        </v-row> -->
-
         <!-- favorite Dialog -->
         <v-dialog transition="dialog-top-transition" persistent v-model="favoriteDialog" max-width="600">
             <template>
