@@ -135,6 +135,16 @@
               </template>
             </v-col>
           </div>
+           <!--  -->
+          <div>
+            <h4 style="margin: 1em 0 0 10px;">Social Platform</h4>
+            <v-list style="display: flex; flex-direction: row;  flex-wrap: wrap; justify-content: flex-start; margin-left:10px;">
+              <network-sharing 
+                :url="`http://localhost:8080/view-rental/${allSinglePropertyVisuals[0].property_id}?location=${$route.query.location}`"
+                />
+                </v-list>
+          </div>
+          <!--  -->
         </v-col>
       </v-row>
     </v-container>
@@ -310,12 +320,13 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import NetworkSharing from "./BaseShareComponent.vue";
 import About from "../views/About.vue";
 import Footer from "./Footer.vue";
 import MainNav from "./MainNav.vue";
 import TopNav from "./TopNav.vue";
 export default {
-  components: { TopNav, MainNav, About, Footer },
+  components: { NetworkSharing, TopNav, MainNav, About, Footer },
   name: "ViewRentalProperty",
   props: ["property_id"],
   // $route.params.propertyId
@@ -349,18 +360,6 @@ export default {
       { text: "Price", value: "price" },
       { text: "Payment Date", value: "when_created" },
     ],
-    // propertyPriceHistory: [
-    //   {
-    //     "event": "Sold",
-    //     "price": 5000000,
-    //     "when_created": '2021-10-21'
-    //   },
-    //   {
-    //     "event": "Bought",
-    //     "price": 10000000,
-    //     "when_created": '2021-06-09'
-    //   }
-    // ],
     monthlyCostHeaders: [
       { text: "Principal Plus Interest", value: "principal_plus_interest" },
       { text: "Mortgage Insurance", value: "mortgage_insurance" },
@@ -384,7 +383,7 @@ export default {
       {
         src: "https://cdn.vuetifyjs.com/images/carousel/planet.jpg",
       },
-    ],
+    ]
   }),
   computed: {
     ...mapGetters([

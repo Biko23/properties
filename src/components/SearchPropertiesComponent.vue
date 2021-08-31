@@ -79,6 +79,20 @@
             :src="'http://localhost:8002/' + currentProperty.snapshot"
             :to="`/view/${currentProperty.property_id}?location=${currentProperty.name}`"
           >
+           <template v-slot:share>
+              <v-menu bottom offset-y>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn class="ma-2" v-bind="attrs" v-on="on" icon>
+                    <v-icon>mdi-share-variant</v-icon>
+                  </v-btn>
+                </template>
+                <v-list style="display: flex; flex-direction: column;">
+                  <network-sharing
+                    :url="`http://localhost:8080/view/${currentProperty.property_id}?location=${currentProperty.name}`"
+                  />
+                </v-list>
+              </v-menu>
+            </template>
             <!--  -->
             <template v-if="loginState">
               <template
@@ -133,14 +147,12 @@
 import PropertyCard from "@/components/PropertyCard";
 import dateFormat from "dateformat";
 import { mapActions, mapGetters } from "vuex";
+import NetworkSharing from './BaseShareComponent.vue'
 export default {
-  //   components: {
-  //     'v-header': Header,
-  //     'v-button': Button
-  //   }
   name: "SearchPropertiesComponent",
   components: {
     PropertyCard,
+    NetworkSharing
   },
   props: ["keyword"],
   data: () => ({

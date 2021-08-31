@@ -22,14 +22,45 @@
       </v-dialog>
       <!-- end favorite Dialog -->
       <v-row id="property-header">
-        <div style="flex: 1">
+        <div id="result-total">
           <h3>Rentals</h3>
           <small style="font-weight: bold"
             >{{ allPropertyForRent.length }} results</small
           >
         </div>
-        <div style="flex: 1">
-          <h3 style="color: #3b6ef3">RENT PROPERTY HERE</h3>
+        <div id="search-field">
+          <v-btn
+            depressed
+            rounded
+            style="margin: 10px 5px 0 0"
+            color="#3b6ef3"
+            @click="resetSelection"
+            ><span style="color: white">All</span></v-btn
+          >
+          <v-select
+            v-model="startPrice"
+            :items="propertyCost()"
+            label="Start Price"
+            solo
+          ></v-select>
+          <v-select
+            v-model="endPrice"
+            :items="propertyCost()"
+            label="End Price"
+            solo
+          ></v-select>
+          <v-select
+            v-model="selection"
+            :items="propertyCategories()"
+            label="Category"
+            solo
+          ></v-select>
+          <v-select
+            v-model="selection"
+            :items="propertyLocation()"
+            label="Location"
+            solo
+          ></v-select>
         </div>
       </v-row>
       <v-row id="main-property">
@@ -40,8 +71,8 @@
           md="4"
           sm="6"
           xs="12"
-          v-for="propertyVisual in allPropertyForRent"
-          :key="propertyVisual.visuals_id"
+          v-for="(propertyVisual, index) in filteredProperties()"
+          :key="index"
         >
           <property-card
             :location="propertyVisual.name"
@@ -52,6 +83,20 @@
             :src="'http://localhost:8002/' + propertyVisual.snapshot"
             :to="`/view-rental/${propertyVisual.property_id}?location=${propertyVisual.name}`"
           >
+            <template v-slot:share>
+              <v-menu bottom offset-y>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn class="ma-2" v-bind="attrs" v-on="on" icon>
+                    <v-icon>mdi-share-variant</v-icon>
+                  </v-btn>
+                </template>
+                <v-list style="display: flex; flex-direction: column;">
+                  <network-sharing
+                    :url="`http://localhost:8080/view-rental/${propertyVisual.property_id}?location=${propertyVisual.name}`"
+                  />
+                </v-list>
+              </v-menu>
+            </template>
             <!--  -->
             <template v-if="loginState">
               <template
@@ -108,15 +153,78 @@
 import PropertyCard from "@/components/PropertyCard";
 import dateFormat from "dateformat";
 import { mapActions, mapGetters } from "vuex";
+import NetworkSharing from './BaseShareComponent.vue';
 export default {
   name: "PropertiesForRentComponent",
   components: {
     PropertyCard,
+    NetworkSharing
   },
   data() {
     return {
       favoriteDialog: "",
       alertMessage: false,
+       selection: null,
+      startPrice: 0,
+      endPrice: null,
+      sharing: {
+        title: "Stanbic properties Limited",
+        description:'would like you to come and have a look at this property by Stanbic properties',
+        image: require('../assets/logo.png'),
+        quote: "An Ounce of action is better than 1000 words",
+        hashtags: "SHUL",
+        twitterUser: "isaacpro01"
+      },
+      networks: [
+        {
+          network: "email",
+          name: "Email",
+          icon: "mdi-email",
+          color: "#333333",
+          type: "popup"
+        },
+        {
+          network: "facebook",
+          name: "Facebook",
+          icon: "mdi-facebook",
+          color: "#1877f2",
+          type: "popup"
+        },
+        {
+          network: 'linkedin',
+          name: "LinkedIn",
+          icon: "mdi-linkedin",
+          color: "#007bb5",
+          type: "popup"
+        },
+        {
+          network: 'skype',
+          name: "Skype",
+          icon: "mdi-skype",
+          color: "#00aff0",
+          type: "popup"
+        },
+        {
+          network: 'telegram',
+          name: "Telegram",
+          icon: "mdi-telegram",
+          color: "#0088cc",
+          type: "popup"
+        },
+        {
+          network: 'twitter',
+          name: "Twitter",
+          icon: "mdi-twitter",
+          color: "#1da1f2"
+        },
+        {
+          network: 'whatsapp',
+          name: "Whatsapp",
+          icon: "mdi-whatsapp",
+          color: "#25d366",
+          type: "popup",
+        },
+      ]
     };
   },
   methods: {
@@ -197,6 +305,13 @@ export default {
         throw new Error("Failed to fetch data");
       }
     },
+     resetSelection() {
+      if (this.selection != null || this.endPrice != null) {
+        this.selection = null;
+        this.startPrice = 0;
+        this.endPrice = null;
+      }
+    }
   },
   computed: {
     ...mapGetters([
@@ -205,6 +320,50 @@ export default {
       "currentLoggedinUser",
       "allCurrentUserFavoriteProperties",
     ]),
+    filteredProperties() {
+      if (this.selection === null && this.endPrice === null) {
+        return () => this.allPropertyForRent;
+      } else if (this.selection !== null) {
+        this.startPrice = 0;
+        this.endPrice = null;
+        return () =>
+          (this.allPropertyForRent = this.allPropertyForRent.filter(
+            (property) =>
+              property.category == this.selection ||
+              property.name == this.selection
+          ));
+      } else if (this.endPrice !== null) {
+        this.selection = null;
+        if (this.startPrice > this.endPrice) {
+          return () =>
+            (this.allPropertyForRent = this.allPropertyForRent.filter(
+              (property) =>
+                property.actual_value <= this.startPrice &&
+                property.actual_value >= this.endPrice
+            ));
+        } else {
+          return () =>
+            (this.allPropertyForSale = this.allPropertyForRent.filter(
+              (property) =>
+                property.actual_value >= this.startPrice &&
+                property.actual_value <= this.endPrice
+            ));
+        }
+      }
+    },
+    propertyCategories() {
+      return () => this.allPropertyForRent.map((property) => property.category);
+    },
+    propertyLocation() {
+      return () => this.allPropertyForRent.map((property) => property.name);
+    },
+    propertyCost() {
+      const prices = this.allPropertyForRent.map(
+        (property) => property.actual_value
+      );
+      const result = prices.sort((a, b) => a - b);
+      return () => result;
+    },
   },
   created() {
     this.fetchAllRentalProperties();
@@ -224,5 +383,28 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+}
+#result-total {
+  flex: 1;
+}
+
+#search-field {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+}
+
+@media only screen and (max-width: 768px) {
+  #property-header {
+    flex-direction: column;
+  }
+
+  #search-field {
+    order: 1;
+  }
+
+  #result-total {
+    order: 2;
+  }
 }
 </style>

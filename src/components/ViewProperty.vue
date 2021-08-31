@@ -57,23 +57,33 @@
           <br />
           <div style="background-color: #f2f2f2; border-radius: 6px">
             <v-col>
-              <div style="display: flex; flex-direction: column;">
-              <span style="flex: 1; display: flex; flex-direction: row; justify-content: space-between; flex-wrap: wrap;">
-                <span>
-                  Price:
+              <div style="display: flex; flex-direction: column">
+                <span
+                  style="
+                    flex: 1;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    flex-wrap: wrap;
+                  "
+                >
+                  <span> Price: </span>
+                  <span>
+                    UGX {{ commaFormatted(currentPropertyValue.actual_value) }}
+                  </span>
                 </span>
-                <span>
-                  UGX {{ commaFormatted(currentPropertyValue.actual_value) }}
+                <span
+                  style="
+                    flex: 1;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    flex-wrap: wrap;
+                  "
+                >
+                  <span> Equavalent To: </span>
+                  <span> $ {{ dollarExchange() }} </span>
                 </span>
-              </span>
-              <span style="flex: 1; display: flex; flex-direction: row; justify-content: space-between; flex-wrap: wrap;">
-                <span>
-                  Equavalent To:
-                </span>
-                <span>
-                  $ {{ dollarExchange() }}
-                </span>
-              </span>
               </div>
             </v-col>
 
@@ -152,6 +162,24 @@
               </template>
             </v-col>
           </div>
+          <!--  -->
+          <div>
+            <h4 style="margin: 1em 0 0 10px">Social Platform</h4>
+            <v-list
+              style="
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                margin-left: 10px;
+              "
+            >
+              <network-sharing 
+                :url="`http://localhost:8080/view/${allSinglePropertyVisuals[0].property_id}?location=${$route.query.location}`"
+                />
+            </v-list>
+          </div>
+          <!--  -->
         </v-col>
       </v-row>
     </v-container>
@@ -326,12 +354,13 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import NetworkSharing from "./BaseShareComponent.vue";
 import About from "../views/About.vue";
 import Footer from "./Footer.vue";
 import MainNav from "./MainNav.vue";
 import TopNav from "./TopNav.vue";
 export default {
-  components: { TopNav, MainNav, About, Footer },
+  components: { NetworkSharing, TopNav, MainNav, About, Footer },
   name: "ViewProperty",
   props: ["property_id"],
   // $route.params.propertyId
@@ -372,7 +401,7 @@ export default {
       { text: "Price", value: "price" },
       { text: "Payment Date", value: "when_created" },
     ],
-    tab: null,
+    tab: null
   }),
   computed: {
     ...mapGetters([
@@ -384,7 +413,7 @@ export default {
       "currentPropertyPriceHistory",
       "allCurrentPropertyFeatures",
       "allCurrentUserFavoriteProperties",
-      "loginState"
+      "loginState",
     ]),
     dollarExchange() {
       // const USCost = (this.currentPropertyValue.actual_value / 3500).toFixed(2);
@@ -409,8 +438,8 @@ export default {
       "removePropertyFromFavorites",
       "addPropertyToFavorites",
     ]),
-    addUserView(){
-      if(this.loginState === true){
+    addUserView() {
+      if (this.loginState === true) {
         this.addAViewedProperty(this.property_id);
       }
     },

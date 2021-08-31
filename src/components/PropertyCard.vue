@@ -13,8 +13,13 @@
             <small>Posted by: {{postedBy}}</small>
         </v-card-subtitle>
 
-        <div style="display: flex; align-items: center; justify-content: center;">
-           <slot></slot>
+        <div style="display: flex; flex-direction: column;">
+            <div style="flex: 1; align-items: center; display: flex;  justify-content: flex-end;">
+                <slot></slot>
+            </div>
+            <div style="flex: 1; align-items: center; justify-content: flex-end;">
+                <slot name="share"></slot>
+            </div>
         </div>
     </div>
 </v-card>
