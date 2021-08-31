@@ -5,7 +5,17 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 import VuetifyGoogleAutocomplete from 'vuetify-google-autocomplete';
 
+// To load sharing icons
+import vuetifyIcon from 'vuetify'
+import VueSocialSharing from 'vue-social-sharing'
+// End load sharing icons
+
 Vue.config.productionTip = false
+
+// To load sharing icons
+Vue.use(vuetifyIcon)
+Vue.use(VueSocialSharing)
+// End load sharing icons
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.basicAuth)) {

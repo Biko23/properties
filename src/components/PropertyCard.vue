@@ -2,9 +2,6 @@
 <v-card max-width="auto">
     <router-link :to="to" style=" text-decoration:none;">
         <v-card-subtitle class="time" style="z-index: 1;">{{date}} </v-card-subtitle>
-            <v-card-subtitle class="share">
-                 <slot name="share"></slot>
-            </v-card-subtitle>
         <v-img :src="src" :lazy-src="lazy" height="200px"></v-img>
     </router-link>
     <div style="display: flex; flex-direction: row; justify-content: space-between;">
@@ -16,8 +13,13 @@
             <small>Posted by: {{postedBy}}</small>
         </v-card-subtitle>
 
-        <div style="display: flex; align-items: center; justify-content: center;">
-           <slot></slot>
+        <div style="display: flex; flex-direction: column;">
+            <div style="flex: 1; align-items: center; display: flex;  justify-content: flex-end;">
+                <slot></slot>
+            </div>
+            <div style="flex: 1; align-items: center; justify-content: flex-end;">
+                <slot name="share"></slot>
+            </div>
         </div>
     </div>
 </v-card>
@@ -79,14 +81,6 @@ export default {
     color: #000000;
     padding: 5px;
     background-color: #FFFFFF;
-    display: inline-block;
-}
-.share {
-    position: absolute;
-    z-index: 10;
-    top: 10;
-    right: 0;
-    padding: 5px;
     display: inline-block;
 }
 </style>
