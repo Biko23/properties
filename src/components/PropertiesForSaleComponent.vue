@@ -33,16 +33,22 @@
             @click="resetSelection"
             ><span style="color: white;">All</span></v-btn
           >
-          <v-select
-            v-model="selection"
-            :items="propertyCategories()"
-            label="Category"
+           <v-select
+            v-model="startPrice"
+            :items="propertyCost()"
+            label="Start Price"
+            solo
+          ></v-select>
+           <v-select
+            v-model="endPrice"
+            :items="propertyCost()"
+            label="End Price"
             solo
           ></v-select>
           <v-select
             v-model="selection"
-            :items="propertyCost()"
-            label="Price"
+            :items="propertyCategories()"
+            label="Category"
             solo
           ></v-select>
           <v-select
@@ -74,6 +80,16 @@
             :src="'http://localhost:8002/' + propertyVisual.snapshot"
             :to="`/view/${propertyVisual.property_id}?location=${propertyVisual.name}`"
           >
+          <!-- <template v-slot:share>
+             <v-icon
+                small
+                class="mr-2"
+                style="font-size: 40px; color: white;"
+                @click.stop="alert('Hello')"
+              >
+                mdi-share-variant
+              </v-icon>
+          </template> -->
           <template v-if="loginState">
             <template
               v-if="currentLoggedinUser.username !== propertyVisual.created_by"
@@ -131,7 +147,9 @@ export default {
     return {
       favoriteDialog: "",
       alertMessage: false,
-      selection: null
+      selection: null,
+      startPrice: 0,
+      endPrice: null
     };
   },
   methods: {
@@ -213,8 +231,10 @@ export default {
       }
     },
     resetSelection(){
-      if(this.selection != null){
+      if(this.selection != null || this.endPrice != null){
         this.selection = null;
+        this.startPrice = 0;
+        this.endPrice = null;
       }
     }
   },
@@ -226,10 +246,19 @@ export default {
       "allCurrentUserFavoriteProperties",
     ]),
     filteredProperties(){
-      if(this.selection === null){
+      if(this.selection === null && this.endPrice === null){
         return () => this.allPropertyForSale;
-      } else {
-        return () => this.allPropertyForSale = this.allPropertyForSale.filter(property => ((property.category == this.selection) || (property.name == this.selection) || (property.actual_value == this.selection)));
+      } else if(this.selection !== null) {
+        this.startPrice = 0;
+        this.endPrice = null;
+        return () => this.allPropertyForSale = this.allPropertyForSale.filter(property => ((property.category == this.selection) || (property.name == this.selection)));
+      } else if(this.endPrice !== null){
+        this.selection = null;
+        if(this.startPrice > this.endPrice){
+             return () => this.allPropertyForSale = this.allPropertyForSale.filter(property => ((property.actual_value <= this.startPrice) && (property.actual_value >= this.endPrice)));
+        } else {
+           return () => this.allPropertyForSale = this.allPropertyForSale.filter(property => ((property.actual_value >= this.startPrice) && (property.actual_value <= this.endPrice)));
+        }
       }
     },
     propertyCategories(){
@@ -238,8 +267,13 @@ export default {
     propertyLocation(){
       return () => (this.allPropertyForSale).map(property => property.name);
     },
+    //  propertyCost(){
+    //   return () => (this.allPropertyForSale).map(property => property.actual_value);
+    // }
      propertyCost(){
-      return () => (this.allPropertyForSale).map(property => property.actual_value);
+       const prices = (this.allPropertyForSale).map(property => property.actual_value);
+       const result = prices.sort((a, b) => a - b);
+      return () => result;
     }
   },
   created() {

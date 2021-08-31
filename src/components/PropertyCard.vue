@@ -2,6 +2,9 @@
 <v-card max-width="auto">
     <router-link :to="to" style=" text-decoration:none;">
         <v-card-subtitle class="time" style="z-index: 1;">{{date}} </v-card-subtitle>
+            <v-card-subtitle class="share">
+                 <slot name="share"></slot>
+            </v-card-subtitle>
         <v-img :src="src" :lazy-src="lazy" height="200px"></v-img>
     </router-link>
     <div style="display: flex; flex-direction: row; justify-content: space-between;">
@@ -76,6 +79,14 @@ export default {
     color: #000000;
     padding: 5px;
     background-color: #FFFFFF;
+    display: inline-block;
+}
+.share {
+    position: absolute;
+    z-index: 10;
+    top: 10;
+    right: 0;
+    padding: 5px;
     display: inline-block;
 }
 </style>
