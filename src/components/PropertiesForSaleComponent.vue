@@ -93,22 +93,10 @@
                     <v-icon>mdi-share-variant</v-icon>
                   </v-btn>
                 </template>
-                <v-list style="display: flex; flex-direction: column;">
-                  <ShareNetwork
-                    v-for="network in networks"
-                    :network="network.network"
-                    style="text-decoration: none;"
-                    :key="network.name"
+                <v-list style="display: flex;">
+                  <network-sharing
                     :url="`http://localhost:8080/view/${propertyVisual.property_id}?location=${propertyVisual.name}`"
-                    :title="sharing.title"
-                    :image="sharing.image"
-                    :description="sharing.description"
-                    :quote="sharing.quote"
-                    :hashtags="sharing.hashtags"
-                    :twitterUser="sharing.twitterUser"
-                  >
-                    <v-icon :color="network.color">{{network.icon}}</v-icon>
-                  </ShareNetwork>
+                  />
                 </v-list>
               </v-menu>
             </template>
@@ -167,11 +155,13 @@
 import PropertyCard from "@/components/PropertyCard";
 import dateFormat from "dateformat";
 // import { formatDate } from '@/helpers/helpers'
+import NetworkSharing from './BaseShareComponent.vue';
 import { mapActions, mapGetters } from "vuex";
 export default {
   name: "PropertiesForSaleComponent",
   components: {
     PropertyCard,
+    NetworkSharing
   },
   data() {
     return {
@@ -179,65 +169,7 @@ export default {
       alertMessage: false,
       selection: null,
       startPrice: 0,
-      endPrice: null,
-      sharing: {
-        title: "Stanbic properties Limited",
-        description:'would like you to come and have a look at this property by Stanbic properties',
-        image: require('../assets/logo.png'),
-        quote: "An Ounce of action is better than 1000 words",
-        hashtags: "SHUL",
-        twitterUser: "isaacpro01"
-      },
-      networks: [
-        {
-          network: "email",
-          name: "Email",
-          icon: "mdi-email",
-          color: "#333333",
-          type: "popup"
-        },
-        {
-          network: "facebook",
-          name: "Facebook",
-          icon: "mdi-facebook",
-          color: "#1877f2",
-          type: "popup"
-        },
-        {
-          network: 'linkedin',
-          name: "LinkedIn",
-          icon: "mdi-linkedin",
-          color: "#007bb5",
-          type: "popup"
-        },
-        {
-          network: 'skype',
-          name: "Skype",
-          icon: "mdi-skype",
-          color: "#00aff0",
-          type: "popup"
-        },
-        {
-          network: 'telegram',
-          name: "Telegram",
-          icon: "mdi-telegram",
-          color: "#0088cc",
-          type: "popup"
-        },
-        {
-          network: 'twitter',
-          name: "Twitter",
-          icon: "mdi-twitter",
-          color: "#1da1f2"
-        },
-        {
-          network: 'whatsapp',
-          name: "Whatsapp",
-          icon: "mdi-whatsapp",
-          color: "#25d366",
-          type: "popup",
-        },
-      ],
+      endPrice: null
     };
   },
   methods: {
@@ -370,9 +302,6 @@ export default {
     propertyLocation() {
       return () => this.allPropertyForSale.map((property) => property.name);
     },
-    //  propertyCost(){
-    //   return () => (this.allPropertyForSale).map(property => property.actual_value);
-    // }
     propertyCost() {
       const prices = this.allPropertyForSale.map(
         (property) => property.actual_value

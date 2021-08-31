@@ -139,21 +139,9 @@
           <div>
             <h4 style="margin: 1em 0 0 10px;">Social Platform</h4>
             <v-list style="display: flex; flex-direction: row;  flex-wrap: wrap; justify-content: flex-start; margin-left:10px;">
-                  <ShareNetwork
-                    v-for="network in networks"
-                    :network="network.network"
-                    style="text-decoration: none;"
-                    :key="network.name"
-                    :url="`http://localhost:8080/view-rental/${allSinglePropertyVisuals[0].property_id}?location=${$route.query.location}`"
-                    :title="sharing.title"
-                    :image="sharing.image"
-                    :description="sharing.description"
-                    :quote="sharing.quote"
-                    :hashtags="sharing.hashtags"
-                    :twitterUser="sharing.twitterUser"
-                  >
-                    <v-icon :color="network.color">{{network.icon}}</v-icon>
-                  </ShareNetwork>
+              <network-sharing 
+                :url="`http://localhost:8080/view-rental/${allSinglePropertyVisuals[0].property_id}?location=${$route.query.location}`"
+                />
                 </v-list>
           </div>
           <!--  -->
@@ -332,12 +320,13 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import NetworkSharing from "./BaseShareComponent.vue";
 import About from "../views/About.vue";
 import Footer from "./Footer.vue";
 import MainNav from "./MainNav.vue";
 import TopNav from "./TopNav.vue";
 export default {
-  components: { TopNav, MainNav, About, Footer },
+  components: { NetworkSharing, TopNav, MainNav, About, Footer },
   name: "ViewRentalProperty",
   props: ["property_id"],
   // $route.params.propertyId
@@ -394,65 +383,7 @@ export default {
       {
         src: "https://cdn.vuetifyjs.com/images/carousel/planet.jpg",
       },
-    ],
-    sharing: {
-        title: "Stanbic properties Limited",
-        description:'would like you to come and have a look at this property by Stanbic properties',
-        image: require('../assets/logo.png'),
-        quote: "An Ounce of action is better than 1000 words",
-        hashtags: "SHUL",
-        twitterUser: "isaacpro01"
-      },
-      networks: [
-        {
-          network: "email",
-          name: "Email",
-          icon: "mdi-email",
-          color: "#333333",
-          type: "popup"
-        },
-        {
-          network: "facebook",
-          name: "Facebook",
-          icon: "mdi-facebook",
-          color: "#1877f2",
-          type: "popup"
-        },
-        {
-          network: 'linkedin',
-          name: "LinkedIn",
-          icon: "mdi-linkedin",
-          color: "#007bb5",
-          type: "popup"
-        },
-        {
-          network: 'skype',
-          name: "Skype",
-          icon: "mdi-skype",
-          color: "#00aff0",
-          type: "popup"
-        },
-        {
-          network: 'telegram',
-          name: "Telegram",
-          icon: "mdi-telegram",
-          color: "#0088cc",
-          type: "popup"
-        },
-        {
-          network: 'twitter',
-          name: "Twitter",
-          icon: "mdi-twitter",
-          color: "#1da1f2"
-        },
-        {
-          network: 'whatsapp',
-          name: "Whatsapp",
-          icon: "mdi-whatsapp",
-          color: "#25d366",
-          type: "popup",
-        },
-      ]
+    ]
   }),
   computed: {
     ...mapGetters([
