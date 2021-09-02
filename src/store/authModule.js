@@ -15,7 +15,8 @@ const state = {
     is_certified_product_developer: !!user.is_certified_product_developer,
     is_certified_investor: !!user.is_certified_investor,
     is_certified_professional_service_provider: !!user.is_certified_professional_service_provider,
-    roles: user.roles
+    roles: user.roles,
+    userRoleIdentifier: 1
 }
 
 const getters = {
@@ -30,7 +31,8 @@ const getters = {
     iAmACertifiedProductDeveloper: state => state.is_certified_product_developer,
     iAmACertifiedInvestor: state => state.is_certified_investor,
     iAmACertifiedProfessionalServiceProvider: state => state.is_certified_professional_service_provider,
-    allRoles: state => state.roles
+    allRoles: state => state.roles,
+    currentUserRoleIdentifier: state => state.userRoleIdentifier
 };
  
 const actions = {
@@ -57,10 +59,23 @@ const actions = {
             throw new Error('An error occured when sending data');
         }
     },
+    assignUpdatingUserRole({ commit }, userRoleIdentifier){
+        commit("setUserRoleIdentifier", userRoleIdentifier);
+    },
     async updateUser(_, userDetails) {
         try {
-            const userRole = state.roles.filter(role => role.name === ("Seller" || "seller" || "SELLER"))
-            userDetails.role_id = userRole[0].role_id
+            // agent/ landlord
+            // const userRole = state.roles.filter(role => role.name === ("Seller" || "seller" || "SELLER"))
+            // userDetails.role_id = userRole[0].role_id
+            let userRole = 0;
+            if(state.userRoleIdentifier === 1){
+                userRole = state.roles.filter(role => role.name === ("agent" || "Agent" || "AGENT"));
+                userDetails.role_id = userRole[0].role_id
+                return;
+            } else if (state.userRoleIdentifier === 2){
+                userRole = state.roles.filter(role => role.name === ("landlord" || "Landlord" || "LANDLORD"));
+                userDetails.role_id = userRole[0].role_id
+            }
             const response = await AuthService.updateUserProfile(userDetails);
             return response;
         } catch (error) {
@@ -162,7 +177,8 @@ const mutations = {
             role_id: role.role_id,
             name: role.name
         }
-    })
+    }),
+    setUserRoleIdentifier: (state, userRoleIdentifier) => state.userRoleIdentifier = userRoleIdentifier
 }
 
 export default {

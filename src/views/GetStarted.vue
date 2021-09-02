@@ -40,7 +40,7 @@
                     </v-img><br />
                     <h3 style="text-align: center">I'm a broker</h3>
                     <div style="text-align: center">
-                        <v-btn color="primary" @click="checkUserSellerStatus">Get started</v-btn>
+                        <v-btn color="primary" @click="checkUserSellerStatus(1)">Get started</v-btn>
                         <br /><br />
                     </div>
                 </v-card>
@@ -53,7 +53,7 @@
                     <br />
                     <h3 style="text-align: center">I'm a Landloard</h3>
                     <div style="text-align: center">
-                        <v-btn color="primary" @click="checkUserSellerStatus">Get started</v-btn>
+                        <v-btn color="primary" @click="checkUserSellerStatus(2)">Get started</v-btn>
                         <br /><br />
                     </div>
                 </v-card>
@@ -130,6 +130,7 @@
 
 <script>
 import {
+  mapActions,
     mapGetters
 } from 'vuex';
 import BottonNav from "../components/BottonNav.vue";
@@ -158,7 +159,8 @@ export default {
         ...mapGetters(["loginState", "iAmASeller", "iAmACertifiedSeller"])
     },
     methods: {
-        checkUserSellerStatus() {
+        ...mapActions(["assignUpdatingUserRole"]),
+        checkUserSellerStatus(identifier) {
             if (this.iAmASeller && this.iAmACertifiedSeller) {
                 this.messageDialog = true;
                 this.color = "success";
@@ -184,7 +186,8 @@ export default {
                     this.$router.push('/learn');
                 }, 3000);
             } else {
-                this.$router.push(`/profile`);
+                this.assignUpdatingUserRole(identifier)
+                    .then(()=>this.$router.push(`/profile`));
             }
         }
     }

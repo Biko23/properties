@@ -109,7 +109,7 @@ const actions = {
         }
     },
     // First page logic to register property for rent
-    async addPropertyForRentDataFromPageOne({ commit, rootState }, rentPropertyDataOne) {
+    async addPropertyForRentDataFromPageOne({ commit, rootState, state }, rentPropertyDataOne) {
         try {
             await commit('setPropertyRegisterFirstData', rentPropertyDataOne);
             await commit('setPropertySubmissionState', 2); // determine value table
