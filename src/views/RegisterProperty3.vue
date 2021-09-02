@@ -1,7 +1,5 @@
 <template>
 <div class="main-div">
-    <top-nav />
-    <main-nav />
     <v-container>
         <!-- success Dialog -->
         <v-dialog transition="dialog-top-transition" persistent v-model="messageDialog" max-width="600">
@@ -118,17 +116,11 @@
         </v-form>
         <br />
     </v-container>
-    <about />
-    <Footer />
     <botton-nav />
 </div>
 </template>
 
 <script>
-import TopNav from "@/components/TopNav.vue";
-import MainNav from "@/components/MainNav.vue";
-import About from "./About.vue";
-import Footer from "../components/Footer.vue";
 import BottonNav from "../components/BottonNav.vue";
 import { mapGetters, mapActions } from "vuex";
 import UploadImages from "vue-upload-drop-images";
@@ -155,12 +147,8 @@ export default {
         },
     }),
     components: {
-        TopNav,
-        MainNav,
         BottonNav,
-        UploadImages,
-        About,
-        Footer
+        UploadImages
     },
     created() {
         this.fetchPropertyLandmarkTypes();

@@ -1,8 +1,5 @@
 <template>
 <div id="main-div">
-    <top-nav />
-    <main-nav />
-
     <v-container>
         <div style="text-align: center">
             <h3 style="color: white">Requirements for adding A Rental</h3>
@@ -175,18 +172,12 @@
         </v-row>
         <br />
     </v-container>
-    <about />
-    <Footer />
     <botton-nav />
 </div>
 </template>
 
 <script>
-import TopNav from "@/components/TopNav.vue";
-import MainNav from "@/components/MainNav.vue";
 import BottonNav from "../components/BottonNav.vue";
-import About from "./About.vue";
-import Footer from "../components/Footer.vue";
 import {
     mapGetters
 } from 'vuex';
@@ -199,13 +190,8 @@ export default {
         showCard3: false
     }),
     components: {
-        TopNav,
-        MainNav,
-        BottonNav,
-        About,
-        Footer
+        BottonNav
     },
-    methods: {},
     computed: {
         ...mapGetters(["loginState"])
     },

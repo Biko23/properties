@@ -1,7 +1,5 @@
 <template>
   <div>
-    <top-nav />
-    <main-nav />
     <v-container>
       <!-- Like Dialog -->
       <v-dialog
@@ -40,6 +38,7 @@
           label="Full Name"
           outlined
           dense
+          @click="phoneNumber == null"
         ></v-combobox>
 
         <v-combobox
@@ -48,6 +47,7 @@
           label="Phone Number"
           outlined
           dense
+          @click="fullName == null"
         ></v-combobox>
         </v-col>
       </v-row>
@@ -137,15 +137,12 @@
         </v-col>
       </v-row>
     </v-container>
-    <Footer />
+    <!-- footer only -->
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import Footer from "./Footer.vue";
-import MainNav from "./MainNav.vue";
-import TopNav from "./TopNav.vue";
 import ServiceProviderCard from "./ServiceProviderCard.vue";
 export default {
   data() {
@@ -158,9 +155,6 @@ export default {
     };
   },
   components: {
-    Footer,
-    MainNav,
-    TopNav,
     ServiceProviderCard,
   },
   name: "ServiceProviderComponent",
@@ -177,10 +171,12 @@ export default {
     filteredProviders() {
       if ((this.fullName == null || this.fullName == "") && (this.phoneNumber === null || this.phoneNumber === "")) {
         return () => this.allVendors;
-      } else if (this.fullName !== null) {
+      } 
+      if (this.fullName !== null && this.phoneNumber == null) {
         this.phoneNumber = null;
         return () =>this.allVendors = this.allVendors.filter(vendors => vendors.vendor_name == this.fullName);
-      } else if (this.phoneNumber !== null) {
+      } 
+      if (this.phoneNumber !== null && this.fullName == null) {
         this.fullName = null;
           return () => this.allVendors = this.allVendors.filter(vendors => vendors.vendor_primary_phone_number == this.phoneNumber);
       }
@@ -227,20 +223,19 @@ export default {
         this.fullName = null;
       }
     },
-    searchCurrentKeyword() {
-      if (this.searchKeyword === null) {
-        return this.allVendors;
-      } else {
-        const mySearchArray = Array.from(this.allVendors)
-        const result = mySearchArray.filter(
-          (vendor) =>
-            vendor.vendor_name == this.searchKeyword ||
-            vendor.vendor_primary_phone_number == this.searchKeyword
-        );
-        console.log(result);
-        return this.allVendors = [...result];
-      }
-    },
+    // searchCurrentKeyword() {
+    //   if (this.searchKeyword === null) {
+    //     return this.allVendors;
+    //   } else {
+    //     const mySearchArray = Array.from(this.allVendors)
+    //     const result = mySearchArray.filter(
+    //       (vendor) =>
+    //         vendor.vendor_name == this.searchKeyword ||
+    //         vendor.vendor_primary_phone_number == this.searchKeyword
+    //     );
+    //     return this.allVendors = [...result];
+    //   }
+    // },
    async likingVendor(vendor_id) {
       const data = {
         vendor_id: vendor_id,

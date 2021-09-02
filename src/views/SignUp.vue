@@ -1,6 +1,5 @@
 <template>
 <div>
-    <top-nav />
     <v-container id="main-container" fluid>
         <!-- success Dialog -->
         <v-dialog transition="dialog-top-transition" persistent v-model="messageDialog" max-width="600">
@@ -136,8 +135,6 @@
 import {
     mapActions
 } from 'vuex';
-import TopNav from "../components/TopNav.vue";
-
 export default {
     name: "SignUp",
     data: () => ({
@@ -171,9 +168,6 @@ export default {
             v => /[0-9]/.test(v) || "Number should not contains letters"
         ],
     }),
-    components: {
-        TopNav
-    },
     methods: {
         ...mapActions(["signupANewUser"]),
         async postNewUserData() {

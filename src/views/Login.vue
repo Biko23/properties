@@ -1,6 +1,5 @@
 <template>
 <div>
-    <top-nav />
     <v-container id="main-container" fluid>
         <!-- failure Dialog -->
         <v-dialog transition="dialog-top-transition" persistent v-model="failureDialog" max-width="600">
@@ -118,13 +117,9 @@
 import {
     mapActions
 } from "vuex";
-import TopNav from "../components/TopNav.vue";
 
 export default {
     name: "Login",
-    components: {
-        TopNav,
-    },
     data: () => ({
         show1: false,
         valid: true,

@@ -89,26 +89,23 @@
   </v-container> -->
       <!-- <a href="http://" class="sign-in">Sign In</a> -->
       <v-col class="hid-navbar sign-in">
-        <router-link
+        <v-btn
           color="primary"
           style="text-decoration: none; color: white"
           v-if="loginState"
           @click="logingOut"
-          >Logout</router-link
-        >
+          >Logout</v-btn>
         <router-link
           to="/login"
           style="text-decoration: none; color: white"
           v-else
-          >Login</router-link
-        >
+          >Login</router-link>
       </v-col>
     </v-app-bar>
   </div>
 </template>
 
 <script>
-// import { defineComponent } from '@vue/composition-api'
 import { mapActions, mapGetters } from "vuex";
 export default {
   name: "TopNav",

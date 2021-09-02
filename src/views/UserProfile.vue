@@ -1,7 +1,5 @@
 <template>
   <div style="background-color: #3b6ef3">
-    <top-nav />
-    <main-nav />
     <v-container>
       <v-row>
         <v-col cols="12" sm="12" md="12" xl="12">
@@ -81,26 +79,15 @@
         </v-col>
       </v-row>
     </v-container>
-    <about />
-    <Footer />
-    <h3></h3>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
 import BottonNav from "../components/BottonNav.vue";
-import About from "./About.vue";
-import Footer from "../components/Footer.vue";
-import MainNav from "../components/MainNav.vue";
-import TopNav from "../components/TopNav.vue";
 export default {
   components: {
-    TopNav,
-    MainNav,
-    BottonNav,
-    About,
-    Footer,
+    BottonNav
   },
   name: "UserProfile",
   data: () => ({

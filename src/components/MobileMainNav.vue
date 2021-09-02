@@ -82,7 +82,7 @@
         <router-link to="/login" style="text-decoration: none" v-else
           >Login</router-link
         >
-        OR
+        <span v-if="!loginState">OR</span>
         <router-link to="/signup" v-if="!loginState" style="text-decoration: none">Sign up</router-link>
       </v-col>
   </v-list>

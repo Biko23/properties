@@ -1,8 +1,5 @@
 <template>
 <div id="main-div">
-    <top-nav />
-    <main-nav />
-
     <v-container>
         <div style="text-align: center">
             <h3 style="color: white">List A rental</h3>
@@ -80,17 +77,11 @@
         </v-form>
         <br />
     </v-container>
-    <about />
-    <Footer />
     <botton-nav />
 </div>
 </template>
 
 <script>
-import TopNav from "@/components/TopNav.vue";
-import MainNav from "@/components/MainNav.vue";
-import About from "./About.vue";
-import Footer from "../components/Footer.vue";
 import BottonNav from "../components/BottonNav.vue";
 import {
     mapGetters,
@@ -129,12 +120,8 @@ export default {
         hide: true,
     }),
     components: {
-        TopNav,
-        MainNav,
         BottonNav,
-        UploadImages,
-        About,
-        Footer
+        UploadImages
     },
     methods: {
         // post rental price to property_rental_value

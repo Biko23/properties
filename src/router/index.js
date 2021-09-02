@@ -106,7 +106,8 @@ const routes = [
     name: 'seller-properties-details',
     component: () => import('@/views/SellerPropertiesDetails'),
     meta: {
-      requireSellerRole: true
+      requireSellerRole: true,
+      hideFooterAndAbout: true
     }
   },
   {
@@ -135,6 +136,7 @@ const routes = [
     name: 'UserProfile',
     component: () => import('@/views/UserProfile'),
     meta: {
+      // hideAbout: true,
       requiresAuth: true
     }
   },

@@ -155,14 +155,11 @@
         </v-col>
         <v-col></v-col>
       </v-row>
-    </v-container><br>
-    <Footer />
+    </v-container>
   </div>
 </template>
 <script>
-import Footer from "./Footer.vue";
 export default {
-  components: { Footer },
   name: "LearnComponent",
 };
 </script>

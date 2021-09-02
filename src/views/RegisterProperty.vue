@@ -1,8 +1,5 @@
 <template>
   <div id="main-div">
-    <top-nav />
-    <main-nav />
-
     <v-container>
       <div style="text-align: center">
         <h3 style="color: white">Add A property</h3>
@@ -129,17 +126,11 @@
       </v-form>
       <br />
     </v-container>
-    <about />
-    <Footer />
     <botton-nav />
   </div>
 </template>
 
 <script>
-import TopNav from "@/components/TopNav.vue";
-import MainNav from "@/components/MainNav.vue";
-import About from "./About.vue";
-import Footer from "../components/Footer.vue";
 import BottonNav from "../components/BottonNav.vue";
 import { mapGetters, mapActions } from "vuex";
 import UploadImages from "vue-upload-drop-images";
@@ -178,12 +169,8 @@ export default {
     hide: true,
   }),
   components: {
-    TopNav,
-    MainNav,
     BottonNav,
-    UploadImages,
-    About,
-    Footer,
+    UploadImages
   },
   methods: {
     ...mapActions([

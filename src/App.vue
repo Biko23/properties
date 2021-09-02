@@ -1,31 +1,44 @@
 <template>
 <v-app>
-    <!-- <top-nav />
-    <main-nav /> -->
+    <top-nav />
+    <main-nav v-if="!shouldShowMainNav"/>
     <v-main>
         <router-view />
     </v-main>
-    <!-- <about />
-    <Footer /> -->
+    <template v-if="!shouldHideAboutAndFooter">
+        <about v-if="!shouldShowMainNav"/>
+        <Footer v-if="!shouldShowMainNav"/>
+    </template>
 </v-app>
 </template>
 
 <script>
-// import TopNav from '@/components/TopNav.vue'
-// import MainNav from '@/components/MainNav.vue'
-// import Footer from '@/components/Footer'
-// import About from '@/views/About.vue'
+import TopNav from '@/components/TopNav.vue'
+import MainNav from '@/components/MainNav.vue'
+import Footer from '@/components/Footer'
+import About from '@/views/About.vue'
 export default {
     name: 'App',
-    // components: {
-    //     TopNav,
-    //     MainNav,
-    //     Footer,
-    //     About
-    // },
+    components: {
+        TopNav,
+        MainNav,
+        Footer,
+        About
+    },
     data: () => ({
         //
-    })
+    }),
+    computed: {
+        shouldShowMainNav() {
+            return this.$route.meta.hideForAuth == true;
+        },
+        shouldHideAboutAndFooter(){
+            return this.$route.meta.hideFooterAndAbout == true;
+        },
+        //  shouldHideAbout(){
+        //     return this.$route.meta.hideAbout == true;
+        // }
+    }
 }
 </script>
 

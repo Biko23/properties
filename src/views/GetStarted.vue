@@ -1,7 +1,5 @@
 <template>
-<div style="background-color: #e7f0ff">
-    <top-nav />
-    <main-nav />
+<div style="background-color: #e7f0ff; box-shadow:  inset 0 4px 4px 0 rgba(0,0,0,0.1);">
     <v-container>
         <v-row>
             <v-col cols="12" sm="12" md="12" xl="12">
@@ -122,9 +120,6 @@
             </v-col>
         </v-row>
     </v-container>
-    <about />
-    <Footer />
-    <h3></h3>
 </div>
 </template>
 
@@ -134,17 +129,9 @@ import {
     mapGetters
 } from 'vuex';
 import BottonNav from "../components/BottonNav.vue";
-import Footer from "../components/Footer.vue";
-import MainNav from "../components/MainNav.vue";
-import TopNav from "../components/TopNav.vue";
-import About from "./About.vue";
 export default {
     components: {
-        TopNav,
-        MainNav,
-        BottonNav,
-        Footer,
-        About
+        BottonNav
     },
     name: "GetStarted",
     data() {

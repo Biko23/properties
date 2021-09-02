@@ -1,7 +1,5 @@
 <template>
 <div>
-    <top-nav />
-    <main-nav />
     <v-container id="container" fluid>
         <v-carousel cycle hide-delimiter-background show-arrows-on-hover>
             <v-carousel-item v-for="(image,i) in images" :key="i" :src="image.src">
@@ -142,23 +140,11 @@
         </v-col>
         </v-row><br /><br>
     </v-container>
-    <about />
-    <Footer />
 </div>
 </template>
 
 <script>
-import Footer from "../components/Footer";
-import MainNav from '../components/MainNav.vue';
-import TopNav from '../components/TopNav.vue';
-import About from './About.vue';
 export default {
-    components: {
-        Footer,
-        TopNav,
-        MainNav,
-        About
-    },
     name: "MortgageRates",
     data() {
         return {

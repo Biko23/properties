@@ -1,7 +1,5 @@
 <template>
 <div>
-    <top-nav />
-    <main-nav />
     <v-container>
         <v-row>
             <v-col>
@@ -55,19 +53,13 @@
             </v-col>
         </v-row>
     </v-container>
-    <!-- <about />
-    <Footer /> -->
 
 </div>
 </template>
 
 <script>
-import TopNav from '@/components/TopNav.vue'
-import MainNav from '@/components/MainNav.vue'
 import SellerPropertyDetails from '@/components/SellerPropertyDetailComponent'
 import Button from '@/components/Button'
-// import About from './About.vue'
-// import Footer from '@/components/Footer'
 import {
     mapActions,
     mapGetters
@@ -76,12 +68,8 @@ import {
 export default {
     name: 'SellerPropertiesDetails',
     components: {
-        TopNav,
-        MainNav,
         SellerPropertyDetails,
         Button
-        // Footer,
-        // About
     },
     data: () => ({
         tab: null,

@@ -1,8 +1,5 @@
 <template>
 <div class="main-div">
-    <top-nav />
-    <main-nav />
-
     <v-container>
         <div style="text-align: center">
             <h3 style="color: white">Add A property</h3>
@@ -107,23 +104,17 @@
         </v-form>
         <br />
     </v-container>
-    <about />
-    <Footer />
     <botton-nav />
 </div>
 </template>
 
 <script>
-import TopNav from "@/components/TopNav.vue";
-import MainNav from "@/components/MainNav.vue";
 import BottonNav from "../components/BottonNav.vue";
 import UploadImages from "vue-upload-drop-images";
 import {
     mapActions,
     mapGetters
 } from 'vuex';
-import Footer from '../components/Footer.vue';
-import About from './About.vue';
 
 export default {
     name: "RegisterProperty2",
@@ -147,12 +138,8 @@ export default {
         },
     }),
     components: {
-        TopNav,
-        MainNav,
         BottonNav,
-        UploadImages,
-        Footer,
-        About
+        UploadImages
     },
     methods: {
         ...mapActions([
