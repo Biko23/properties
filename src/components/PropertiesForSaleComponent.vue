@@ -90,7 +90,10 @@
               <v-menu bottom offset-y>
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn class="ma-2" v-bind="attrs" v-on="on" icon>
-                    <v-icon>mdi-share-variant</v-icon>
+                    <v-icon 
+                      style="font-size: 36px;"
+                      title="Share this property"
+                      >mdi-share-variant</v-icon>
                   </v-btn>
                 </template>
                 <v-list style="display: flex;">
@@ -113,19 +116,19 @@
                       propertyVisual.property_id
                     )
                   "
-                  small
                   class="mr-2"
-                  style="font-size: 40px; color: #3b6ef3; z-index: 100"
+                  style="font-size: 40px; color: #3b6ef3; z-index: 100; padding-bottom: 7px;"
                   @click="onRemove(propertyVisual.property_id)"
+                  title="Add to Favorites"
                 >
                   mdi-heart
                 </v-icon>
                 <v-icon
                   v-else
-                  small
                   class="mr-2"
-                  style="font-size: 40px; color: black; z-index: 100"
+                  style="font-size: 40px; color: black; z-index: 100;  padding-bottom: 7px;"
                   @click="onAdd(propertyVisual.property_id)"
+                  title="Add to Favorites"
                 >
                   mdi-heart-outline
                 </v-icon>
@@ -134,10 +137,10 @@
             </template>
             <template v-else>
               <v-icon
-                small
                 class="mr-2"
-                style="font-size: 40px; color: black; z-index: 100"
+                style="font-size: 40px; color: black; z-index: 100;  padding-bottom: 7px;"
                 @click="showLoginMessage"
+                title="Add to Favorites"
               >
                 mdi-heart-outline
               </v-icon>

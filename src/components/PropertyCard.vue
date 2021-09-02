@@ -13,12 +13,12 @@
             <small>Posted by: {{postedBy}}</small>
         </v-card-subtitle>
 
-        <div style="display: flex; flex-direction: column;">
-            <div style="flex: 1; align-items: center; display: flex;  justify-content: flex-end;">
-                <slot></slot>
-            </div>
+        <div style="display: flex; flex-direction: row; align-items: flex-end;">
             <div style="flex: 1; align-items: center; justify-content: flex-end;">
                 <slot name="share"></slot>
+            </div>
+             <div style="flex: 1; align-items: center; justify-content: flex-end;">
+                <slot></slot>
             </div>
         </div>
     </div>

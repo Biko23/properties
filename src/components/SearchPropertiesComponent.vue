@@ -83,7 +83,10 @@
               <v-menu bottom offset-y>
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn class="ma-2" v-bind="attrs" v-on="on" icon>
-                    <v-icon>mdi-share-variant</v-icon>
+                    <v-icon 
+                      style="font-size: 36px;"
+                      title="Share this property"
+                      >mdi-share-variant</v-icon>
                   </v-btn>
                 </template>
                 <v-list style="display: flex; flex-direction: column;">
@@ -108,7 +111,8 @@
                   "
                   small
                   class="mr-2"
-                  style="font-size: 40px; color: #3b6ef3; z-index: 100"
+                  style="font-size: 40px; color: #3b6ef3; z-index: 100; padding-bottom: 7px;"
+                  title="Add to Favorites"
                   @click="onRemove(currentProperty.property_id)"
                 >
                   mdi-heart
@@ -117,7 +121,8 @@
                   v-else
                   small
                   class="mr-2"
-                  style="font-size: 40px; color: black; z-index: 100"
+                  style="font-size: 40px; color: black; z-index: 100; padding-bottom: 7px;"
+                  title="Add to Favorites"
                   @click="onAdd(currentProperty.property_id)"
                 >
                   mdi-heart-outline
@@ -129,7 +134,8 @@
               <v-icon
                 small
                 class="mr-2"
-                style="font-size: 40px; color: black; z-index: 100"
+                style="font-size: 40px; color: black; z-index: 100; padding-bottom: 7px;"
+                title="Add to Favorites"
                 @click="showLoginMessage"
               >
                 mdi-heart-outline
@@ -244,12 +250,7 @@ export default {
       } catch (error) {
         console.log(error);
       }
-    },
-    changeIcon() {
-      this.myIcon === "mdi-heart"
-        ? (this.myIcon = "mdi-heart-outline")
-        : (this.myIcon = "mdi-heart");
-    },
+    }
   },
   computed: {
     ...mapGetters([

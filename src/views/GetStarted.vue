@@ -40,9 +40,7 @@
                     </v-img><br />
                     <h3 style="text-align: center">I'm a broker</h3>
                     <div style="text-align: center">
-                        <!-- <router-link to="/profile" style="text-decoration: none"> -->
                         <v-btn color="primary" @click="checkUserSellerStatus">Get started</v-btn>
-                        <!-- </router-link> -->
                         <br /><br />
                     </div>
                 </v-card>
@@ -55,9 +53,7 @@
                     <br />
                     <h3 style="text-align: center">I'm a Landloard</h3>
                     <div style="text-align: center">
-                        <!-- <router-link to="/profile" style="text-decoration: none"> -->
                         <v-btn color="primary" @click="checkUserSellerStatus">Get started</v-btn>
-                        <!-- </router-link> -->
                         <br /><br />
                     </div>
                 </v-card>
@@ -188,7 +184,7 @@ export default {
                     this.$router.push('/learn');
                 }, 3000);
             } else {
-                this.$router.push('/profile');
+                this.$router.push(`/profile`);
             }
         }
     }

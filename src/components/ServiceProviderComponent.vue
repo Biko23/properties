@@ -27,8 +27,28 @@
         <v-col style="text-align: center">
           <h1>
             List of trusted
-            {{ allVendors[0].vendorCategory.vendor_category_name }}
+            {{ vendorCategory()[0] }}
           </h1>
+        </v-col>
+        <v-col id="search-field" style="position: relative">
+          <v-btn @click="resetSelection" color="primary" rounded class="mr-2 mt-1"
+            >All</v-btn
+          >
+        <v-combobox
+          v-model="fullName"
+          :items="sortedProviderName()"
+          label="Full Name"
+          outlined
+          dense
+        ></v-combobox>
+
+        <v-combobox
+          v-model="phoneNumber"
+          :items="sortedProviderNumber()"
+          label="Phone Number"
+          outlined
+          dense
+        ></v-combobox>
         </v-col>
       </v-row>
     </v-container>
@@ -41,7 +61,7 @@
           md="4"
           sm="6"
           xs="12"
-          v-for="(vendor, index) in allVendors"
+          v-for="(vendor, index) in filteredProviders()"
           :key="index"
         >
           <service-provider-card
@@ -54,43 +74,44 @@
             <template v-if="loginState">
               <!--  -->
               <template>
-              <v-icon
-                v-if="allLikedVendors.includes(vendor.vendor_id)"
-                medium
-                class="mr-2"
-                color="primary"
-                style="margin: 0 0 10px 10px"
-                @click="vendorAlreadyLikedOrDisliked(1)"
-                >mdi-thumb-up</v-icon
-              >
-              <v-icon
-                v-else
-                medium
-                class="mr-2"
-                style="margin: 0 0 10px 10px"
-                @click="likingVendor(vendor.vendor_id)"
-                >mdi-thumb-up</v-icon
-              >
-            </template>
+                <v-icon
+                  v-if="allLikedVendors.includes(vendor.vendor_id)"
+                  medium
+                  class="mr-2"
+                  color="primary"
+                  style="margin: 0 0 10px 10px"
+                  @click="vendorAlreadyLikedOrDisliked(1)"
+                  >mdi-thumb-up</v-icon
+                >
+                <v-icon
+                  v-else
+                  medium
+                  class="mr-2"
+                  style="margin: 0 0 10px 10px"
+                  @click="likingVendor(vendor.vendor_id)"
+                  >mdi-thumb-up</v-icon
+                >
+              </template>
               <!--  -->
               <!--  -->
               <template>
-              <v-icon
-                v-if="allUnlikedVendors.includes(vendor.vendor_id)"
-                medium
-                class="mr-2"
-                color="primary"
-                style="margin: 0 0 10px 10px"
-                @click="vendorAlreadyLikedOrDisliked(2)"
-                >mdi-thumb-down</v-icon
-              >
-              <v-icon
-                v-else
-                medium
-                class="mr-2"
-                style="margin: 0 0 10px 10px"
-                @click="unlikingVendor(vendor.vendor_id)"
-                >mdi-thumb-down</v-icon>
+                <v-icon
+                  v-if="allUnlikedVendors.includes(vendor.vendor_id)"
+                  medium
+                  class="mr-2"
+                  color="primary"
+                  style="margin: 0 0 10px 10px"
+                  @click="vendorAlreadyLikedOrDisliked(2)"
+                  >mdi-thumb-down</v-icon
+                >
+                <v-icon
+                  v-else
+                  medium
+                  class="mr-2"
+                  style="margin: 0 0 10px 10px"
+                  @click="unlikingVendor(vendor.vendor_id)"
+                  >mdi-thumb-down</v-icon
+                >
               </template>
               <!--  -->
             </template>
@@ -132,6 +153,8 @@ export default {
       likeDialog: false,
       alertMessage: "",
       currentVendorCategoryId: this.vendorCategoryId || this.vendor_category_id,
+      fullName: null,
+      phoneNumber: null
     };
   },
   components: {
@@ -144,18 +167,37 @@ export default {
   props: ["vendor_category_id"],
   computed: {
     ...mapGetters([
-      "allVendors",
       "currentLoggedinUser",
       "loginState",
       "vendorCategoryId",
       "allLikedVendors",
       "allUnlikedVendors",
+      "allVendors",
     ]),
-  },
-  created() {
-    this.fetchVendors(this.vendor_category_id);
-    this.fetchAllLikedVendorsByUserId();
-    this.fetchAllUnlikedVendorsByUserId();
+    filteredProviders() {
+      if ((this.fullName == null || this.fullName == "") && (this.phoneNumber === null || this.phoneNumber === "")) {
+        return () => this.allVendors;
+      } else if (this.fullName !== null) {
+        this.phoneNumber = null;
+        return () =>this.allVendors = this.allVendors.filter(vendors => vendors.vendor_name == this.fullName);
+      } else if (this.phoneNumber !== null) {
+        this.fullName = null;
+          return () => this.allVendors = this.allVendors.filter(vendors => vendors.vendor_primary_phone_number == this.phoneNumber);
+      }
+    },
+     sortedProviderNumber() {
+      return () => this.allVendors.map(vendorPhone => vendorPhone.vendor_primary_phone_number);
+    },
+
+    sortedProviderName(){
+      return () => this.allVendors.map((vendorName) => vendorName.vendor_name);
+    },
+    vendorCategory() {
+      return () =>
+        this.allVendors.map(
+          (vendor) => vendor.vendorCategory.vendor_category_name
+        );
+    },
   },
   watch: {
     vendorCategoryId: async function () {
@@ -164,7 +206,12 @@ export default {
       } catch (error) {
         console.log(error);
       }
-    },
+    }
+  },
+  created() {
+    this.fetchVendors(this.vendor_category_id);
+    this.fetchAllLikedVendorsByUserId();
+    this.fetchAllUnlikedVendorsByUserId();
   },
   methods: {
     ...mapActions([
@@ -174,7 +221,27 @@ export default {
       "fetchAllLikedVendorsByUserId",
       "fetchAllUnlikedVendorsByUserId",
     ]),
-    async likingVendor(vendor_id) {
+    resetSelection() {
+      if (this.fullName != null || this.phoneNumber != null) {
+        this.phoneNumber = null;
+        this.fullName = null;
+      }
+    },
+    searchCurrentKeyword() {
+      if (this.searchKeyword === null) {
+        return this.allVendors;
+      } else {
+        const mySearchArray = Array.from(this.allVendors)
+        const result = mySearchArray.filter(
+          (vendor) =>
+            vendor.vendor_name == this.searchKeyword ||
+            vendor.vendor_primary_phone_number == this.searchKeyword
+        );
+        console.log(result);
+        return this.allVendors = [...result];
+      }
+    },
+   async likingVendor(vendor_id) {
       const data = {
         vendor_id: vendor_id,
         liked_by: this.currentLoggedinUser.user_id,
@@ -227,6 +294,15 @@ export default {
   },
 };
 </script>
-
 <style>
+#search-field {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+}
+@media only screen and (max-width: 768px) {
+  #search-field {
+    order: 1;
+  }
+}
 </style>

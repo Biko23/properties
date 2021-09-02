@@ -87,7 +87,10 @@
               <v-menu bottom offset-y>
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn class="ma-2" v-bind="attrs" v-on="on" icon>
-                    <v-icon>mdi-share-variant</v-icon>
+                    <v-icon 
+                      style="font-size: 36px;"
+                      title="Share this property"
+                      >mdi-share-variant</v-icon>
                   </v-btn>
                 </template>
                 <v-list style="display: flex; flex-direction: column;">
@@ -112,8 +115,9 @@
                   "
                   small
                   class="mr-2"
-                  style="font-size: 40px; color: #3b6ef3; z-index: 100"
+                  style="font-size: 40px; color: #3b6ef3; z-index: 100; padding-bottom: 7px;"
                   @click="onRemove(propertyVisual.property_id)"
+                  title="Add to Favorites"
                 >
                   mdi-heart
                 </v-icon>
@@ -121,8 +125,9 @@
                   v-else
                   small
                   class="mr-2"
-                  style="font-size: 40px; color: black; z-index: 100"
+                  style="font-size: 40px; color: black; z-index: 100; padding-bottom: 7px;"
                   @click="onAdd(propertyVisual.property_id)"
+                  title="Add to Favorites"
                 >
                   mdi-heart-outline
                 </v-icon>
@@ -133,8 +138,9 @@
               <v-icon
                 small
                 class="mr-2"
-                style="font-size: 40px; color: black; z-index: 100"
+                style="font-size: 40px; color: black; z-index: 100; padding-bottom: 7px;"
                 @click="showLoginMessage"
+                title="Add to Favorites"
               >
                 mdi-heart-outline
               </v-icon>
@@ -166,65 +172,7 @@ export default {
       alertMessage: false,
        selection: null,
       startPrice: 0,
-      endPrice: null,
-      sharing: {
-        title: "Stanbic properties Limited",
-        description:'would like you to come and have a look at this property by Stanbic properties',
-        image: require('../assets/logo.png'),
-        quote: "An Ounce of action is better than 1000 words",
-        hashtags: "SHUL",
-        twitterUser: "isaacpro01"
-      },
-      networks: [
-        {
-          network: "email",
-          name: "Email",
-          icon: "mdi-email",
-          color: "#333333",
-          type: "popup"
-        },
-        {
-          network: "facebook",
-          name: "Facebook",
-          icon: "mdi-facebook",
-          color: "#1877f2",
-          type: "popup"
-        },
-        {
-          network: 'linkedin',
-          name: "LinkedIn",
-          icon: "mdi-linkedin",
-          color: "#007bb5",
-          type: "popup"
-        },
-        {
-          network: 'skype',
-          name: "Skype",
-          icon: "mdi-skype",
-          color: "#00aff0",
-          type: "popup"
-        },
-        {
-          network: 'telegram',
-          name: "Telegram",
-          icon: "mdi-telegram",
-          color: "#0088cc",
-          type: "popup"
-        },
-        {
-          network: 'twitter',
-          name: "Twitter",
-          icon: "mdi-twitter",
-          color: "#1da1f2"
-        },
-        {
-          network: 'whatsapp',
-          name: "Whatsapp",
-          icon: "mdi-whatsapp",
-          color: "#25d366",
-          type: "popup",
-        },
-      ]
+      endPrice: null
     };
   },
   methods: {
@@ -244,7 +192,6 @@ export default {
       let returnedFormattedDate = new Date(dateToFormat);
       let difference = Math.abs(returnedFormattedDate - currentDate);
       let days = (difference / (1000 * 3600 * 24)).toFixed(0);
-      console.log(days);
 
       let result;
       switch (+days) {
