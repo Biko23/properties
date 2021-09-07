@@ -176,6 +176,7 @@ export default {
       "fetchFavoritePropertiesForComparision",
       "removePropertyFromFavorites",
       "addPropertyToFavorites",
+      "postAUserLog"
     ]),
     commaFormatted(amount) {
       let price = amount.toLocaleString("en-US");
@@ -220,10 +221,24 @@ export default {
       return result;
     },
     onRemove(property_id) {
-      this.removePropertyFromFavorites(property_id);
+      this.removePropertyFromFavorites(property_id)
+        .then(()=>{
+           const payload = {
+            "activity":`Removed Property with id ${property_id} from favorites`, 
+            "button_clicked":"Favorite Button"
+          }
+          this.postAUserLog(payload);
+      });
     },
     onAdd(property_id) {
-      this.addPropertyToFavorites(property_id);
+      this.addPropertyToFavorites(property_id)
+        .then(()=>{
+           const payload = {
+            "activity":`Added Property with id ${property_id} in favorites`, 
+            "button_clicked":"Favorite Button"
+          }
+          this.postAUserLog(payload);
+        });
     },
     showLoginMessage() {
       this.favoriteDialog = true;
@@ -245,6 +260,10 @@ export default {
           this.searchKey = this.searchKeyword;
         }
         await this.fetchPropertiesBySearchKeyword(this.searchKey);
+        this.postAUserLog({
+          "activity":`Searched Properties with keyword '${this.searchKey}'`, 
+          "button_clicked":"Search Button"
+        });
         this.searchKeyword = "";
         this.search = null;
       } catch (error) {

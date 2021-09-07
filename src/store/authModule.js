@@ -45,7 +45,7 @@ const actions = {
             throw new Error(error);
         }
     },
-    async login({ commit }, userDetails) {
+    async login({ commit }, userDetails) { //payload
         try {
             const response = await AuthService.loggingUser(userDetails);
             if (response.status === 200 && response.data.hasOwnProperty('token')) {
@@ -62,7 +62,7 @@ const actions = {
     assignUpdatingUserRole({ commit }, userRoleIdentifier){
         commit("setUserRoleIdentifier", userRoleIdentifier);
     },
-    async updateUser(_, userDetails) {
+    async updateUser(_, userDetails) { //update user profile and assign a role
         try {
             // agent/ landlord
             // const userRole = state.roles.filter(role => role.name === ("Seller" || "seller" || "SELLER"))
@@ -83,12 +83,20 @@ const actions = {
             // throw new Error('An error occured when sending data');
         }
     },
+    async updateUserProfile(_, payload){
+        try {
+            const response = await AuthService.updateUserProfileOnly(payload); //update profile only
+            return response;
+        } catch (error) {
+            console.log(error);
+        }
+    },
     async fetchLoggedUser({ commit }) {
         try {
             const toDecode = localStorage.getItem('token');
             const decoded = await decode(toDecode);
             const response = await AuthService.fetchLoggedUser(decoded.sub);
-            if (response.status === 200 || response.status === 200) {
+            if (response.status === 200) {
 
                 const loggedInUser = {
                     username: response.data.result.username,

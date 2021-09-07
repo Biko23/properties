@@ -154,6 +154,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
     name: "Mortgage",
     data() {
@@ -175,6 +176,15 @@ export default {
                 }
             ]
         }
+    },
+    methods: {
+        ...mapActions(["postAUserLog"])
+    },
+    created(){
+        this.postAUserLog({
+            activity: "Visited Mortgage page",
+            button_clicked: "Mortgage Page"
+        });
     }
 };
 </script>

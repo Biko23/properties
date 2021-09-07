@@ -8,8 +8,6 @@ export const formatDate = (dateToFormat) => {
     let returnedFormattedDate = new Date(dateToFormat);
     let difference = Math.abs(returnedFormattedDate - currentDate);
     let days = (difference/(1000 * 3600 * 24)).toFixed(0);
-    console.log(days);
-
     let result;
     switch(+days){
         case 0:

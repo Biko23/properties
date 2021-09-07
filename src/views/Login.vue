@@ -135,7 +135,7 @@ export default {
         },
     }),
     methods: {
-        ...mapActions(["login", "fetchLoggedUser"]),
+        ...mapActions(["login", "fetchLoggedUser", "fetchTotalFavoriteCount", "postAUserLog"]),
         async postLoginData() {
             try {
                 if (this.$refs.loginForm.validate()) {
@@ -143,6 +143,12 @@ export default {
                     if (response.status === 200) {
                         if (response.data.hasOwnProperty("token")) {
                             this.fetchLoggedUser().then(() => {
+                               this.fetchTotalFavoriteCount();
+                               const payload = {
+                                   "activity":"Login", 
+                                   "button_clicked":"Login button"
+                               }
+                               this.postAUserLog(payload);
                                 this.$router.replace(
                                     sessionStorage.getItem("redirectPath") || "/"
                                 );

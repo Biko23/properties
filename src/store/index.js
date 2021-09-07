@@ -4,6 +4,7 @@ import SellerModule from './sellerModule'
 import BuyerModule from './buyerModule'
 import AuthModule from './authModule'
 import vendorsModule from './vendorsModule'
+import AuditLogsModule from './auditModule'
 
 Vue.use(Vuex)
 
@@ -18,6 +19,7 @@ export default new Vuex.Store({
     SellerModule,
     BuyerModule,
     AuthModule,
-    vendorsModule
+    vendorsModule,
+    AuditLogsModule
   }
 })

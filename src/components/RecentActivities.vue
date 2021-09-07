@@ -52,13 +52,14 @@ import {
     mapGetters
 } from "vuex";
 import BaseViewedCard from "./BaseViewedCard.vue";
+import dateFormat from 'dateformat';
 export default {
     name: "RecentActivities",
     components: {
         BaseViewedCard,
     },
     methods: {
-        ...mapActions(["fetchViewedRentalProperties", "fetchViewedSaleProperties"]),
+        ...mapActions(["fetchViewedRentalProperties", "fetchViewedSaleProperties", "postAUserLog"]),
         formatDate(dateToFormat) {
             let currentDate = new Date();
             let returnedFormattedDate = new Date(dateToFormat);
@@ -102,6 +103,10 @@ export default {
         ...mapGetters(["allRecentViewedRentals", "allRecentViewedProperties"]),
     },
     created() {
+        this.postAUserLog({
+            activity: `Visited Recent Activities Page`,
+            button_clicked: "View Recent Activities Page"
+        });
         this.fetchViewedRentalProperties();
         this.fetchViewedSaleProperties();
     },

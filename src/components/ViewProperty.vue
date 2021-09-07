@@ -1,7 +1,5 @@
 <template>
   <div>
-    <top-nav />
-    <main-nav />
     <v-container>
       <!-- favorite Dialog -->
       <v-dialog
@@ -347,8 +345,6 @@
         </v-col>
       </v-row>
     </v-container>
-    <about />
-    <Footer />
   </div>
 </template>
 

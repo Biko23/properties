@@ -178,6 +178,7 @@ export default {
       "fetchPropertyFeatures",
       "addPropertyDataFromPageOne",
       "fetchPropertyCategories",
+      "postAUserLog"
     ]),
     handleImages(files) {
       this.property.visuals.splice(0, this.property.visuals.length);
@@ -195,6 +196,10 @@ export default {
     ...mapGetters(["allPropertyTypes", "allPropertyFeatures"]),
   },
   created() {
+    this.postAUserLog({
+      activity: "Visited the Property Listing first page",
+      button_clicked: "Property Listing Page"
+    });
     this.fetchPropertyTypes();
     this.fetchPropertyFeatures();
     this.fetchPropertyCategories();

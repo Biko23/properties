@@ -59,7 +59,7 @@
           <v-list-item-content class="justify-center" style="z-index: 600;">
             <div class="mx-auto text-center">
               <v-avatar color="brown">
-                <span class="white--text text-h5">{{ user.initials }}</span>
+                <span class="white--text text-h5">{{ userIntials() }}</span>
               </v-avatar>
               <h3>{{ currentLoggedinUser.vendor_name }}</h3>
               <p class="text-caption mt-1">
@@ -109,28 +109,30 @@
 import { mapActions, mapGetters } from "vuex";
 export default {
   name: "TopNav",
-  data: () => ({
-    user: {
-      initials: "PP",
-      fullName: "John Doe",
-      email: "john.doe@doe.com",
-    },
-  }),
   computed: {
     ...mapGetters(["loginState", "currentLoggedinUser", "currentUserFavoriteTotalCount"]),
+    userIntials(){
+      const secondName = this.currentLoggedinUser.vendor_name.split(' ')[1] || '';
+      return () => this.currentLoggedinUser.vendor_name[0] + secondName[0];
+    }
   },
   created() {
     this.fetchVendorsCategories();
     this.fetchTotalFavoriteCount();
   },
   methods: {
-    ...mapActions(["logout", "fetchVendorsCategories", "fetchTotalFavoriteCount"]),
+    ...mapActions(["logout", "fetchVendorsCategories", "fetchTotalFavoriteCount", "postAUserLog"]),
     async logingOut() {
+        const payload = {
+              "activity":"Logout", 
+              "button_clicked":"Logout button"
+        }
+        this.postAUserLog(payload);
       try {
         await this.logout().then(() => {
           this.$router.push("/");
         });
-      } catch (error) {
+       } catch (error) {
         throw new Error(error);
       }
     },

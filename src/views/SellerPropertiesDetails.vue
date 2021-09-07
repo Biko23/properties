@@ -35,7 +35,7 @@
                                 <v-card-text>
                                     <v-data-table :headers="listedHeaders" :items="allCurrentUserUnlistedPropertyVisuals" :items-per-page="5" class="elevation-1">
                                         <template v-slot:item.actions="{ item }">
-                                            <v-btn @click="-changeAvailabilityToAvailable(item)">
+                                            <v-btn @click="changeAvailabilityToAvailable(item)">
                                                 <v-icon small class="mr-2">
                                                     mdi-arrow-left-bold
                                                 </v-icon>List
@@ -130,12 +130,20 @@ export default {
             "getUnlistedPropertyVisualsByUsername",
             "getUncertifiedPropertyVisualsByUsername",
             "updatePropertyVisualAvailabilityStatus",
-            "updatePropertyVisualNotAvailabilityStatus"
+            "updatePropertyVisualNotAvailabilityStatus",
+            "postAUserLog"
         ]),
         async changeAvailabilityToNotAvailable(property) {
             try {
                 await this.updatePropertyVisualAvailabilityStatus(property.property_id)
-                    .then(() => this.getUnlistedPropertyVisualsByUsername());
+                    .then(() => {
+                        const payload = {
+                            activity: "Moved property to Unavailable section",
+                            button_clicked: "Unlist Button"
+                        }
+                        this.postAUserLog(payload);
+                        this.getUnlistedPropertyVisualsByUsername();
+                        });
 
             } catch (error) {
                 throw new Error(error);
@@ -144,13 +152,24 @@ export default {
         async changeAvailabilityToAvailable(property) {
             try {
                 await this.updatePropertyVisualNotAvailabilityStatus(property.property_id)
-                    .then(() => this.getListedPropertyVisualsByUsername());
+                    .then(() =>{
+                        const payload = {
+                            activity: "Moved property to Available section",
+                            button_clicked: "Unlist Button"
+                        }
+                        this.postAUserLog(payload);
+                        this.getListedPropertyVisualsByUsername()
+                    });
             } catch (error) {
                 throw new Error(error);
             }
         }
     },
     created() {
+         this.postAUserLog({
+            activity: "Visited Seller Details page",
+            button_clicked: "Seller Details Page"
+        })
         this.getListedPropertyVisualsByUsername();
         this.getUnlistedPropertyVisualsByUsername();
         this.getUncertifiedPropertyVisualsByUsername();

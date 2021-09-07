@@ -67,7 +67,7 @@
               <v-row>
                 <v-col cols="12" sm="12" md="12">
                   <v-btn color="primary" block @click="postingVendor"
-                    >Update Profile</v-btn
+                    >Register As Provider</v-btn
                   >
                 </v-col>
               </v-row>
@@ -127,8 +127,12 @@ export default {
     this.loadVendorData();
   },
   methods: {
-    ...mapActions(["fetchVendorsCategories", "postVendor"]),
+    ...mapActions(["fetchVendorsCategories", "postVendor", "postAUserLog"]),
     async postingVendor() {
+       this.postAUserLog({
+            activity: `Registered as a Service provider Page`,
+            button_clicked: "Register As A Provider Button"
+        });
       try {
         const response = await this.postVendor(this.newVendor);
         if (response.status === 201 || response.status === 200) {

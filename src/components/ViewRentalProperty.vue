@@ -1,7 +1,5 @@
 <template>
   <div>
-    <top-nav />
-    <main-nav />
     <v-container>
        <!-- favorite Dialog -->
         <v-dialog transition="dialog-top-transition" persistent v-model="favoriteDialog" max-width="600">
@@ -34,7 +32,7 @@
           <div style="background-color: #f2f2f2; border-radius: 6px">
             <v-col>
               <a href="mailto:cccug@stanbic.com" style="text-decoration: none">
-                <v-btn color="primary" block>Email Us</v-btn>
+                <v-btn color="primary"  @click="emailOwner" block>Email Us</v-btn>
               </a>
             </v-col>
           </div>
@@ -65,7 +63,7 @@
                 style="text-decoration: none"
                 title="+256782456789"
               >
-                <v-btn color="primary" block>Call Us</v-btn>
+                <v-btn color="primary" @click="callOwner" block>Call Us</v-btn>
               </a>
             </v-col>
           </div>
@@ -313,8 +311,6 @@
         </v-col>
       </v-row>
     </v-container>
-    <about />
-    <Footer />
   </div>
 </template>
 
@@ -416,17 +412,32 @@ export default {
       "fetchCurrentPropertySelectedFeatures",
       "addAViewedProperty",
       "removePropertyFromFavorites",
-      "addPropertyToFavorites"
+      "addPropertyToFavorites",
+      "postAUserLog"
     ]),
     commaFormatted(amount) {
       let price = amount.toLocaleString("en-US");
       return price;
     },
      onRemove(property_id) {
-      this.removePropertyFromFavorites(property_id);
+      this.removePropertyFromFavorites(property_id)
+      .then(() => {
+        const payload = {
+            "activity":`Removed Property with id ${property_id} from favorites`, 
+            "button_clicked":"Favorite Button"
+          }
+          this.postAUserLog(payload);
+      });
     },
     onAdd(property_id) {
-     this.addPropertyToFavorites(property_id);
+     this.addPropertyToFavorites(property_id)
+      .then(() => {
+        const payload = {
+            "activity":`Added Property with id ${property_id} in favorites`, 
+            "button_clicked":"Favorite Button"
+          }
+          this.postAUserLog(payload);
+      });
     },
     showLoginMessage() {
       this.favoriteDialog = true;
@@ -439,9 +450,29 @@ export default {
     closeFavoriteDialog(){
       this.favoriteDialog = false;
       this.alertMessage = "";
-    }
+    },
+    async emailOwner(){
+       const payload = {
+          "activity":`Emailed owner about Rental Property with id ${this.property_id}`, 
+          "button_clicked":"Email Button"
+        }
+
+        await this.postAUserLog(payload);
+    },
+     async callOwner(){
+       const payload = {
+          "activity":`Called owner about Rental Property with id ${this.property_id}`, 
+          "button_clicked":"Call Button"
+        }
+
+        await this.postAUserLog(payload);
+     }
   },
   mounted() {
+    this.postAUserLog({
+      "activity":`Viewed a Rental Property with id ${this.property_id}`, 
+      "button_clicked":"Visit Rental Page"
+    });
     this.addAViewedProperty(this.property_id);
     this.fetchSinglePropertyVisuals(this.property_id);
     this.fetchPropertyNearbyLandmarkVisuals(this.property_id);

@@ -11,7 +11,16 @@ export default {
   name: 'Recent',
   components: { 
     RecentActivities
-  }
+  },
+    methods: {
+        ...mapActions(["postAUserLog"])
+    },
+    created(){
+        this.postAUserLog({
+            activity: "Visited Recently Viewed page",
+            button_clicked: "Rencently Viewed Page"
+        });
+    }
 }
 </script>
 

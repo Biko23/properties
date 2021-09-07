@@ -151,13 +151,18 @@ export default {
         UploadImages
     },
     created() {
+        this.postAUserLog({
+            activity: "Visited the Property Listing Third page",
+            button_clicked: "Property Listing Page"
+        });
         this.fetchPropertyLandmarkTypes();
     },
     methods: {
         ...mapActions([
             "fetchPropertyLandmarkTypes",
             "addPropertyDataFromPageThird",
-            "submitAllPropertyData"
+            "submitAllPropertyData",
+            "postAUserLog"
         ]),
         handleImages(files) {
             this.property.landmarkVisuals.splice(
@@ -171,12 +176,20 @@ export default {
                 await this.addPropertyDataFromPageThird(this.property);
                 const response = await this.submitAllPropertyData();
                 if (response.status === 200 || response.status === 201) {
+                    this.postAUserLog({
+                        activity: "Registered a property",
+                        button_clicked: "Create Property Btn"
+                    });
                     this.messageDialog = true;
                     this.responseMessage = 'Property created successfully. Now waiting SPL approval!!';
                     return;
                 }
 
                 if (response.status !== 200 || response.status !== 201) {
+                    this.postAUserLog({
+                        activity: "Failure on registering a the Property",
+                        button_clicked: "Create Property Btn"
+                    });
                     this.failureDialog = true;
                     this.responseMessage = 'Failed to create property. Please try again!!';
                 }

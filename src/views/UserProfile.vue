@@ -112,9 +112,13 @@ export default {
     ...mapGetters(["currentLoggedinUser", "iAmASeller"]),
   },
   methods: {
-    ...mapActions(["updateUser", "fetchAllUserRoles", "fetchLoggedUser"]),
+    ...mapActions(["updateUser", "fetchAllUserRoles", "fetchLoggedUser", "postAUserLog"]),
     async updateUserDetails() {
       this.userData.user_id = this.currentLoggedinUser.user_id;
+       this.postAUserLog({
+        "activity":`Update User Profile/ Register for a role`, 
+        "button_clicked":"Update User Button"
+    });
       try {
         if (this.$refs.moreUserDataForm.validate()) {
           const response = await this.updateUser(this.userData);

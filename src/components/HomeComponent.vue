@@ -393,7 +393,8 @@ export default {
             "fetchPropertiesBySearchKeyword",
             "loadSearchKeywordIntoGlobalState",
             "fetchAutoCompleteWords",
-            "fetchPropertyCategories"
+            "fetchPropertyCategories",
+            "postAUserLog"
         ]),
         searchProperties() {
             if (this.search != null) {
@@ -401,6 +402,10 @@ export default {
             } else {
                 this.searchKey = this.keyword;
             }
+             this.postAUserLog({
+                "activity":`Searched Properties with keyword '${this.searchKey}'`, 
+                "button_clicked":"Search Button"
+            });
             this.loadSearchKeywordIntoGlobalState(this.searchKey)
                 .then(() => {
                     this.$router.push(`/search-result`);

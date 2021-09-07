@@ -144,8 +144,9 @@ export default {
     methods: {
         ...mapActions([
             "addPropertyDataFromPageTwo",
-            "fetchCurrencies"
-            ]),
+            "fetchCurrencies",
+            "postAUserLog"
+        ]),
         handleImages(files) {
             this.property.neighborhoodVisuals.splice(
                 0,
@@ -165,6 +166,10 @@ export default {
         ...mapGetters(["allCurrencies"])
     },
     created() {
+        this.postAUserLog({
+            activity: "Visited the Property Listing Second page",
+            button_clicked: "Property Listing Page"
+        });
         this.fetchCurrencies();
     },
 };

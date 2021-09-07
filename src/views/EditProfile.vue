@@ -50,7 +50,7 @@
                         </v-row>
                         <v-row>
                             <v-col cols="12" sm="12" md="12">
-                                <v-btn color="primary" :disabled="!valid" @click="updateUserDetails" block>Update Your Details</v-btn>
+                                <v-btn color="primary" :disabled="!valid" @click="updateUserDetails" block>Update My Profile</v-btn>
                             </v-col>
                         </v-row>
                     </v-container>
@@ -92,12 +92,16 @@ export default {
     }),
     created() {
         this.fetchAllUserRoles();
+        this.postAUserLog({
+            "activity":`Visited Edit Profile Page`, 
+            "button_clicked":"View EditProfile Page"
+        });
     },
     computed: {
         ...mapGetters(["currentLoggedinUser", "iAmASeller", "iAmACertifiedSeller"]),
     },
     methods: {
-        ...mapActions(["updateUser", "fetchAllUserRoles", "fetchLoggedUser"]),
+        ...mapActions(["updateUserProfile", "fetchAllUserRoles", "fetchLoggedUser", "postAUserLog"]),
         async updateUserDetails() {
             this.userData = {
                 user_id: this.currentLoggedinUser.user_id, 
@@ -105,9 +109,13 @@ export default {
                 secondary_contact: this.currentLoggedinUser.vendor_secondary_phone_number,
                 business_location: this.currentLoggedinUser.business_location
             }
+             this.postAUserLog({
+                "activity":`Updated my personal profile`, 
+                "button_clicked":"Update Profile Button"
+            });
             try {
                 if (this.$refs.moreUserDataForm.validate()) {
-                    const response = await this.updateUser(this.userData);
+                    const response = await this.updateUserProfile(this.userData);
                     if (response.status == 200) {
                         this.fetchLoggedUser().then(() => {
                             if (response.status === 200) {

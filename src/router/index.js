@@ -28,7 +28,10 @@ const routes = [
   {
     path: '/user-favorite-properties',
     name: 'FavoriteProperties',
-    component: () => import('@/views/FavoriteProperties.vue')
+    component: () => import('@/views/FavoriteProperties.vue'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/register',
@@ -187,12 +190,12 @@ const routes = [
   {
     path:'/learn',
     name:'Learn',
-    component:() => import(/* webpackChunkName: "about" */ '../views/Learn.vue')
+    component:() => import('../views/Learn.vue')
   },
   {
     path:'/recentactivities',
     name:'Recent',
-    component:() => import(/* webpackChunkName: "about" */ '../views/Recent.vue')
+    component:() => import('../views/Recent.vue')
   },
   {
     path:'/logs',

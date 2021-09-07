@@ -98,6 +98,7 @@
                 </template>
                 <v-list style="display: flex;">
                   <network-sharing
+                    @click.native="logActivity(propertyVisual.property_id)"
                     :url="`http://localhost:8080/view/${propertyVisual.property_id}?location=${propertyVisual.name}`"
                   />
                 </v-list>
@@ -182,6 +183,7 @@ export default {
       "fetchFavoritePropertiesForComparision",
       "addPropertyToFavorites",
       "removePropertyFromFavorites",
+      "postAUserLog"
     ]),
     commaFormatted(amount) {
       let price = amount.toLocaleString("en-US");
@@ -227,10 +229,24 @@ export default {
       return result;
     },
     onRemove(property_id) {
-      this.removePropertyFromFavorites(property_id);
+      this.removePropertyFromFavorites(property_id)
+        .then(()=>{
+          const payload = {
+            "activity":`Removed Property with id ${property_id} from favorites`, 
+            "button_clicked":"Favorite Button"
+          }
+          this.postAUserLog(payload);
+        });
     },
     onAdd(property_id) {
-      this.addPropertyToFavorites(property_id);
+      this.addPropertyToFavorites(property_id)
+        .then(()=>{
+          const payload = {
+            "activity":`Added Property with id ${property_id} in favorites`, 
+            "button_clicked":"Favorite Button"
+          }
+          this.postAUserLog(payload);
+        });
     },
     showLoginMessage() {
       this.favoriteDialog = true;
@@ -260,6 +276,13 @@ export default {
         this.endPrice = null;
       }
     },
+     logActivity(property_id){
+      const payload = {
+          "activity":`Shared A Property with id ${property_id}`, 
+          "button_clicked":"Share Button"
+      }
+      this.postAUserLog(payload);
+    }
   },
   computed: {
     ...mapGetters([

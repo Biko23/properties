@@ -43,6 +43,14 @@ export default {
       throw new Error('An error occured when updating data')
     }
   },
+  async updateUserProfileOnly(payload){
+    try {
+      const response = await API.userApi.put(`/users/${payload.user_id}`, payload);
+      return response;
+    } catch (error) {
+      throw new Error('An error occured when updating data')
+    }
+  },
   async deleteAUserAccount (user) {
     try {
       const response = await API.userApi.delete(`/users/${user.user_id}`)

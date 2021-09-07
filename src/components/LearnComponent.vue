@@ -159,8 +159,18 @@
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex';
 export default {
   name: "LearnComponent",
+  methods: {
+    ...mapActions(["postAUserLog"])
+  },
+  created(){
+    this.postAUserLog({
+        "activity":`Visited Learn Page'`, 
+        "button_clicked":"View Learn Page"
+    });
+  }
 };
 </script>
 <style scoped>

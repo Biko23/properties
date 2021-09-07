@@ -156,6 +156,15 @@ export default {
 
             ]
         }
+    },
+      methods: {
+        ...mapActions(["postAUserLog"])
+    },
+    created(){
+        this.postAUserLog({
+            activity: "Visited Mortgage Rates page",
+            button_clicked: "Mortgage Rate Page"
+        });
     }
 };
 </script>

@@ -23,39 +23,39 @@
           v-for="(favoriteProperty, index) in allDetailedCurrentFavoriteList"
           :key="index"
         >
-        <transition name="slide-fade">
-           <!-- v-if="favoriteProperty.property_id ? hide : ''" -->
-           <!-- v-if="hide" -->
-          <property-card
-            :location="favoriteProperty.name"
-            :date="formatDate(favoriteProperty.when_saved)"
-            :category="favoriteProperty.category"
-            :cost="commaFormatted(favoriteProperty.actual_value)"
-            :postedBy="favoriteProperty.created_by"
-            :src="'http://localhost:8002/' + favoriteProperty.snapshot"
-            :to="
-              favoriteProperty.listed_for_name == ('Rent' || 'rent' || 'RENT')
-                ? `/view-rental/${favoriteProperty.property_id}?location=${favoriteProperty.name}`
-                : `/view/${favoriteProperty.property_id}?location=${favoriteProperty.name}`
-            "
-          >
-            <template v-slot:type>
-              <small style="font-size: 14px"
-                >Type: <b>{{ favoriteProperty.listed_for_name }}</b></small
-              ><br />
-            </template>
-            <template v-slot:default>
-              <v-icon
-                small
-                class="mr-2"
-                style="font-size: 40px; color: #3b6ef3; z-index: 100"
-                @click="onRemove(favoriteProperty.property_id)"
-              >
-                mdi-heart
-              </v-icon>
-            </template>
-          </property-card>
-           </transition>
+          <transition name="slide-fade">
+            <!-- v-if="favoriteProperty.property_id ? hide : ''" -->
+            <!-- v-if="hide" -->
+            <property-card
+              :location="favoriteProperty.name"
+              :date="formatDate(favoriteProperty.when_saved)"
+              :category="favoriteProperty.category"
+              :cost="commaFormatted(favoriteProperty.actual_value)"
+              :postedBy="favoriteProperty.created_by"
+              :src="'http://localhost:8002/' + favoriteProperty.snapshot"
+              :to="
+                favoriteProperty.listed_for_name == ('Rent' || 'rent' || 'RENT')
+                  ? `/view-rental/${favoriteProperty.property_id}?location=${favoriteProperty.name}`
+                  : `/view/${favoriteProperty.property_id}?location=${favoriteProperty.name}`
+              "
+            >
+              <template v-slot:type>
+                <small style="font-size: 14px"
+                  >Type: <b>{{ favoriteProperty.listed_for_name }}</b></small
+                ><br />
+              </template>
+              <template v-slot:default>
+                <v-icon
+                  small
+                  class="mr-2"
+                  style="font-size: 40px; color: #3b6ef3; z-index: 100"
+                  @click="onRemove(favoriteProperty.property_id)"
+                >
+                  mdi-heart
+                </v-icon>
+              </template>
+            </property-card>
+          </transition>
         </v-col>
       </v-row> </v-container
     ><br />
@@ -75,13 +75,14 @@ export default {
   data() {
     return {
       myIcon: "mdi-heart",
-      hide: true
+      hide: true,
     };
   },
   methods: {
     ...mapActions([
       "fetchAllDetailedCurrentUserProperties",
       "removePropertyFromFavoriteSection",
+      "postAUserLog",
     ]),
     // refactoring needed
     formatDate(dateToFormat) {
@@ -130,14 +131,24 @@ export default {
       return price;
     },
     onRemove(property_id) {
-      this.removePropertyFromFavoriteSection(property_id);
-      this.hide = false;
+      this.removePropertyFromFavoriteSection(property_id).then(() => {
+        const payload = {
+          activity: `Removed Property with id ${property_id} from favorites`,
+          button_clicked: "Favorite Button",
+        };
+        this.postAUserLog(payload);
+        this.hide = false;
+      });
     },
   },
   computed: {
     ...mapGetters(["allDetailedCurrentFavoriteList"]),
   },
   created() {
+    this.postAUserLog({
+      activity: "Visited the favorites page",
+      button_clicked: "View Favorite Page",
+    });
     this.fetchAllDetailedCurrentUserProperties();
   },
 };
@@ -158,7 +169,7 @@ export default {
 }
 
 .slide-fade-leave-active {
-  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
 }
 .slide-fade-leave-to {
   transform: translateX(10px);

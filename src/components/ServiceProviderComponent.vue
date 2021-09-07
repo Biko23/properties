@@ -29,26 +29,30 @@
           </h1>
         </v-col>
         <v-col id="search-field" style="position: relative">
-          <v-btn @click="resetSelection" color="primary" rounded class="mr-2 mt-1"
+          <v-btn
+            @click="resetSelection"
+            color="primary"
+            rounded
+            class="mr-2 mt-1"
             >All</v-btn
           >
-        <v-combobox
-          v-model="fullName"
-          :items="sortedProviderName()"
-          label="Full Name"
-          outlined
-          dense
-          @click="phoneNumber == null"
-        ></v-combobox>
+          <v-combobox
+            v-model="fullName"
+            :items="sortedProviderName()"
+            label="Full Name"
+            outlined
+            dense
+            @click="phoneNumber == null"
+          ></v-combobox>
 
-        <v-combobox
-          v-model="phoneNumber"
-          :items="sortedProviderNumber()"
-          label="Phone Number"
-          outlined
-          dense
-          @click="fullName == null"
-        ></v-combobox>
+          <v-combobox
+            v-model="phoneNumber"
+            :items="sortedProviderNumber()"
+            label="Phone Number"
+            outlined
+            dense
+            @click="fullName == null"
+          ></v-combobox>
         </v-col>
       </v-row>
     </v-container>
@@ -151,7 +155,7 @@ export default {
       alertMessage: "",
       currentVendorCategoryId: this.vendorCategoryId || this.vendor_category_id,
       fullName: null,
-      phoneNumber: null
+      phoneNumber: null,
     };
   },
   components: {
@@ -169,23 +173,35 @@ export default {
       "allVendors",
     ]),
     filteredProviders() {
-      if ((this.fullName == null || this.fullName == "") && (this.phoneNumber === null || this.phoneNumber === "")) {
+      if (
+        (this.fullName == null || this.fullName == "") &&
+        (this.phoneNumber === null || this.phoneNumber === "")
+      ) {
         return () => this.allVendors;
-      } 
+      }
       if (this.fullName !== null && this.phoneNumber == null) {
         this.phoneNumber = null;
-        return () =>this.allVendors = this.allVendors.filter(vendors => vendors.vendor_name == this.fullName);
-      } 
+        return () =>
+          (this.allVendors = this.allVendors.filter(
+            (vendors) => vendors.vendor_name == this.fullName
+          ));
+      }
       if (this.phoneNumber !== null && this.fullName == null) {
         this.fullName = null;
-          return () => this.allVendors = this.allVendors.filter(vendors => vendors.vendor_primary_phone_number == this.phoneNumber);
+        return () =>
+          (this.allVendors = this.allVendors.filter(
+            (vendors) => vendors.vendor_primary_phone_number == this.phoneNumber
+          ));
       }
     },
-     sortedProviderNumber() {
-      return () => this.allVendors.map(vendorPhone => vendorPhone.vendor_primary_phone_number);
+    sortedProviderNumber() {
+      return () =>
+        this.allVendors.map(
+          (vendorPhone) => vendorPhone.vendor_primary_phone_number
+        );
     },
 
-    sortedProviderName(){
+    sortedProviderName() {
       return () => this.allVendors.map((vendorName) => vendorName.vendor_name);
     },
     vendorCategory() {
@@ -202,9 +218,13 @@ export default {
       } catch (error) {
         console.log(error);
       }
-    }
+    },
   },
   created() {
+    this.postAUserLog({
+      activity: `Visited Service Provider Page`,
+      button_clicked: "View Providers(Vendor) Page",
+    });
     this.fetchVendors(this.vendor_category_id);
     this.fetchAllLikedVendorsByUserId();
     this.fetchAllUnlikedVendorsByUserId();
@@ -216,6 +236,7 @@ export default {
       "unLikeVendor",
       "fetchAllLikedVendorsByUserId",
       "fetchAllUnlikedVendorsByUserId",
+      "postAUserLog",
     ]),
     resetSelection() {
       if (this.fullName != null || this.phoneNumber != null) {
@@ -236,11 +257,15 @@ export default {
     //     return this.allVendors = [...result];
     //   }
     // },
-   async likingVendor(vendor_id) {
+    async likingVendor(vendor_id) {
       const data = {
         vendor_id: vendor_id,
         liked_by: this.currentLoggedinUser.user_id,
       };
+      this.postAUserLog({
+        activity: `Liked Vendor with id ${vendor_id}`,
+        button_clicked: "Like Button",
+      });
       try {
         await this.likeVendor(data);
       } catch (error) {
@@ -252,6 +277,10 @@ export default {
         vendor_id: vendor_id,
         disliked_by: this.currentLoggedinUser.user_id,
       };
+      this.postAUserLog({
+        activity: `Unliked Vendor with id ${vendor_id}`,
+        button_clicked: "Unlike Button",
+      });
       try {
         await this.unLikeVendor(data);
       } catch (error) {

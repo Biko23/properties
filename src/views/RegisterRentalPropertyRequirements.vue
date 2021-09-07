@@ -179,6 +179,7 @@
 <script>
 import BottonNav from "../components/BottonNav.vue";
 import {
+  mapActions,
     mapGetters
 } from 'vuex';
 
@@ -195,8 +196,15 @@ export default {
     computed: {
         ...mapGetters(["loginState"])
     },
-    // currentLoggedinUser
-    created() {},
+    methods: {
+        ...mapActions(["postAUserLog"])
+    },
+    created() {
+        this.postAUserLog({
+            activity: "Visited Rental Requirement page",
+            button_clicked: "Rental Requirement Page"
+        })
+    },
 };
 </script>
 

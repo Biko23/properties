@@ -94,7 +94,7 @@
                   </v-btn>
                 </template>
                 <v-list style="display: flex; flex-direction: column;">
-                  <network-sharing
+                  <network-sharing @click.native="logActivity(propertyVisual.property_id)"
                     :url="`http://localhost:8080/view-rental/${propertyVisual.property_id}?location=${propertyVisual.name}`"
                   />
                 </v-list>
@@ -147,8 +147,6 @@
             </template>
             <!--  -->
           </property-card>
-
-          <!-- C:\Users\A241901\Documents\project\stanbicproperties-marketplace\property-visuals\src\main\resources\uploads -->
         </v-col>
       </v-row> </v-container
     ><br />
@@ -182,6 +180,7 @@ export default {
       "fetchFavoritePropertiesForComparision",
       "removePropertyFromFavorites",
       "addPropertyToFavorites",
+      "postAUserLog"
     ]),
     commaFormatted(amount) {
       let price = amount.toLocaleString("en-US");
@@ -226,10 +225,24 @@ export default {
       return result;
     },
     onRemove(property_id) {
-      this.removePropertyFromFavorites(property_id);
+      this.removePropertyFromFavorites(property_id)
+        .then(()=>{
+           const payload = {
+            "activity":`Removed Property with id ${property_id} from favorites`, 
+            "button_clicked":"Favorite Button"
+          }
+          this.postAUserLog(payload);
+      });
     },
     onAdd(property_id) {
-      this.addPropertyToFavorites(property_id);
+      this.addPropertyToFavorites(property_id)
+        .then(()=>{
+           const payload = {
+            "activity":`Added Property with id ${property_id} in favorites`, 
+            "button_clicked":"Favorite Button"
+          }
+          this.postAUserLog(payload);
+        });
     },
     showLoginMessage() {
       this.favoriteDialog = true;
@@ -245,8 +258,8 @@ export default {
     },
     async fetchAllRentalProperties() {
       try {
-        await this.fetchPropertyCategories().then(() =>
-          this.fetchPropertyForRent()
+        await this.fetchPropertyCategories().then(
+          () => this.fetchPropertyForRent()
         );
       } catch (error) {
         throw new Error("Failed to fetch data");
@@ -258,6 +271,13 @@ export default {
         this.startPrice = 0;
         this.endPrice = null;
       }
+    },
+    logActivity(property_id){
+      const payload = {
+          "activity":`Shared A Property with id ${property_id}`, 
+          "button_clicked":"Share Button"
+      }
+      this.postAUserLog(payload);
     }
   },
   computed: {

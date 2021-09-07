@@ -129,7 +129,8 @@ export default {
             "fetchPropertyTypes",
             "fetchPropertyFeatures",
             "addPropertyForRentDataFromPageOne",
-            "fetchPropertyCategories"
+            "fetchPropertyCategories",
+            "postAUserLog"
         ]),
         handleImages(files) {
             this.property.visuals.splice(0, this.property.visuals.length);
@@ -148,6 +149,10 @@ export default {
         ...mapGetters(["allPropertyTypes", "allPropertyFeatures"])
     },
     created() {
+        this.postAUserLog({
+            activity: "Visited the Rental Property Listing First page",
+            button_clicked: "Property Listing Page"
+        });
         this.fetchPropertyTypes();
         this.fetchPropertyFeatures();
         this.fetchPropertyCategories();
