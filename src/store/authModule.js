@@ -7,6 +7,7 @@ const state = {
     registeringUser: [],
     currentUser: user,
     isLoggedIn: !!localStorage.getItem('token'),
+    loginToken: localStorage.getItem('token'), // new
     is_seller: !!user.is_seller,
     is_investor: !!user.is_investor,
     is_product_developer: !!user.is_product_developer,
@@ -22,6 +23,7 @@ const state = {
 const getters = {
     currentRegisteringUser: state => state.registeringUser,
     loginState: state => state.isLoggedIn,
+    currentUserToken: state => state.loginToken, // new
     currentLoggedinUser: state => state.currentUser,
     iAmASeller: state => state.is_seller,
     iAmAInvestor: state => state.is_investor,
@@ -51,6 +53,8 @@ const actions = {
             if (response.status === 200 && response.data.hasOwnProperty('token')) {
                 localStorage.setItem('token', response.data.token);
                 commit('loginStatus', true);
+                // sessionStorage.setItem('token', response.data.token);
+                commit('currentToken', response.data.token); // new
             } else if (response.status === 200 && response.data.hasOwnProperty('status')) {
                 commit('loginStatus', false);
             }
@@ -119,6 +123,8 @@ const actions = {
                     is_certified_investor: response.data.result._certified_investor,
                     is_certified_professional_service_provider: response.data.result._certified_professional_service_provider
                 }
+                // sessionStorage.setItem('username', loggedInUser.username); //newly added
+
                 localStorage.setItem('currentUser', JSON.stringify(loggedInUser));
                 commit("setCurrentUser", loggedInUser);
                 commit("setIsseller", loggedInUser.is_seller);
@@ -142,6 +148,7 @@ const actions = {
             await commit('loginStatus', false);
             await commit('setUserStatus', false);
             await commit('setCurrentUser', {});
+            await commit('currentToken', '');
         }
         catch (error) {
             throw new Error(error);
@@ -162,6 +169,7 @@ const mutations = {
     setRegisteredUser: (state, returnedUser) => (state.registeringUser = returnedUser),
     setCurrentUser: (state, currentUser) => state.currentUser = currentUser,
     loginStatus: (state, status) => state.isLoggedIn = status,
+    currentToken: (state, token) => state.loginToken = token,
     setUserStatus: (state, status) => {
         state.is_seller = status,
         state.is_investor = status,

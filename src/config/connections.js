@@ -1,6 +1,25 @@
 import axios from 'axios';
 import URL, { defaultHeaders } from './urls';
 
+const user = localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')) : '';
+const username = user != '' ? user.username : '';
+
+const propertyApi = axios.create();
+propertyApi.interceptors.request.use(
+  async config => {
+    config.baseURL = URL.propertyUrl,
+    config.timeout= 10000,
+    config.headers = { 
+      'Authorization': localStorage.getItem('token'),
+      username,
+      'Content-Type': 'application/json'
+    }
+    return config;
+  },
+  error => {
+    Promise.reject(error)
+});
+
 export default {
     // user route
     userApi: axios.create({
@@ -8,12 +27,13 @@ export default {
         timeout: 10000,
         headers: defaultHeaders
     }),
+    propertyApi,
     // property route
-    propertyApi: axios.create({
-        baseURL: URL.propertyUrl,
-        timeout: 10000,
-        headers: defaultHeaders
-    }),
+    // propertyApi: axios.create({
+    //     baseURL: URL.propertyUrl,
+    //     timeout: 10000,
+    //     headers: defaultHeaders
+    // }),
     // propertyRentalValue route
     propertyRentalValueApi: axios.create({
         baseURL: URL.propertyRentalValueUrl,

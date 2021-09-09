@@ -1,9 +1,12 @@
-
 const PREFIX = 'api/v1'
+
+// axios.defaults.headers.common['content-type'] = 'application/json'
+// axios.defaults.headers.common['authorization'] = token
 
 export const defaultHeaders = {
     'content-type': 'application/json',
-    Authorization: '',
+    'authorization': sessionStorage.getItem("token"),
+    'username': sessionStorage.getItem("username"),
     'Access-Control-Allow-Origin': '*'
 }
 

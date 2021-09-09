@@ -1,50 +1,44 @@
 <template>
-<v-app>
+  <v-app>
     <top-nav />
-    <main-nav v-if="!shouldShowMainNav"/>
+    <main-nav v-if="!shouldShowMainNav" />
     <v-main>
-        <router-view />
+      <router-view />
     </v-main>
     <template v-if="!shouldHideAboutAndFooter">
-        <about v-if="!shouldShowMainNav"/>
-        <Footer v-if="!shouldShowMainNav"/>
+      <about v-if="!shouldShowMainNav" />
+      <Footer v-if="!shouldShowMainNav" />
     </template>
-</v-app>
+  </v-app>
 </template>
 
 <script>
-import TopNav from '@/components/TopNav.vue'
-import MainNav from '@/components/MainNav.vue'
-import Footer from '@/components/Footer'
-import About from '@/views/About.vue'
+import TopNav from "@/components/TopNav.vue";
+import MainNav from "@/components/MainNav.vue";
+import Footer from "@/components/Footer";
+import About from "@/views/About.vue";
 export default {
-    name: 'App',
-    components: {
-        TopNav,
-        MainNav,
-        Footer,
-        About
+  name: "App",
+  components: {
+    TopNav,
+    MainNav,
+    Footer,
+    About,
+  },
+  computed: {
+    shouldShowMainNav() {
+      return this.$route.meta.hideForAuth == true;
     },
-    data: () => ({
-        //
-    }),
-    computed: {
-        shouldShowMainNav() {
-            return this.$route.meta.hideForAuth == true;
-        },
-        shouldHideAboutAndFooter(){
-            return this.$route.meta.hideFooterAndAbout == true;
-        },
-        //  shouldHideAbout(){
-        //     return this.$route.meta.hideAbout == true;
-        // }
+    shouldHideAboutAndFooter() {
+      return this.$route.meta.hideFooterAndAbout == true;
     }
-}
+  },
+};
 </script>
 
 <style>
 @font-face {
-    font-family: "Avenir";
-    src: local("Avenir"), url(./fonts/AvenirLTStd-Book.otf) format("opentypefont");
+  font-family: "Avenir";
+  src: local("Avenir"), url(./fonts/AvenirLTStd-Book.otf) format("opentypefont");
 }
 </style>

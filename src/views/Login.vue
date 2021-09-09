@@ -142,7 +142,7 @@ export default {
                     const response = await this.login(this.loginDetails);
                     if (response.status === 200) {
                         if (response.data.hasOwnProperty("token")) {
-                            this.fetchLoggedUser().then(() => {
+                            this.fetchLoggedUser().then(() => {                                
                                this.fetchTotalFavoriteCount();
                                const payload = {
                                    "activity":"Login", 

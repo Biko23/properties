@@ -3,7 +3,17 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
+import VueSession from 'vue-session'
 import VuetifyGoogleAutocomplete from 'vuetify-google-autocomplete';
+// import axios from 'axios'
+
+// const token = localStorage.getItem('token')
+// const user = localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')) : ''
+// const username = user.username
+
+// axios.defaults.headers['authorization'] = token
+// axios.defaults.headers['username'] = username
+
 
 // To load sharing icons
 import vuetifyIcon from 'vuetify'
@@ -11,6 +21,9 @@ import VueSocialSharing from 'vue-social-sharing'
 // End load sharing icons
 
 Vue.config.productionTip = false
+
+// Session
+Vue.use(VueSession)
 
 // To load sharing icons
 Vue.use(vuetifyIcon)
