@@ -113,16 +113,15 @@ const actions = {
                     business_location: response.data.result.business_location,
                     roles: response.data.result.roles,
                     when_created: response.data.result.when_created,
-                    is_seller: response.data.result._seller,
-                    is_investor: response.data.result._investor,
-                    is_product_developer: response.data.result._product_developer,
-                    is_certified_seller: response.data.result._certified_seller,
-                    is_professional_service_provider: response.data.result._professional_service_provider,
-                    is_certified_product_developer: response.data.result._certified_product_developer,
-                    is_certified_investor: response.data.result._certified_investor,
-                    is_certified_professional_service_provider: response.data.result._certified_professional_service_provider
+                    is_seller: response.data.result.seller,
+                    is_investor: response.data.result.investor,
+                    is_product_developer: response.data.result.product_developer,
+                    is_certified_seller: response.data.result.certified_seller,
+                    is_professional_service_provider: response.data.result.professional_service_provider,
+                    is_certified_product_developer: response.data.result.certified_product_developer,
+                    is_certified_investor: response.data.result.certified_investor,
+                    is_certified_professional_service_provider: response.data.result.certified_professional_service_provider
                 }
-                // sessionStorage.setItem('username', loggedInUser.username); //newly added
 
                 localStorage.setItem('currentUser', JSON.stringify(loggedInUser));
                 commit("setCurrentUser", loggedInUser);
