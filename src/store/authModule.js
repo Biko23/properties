@@ -75,7 +75,6 @@ const actions = {
             if(state.userRoleIdentifier === 1){
                 userRole = state.roles.filter(role => role.name === ("agent" || "Agent" || "AGENT"));
                 userDetails.role_id = userRole[0].role_id
-                return;
             } else if (state.userRoleIdentifier === 2){
                 userRole = state.roles.filter(role => role.name === ("landlord" || "Landlord" || "LANDLORD"));
                 userDetails.role_id = userRole[0].role_id

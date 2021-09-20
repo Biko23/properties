@@ -34,7 +34,8 @@ export default {
       throw new Error('An error occured when getting user data')
     }
   },
-  async updateUserProfile (user) {
+  async updateUserProfile(user) {
+    console.log('user', user);
     try {
       const response = await API.userApi.put(`/users/${user.user_id}`, user)
       const roleResponse = await API.userApi.post(`/users/add-role/${user.user_id}/${user.role_id}`)

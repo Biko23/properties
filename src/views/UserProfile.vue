@@ -124,7 +124,6 @@ export default {
           const response = await this.updateUser(this.userData);
           if (response.status == 200 || response.status === 201) {
             this.fetchLoggedUser().then(() => {
-              // this.$router.push('/getstarted')
               this.$router.replace(
                 sessionStorage.getItem("nextPath") || "/getstarted"
               );
