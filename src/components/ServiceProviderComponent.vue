@@ -24,7 +24,7 @@
       <v-row>
         <v-col style="text-align: center">
           <h1>
-            List of trusted
+            List of certified
             {{ vendorCategory()[0] }}
           </h1>
         </v-col>

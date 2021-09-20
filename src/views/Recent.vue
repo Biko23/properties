@@ -7,6 +7,7 @@
 
 <script>
 import RecentActivities from '@/components/RecentActivities.vue'
+import { mapActions } from 'vuex';
 export default {
   name: 'Recent',
   components: { 

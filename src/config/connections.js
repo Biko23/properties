@@ -5,6 +5,7 @@ const user = localStorage.getItem('currentUser') ? JSON.parse(localStorage.getIt
 const username = user != '' ? user.username : '';
 
 const propertyApi = axios.create();
+
 propertyApi.interceptors.request.use(
   async config => {
     config.baseURL = URL.propertyUrl,
