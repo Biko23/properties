@@ -3,7 +3,7 @@ import API from '../../config/connections'
 export default {
     async getPropertyFeatureTypesByPropertyId(property_id) {
         try {
-            const response = await API.propertyApi.get(`/feature-type-lookup/by-property-id/${property_id}`)
+            const response = await API.marketPlaceApi.get(`/feature-type-lookup/by-property-id/${property_id}`)
             return response
         } catch (error) {
             throw new Error('An error occured when retrieving data')
@@ -24,7 +24,7 @@ export default {
                     formData.append("feature_type_id", feature.feature_type_id);
                     formData.append("name", feature.name);
                 }
-                const response = await API.propertyApi.post(`/feature-type-lookup/${selectedFeatures.property_id}`, formData)
+                const response = await API.marketPlaceApi.post(`/feature-type-lookup/${selectedFeatures.property_id}`, formData)
                 return response
             }
 

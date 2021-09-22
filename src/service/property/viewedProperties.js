@@ -3,7 +3,7 @@ import API from '../../config/connections'
 export default {
     async postViewedProperty(propertyViewed) {
         try {
-            const response = await API.propertyApi.post(`/viewed-properties`, propertyViewed)
+            const response = await API.marketPlaceApi.post(`/viewed-properties`, propertyViewed)
             return response
         } catch (error) {
             throw new Error('An error occured when retrieving data')
@@ -11,7 +11,7 @@ export default {
     },
     async getViewedPropertyForRent(username) {
         try {
-            const response = await API.propertyApi.get(`/viewed-properties/for-rent?user=${username}`)
+            const response = await API.marketPlaceApi.get(`/viewed-properties/for-rent?user=${username}`)
             return response
         } catch (error) {
             throw new Error('An error occured when retrieving data')
@@ -19,7 +19,7 @@ export default {
     },
     async getViewedPropertyForSale(username) {
         try {
-            const response = await API.propertyApi.get(`/viewed-properties/for-sale?user=${username}`)
+            const response = await API.marketPlaceApi.get(`/viewed-properties/for-sale?user=${username}`)
             return response
         } catch (error) {
             throw new Error('An error occured when retrieving data')

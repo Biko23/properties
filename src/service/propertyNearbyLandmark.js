@@ -3,7 +3,7 @@ import API from '../config/connections'
 export default {
   async getAPropertyNearbyLandmarkById (property_nearby_landmark_id) {
     try {
-      const response = await API.propertyNearbyLandmarkApi.get(`/property-nearby-landmarks/${property_nearby_landmark_id}`)
+      const response = await API.marketPlaceApi.get(`/property-nearby-landmarks/${property_nearby_landmark_id}`)
       return response
     } catch (error) {
       throw new Error('An error occured when retrieving data')
@@ -11,7 +11,7 @@ export default {
   },
   async getPropertyNearbyLandmarkByPropertyId(property_id) {
     try {
-      const response = await API.propertyNearbyLandmarkApi.get(`/property-nearby-landmarks/by-property-id/${property_id}`)
+      const response = await API.marketPlaceApi.get(`/property-nearby-landmarks/by-property-id/${property_id}`)
       return response
     } catch (error) {
       throw new Error('An error occured when retrieving data')
@@ -31,7 +31,7 @@ export default {
         formData.append("property_id", propertyNearbyLandmark.property_id);
         formData.append("created_by", propertyNearbyLandmark.created_by);
         formData.append("updated_by", propertyNearbyLandmark.updated_by);
-        const response = await API.propertyNearbyLandmarkApi.post('/property-nearby-landmarks', formData)
+        const response = await API.marketPlaceApi.post('/property-nearby-landmarks', formData)
         return response
       } else {
         console.log("there are no files.");
@@ -43,7 +43,7 @@ export default {
   },
   async updateAPropertyNearbyLandmark (propertyNearbyLandmark) {
     try {
-      const response = await API.propertyNearbyLandmarkApi.put(`/property-nearby-landmarks/${propertyNearbyLandmark.property_nearby_landmark_id}`, propertyNearbyLandmark)
+      const response = await API.marketPlaceApi.put(`/property-nearby-landmarks/${propertyNearbyLandmark.property_nearby_landmark_id}`, propertyNearbyLandmark)
       return response
     } catch (error) {
       throw new Error('An error occured when updating data')
@@ -51,7 +51,7 @@ export default {
   },
   async deleteAPropertyNearbyLandmark (propertyNearbyLandmark) {
     try {
-      const response = await API.propertyNearbyLandmarkApi.delete(`/property-nearby-landmarks/${propertyNearbyLandmark.property_nearby_landmark_id}`)
+      const response = await API.marketPlaceApi.delete(`/property-nearby-landmarks/${propertyNearbyLandmark.property_nearby_landmark_id}`)
       return response
     } catch (error) {
       throw new Error('An error occured when deleting data')

@@ -4,7 +4,7 @@ export default {
   // Returns all visuals where is_main = true
   async getAllPropertyVisuals() {
     try {
-      const response = await API.propertyVisualsApi.get(`/property-visuals/display-main-visual`)
+      const response = await API.marketPlaceApi.get(`/property-visuals/display-main-visual`)
       return response
     } catch (error) {
       throw new Error('An error occured when retrieving data')
@@ -12,7 +12,8 @@ export default {
   },
   async getLatestPropertyVisuals() {
     try {
-      const response = await API.propertyVisualsApi.get(`/property-visuals/display-latest-properties`)
+      const response = await API.marketPlaceApi.get(`/property-visuals/display-latest-properties`)
+      console.log('service', response);
       return response
     } catch (error) {
       throw new Error('An error occured when retrieving data')
@@ -20,7 +21,7 @@ export default {
   },
   async getPropertyVisualsById(visuals_id) {
     try {
-      const response = await API.propertyVisualsApi.get(`/property-visuals/${visuals_id}`)
+      const response = await API.marketPlaceApi.get(`/property-visuals/${visuals_id}`)
       return response
     } catch (error) {
       throw new Error('An error occured when retrieving data')
@@ -28,7 +29,7 @@ export default {
   },
   async getUncertifiedPropertyVisualsByUsername(username) {
     try {
-      const response = await API.propertyVisualsApi.get(`/property-visuals/display-uncertified-property-by-username/${username}`);
+      const response = await API.marketPlaceApi.get(`/property-visuals/display-uncertified-property-by-username/${username}`);
       return response;
     } catch (error) {
       throw new Error(error);
@@ -36,7 +37,7 @@ export default {
   },
   async getListedPropertyVisualsByUsername(username) {
     try {
-      const response = await API.propertyVisualsApi.get(`/property-visuals/display-listed-property-by-username/${username}`);
+      const response = await API.marketPlaceApi.get(`/property-visuals/display-listed-property-by-username/${username}`);
       return response;
     } catch (error) {
       throw new Error(error);
@@ -44,7 +45,7 @@ export default {
   },
   async getUnlistedPropertyVisualsByUsername(username) {
     try {
-      const response = await API.propertyVisualsApi.get(`/property-visuals/display-unlisted-property-by-username/${username}`);
+      const response = await API.marketPlaceApi.get(`/property-visuals/display-unlisted-property-by-username/${username}`);
       return response;
     } catch (error) {
       throw new Error(error);
@@ -52,8 +53,8 @@ export default {
   },
   async updatePropertyVisualAvailabilityStatus(property_id){
     try {
-      const visualsResponse = await API.propertyVisualsApi.put(`/property-visuals/property-visual-available-or-unavailable/${property_id}`);
-      const propertyResponse = await API.propertyApi.put(`/properties/change-property-available-status/${property_id}`);
+      const visualsResponse = await API.marketPlaceApi.put(`/property-visuals/property-visual-available-or-unavailable/${property_id}`);
+      const propertyResponse = await API.marketPlaceApi.put(`/properties/change-property-available-status/${property_id}`);
       if(
         (visualsResponse.status === 200 || visualsResponse.status === 201) &&
         (propertyResponse.status === 200 || propertyResponse.status === 201)
@@ -68,7 +69,7 @@ export default {
   },
   async getPropertyVisualsByPropertyId(property_id) {
     try {
-      const response = await API.propertyVisualsApi.get(`/property-visuals/display-by-property-id/${property_id}`)
+      const response = await API.marketPlaceApi.get(`/property-visuals/display-by-property-id/${property_id}`)
       return response
     } catch (error) {
       throw new Error('An error occured when retrieving data')
@@ -85,7 +86,7 @@ export default {
         formData.append("property_id", propertyVisuals.property_id);
         formData.append("created_by", propertyVisuals.created_by);
         formData.append("updated_by", propertyVisuals.updated_by);
-        const response = await API.propertyVisualsApi.post('/property-visuals', formData)
+        const response = await API.marketPlaceApi.post('/property-visuals', formData)
         return response
       } else {
         console.log("there are no files.");
@@ -96,7 +97,7 @@ export default {
   },
   async updateAPropertyVisual(propertyVisuals) {
     try {
-      const response = await API.propertyVisualsApi.put(`/property-visuals/${propertyVisuals.visuals_id}`, propertyVisuals)
+      const response = await API.marketPlaceApi.put(`/property-visuals/${propertyVisuals.visuals_id}`, propertyVisuals)
       return response
     } catch (error) {
       throw new Error('An error occured when updating data')
@@ -104,7 +105,7 @@ export default {
   },
   async deleteAPropertyVisual(propertyVisuals) {
     try {
-      const response = await API.propertyVisualsApi.delete(`/property-visuals/${propertyVisuals.visuals_id}`)
+      const response = await API.marketPlaceApi.delete(`/property-visuals/${propertyVisuals.visuals_id}`)
       return response
     } catch (error) {
       throw new Error('An error occured when deleting data')

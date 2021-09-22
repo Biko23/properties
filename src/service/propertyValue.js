@@ -4,7 +4,7 @@ import API from '../config/connections'
 export default {
   async getPropertyValue () {
     try {
-      const response = await API.propertyValueApi.get(`/property-value`)
+      const response = await API.marketPlaceApi.get(`/property-value`)
       return response
     } catch (error) {
       throw new Error('An error occured when retrieving data')
@@ -12,7 +12,7 @@ export default {
   },
   async getApprovedPropertyValue(is_listed_for_id){
     try {
-      const response = await API.propertyValueApi.get(`/property-value/approved-property-values/${is_listed_for_id}`)
+      const response = await API.marketPlaceApi.get(`/property-value/approved-property-values/${is_listed_for_id}`)
       return response
     } catch (error) {
       throw new Error('An error occured when retrieving data')
@@ -20,7 +20,7 @@ export default {
   },
   async getPropertyValueById (property_value_id) {
     try {
-      const response = await API.propertyValueApi.get(`/property-value/${property_value_id}`)
+      const response = await API.marketPlaceApi.get(`/property-value/${property_value_id}`)
       return response
     } catch (error) {
       throw new Error('An error occured when retrieving data')
@@ -28,7 +28,7 @@ export default {
   },
   async postAPropertyValue (propertyValue) {
     try {
-      const response = await API.propertyValueApi.post('/property-value', propertyValue)
+      const response = await API.marketPlaceApi.post('/property-value', propertyValue)
       return response
     } catch (error) {
       throw new Error('An error occured when sending data')
@@ -36,7 +36,7 @@ export default {
   },
   async updateAPropertyValue (propertyValue) {
     try {
-      const response = await API.propertyValueApi.put(`/property-value/${propertyValue.property_value_id}`, propertyValue)
+      const response = await API.marketPlaceApi.put(`/property-value/${propertyValue.property_value_id}`, propertyValue)
       return response
     } catch (error) {
       throw new Error('An error occured when updating data')
@@ -44,7 +44,7 @@ export default {
   },
   async deleteAPropertyValue (propertyValue) {
     try {
-      const response = await API.propertyValueApi.delete(`/property-value/${propertyValue.property_value_id}`)
+      const response = await API.marketPlaceApi.delete(`/property-value/${propertyValue.property_value_id}`)
       return response
     } catch (error) {
       throw new Error('An error occured when deleting data')
@@ -52,7 +52,7 @@ export default {
   },
   async getPropertyValueByPropertyId (property_id) {
     try {
-      const response = await API.propertyValueApi.get(`/property-value/by-property-id/${property_id}`)
+      const response = await API.marketPlaceApi.get(`/property-value/by-property-id/${property_id}`)
       return response
     } catch (error) {
       throw new Error('An error occured when retrieving data')

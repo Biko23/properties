@@ -81,6 +81,7 @@ const actions = {
     async fetchLatestPropertyVisuals({ commit }) {
         try {
             const response = await PropertyVisualsService.getLatestPropertyVisuals();
+            console.log('state', response);
             commit('setLatestPropertyVisuals', response.data.result);
         } catch (error) {
             throw new Error("Failed on loading latest properties")
