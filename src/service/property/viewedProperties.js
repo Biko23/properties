@@ -6,7 +6,8 @@ export default {
             const response = await API.marketPlaceApi.post(`/viewed-properties`, propertyViewed)
             return response
         } catch (error) {
-            throw new Error('An error occured when retrieving data')
+            console.log(error);
+            // throw new Error('An error occured when retrieving data')
         }
     },
     async getViewedPropertyForRent(username) {
@@ -14,7 +15,8 @@ export default {
             const response = await API.marketPlaceApi.get(`/viewed-properties/for-rent?user=${username}`)
             return response
         } catch (error) {
-            throw new Error('An error occured when retrieving data')
+            console.log(error);
+            // throw new Error('An error occured when retrieving data')
         }
     },
     async getViewedPropertyForSale(username) {
@@ -22,7 +24,8 @@ export default {
             const response = await API.marketPlaceApi.get(`/viewed-properties/for-sale?user=${username}`)
             return response
         } catch (error) {
-            throw new Error('An error occured when retrieving data')
+            console.log(error);
+            // throw new Error('An error occured when retrieving data')
         }
     }
 }

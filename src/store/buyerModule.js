@@ -66,7 +66,8 @@ const actions = {
             const response = await PropertyService.getAllPropertyForSale(is_listed_for_id);
             commit('setPropertyForSale', response.data.result);
         } catch (error) {
-            throw new Error("Failed on loading current properties")
+            console.log(error);
+            // throw new Error("Failed on loading current properties")
         }
     },
     async fetchPropertyForRent({ commit, rootState }) {
@@ -75,16 +76,17 @@ const actions = {
             const response = await PropertyService.getAllPropertyForRent(is_listed_for_id);
             commit('setPropertyForRent', response.data.result);
         } catch (error) {
-            throw new Error("Failed on loading current properties")
+            console.log(error);
+            // throw new Error("Failed on loading current properties")
         }
     },
     async fetchLatestPropertyVisuals({ commit }) {
         try {
             const response = await PropertyVisualsService.getLatestPropertyVisuals();
-            console.log('state', response);
             commit('setLatestPropertyVisuals', response.data.result);
         } catch (error) {
-            throw new Error("Failed on loading latest properties")
+            console.log(error);
+            // throw new Error("Failed on loading latest properties")
         }
     },
     async fetchSinglePropertyVisuals({ commit }, property_id) {
@@ -92,7 +94,8 @@ const actions = {
             const response = await PropertyVisualsService.getPropertyVisualsByPropertyId(property_id);
             commit("setSinglePropertyVisuals", response.data.result);
         } catch (error) {
-            throw new Error("Failed on loading current property visuals")
+            console.log(error);
+            // throw new Error("Failed on loading current property visuals")
         }
     },
     async fetchPropertyNearbyLandmarkVisuals({ commit }, property_id) {
@@ -100,7 +103,8 @@ const actions = {
             const response = await PropertyNearbyLandmarkService.getPropertyNearbyLandmarkByPropertyId(property_id);
             commit("setSinglePropertyNearbyLandmarkVisuals", response.data.result);
         } catch (error) {
-            throw new Error("Failed on loading current property visuals")
+            console.log(error);
+            // throw new Error("Failed on loading current property visuals")
         }
     },
     async fetchPropertyNeighborhoodVisuals({ commit }, property_id) {
@@ -108,7 +112,8 @@ const actions = {
             const response = await NeighborhoodVisualsService.getNeighborhoodVisualsByPropertyId(property_id);
             commit("setSinglePropertyNeighborhoodVisuals", response.data.result);
         } catch (error) {
-            throw new Error("Failed on loading current property visuals")
+            console.log(error);
+            // throw new Error("Failed on loading current property visuals")
         }
     },
     async fetchCurrentPropertySelectedFeatures({ commit }, property_id) {
@@ -116,7 +121,8 @@ const actions = {
             const response = await FeatureTypeLookupService.getPropertyFeatureTypesByPropertyId(property_id);
             commit("setCurrentPropertyFeatures", response.data.result);
         } catch (error) {
-            throw new Error("Failed on loading current property features")
+            console.log(error);
+            // throw new Error("Failed on loading current property features")
         }
     },
     async fetchCurrentPropertyValue({ commit }, property_id) {
@@ -124,7 +130,8 @@ const actions = {
             const response = await PropertyValueService.getPropertyValueByPropertyId(property_id);
             commit("setSinglePropertyValue", response.data.result);
         } catch (error) {
-            throw new Error("Failed on loading current property value")
+            console.log(error);
+            // throw new Error("Failed on loading current property value")
         }
     },
     async fetchPropertyRentalValue({ commit }, property_id) {
@@ -132,7 +139,8 @@ const actions = {
             const response = await PropertyRentalValueService.getPropertyRentalValueByPropertyId(property_id);
             commit("setSingleRentalValue", response.data.result);
         } catch (error) {
-            throw new Error("Failed on loading current property value")
+            console.log(error);
+            // throw new Error("Failed on loading current property value")
         }
     },
     async fetchPropertyPriceHistories({ commit }, property_id) {
@@ -140,7 +148,8 @@ const actions = {
             const response = await PropertyPriceHistoryService.getPropertyPriceHistoriesByPropertyId(property_id);
             commit("setSinglePropertyPriceHistory", response.data.result);
         } catch (error) {
-            throw new Error("Failed on loading current property price histories")
+            console.log(error);
+            // throw new Error("Failed on loading current property price histories")
         }
     },
     loadSearchKeywordIntoGlobalState({ commit }, keyword) {
@@ -159,7 +168,8 @@ const actions = {
             const response = await PropertyService.getSearchedProperties(keyword);
             commit("setSearchedPropertyResult", response.data.result);
         } catch (error) {
-            throw new Error("Failed to fetch your data");
+            console.log(error);
+            // throw new Error("Failed to fetch your data");
         }
     },
     async fetchAutoCompleteWords({ commit, rootState }) {
@@ -196,7 +206,8 @@ const actions = {
             const searchList = mergedList.map(eachItem => eachItem.option);
             commit("setSearchList", searchList);
         } catch (error) {
-            throw new Error("Failed to fetch your data");
+            console.log(error);
+            // throw new Error("Failed to fetch your data");
         }
     },
     // Viewed Properties
@@ -216,7 +227,8 @@ const actions = {
                 commit('setViewedProperty', false);
             }
         } catch (error) {
-            throw new Error("Failed to post your data");
+            console.log(error);
+            // throw new Error("Failed to post your data");
         }
     },
     async fetchViewedRentalProperties({ commit, rootState }) {
@@ -226,7 +238,8 @@ const actions = {
                 commit('setRecentViewedRentals', response.data.result);
             }
         } catch (error) {
-            throw new Error("Failed to post your data");
+            console.log(error);
+            // throw new Error("Failed to post your data");
         }
     },
     async fetchViewedSaleProperties({ commit, rootState }) {
@@ -236,7 +249,8 @@ const actions = {
                 commit('setRecentViewedSale', response.data.result);
             }
         } catch (error) {
-            throw new Error("Failed to post your data");
+            console.log(error);
+            // throw new Error("Failed to post your data");
         }
     },
 
@@ -250,7 +264,8 @@ const actions = {
                 commit('setTotalFavoriteCount', 0);
             }
         } catch (error) {
-            throw new Error("Failed to post your data");
+            console.log(error);
+            // throw new Error("Failed to post your data");
         }
     },
     async fetchFavoritePropertiesForComparision({ commit, rootState }) {
@@ -258,7 +273,8 @@ const actions = {
             const response = await FavoritePropertiesService.getFavoritePropertiesForComparision(rootState.AuthModule.currentUser.username);
             commit("setCurrentUserFavoriteProperties", response.data.result);
         } catch (error) {
-            throw new Error("Failed to fetch your data");
+            console.log(error);
+            // throw new Error("Failed to fetch your data");
         }
     },
     async addPropertyToFavorites({ commit, rootState }, property_id) {
@@ -272,7 +288,8 @@ const actions = {
                 commit("setAddCurrentUserFavoriteProperty", user.property_id);
             }
         } catch (error) {
-            throw new Error("Failed to fetch your data");
+            console.log(error);
+            // throw new Error("Failed to fetch your data");
         }
     },
     async removePropertyFromFavorites({ commit, rootState }, property_id) {
@@ -286,7 +303,8 @@ const actions = {
                 commit("setRemoveCurrentUserFavoriteProperty", user.property_id);
             }
         } catch (error) {
-            throw new Error("Failed to fetch your data");
+            console.log(error);
+            // throw new Error("Failed to fetch your data");
         }
     },
     async removePropertyFromFavoriteSection({ commit, rootState }, property_id){
@@ -338,7 +356,8 @@ const actions = {
                 commit("setDetailedCurrentUserFavoriteList", favorites);
             }
         } catch (error) {
-            throw new Error("Failed to fetch your data");
+            console.log(error);
+            // throw new Error("Failed to fetch your data");
         }
     }
 }

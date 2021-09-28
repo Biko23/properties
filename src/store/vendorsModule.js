@@ -22,7 +22,8 @@ const actions = {
             const response = await vendorsBackOfficeService.getVendorsCategories();
             commit('setVendorCategories', response.data);
         } catch (error) {
-            throw new Error("Failed on loading current Vendors")
+            console.log(error);
+            // throw new Error("Failed on loading current Vendors")
         }
     },
     async postVendor(_ , newVendor) {
@@ -30,7 +31,8 @@ const actions = {
             const response = await vendorsBackOfficeService.postProfessional(newVendor);
             return response;
         } catch (error) {
-            throw new Error("Failed on posting new profession sevice")
+            console.log(error);
+            // throw new Error("Failed on posting new profession sevice")
         }
     },
     async likeVendor({ commit, state }, newVendor) {
@@ -45,7 +47,8 @@ const actions = {
                 });
             }
         } catch (error) {
-            throw new Error("Failed on liking current vendor")
+            console.log(error);
+            // throw new Error("Failed on liking current vendor")
         }
     },
     async unLikeVendor({ commit, state }, newVendor) {
@@ -61,7 +64,8 @@ const actions = {
             }
         }
         catch (error) {
-            throw new Error("Failed on unliking current vendor")
+            console.log(error);
+            // throw new Error("Failed on unliking current vendor")
         }
     },
     async fetchAllLikedVendorsByUserId({ commit, rootState }) {
@@ -73,7 +77,8 @@ const actions = {
                 }
             }
         } catch (error) {
-            throw new Error("Failed on get all liked vendors")
+            console.log(error);
+            // throw new Error("Failed on get all liked vendors")
         }
     },
     async fetchAllUnlikedVendorsByUserId({ commit, rootState }) {
@@ -85,7 +90,8 @@ const actions = {
                 }
             }
         } catch (error) {
-            throw new Error("Failed on get all unliked vendors")
+            console.log(error);
+            // throw new Error("Failed on get all unliked vendors")
         }
     },
     async changeServiceProviderCategoryId({ commit }, vendor_category_id) {
@@ -96,7 +102,8 @@ const actions = {
             const response = await vendorsBackOfficeService.getVendors(vendor_category_id);
             commit('setVendors', response.data);
         } catch (error) {
-            throw new Error("Failed on loading current Vendors")
+            console.log(error);
+            // throw new Error("Failed on loading current Vendors")
         }
     },
 }

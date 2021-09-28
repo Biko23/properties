@@ -6,7 +6,8 @@ export default {
       const response = await API.marketPlaceApi.get(`property-price-histories/by-property-id/${property_id}`)
       return response
     } catch (error) {
-      throw new Error('An error occured when retrieving data')
+      console.log(error);
+      // throw new Error('An error occured when retrieving data')
     }
   },
 }

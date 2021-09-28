@@ -6,7 +6,8 @@ export default {
       const response = await API.marketPlaceApi.get(`/property-nearby-landmarks/${property_nearby_landmark_id}`)
       return response
     } catch (error) {
-      throw new Error('An error occured when retrieving data')
+      console.log(error);
+      // throw new Error('An error occured when retrieving data')
     }
   },
   async getPropertyNearbyLandmarkByPropertyId(property_id) {
@@ -14,7 +15,8 @@ export default {
       const response = await API.marketPlaceApi.get(`/property-nearby-landmarks/by-property-id/${property_id}`)
       return response
     } catch (error) {
-      throw new Error('An error occured when retrieving data')
+      console.log(error);
+      // throw new Error('An error occured when retrieving data')
     }
   },
   async postAPropertyNearbyLandmark (propertyNearbyLandmark) {
@@ -38,7 +40,8 @@ export default {
       }  
 
     } catch (error) {
-      throw new Error('An error occured when sending data')
+      console.log(error);
+      // throw new Error('An error occured when sending data')
     }
   },
   async updateAPropertyNearbyLandmark (propertyNearbyLandmark) {
@@ -46,7 +49,8 @@ export default {
       const response = await API.marketPlaceApi.put(`/property-nearby-landmarks/${propertyNearbyLandmark.property_nearby_landmark_id}`, propertyNearbyLandmark)
       return response
     } catch (error) {
-      throw new Error('An error occured when updating data')
+      console.log(error);
+      // throw new Error('An error occured when updating data')
     }
   },
   async deleteAPropertyNearbyLandmark (propertyNearbyLandmark) {
@@ -54,7 +58,8 @@ export default {
       const response = await API.marketPlaceApi.delete(`/property-nearby-landmarks/${propertyNearbyLandmark.property_nearby_landmark_id}`)
       return response
     } catch (error) {
-      throw new Error('An error occured when deleting data')
+      console.log(error);
+      // throw new Error('An error occured when deleting data')
     }
   }
 }

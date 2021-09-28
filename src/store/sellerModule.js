@@ -210,8 +210,9 @@ const actions = {
                 return propertyValueResponse;
             }
         } catch (error) {
+            console.log(error);
             // this.$swal('ooh!','Unable to finish!','error');
-            throw new Error('Failed to fully create a property');
+            // throw new Error('Failed to fully create a property');
         }
     },
     async getListedPropertyVisualsByUsername({ commit, rootState }) {
@@ -220,7 +221,8 @@ const actions = {
             const response = await PropertyVisualsService.getListedPropertyVisualsByUsername(username);
             commit('setCurrentUserListedPropertyVisuals', response.data.result);
         } catch (error) {
-            throw new Error(error);
+            console.log(error);
+            // throw new Error(error);
         }
     },
     async getUnlistedPropertyVisualsByUsername({ commit, rootState }) {
@@ -229,7 +231,8 @@ const actions = {
             const response = await PropertyVisualsService.getUnlistedPropertyVisualsByUsername(username);
             commit('setCurrentUserUnlistedPropertyVisuals', response.data.result);
         } catch (error) {
-            throw new Error(error);
+            console.log(error);
+            // throw new Error(error);
         }
     },
     async getUncertifiedPropertyVisualsByUsername({ commit, rootState }) {
@@ -238,7 +241,8 @@ const actions = {
             const response = await PropertyVisualsService.getUncertifiedPropertyVisualsByUsername(username);
             commit('setCurrentUserUncertifiedPropertyVisuals', response.data.result);
         } catch (error) {
-            throw new Error(error);
+            console.log(error);
+            // throw new Error(error);
         }
     },
     async updatePropertyVisualAvailabilityStatus({ commit }, property_id) {
@@ -248,7 +252,8 @@ const actions = {
                 commit('updatePropertyVisualsList', property_id);
             }
         } catch (error) {
-            throw new Error(error);
+            console.log(error);
+            // throw new Error(error);
         }
     },
     async updatePropertyVisualNotAvailabilityStatus({ commit }, property_id) {
@@ -258,7 +263,8 @@ const actions = {
                 commit('updatePropertyVisualsUnlist', property_id);
             }
         } catch (error) {
-            throw new Error(error);
+            console.log(error);
+            // throw new Error(error);
         }
     }
 }

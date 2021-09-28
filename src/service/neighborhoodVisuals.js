@@ -6,7 +6,8 @@ export default {
       const response = await API.marketPlaceApi.get(`/neighborhood-visuals/${neighborhood_visuals_id}`)
       return response
     } catch (error) {
-      throw new Error('An error occured when retrieving data')
+      console.log(error);
+      // throw new Error('An error occured when retrieving data')
     }
   },
   async getNeighborhoodVisualsByPropertyId(property_id) {
@@ -14,7 +15,8 @@ export default {
       const response = await API.marketPlaceApi.get(`/neighborhood-visuals/display-by-property-id/${property_id}`)
       return response
     } catch (error) {
-      throw new Error('An error occured when retrieving data')
+      console.log(error);
+      // throw new Error('An error occured when retrieving data')
     }
   },
   async postNeighborhoodVisuals (neighborhoodVisuals) {
@@ -34,7 +36,8 @@ export default {
         console.log("there are no files.");
       }  
     } catch (error) {
-      throw new Error('An error occured when sending data')
+      console.log(error);
+      // throw new Error('An error occured when sending data')
     }
   },
   async updateAProperty (neighborhoodVisuals) {
@@ -42,7 +45,8 @@ export default {
       const response = await API.marketPlaceApi.put(`/neighborhood-visuals/${neighborhoodVisuals.neighborhood_visuals_id}`, neighborhoodVisuals)
       return response
     } catch (error) {
-      throw new Error('An error occured when updating data')
+      console.log(error);
+      // throw new Error('An error occured when updating data')
     }
   },
   async deleteAProperty (neighborhoodVisuals) {
@@ -50,7 +54,8 @@ export default {
       const response = await API.marketPlaceApi.delete(`/neighborhood-visuals/${neighborhoodVisuals.neighborhood_visuals_id}`)
       return response
     } catch (error) {
-      throw new Error('An error occured when deleting data')
+      console.log(error);
+      // throw new Error('An error occured when deleting data')
     }
   }
 }

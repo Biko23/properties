@@ -5,7 +5,8 @@ export default{
         const response = await API.marketPlaceApi.get(`/currencies`)
         return response
      }catch(error){
-         throw new Error("Error occured while retrieving Currencies")
+        console.log(error);
+        //  throw new Error("Error occured while retrieving Currencies")
      }
  }
 }

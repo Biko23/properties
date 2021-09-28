@@ -16,7 +16,8 @@ const actions = {
                 payload.created_by = context.rootState.AuthModule.currentUser.username
                 await UserAuditService.postAUserLog(payload);
             } catch (error) {
-                throw new Error(error);
+                console.log(error);
+                // throw new Error(error);
             }
         }
     },
@@ -27,7 +28,8 @@ const actions = {
                 context.commit('setCurrentUserAuditLogs', response.data.result);
             }
         } catch (error) {
-            throw new Error(error);
+            console.log(error);
+            // throw new Error(error);
         }
     }
 }

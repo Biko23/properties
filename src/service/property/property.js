@@ -6,7 +6,8 @@ export default {
       const response = await API.marketPlaceApi.get('/properties')
       return response
     } catch (error) {
-      throw new Error('An error occured when retrieving data')
+      console.log(error);
+      // throw new Error('An error occured when retrieving data')
     }
   },
   async getPropertyById (property_id) {
@@ -14,7 +15,8 @@ export default {
       const response = await API.marketPlaceApi.get(`/properties/${property_id}`)
       return response
     } catch (error) {
-      throw new Error('An error occured when retrieving data')
+      console.log(error);
+      // throw new Error('An error occured when retrieving data')
     }
   },
   async getAllPropertyForSale(is_listed_for_id) { //return properties based on Sale id
@@ -22,7 +24,8 @@ export default {
       const response = await API.marketPlaceApi.get(`/properties/search-listed-for/${is_listed_for_id}`)
       return response
     } catch (error) {
-      throw new Error('An error occured when retrieving data')
+      console.log(error);
+      // throw new Error('An error occured when retrieving data')
     }
   },
   async getAllPropertyForRent(is_listed_for_id) { //return properties based on Rent id
@@ -30,7 +33,8 @@ export default {
       const response = await API.marketPlaceApi.get(`/properties/search-listed-for-rent/${is_listed_for_id}`)
       return response
     } catch (error) {
-      throw new Error('An error occured when retrieving data')
+      console.log(error);
+      // throw new Error('An error occured when retrieving data')
     }
   },
   async getSearchedProperties(keyword) {
@@ -38,7 +42,8 @@ export default {
       const response = await API.marketPlaceApi.get(`/properties/search-properties?key=${keyword}`);
       return response;
     } catch (error) {
-      throw new Error('An error occured when fetching data')
+      console.log(error);
+      // throw new Error('An error occured when fetching data')
     }
   },
   async postAProperty (property) {
@@ -46,7 +51,8 @@ export default {
       const response = await API.marketPlaceApi.post('/properties', property)
       return response
     } catch (error) {
-      throw new Error('An error occured when sending data')
+      console.log(error);
+      // throw new Error('An error occured when sending data')
     }
   },
   async updateAProperty (property) {
@@ -54,7 +60,8 @@ export default {
       const response = await API.marketPlaceApi.put(`/properties/${property.property_id}`, property)
       return response
     } catch (error) {
-      throw new Error('An error occured when updating data')
+      console.log(error);
+      // throw new Error('An error occured when updating data')
     }
   },
   async deleteAProperty (property) {
@@ -62,7 +69,8 @@ export default {
       const response = await API.marketPlaceApi.delete(`/properties/${property.property_id}`)
       return response
     } catch (error) {
-      throw new Error('An error occured when deleting data')
+      console.log(error);
+      // throw new Error('An error occured when deleting data')
     }
   }
 }

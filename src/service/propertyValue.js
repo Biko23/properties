@@ -15,7 +15,8 @@ export default {
       const response = await API.marketPlaceApi.get(`/property-value/approved-property-values/${is_listed_for_id}`)
       return response
     } catch (error) {
-      throw new Error('An error occured when retrieving data')
+      console.log(error);
+      // throw new Error('An error occured when retrieving data')
     }
   },
   async getPropertyValueById (property_value_id) {

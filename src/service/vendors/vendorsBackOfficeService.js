@@ -3,7 +3,7 @@ import API from '../../config/connections'
 export default {
   async getVendorsCategories () {
     try {
-      const response = await API.vendorsApi.get(`/vendor-categories`)
+      const response = await API.backOfficeApi.get(`/vendor-categories`)
       return response
     } catch (error) {
       throw new Error('An error occured when retrieving data')
@@ -11,7 +11,7 @@ export default {
   },
   async postProfessional (vendorsProfession) {
     try {
-      const response = await API.vendorsApi.post('/vendors/self-register', vendorsProfession)
+      const response = await API.backOfficeApi.post('/vendors/self-register', vendorsProfession)
       console.log(response);
       return response
     } catch (error) {
@@ -21,7 +21,7 @@ export default {
 async getVendors (vendor_category_id) {
     try {
       // const response = await API.vendorsApi.get(`/vendors/vetted-vendors`)
-      const response = await API.vendorsApi.get(`/vendors/vendors-by-category/${vendor_category_id}`)
+      const response = await API.backOfficeApi.get(`/vendors/vendors-by-category/${vendor_category_id}`)
       return response
     } catch (error) {
       throw new Error('An error occured when retrieving data')
@@ -29,7 +29,7 @@ async getVendors (vendor_category_id) {
   },
   async likeAVendor (data) {
     try {
-      const response = await API.vendorsApi.post(`/vendors/add-points/${data.vendor_id}/${data.liked_by}`)
+      const response = await API.backOfficeApi.post(`/vendors/add-points/${data.vendor_id}/${data.liked_by}`)
       return response
     } catch (error) {
       console.log(error);
@@ -38,7 +38,7 @@ async getVendors (vendor_category_id) {
   },
   async unLikeAVendor (data) {
     try {
-      const response = await API.vendorsApi.post(`/vendors/deduct-points/${data.vendor_id}/${data.disliked_by}`)
+      const response = await API.backOfficeApi.post(`/vendors/deduct-points/${data.vendor_id}/${data.disliked_by}`)
       return response
     } catch (error) {
       console.log(error);
@@ -47,7 +47,7 @@ async getVendors (vendor_category_id) {
   },
   async getListOfLikedVendorsByUserId (liked_by) {
     try {
-      const response = await API.vendorsApi.get(`/vendors/liked-by/${liked_by}`)
+      const response = await API.backOfficeApi.get(`/vendors/liked-by/${liked_by}`)
       return response
     } catch (error) {
       console.log(error)
@@ -55,7 +55,7 @@ async getVendors (vendor_category_id) {
   },
   async getListOfUnlikedVendorsByUserId (disliked_by) {
     try {
-      const response = await API.vendorsApi.get(`/vendors/disliked-by/${disliked_by}`)
+      const response = await API.backOfficeApi.get(`/vendors/disliked-by/${disliked_by}`)
       return response
     } catch (error) {
       console.log(error)

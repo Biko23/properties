@@ -6,7 +6,8 @@ export default {
       const response = await API.marketPlaceApi.get(`/users/${user_id}`)
       return response
     } catch (error) {
-      throw new Error('An error occured when retrieving data')
+      console.log(error);
+      // throw new Error('An error occured when retrieving data')
     }
   },
   async signupANewUser(newUser) {
@@ -14,7 +15,8 @@ export default {
       const response = await API.marketPlaceApi.post('/users', newUser)
       return response
     } catch (error) {
-        throw new Error(error);
+      console.log(error);
+        // throw new Error(error);
     }
   },
   async loggingUser (loginUser) {
@@ -22,7 +24,16 @@ export default {
       const response = await API.marketPlaceApi.post('/authenticate', loginUser)
       return response
     } catch (error) {
-      throw new Error('An error occured when sending data')
+      console.log(error);
+      // throw new Error('An error occured when sending data')
+    }
+  },
+  async autoUpdateToken(){
+    try {
+      const response = await API.marketPlaceApi.post('/authenticate/activate-token');
+      return response
+    } catch (error) {
+      console.log(error);
     }
   },
   async fetchLoggedUser(username){
@@ -31,7 +42,7 @@ export default {
       return response
     } catch (error) {
       console.log(error);
-      throw new Error('An error occured when getting user data')
+      // throw new Error('An error occured when getting user data')
     }
   },
   async updateUserProfile(user) {
@@ -41,7 +52,8 @@ export default {
       const roleResponse = await API.marketPlaceApi.post(`/users/add-role/${user.user_id}/${user.role_id}`)
       return response
     } catch (error) {
-      throw new Error('An error occured when updating data')
+      console.log(error);
+      // throw new Error('An error occured when updating data')
     }
   },
   async updateUserProfileOnly(payload){
@@ -49,7 +61,8 @@ export default {
       const response = await API.marketPlaceApi.put(`/users/${payload.user_id}`, payload);
       return response;
     } catch (error) {
-      throw new Error('An error occured when updating data')
+      console.log(error);
+      // throw new Error('An error occured when updating data')
     }
   },
   async deleteAUserAccount (user) {
@@ -57,7 +70,8 @@ export default {
       const response = await API.marketPlaceApi.delete(`/users/${user.user_id}`)
       return response
     } catch (error) {
-      throw new Error('An error occured when deleting data')
+      console.log(error);
+      // throw new Error('An error occured when deleting data')
     }
   },
   async getAllUserRoles () {
@@ -65,7 +79,8 @@ export default {
       const response = await API.marketPlaceApi.get('/roles')
       return response;
     } catch (error) {
-      throw new Error('An error occured while fetching user roles')
+      console.log(error);
+      // throw new Error('An error occured while fetching user roles')
     }
   }
 }

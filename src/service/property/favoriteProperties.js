@@ -12,7 +12,8 @@ export default {
             //     "property_id":89
             // }
         } catch (error) {
-            throw new Error('An error occured when posting data')
+            console.log(error);
+            // throw new Error('An error occured when posting data')
         }
     },
     async removeAPropertyFromFavorites(favoriteProperty) {
@@ -21,7 +22,8 @@ export default {
             const response = await API.marketPlaceApi.post(`/saved-properties/remove-favorite-property`, favoriteProperty)
             return response
         } catch (error) {
-            throw new Error('An error occured when posting data')
+            console.log(error);
+            // throw new Error('An error occured when posting data')
         }
     },
     async getTotalCountOfFavoriteProperties(username) {
@@ -29,7 +31,8 @@ export default {
             const response = await API.marketPlaceApi.get(`/saved-properties/total-liked-properties?user=${username}`)
             return response
         } catch (error) {
-            throw new Error('An error occured when retrieving data')
+            console.log(error);
+            // throw new Error('An error occured when retrieving data')
         }
     },
     async getFavoritePropertiesForComparision(username) {
@@ -37,7 +40,8 @@ export default {
             const response = await API.marketPlaceApi.get(`/saved-properties/by-username?user=${username}`)
             return response
         } catch (error) {
-            throw new Error('An error occured when retrieving data')
+            console.log(error);
+            // throw new Error('An error occured when retrieving data')
         }
     },
     async getAllCurrentUserFavoriteRentalProperties(username) {
@@ -45,7 +49,8 @@ export default {
             const response = await API.marketPlaceApi.get(`/saved-properties/for-rent?user=${username}`)
             return response
         } catch (error) {
-            throw new Error('An error occured when retrieving data')
+            console.log(error);
+            // throw new Error('An error occured when retrieving data')
         }
     },
     async getAllCurrentUserFavoriteSaleProperties(username) {
@@ -53,7 +58,8 @@ export default {
             const response = await API.marketPlaceApi.get(`/saved-properties/for-sale?user=${username}`)
             return response
         } catch (error) {
-            throw new Error('An error occured when retrieving data')
+            console.log(error);
+            // throw new Error('An error occured when retrieving data')
         }
     }
 }

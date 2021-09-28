@@ -17,6 +17,7 @@ import TopNav from "@/components/TopNav.vue";
 import MainNav from "@/components/MainNav.vue";
 import Footer from "@/components/Footer";
 import About from "@/views/About.vue";
+import { mapActions } from 'vuex';
 export default {
   name: "App",
   components: {
@@ -24,6 +25,9 @@ export default {
     MainNav,
     Footer,
     About,
+  },
+  methods: {
+    ...mapActions(['autoLogin'])
   },
   computed: {
     shouldShowMainNav() {
@@ -33,6 +37,9 @@ export default {
       return this.$route.meta.hideFooterAndAbout == true;
     }
   },
+  created(){
+    this.autoLogin();
+  }
 };
 </script>
 

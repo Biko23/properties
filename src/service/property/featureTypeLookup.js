@@ -6,7 +6,8 @@ export default {
             const response = await API.marketPlaceApi.get(`/feature-type-lookup/by-property-id/${property_id}`)
             return response
         } catch (error) {
-            throw new Error('An error occured when retrieving data')
+            console.log(error);
+            // throw new Error('An error occured when retrieving data')
         }
     },
     async postAPropertyFeatures(selectedFeatures) {
@@ -29,7 +30,8 @@ export default {
             }
 
         } catch (error) {
-            throw new Error('An error occured when sending data')
+            console.log(error);
+            // throw new Error('An error occured when sending data')
         }
     }
 

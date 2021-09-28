@@ -1,6 +1,8 @@
 import AuthService from '@/service/authService';
 import decode from "jwt-decode";
+// const Cryptr = require('cryptr');
 
+let timer;
 const user = JSON.parse(localStorage.getItem('currentUser')) || {};
 
 const state = {
@@ -44,25 +46,80 @@ const actions = {
             commit('setRegisteredUser', response.data.result);
             return response;
         } catch (error) {
-            throw new Error(error);
+            console.log(error);
+            // throw new Error(error);
         }
     },
-    async login({ commit }, userDetails) { //payload
+    async login(context, userDetails) { //payload
         try {
             const response = await AuthService.loggingUser(userDetails);
             if (response.status === 200 && response.data.hasOwnProperty('token')) {
+                
+                var tokenExpiresIn = Date.parse(response.data.expiryTime);
+                var tokenExpiresSeconds = 60 * 29 * 1000;       
+
+                localStorage.setItem('expiresIn', tokenExpiresIn);
                 localStorage.setItem('token', response.data.token);
-                commit('loginStatus', true);
-                // sessionStorage.setItem('token', response.data.token);
-                commit('currentToken', response.data.token); // new
+                localStorage.setItem('expiresInSeconds', tokenExpiresSeconds);
+                const decoded = await decode(response.data.token);
+
+                // const cryptr = new Cryptr('kfkfkfdkdsksdsdksdkdsksdkdsksdk4304040dkdsksdkdsk');
+                // localStorage.setItem('username',  cryptr.encrypt(decoded.sub));
+
+                localStorage.setItem('username', decoded.sub); //commit this as well
+                context.commit('loginStatus', true);
+                context.commit('currentToken', response.data.token);
+
+                timer = setInterval(()=>{
+                    context.dispatch('fetchNewToken');
+                }, tokenExpiresSeconds);
+
             } else if (response.status === 200 && response.data.hasOwnProperty('status')) {
-                commit('loginStatus', false);
+                context.commit('loginStatus', false);
             }
             return response;
         } catch (error) {
-            throw new Error('An error occured when sending data');
+            console.log(error);
+            // throw new Error('An error occured when sending data');
         }
     },
+    async fetchNewToken(){
+        const response = await AuthService.autoUpdateToken();       
+        if(response.status == 200){
+            var tokenExpiresIn = Date.parse(response.data.expiryTime);
+            localStorage.setItem('expiresIn', tokenExpiresIn);
+            localStorage.setItem('token', response.data.token);
+        }
+    },
+    //  -----------------------------------
+    async autoLogin(context){
+        if(context.state.isLoggedIn === true){
+            let now = new Date();
+            let currentTime = Date.parse(now);
+            let expiryTime = localStorage.getItem('expiresIn');
+            const comparisionTime = currentTime < expiryTime ? expiryTime - currentTime : 0;
+
+            if(currentTime >= expiryTime){
+                context.dispatch('logout');
+            } else if(comparisionTime <= 240000) { //4 minutes to expire or less
+                context.dispatch('fetchNewToken');
+                var tokenExpiresSecond = 60 * 29 * 1000;       
+                timer = setInterval(()=>{
+                    context.dispatch('fetchNewToken');
+                }, tokenExpiresSecond);
+
+            } else {
+                var tokenExpiresSeconds = 60 * 29 * 1000;       
+                timer = setTimeout(()=>{
+                    context.dispatch('fetchNewToken');
+                    setInterval(()=>{
+                        context.dispatch('fetchNewToken');
+                    }, tokenExpiresSeconds);
+                }, comparisionTime);
+            }
+        }
+    },
+    // ------------------------------
     assignUpdatingUserRole({ commit }, userRoleIdentifier){
         commit("setUserRoleIdentifier", userRoleIdentifier);
     },
@@ -136,20 +193,22 @@ const actions = {
             }
             return response;
         } catch (error) {
-            throw new Error(error);
+            console.log(error);
+            // throw new Error(error);
         }
     },
     async logout({ commit }) {
         try {
-            localStorage.removeItem('token');
-            localStorage.removeItem('currentUser');
+            localStorage.clear();
             await commit('loginStatus', false);
             await commit('setUserStatus', false);
             await commit('setCurrentUser', {});
             await commit('currentToken', '');
+            clearInterval(timer);
         }
         catch (error) {
-            throw new Error(error);
+            console.log(error);
+            // throw new Error(error);
         }
     },
     async fetchAllUserRoles({ commit }) {
@@ -158,7 +217,8 @@ const actions = {
             commit('setUserRoles', response.data.result);
         }
         catch (error) {
-            throw new Error(error);
+            console.log(error);
+            // throw new Error(error);
         }
     }
 }
