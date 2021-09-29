@@ -65,7 +65,27 @@
                             <h3>Add Landmark Photos</h3>
                             <v-row>
                                 <v-col cols="12" md="12">
-                                    <UploadImages style="background-color: #e7f0ff" :max="4" uploadMsg="click or drag n' drop images" fileError="images files only accepted" clearAll="Clear" @changed="handleImages" />
+                                    <UploadImages 
+                                        style="background-color: #e7f0ff z-index: 100;" 
+                                        :max="4" 
+                                        uploadMsg="click or drag n' drop images" 
+                                        fileError="images files only accepted" 
+                                        clearAll="Clear" 
+                                        @changed="handleImages" 
+                                    />
+                                </v-col>
+                                <v-col cols="12" md="12">
+                                    <v-text-field
+                                        background-color="#e7f0ff"
+                                        color="#e7f0ff"
+                                        style="margin-top: -7%; z-index: 0;"
+                                        v-model="property.imageValidatorField"
+                                        :rules="[propertyRules.imageSelectCheck]"
+                                        class="custom-label-color"
+                                        readonly
+                                        flat
+                                    >
+                                    </v-text-field>
                                 </v-col>
                             </v-row>
                             <p style="font-size: 12px; margin-right: 100px">
@@ -97,19 +117,27 @@
                                     Back</span>
                             </v-btn>
                         </router-link>
-                        <v-btn style="background-color: #3b6ef3; width: 200px" :disabled="!valid" @click="submitFinalData">
-                            <span style="
-                              color: #ffffff;
-                              font-size: 18px;
-                              font-style: normal;
-                              font-weight: 300;
-                              line-height: 30px;
-                              letter-spacing: 0em;
-                              text-align: center;
-                              text-transform: capitalize;
-                            ">
-                                Create Property</span>
-                        </v-btn>
+                        <div>
+                            <base-spinner v-if="submitting" />
+                            <v-btn 
+                                v-else
+                                style="background-color: #3b6ef3; width: 200px" 
+                                :disabled="!valid" 
+                                @click="submitFinalData"
+                                >
+                                <span style="
+                                color: #ffffff;
+                                font-size: 18px;
+                                font-style: normal;
+                                font-weight: 300;
+                                line-height: 30px;
+                                letter-spacing: 0em;
+                                text-align: center;
+                                text-transform: capitalize;
+                                ">
+                                    Create Property</span>
+                            </v-btn>
+                        </div>
                     </v-col>
                 </v-row>
             </v-row>
@@ -124,6 +152,8 @@
 import BottonNav from "../components/BottonNav.vue";
 import { mapGetters, mapActions } from "vuex";
 import UploadImages from "vue-upload-drop-images";
+import BaseSpinner from '../components/BaseSpinner.vue';
+
 
 export default {
     name: "RegisterProperty3",
@@ -131,24 +161,28 @@ export default {
         valid: true,
         responseMessage: '',
         messageDialog: false,
+        submitting: false,
         failureDialog: false,
         propertyRules: {
             landmark_name: value => !!value || "Name is required.",
             distance_from_property: value => !!value || "Distance is required",
             landmark_type_id: value => !!value || "Type is required.",
+            imageSelectCheck: (value) => !!value || 'At least one image is required.',
             description: value => !!value || "Description is required",
         },
         property: {
             landmark_name: "",
             distance_from_property: "",
             landmark_type_id: 0,
+            imageValidatorField: "",
             description: "",
             landmarkVisuals: [],
         },
     }),
     components: {
         BottonNav,
-        UploadImages
+        UploadImages,
+        BaseSpinner
     },
     created() {
         this.postAUserLog({
@@ -165,6 +199,7 @@ export default {
             "postAUserLog"
         ]),
         handleImages(files) {
+            this.property.imageValidatorField = files.length <= 0 ? "" : files[0].name;
             this.property.landmarkVisuals.splice(
                 0,
                 this.property.landmarkVisuals.length
@@ -173,9 +208,11 @@ export default {
         },
         async submitFinalData() {
             if (this.$refs.propertyForm3.validate()) {
+                this.submitting = true;
                 await this.addPropertyDataFromPageThird(this.property);
                 const response = await this.submitAllPropertyData();
                 if (response.status === 200 || response.status === 201) {
+                    this.submitting = false;
                     this.postAUserLog({
                         activity: "Registered a property",
                         button_clicked: "Create Property Btn"
@@ -186,6 +223,7 @@ export default {
                 }
 
                 if (response.status !== 200 || response.status !== 201) {
+                    this.submitting = false;
                     this.postAUserLog({
                         activity: "Failure on registering a the Property",
                         button_clicked: "Create Property Btn"

@@ -70,21 +70,34 @@
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" md="12">
-                        <UploadImages
-                          style="background-color: #e7f0ff"
-                          :max="8"
-                          :rules="[propertyRules.visuals]"
-                          uploadMsg="Drag n' drop. The first image should be the main image"
-                          fileError="Image files only accepted"
-                          maxError="Max files exceed"
-                          clearAll="Clear"
-                          @changed="handleImages"
-                        />
+                            <UploadImages
+                              style="background-color: #e7f0ff; height: 100%; z-index: 100;"
+                              :max="8"
+                              uploadMsg="Drag n' drop. The first image should be the main image"
+                              fileError="Image files only accepted"
+                              maxError="Max files exceed"
+                              clearAll="Clear"
+                              @changed="handleImages"
+                            />
+                            <br>
+                        <br>
+                      </v-col>
+                      <v-col cols="12" md="12">
+                       <v-text-field
+                          background-color="#e7f0ff"
+                          color="#e7f0ff"
+                          style="margin-top: -7%; z-index: 0;"
+                          v-model="property.imageValidatorField"
+                          :rules="[propertyRules.imageSelectCheck]"
+                          class="custom-label-color"
+                          readonly
+                          flat
+                        >
+                        </v-text-field>
                       </v-col>
                     </v-row>
                   </v-col>
                 </v-row>
-
                 <p style="font-size: 12px; margin-right: 100px">
                   Each picture must not exceed 5 Mb Supported formats are *.jpg,
                   *.gif and *.png
@@ -115,9 +128,7 @@
                       text-align: center;
                       text-transform: capitalize;
                     "
-                  >
-                    Second Step</span
-                  >
+                  >Second Step</span>
                 </v-btn>
               </v-col>
             </v-row>
@@ -137,11 +148,16 @@ import UploadImages from "vue-upload-drop-images";
 
 export default {
   name: "RegisterProperty",
+  components: {
+    BottonNav,
+    UploadImages
+  },
   data: () => ({
     property: {
       type: "",
       location: "",
       description: "",
+      imageValidatorField: "",
       features: [],
       visuals: []
     },
@@ -156,22 +172,19 @@ export default {
         }
         return !!value || "Features are required.";
       }, 
-      visuals(value) {
-        if (value instanceof Array && value.length == 0) {
-          return "Visuals are required";
-        }
-        return !!value || "Visuals are required.";
-      },
+      imageSelectCheck: (value) => !!value || 'At least one image is required.'
+      // visuals(value) {
+      //   if (value instanceof Array && value.length == 0) {
+      //     return "Visuals are required";
+      //   }
+      //   return !!value || "Visuals are required.";
+      // },
     },
     //  imageRules: [
     //     value => !value || value.size < 2000000 || 'Avatar size should be less than 2 MB!'
     // ],
     hide: true,
   }),
-  components: {
-    BottonNav,
-    UploadImages
-  },
   methods: {
     ...mapActions([
       "fetchPropertyTypes",
@@ -181,6 +194,7 @@ export default {
       "postAUserLog"
     ]),
     handleImages(files) {
+      this.property.imageValidatorField = files.length <= 0 ? "" : files[0].name;
       this.property.visuals.splice(0, this.property.visuals.length);
       this.property.visuals.push(...files);
     },

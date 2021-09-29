@@ -39,9 +39,28 @@
                                     ></v-text-field>
                                 </v-col>
                                 <v-col cols="12" md="12">
-                                    <UploadImages style="background-color: #e7f0ff" :max="4" uploadMsg="click or drag n' drop images" fileError="images files only accepted" clearAll="Clear" @changed="handleImages" />
+                                    <UploadImages 
+                                        style="background-color: #e7f0ff z-index: 100;" 
+                                        :max="4" uploadMsg="click or drag n' drop images" 
+                                        fileError="images files only accepted" 
+                                        clearAll="Clear" 
+                                        @changed="handleImages" 
+                                    />
                                 </v-col>
                             </v-row>
+                        </v-col>
+                        <v-col cols="12" md="12">
+                            <v-text-field
+                                background-color="#e7f0ff"
+                                color="#e7f0ff"
+                                style="margin-top: -7%; z-index: 0;"
+                                v-model="property.imageValidatorField"
+                                :rules="[propertyRules.imageSelectCheck]"
+                                class="custom-label-color"
+                                readonly
+                                flat
+                            >
+                            </v-text-field>
                         </v-col>
                     </v-row>
 
@@ -82,7 +101,7 @@
                         </v-btn>
                     </router-link>
                     <v-btn
-                      style="background-color: #3b6ef3; width: 200px"
+                      style="background-color: #3b6ef3; width: 200px;"
                       :disabled="!valid"
                       @click="storePropertyData"
                     >
@@ -128,12 +147,14 @@ export default {
         property: {
             currency_id:"",
             expected_value: "",
+            imageValidatorField: "",
             description: "",
             neighborhoodVisuals: [],
         },
          valid: true,
         propertyRules: {
             expected_value: value => !!value || "Property Value is required.",
+            imageSelectCheck: (value) => !!value || 'At least one image is required.',
             description: v => (v && v.length >= 4) || "Min characters should be 5"
         },
     }),
@@ -148,6 +169,7 @@ export default {
             "postAUserLog"
         ]),
         handleImages(files) {
+            this.property.imageValidatorField = files.length <= 0 ? "" : files[0].name;
             this.property.neighborhoodVisuals.splice(
                 0,
                 this.property.neighborhoodVisuals.length

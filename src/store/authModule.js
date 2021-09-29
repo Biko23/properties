@@ -3,6 +3,8 @@ import decode from "jwt-decode";
 // const Cryptr = require('cryptr');
 
 let timer;
+const TIMER_IN_SECONDS = 60 * 29 * 1000;
+const MINUTE_TO_TOKEN_EXPIRY = 240000;
 const user = JSON.parse(localStorage.getItem('currentUser')) || {};
 
 const state = {
@@ -56,7 +58,7 @@ const actions = {
             if (response.status === 200 && response.data.hasOwnProperty('token')) {
                 
                 var tokenExpiresIn = Date.parse(response.data.expiryTime);
-                var tokenExpiresSeconds = 60 * 29 * 1000;       
+                var tokenExpiresSeconds = TIMER_IN_SECONDS;     
 
                 localStorage.setItem('expiresIn', tokenExpiresIn);
                 localStorage.setItem('token', response.data.token);
@@ -101,15 +103,15 @@ const actions = {
 
             if(currentTime >= expiryTime){
                 context.dispatch('logout');
-            } else if(comparisionTime <= 240000) { //4 minutes to expire or less
+            } else if(comparisionTime <= MINUTE_TO_TOKEN_EXPIRY) { //4 minutes to expire or less
                 context.dispatch('fetchNewToken');
-                var tokenExpiresSecond = 60 * 29 * 1000;       
+                var tokenExpiresSecond = TIMER_IN_SECONDS;       
                 timer = setInterval(()=>{
                     context.dispatch('fetchNewToken');
                 }, tokenExpiresSecond);
 
             } else {
-                var tokenExpiresSeconds = 60 * 29 * 1000;       
+                var tokenExpiresSeconds = TIMER_IN_SECONDS;       
                 timer = setTimeout(()=>{
                     context.dispatch('fetchNewToken');
                     setInterval(()=>{
