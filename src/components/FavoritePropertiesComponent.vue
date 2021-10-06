@@ -142,7 +142,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["allDetailedCurrentFavoriteList"]),
+    ...mapGetters(["allDetailedCurrentFavoriteList"])
   },
   created() {
     this.postAUserLog({
