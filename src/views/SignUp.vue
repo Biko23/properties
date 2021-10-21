@@ -1,36 +1,11 @@
 <template>
 <div>
+    <base-dialog :message="message" :title="title" :dialogState="state">
+        <template v-slot:button>
+            <v-btn text @click="state = !state">close</v-btn>
+        </template>
+    </base-dialog>
     <v-container id="main-container" fluid>
-        <!-- success Dialog -->
-        <v-dialog transition="dialog-top-transition" persistent v-model="messageDialog" max-width="600">
-            <template>
-                <v-card>
-                    <v-toolbar color="success" dark>Success</v-toolbar>
-                    <v-card-text class="pt-5">
-                        <p style="font-size: 16px;">{{responseMessage}}</p>
-                    </v-card-text>
-                    <v-card-actions class="justify-end">
-                        <v-btn text @click="closeDialog">close</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </template>
-        </v-dialog>
-        <!-- end Success Dialog -->
-        <!-- failure Dialog -->
-        <v-dialog transition="dialog-top-transition" persistent v-model="failureDialog" max-width="600">
-            <template>
-                <v-card>
-                    <v-toolbar color="red" dark>Error</v-toolbar>
-                    <v-card-text class="pt-5">
-                       <p style="font-size: 16px;">{{responseMessage}}</p>
-                    </v-card-text>
-                    <v-card-actions class="justify-end">
-                        <v-btn text @click="closeFailureDialog">close</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </template>
-        </v-dialog>
-        <!-- end Failure Dialog -->
         <v-row>
             <v-col cols="12" sm="12" md="6" lg="6">
                 <router-link to="/" style="
@@ -59,7 +34,7 @@
                     <v-container>
                         <v-row>
                             <v-col cols="12" sm="12" md="12">
-                                <v-text-field v-model="userSignupDetails.name" :rules="[rules.required, rules.min]" label="Full name" placeholder="Enter your Full name" solo></v-text-field>
+                                <v-text-field v-model="userSignupDetails.name" :rules="[rules.required, rules.nameMin, rules.char]" label="Full name" placeholder="Enter your Full name" solo></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
@@ -79,10 +54,10 @@
                         </v-row>
                         <v-row>
                             <v-col cols="12" sm="12" md="12">
-                                <v-text-field v-model="userSignupDetails.password" :rules="[rules.required, rules.min]" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :type="show1 ? 'text' : 'password'" label="Password" hint="At least 7 characters" @click:append="show1 = !show1" counter placeholder="Enter your password" solo></v-text-field>
+                                <v-text-field v-model="userSignupDetails.password" :rules="[rules.required, rules.min, rules.password]" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :type="show1 ? 'text' : 'password'" label="Password" hint="At least 8 characters" @click:append="show1 = !show1" counter placeholder="Enter your password" solo></v-text-field>
                             </v-col>
                             <v-col cols="12" sm="12" md="12">
-                                <v-text-field v-model="userSignupDetails.confirmPassword" :rules="[rules.required]" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :type="show1 ? 'text' : 'password'" label="Confirm password" @click:append="show1 = !show1" counter placeholder="Confirm password" solo></v-text-field>
+                                <v-text-field v-model="userSignupDetails.confirmPassword" :rules="[(userSignupDetails.password === userSignupDetails.confirmPassword) || 'Password must match']" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :type="show1 ? 'text' : 'password'" label="Confirm password" @click:append="show1 = !show1" counter placeholder="Confirm password" solo></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
@@ -139,9 +114,9 @@ export default {
     name: "SignUp",
     data: () => ({
         show1: false,
-        responseMessage: '',
-        messageDialog: false,
-        failureDialog: false,
+        message: '',
+        title: '',
+        state: false,
         valid: true,
         userSignupDetails: {
             name: "",
@@ -155,7 +130,10 @@ export default {
         },
         rules: {
             required: value => !!value || "Required.",
-            min: v => (v && v.length >= 7) || "Min 8 characters"
+            min: v => (v && v.length >= 6) || "Min 8 characters",
+            password: v => /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/.test(v) || "Password should have an upper case, lower case and letters",
+            nameMin: v => (v && v.length >= 2) || "Min 3 characters",
+            char: v => /^\w+([a-zA-Z ])+$/.test(v) || "Only characters allowed"
         },
         emailRules: [
             v => !!v || "Required",
@@ -170,37 +148,34 @@ export default {
     }),
     methods: {
         ...mapActions(["signupANewUser"]),
+        defaultResponse(msg, heading, status) {
+            this.message = msg
+            this.title = heading
+            this.state = status
+
+            setTimeout(() => {
+                this.message = ""
+                this.title = ""
+                this.state = false
+            }, 3000);
+        },
         async postNewUserData() {
             try {
                 if (this.$refs.signupForm.validate()) {
                     const response = await this.signupANewUser(this.userSignupDetails);
                     if (response.status === 201) {
-                        this.messageDialog = true;
-                        this.responseMessage = 'Account created successfully!!';
+                        this.defaultResponse('Account successfully created', 'Success', true);
                         setTimeout(() => {
-                            this.messageDialog = false;
-                            this.responseMessage = '';
                             this.$router.push('/login');
-                        }, 2000);
+                        }, 3000);
                         return;
                     }
-                    
                     if(response.status === 200) {
-                        this.failureDialog = true;
-                        this.responseMessage = response.data.message;
-                        setTimeout(() => {
-                            this.failureDialog = false;
-                            this.responseMessage = '';
-                        }, 3000);
+                        this.defaultResponse(response.data.message, 'Error', true);
                     }
                 }
             } catch (error) {
-                this.failureDialog = true;
-                this.responseMessage = error;
-                setTimeout(() => {
-                    this.failureDialog = false;
-                    this.responseMessage = '';
-                }, 1000);
+                this.defaultResponse(error.message, 'Error', true);
             }
         },
         closeDialog() {

@@ -1,21 +1,11 @@
 <template>
 <div style="background-color: #3b6ef3">
+    <base-dialog :message="message" :title="title" :dialogState="state">
+        <template v-slot:button>
+            <v-btn text @click="state = !state">close</v-btn>
+        </template>
+    </base-dialog>
     <v-container>
-        <!-- success Dialog -->
-        <v-dialog transition="dialog-top-transition" persistent v-model="messageDialog" max-width="600">
-            <template>
-                <v-card>
-                    <v-toolbar color="primary" dark>Success</v-toolbar>
-                    <v-card-text class="pt-5">
-                        <p style="font-size: 16px">{{ responseMessage }}</p>
-                    </v-card-text>
-                    <v-card-actions class="justify-end">
-                        <v-btn text @click="closeMessageDialog">close</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </template>
-        </v-dialog>
-        <!-- end success Dialog -->
         <v-row>
             <v-col cols="12" sm="12" md="12" xl="12">
                 <h3 style="
@@ -75,12 +65,12 @@ export default {
     data: () => ({
         valid: true,
         userData: {},
-        messageDialog: false,
-        responseMessage: '',
+        message: '',
+        title: '',
+        state: false,
         userRules: {
             secondary_email: (value) => !!value || "Secondary email is required.",
-            secondary_contact: (v) =>
-                (v && v.length >= 7) || "Min characters should be 8",
+            secondary_contact: (v) => (v && v.length >= 7) || "Min characters should be 8",
             business_location: (value) => !!value || "Business location is required.",
         },
         phoneNumberRules: [
@@ -102,6 +92,16 @@ export default {
     },
     methods: {
         ...mapActions(["updateUserProfile", "fetchAllUserRoles", "fetchLoggedUser", "postAUserLog"]),
+        defaultResponse(msg, heading, status) {
+            this.message = msg
+            this.title = heading
+            this.state = status
+            setTimeout(() => {
+                this.message = ""
+                this.title = ""
+                this.state = false
+            }, 3000);
+        },
         async updateUserDetails() {
             this.userData = {
                 user_id: this.currentLoggedinUser.user_id, 
@@ -116,28 +116,23 @@ export default {
             try {
                 if (this.$refs.moreUserDataForm.validate()) {
                     const response = await this.updateUserProfile(this.userData);
-                    if (response.status == 200) {
-                        this.fetchLoggedUser().then(() => {
-                            if (response.status === 200) {
-                                this.messageDialog = true;
-                                this.responseMessage = 'Account details updated successfully!!';
+                    if (response.data.status == 1) {
+                        this.fetchLoggedUser().then((userData) => {
+                            if (userData.data.status === 1) {
+                                this.defaultResponse('Account details updated successfully!!', 'Success', true);
                                 setTimeout(() => {
-                                    this.messageDialog = false;
-                                    this.responseMessage = '';
                                     this.$router.push('/user-settings');
                                 }, 2000);
                                 return;
                             }
                         });
+                    } else {
+                        this.defaultResponse(response.data.message, 'Error', true);
                     }
                 }
             } catch (error) {
-                console.log(error);
+                this.defaultResponse(error.message, 'Error', true);
             }
-        },
-        closeMessageDialog() {
-            this.messageDialog = false;
-            this.responseMessage = "";
         }
     },
 };

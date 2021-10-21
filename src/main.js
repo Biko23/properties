@@ -4,21 +4,19 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
 import VueSession from 'vue-session'
-import VuetifyGoogleAutocomplete from 'vuetify-google-autocomplete';
-// import axios from 'axios'
 
-// const token = localStorage.getItem('token')
-// const user = localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')) : ''
-// const username = user.username
+// import VuetifyGoogleAutocomplete from 'vuetify-google-autocomplete';
 
-// axios.defaults.headers['authorization'] = token
-// axios.defaults.headers['username'] = username
+import BaseDialog from '@/components/BaseDialog.vue'
 
-
+// import BaseSpinner from '@/components/BaseSpinner.vue'
 // To load sharing icons
 import vuetifyIcon from 'vuetify'
 import VueSocialSharing from 'vue-social-sharing'
 // End load sharing icons
+
+Vue.component('base-dialog', BaseDialog)
+// Vue.component('base-spinner', BaseSpinner)
 
 Vue.config.productionTip = false
 

@@ -1,22 +1,11 @@
 <template>
 <div>
+    <base-dialog :message="message" :title="title" :dialogState="state">
+        <template v-slot:button>
+            <v-btn text @click="state = !state">close</v-btn>
+        </template>
+    </base-dialog>
     <v-container id="main-container" fluid>
-        <!-- failure Dialog -->
-        <v-dialog transition="dialog-top-transition" persistent v-model="failureDialog" max-width="600">
-            <template>
-                <v-card>
-                    <v-toolbar color="red" dark>Error</v-toolbar>
-                    <v-card-text class="pt-5">
-                        <p style="font-size: 16px">{{ responseMessage }}</p>
-                    </v-card-text>
-                    <v-card-actions class="justify-end">
-                        <v-btn text @click="closeFailureDialog">close</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </template>
-        </v-dialog>
-        <!-- end Failure Dialog -->
-
         <v-row>
             <v-col cols="12" sm="12" md="6" lg="6">
                 <router-link to="/" style="
@@ -52,7 +41,7 @@
                     <v-container>
                         <v-row>
                             <v-col cols="12" sm="12" md="12">
-                                <v-text-field v-model="loginDetails.username" :rules="[rules.required, rules.min]" label="Username or Email or phone number" placeholder="Username or Email or phone number" solo></v-text-field>
+                                <v-text-field v-model="loginDetails.username" :rules="[rules.required]" label="Username or Email or phone number" placeholder="Username or Email or phone number" solo></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
@@ -123,11 +112,11 @@ export default {
     data: () => ({
         show1: false,
         valid: true,
-        responseMessage: "",
-        failureDialog: false,
+        message: '',
+        title: '',
+        state: false,
         rules: {
-            required: (value) => !!value || "Required.",
-            min: (v) => (v && v.length >= 2) || "Min 3 characters",
+            required: (value) => !!value || "Required."
         },
         loginDetails: {
             username: "",
@@ -136,6 +125,16 @@ export default {
     }),
     methods: {
         ...mapActions(["login", "fetchLoggedUser", "fetchTotalFavoriteCount", "postAUserLog"]),
+        defaultResponse(msg, heading, status) {
+            this.message = msg
+            this.title = heading
+            this.state = status
+            setTimeout(() => {
+                this.message = ""
+                this.title = ""
+                this.state = false
+            }, 3000);
+        },
         async postLoginData() {
             try {
                 if (this.$refs.loginForm.validate()) {
@@ -155,23 +154,14 @@ export default {
                                 sessionStorage.removeItem("redirectPath");
                             });
                         } else if (response.data.status === 0) {
-                            this.failureDialog = true;
-                            this.responseMessage = "Wrong Username and/ or password.";
-                            setTimeout(() => {
-                                this.failureDialog = false;
-                                this.responseMessage = "";
-                            }, 3000);
+                            this.defaultResponse("Wrong Username and/ or password.", 'Error', true);
                         }
                     }
                 }
             } catch (error) {
-                throw new Error("Failed, Please try again");
+                this.defaultResponse(error.message, 'Error', true);
             }
-        },
-        closeFailureDialog() {
-            this.failureDialog = false;
-            this.responseMessage = "";
-        },
+        }
     },
 };
 </script>
