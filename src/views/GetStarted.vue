@@ -53,7 +53,7 @@
             ><br />
             <h3 style="text-align: center">I'm a broker</h3>
             <div style="text-align: center">
-              <v-btn color="primary" @click="checkUserSellerStatus(1)"
+              <v-btn color="primary" @click="assignRole('agent')"
                 >Get started</v-btn
               >
               <br /><br />
@@ -72,7 +72,7 @@
             <br />
             <h3 style="text-align: center">I'm a Landloard</h3>
             <div style="text-align: center">
-              <v-btn color="primary" @click="checkUserSellerStatus(2)"
+              <v-btn color="primary" @click="assignRole('landlord')"
                 >Get started</v-btn
               >
               <br /><br />
@@ -180,17 +180,18 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["loginState", "iAmASeller", "iAmACertifiedSeller"]),
+    ...mapGetters(["loginState", "iAmASeller", "iAmACertifiedSeller", "allRoles"]),
   },
   created() {
+    this.fetchAllUserRoles();
     this.postAUserLog({
       activity: `Visited Get Started Page`,
       button_clicked: "Visit GetStarted Page",
     });
   },
   methods: {
-    ...mapActions(["assignUpdatingUserRole", "postAUserLog"]),
-    checkUserSellerStatus(identifier) {
+    ...mapActions(["assignUpdatingUserRole", "postAUserLog", "fetchAllUserRoles"]),
+    checkUserSellerStatus(roleId) {
       if (this.iAmASeller && this.iAmACertifiedSeller) {
         this.messageDialog = true;
         this.color = "success";
@@ -222,11 +223,24 @@ export default {
           activity: `Visited register a broker/ Landlord Page`,
           button_clicked: "Visit Broker/ Landlord Page",
         });
-        this.assignUpdatingUserRole(identifier).then(() =>
+        this.assignUpdatingUserRole(roleId).then(() =>
           this.$router.push(`/profile`)
         );
       }
     },
+    assignRole(role){
+      try {
+        console.log(role);
+        const foundRole = this.allRoles.map(eachRole => eachRole.name).indexOf(role);
+        console.log(this.allRoles);
+        if(foundRole > -1){
+          const roleId = this.allRoles[foundRole].role_id
+          this.checkUserSellerStatus(roleId);
+        }
+      } catch (error) {
+        console.log(error);   
+      }
+    }
   },
 };
 </script>
