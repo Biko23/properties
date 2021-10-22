@@ -20,7 +20,7 @@ const state = {
     is_certified_product_developer: !!user.is_certified_product_developer,
     is_certified_investor: !!user.is_certified_investor,
     is_certified_professional_service_provider: !!user.is_certified_professional_service_provider,
-    roles: user.roles,
+    roles: [],
     userRoleIdentifier: 1
 }
 
@@ -125,19 +125,20 @@ const actions = {
     assignUpdatingUserRole({ commit }, userRoleIdentifier){
         commit("setUserRoleIdentifier", userRoleIdentifier);
     },
-    async updateUser(_, userDetails) { //update user profile and assign a role
+    async updateUser({ state }, userDetails) { //update user profile and assign a role
         try {
             // agent/ landlord
             // const userRole = state.roles.filter(role => role.name === ("Seller" || "seller" || "SELLER"))
             // userDetails.role_id = userRole[0].role_id
-            let userRole = 0;
-            if(state.userRoleIdentifier === 1){
-                userRole = state.roles.filter(role => role.name === ("agent" || "Agent" || "AGENT"));
-                userDetails.role_id = userRole[0].role_id
-            } else if (state.userRoleIdentifier === 2){
-                userRole = state.roles.filter(role => role.name === ("landlord" || "Landlord" || "LANDLORD"));
-                userDetails.role_id = userRole[0].role_id
-            }
+            // let userRole = 0;
+            // if(state.userRoleIdentifier === 1){
+            //     userRole = state.roles.filter(role => role.name === ("agent" || "Agent" || "AGENT"));
+            //     userDetails.role_id = userRole[0].role_id
+            // } else if (state.userRoleIdentifier === 2){
+            //     userRole = state.roles.filter(role => role.name === ("landlord" || "Landlord" || "LANDLORD"));
+            //     userDetails.role_id = userRole[0].role_id
+            // }
+            userDetails.role_id = state.userRoleIdentifier
             const response = await AuthService.updateUserProfile(userDetails);
             return response;
         } catch (error) {
@@ -220,7 +221,6 @@ const actions = {
         }
         catch (error) {
             console.log(error);
-            // throw new Error(error);
         }
     }
 }
@@ -251,7 +251,7 @@ const mutations = {
     setUserRoles: (state, userRoles) => state.roles = userRoles.map(role => {
         return {
             role_id: role.role_id,
-            name: role.name
+            name: (role.name).toLowerCase()
         }
     }),
     setUserRoleIdentifier: (state, userRoleIdentifier) => state.userRoleIdentifier = userRoleIdentifier
