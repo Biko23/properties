@@ -10,12 +10,6 @@
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>
 
-      <v-toolbar-title class="telephone"
-        >Tel No. (+256) 782-456-789</v-toolbar-title
-      >
-
-      <v-spacer></v-spacer>
-      <v-spacer></v-spacer>
       <v-btn icon 
         v-if="loginState && currentUserFavoriteTotalCount > 0" 
         @click="navigateToFavoriteScreen" 

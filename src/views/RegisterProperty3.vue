@@ -1,36 +1,11 @@
 <template>
 <div class="main-div">
+    <base-dialog :message="message" :title="title" :dialogState="state">
+        <template v-slot:button>
+            <v-btn text @click="state = !state">close</v-btn>
+        </template>
+    </base-dialog>
     <v-container>
-        <!-- success Dialog -->
-        <v-dialog transition="dialog-top-transition" persistent v-model="messageDialog" max-width="600">
-            <template>
-                <v-card>
-                    <v-toolbar color="success" dark>Success</v-toolbar>
-                    <v-card-text>
-                        {{responseMessage}}
-                    </v-card-text>
-                    <v-card-actions class="justify-end">
-                        <v-btn text @click="closeDialog">close</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </template>
-        </v-dialog>
-        <!-- end Success Dialog -->
-        <!-- failure Dialog -->
-        <v-dialog transition="dialog-top-transition" persistent v-model="failureDialog" max-width="600">
-            <template>
-                <v-card>
-                    <v-toolbar color="red" dark>Error</v-toolbar>
-                    <v-card-text>
-                        {{responseMessage}}
-                    </v-card-text>
-                    <v-card-actions class="justify-end">
-                        <v-btn text @click="closeFailureDialog">close</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </template>
-        </v-dialog>
-        <!-- end Failure Dialog -->
         <div style="text-align: center">
             <h3 style="color: white">Add A property</h3>
             <h4 style="color: #b9cbdb">Final Step 4/4</h4>
@@ -118,7 +93,9 @@
                             </v-btn>
                         </router-link>
                         <div>
-                            <base-spinner v-if="submitting" />
+                             <v-col cols="12" sm="12" md="12" v-if="submitting">
+                                <base-spinner />
+                            </v-col>
                             <v-btn 
                                 v-else
                                 style="background-color: #3b6ef3; width: 200px" 
@@ -159,10 +136,10 @@ export default {
     name: "RegisterProperty3",
     data: () => ({
         valid: true,
-        responseMessage: '',
-        messageDialog: false,
+        message: '',
+        title: '',
+        state: false,
         submitting: false,
-        failureDialog: false,
         propertyRules: {
             landmark_name: value => !!value || "Name is required.",
             distance_from_property: value => !!value || "Distance is required",
@@ -206,44 +183,63 @@ export default {
             );
             this.property.landmarkVisuals.push(...files);
         },
+        defaultResponse(msg, heading, status) {
+            this.message = msg
+            this.title = heading
+            this.state = status
+
+            setTimeout(() => {
+                this.message = ""
+                this.title = ""
+                this.state = false
+            }, 3000);
+        },
         async submitFinalData() {
             if (this.$refs.propertyForm3.validate()) {
                 this.submitting = true;
                 await this.addPropertyDataFromPageThird(this.property);
-                const response = await this.submitAllPropertyData();
-                if (response.status === 200 || response.status === 201) {
+                const { 
+                        value, location, feature, landmark, neighborhood, propertyVisuals 
+                    } = await this.submitAllPropertyData();
+
+                if (
+                    value.status === 201 && 
+                    location.status === 201 &&
+                    feature.status === 201 &&
+                    landmark.status === 201 &&
+                    neighborhood.status === 201 &&
+                    propertyVisuals.status === 201 
+                ) {
                     this.submitting = false;
                     this.postAUserLog({
                         activity: "Registered a property",
                         button_clicked: "Create Property Btn"
                     });
-                    this.messageDialog = true;
-                    this.responseMessage = 'Property created successfully. Now waiting SPL approval!!';
-                    return;
+                    this.defaultResponse('Property created successfully. Now waiting SPL approval!!', 'Success', true);
+                     setTimeout(() => {
+                        this.$router.push("/properties-for-sale");
+                    }, 3000);
                 }
 
-                if (response.status !== 200 || response.status !== 201) {
+                if (
+                    value.status === 200 || 
+                    location.status === 200 ||
+                    feature.status === 200 ||
+                    landmark.status === 200 ||
+                    neighborhood.status === 200 ||
+                    propertyVisuals.status === 200
+                ) {
                     this.submitting = false;
                     this.postAUserLog({
                         activity: "Failure on registering a the Property",
                         button_clicked: "Create Property Btn"
                     });
-                    this.failureDialog = true;
-                    this.responseMessage = 'Failed to create property. Please try again!!';
+                    this.defaultResponse('Property partially created or failed to be created. Try again!!', 'Error', true);
+                    setTimeout(() => {
+                        this.$router.push("/properties-for-sale");
+                    }, 3000);
                 }
             }
-        },
-        closeDialog() {
-            this.messageDialog = false;
-            setTimeout(() => {
-                this.$router.push("/properties-for-sale");
-            }, 100);
-        },
-        closeFailureDialog() {
-            this.failureDialog = false;
-            setTimeout(() => {
-                this.$router.push("/register");
-            }, 100);
         }
     },
     computed: {

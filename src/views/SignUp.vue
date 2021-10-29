@@ -118,16 +118,7 @@ export default {
         title: '',
         state: false,
         valid: true,
-        userSignupDetails: {
-            name: "",
-            email: "",
-            telephone: "",
-            username: "",
-            password: "",
-            confirmPassword: "",
-            created_by: "Isaac",
-            updated_by: "Isaac"
-        },
+        userSignupDetails: {},
         rules: {
             required: value => !!value || "Required.",
             min: v => (v && v.length >= 6) || "Min 8 characters",
@@ -142,7 +133,7 @@ export default {
         phoneNumberRules: [
             v => !!v || "Phone Number Required",
             v => (v && v.length >= 10) || "Number should not be less than 9",
-            v => (v && v.length < 11) || "Number should not exceed 10 characters",
+            v => (v && v.length < 16) || "Number should not exceed 15 characters",
             v => /[0-9]/.test(v) || "Number should not contains letters"
         ],
     }),
@@ -162,6 +153,8 @@ export default {
         async postNewUserData() {
             try {
                 if (this.$refs.signupForm.validate()) {
+                    this.userSignupDetails.created_by = this.userSignupDetails.username;
+                    this.userSignupDetails.updated_by = this.userSignupDetails.username;
                     const response = await this.signupANewUser(this.userSignupDetails);
                     if (response.status === 201) {
                         this.defaultResponse('Account successfully created', 'Success', true);

@@ -27,8 +27,6 @@ export default {
     height: 40px;
     width: 40px;
     position: absolute;
-    top: 10%;
-    left: 10%;
     transform: translate3d(-50%, -50%, 0);
     will-change: transform;
 }

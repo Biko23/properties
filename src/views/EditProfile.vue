@@ -117,15 +117,11 @@ export default {
                 if (this.$refs.moreUserDataForm.validate()) {
                     const response = await this.updateUserProfile(this.userData);
                     if (response.data.status == 1) {
-                        this.fetchLoggedUser().then((userData) => {
-                            if (userData.data.status === 1) {
-                                this.defaultResponse('Account details updated successfully!!', 'Success', true);
-                                setTimeout(() => {
-                                    this.$router.push('/user-settings');
-                                }, 2000);
-                                return;
-                            }
-                        });
+                        this.fetchLoggedUser();
+                        this.defaultResponse('Account details updated successfully!!', 'Success', true);
+                        setTimeout(() => {
+                            this.$router.push('/user-settings');
+                        }, 2000);
                     } else {
                         this.defaultResponse(response.data.message, 'Error', true);
                     }

@@ -35,6 +35,7 @@
             "
           >
             Stanbic Bank Uganda, Crested Towers <br />
+            Tel No. (+256) 782-456-789 <br />
             Plot 17, Hannington Road, <br /> 
             Kampala - Uganda
           </p>

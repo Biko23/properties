@@ -192,11 +192,11 @@ const actions = {
                 updated_by: rootState.AuthModule.currentUser.username
             }
 
-            await PropertyLocationService.postAPropertyLocation(propertyLocation);
-            await FeatureTypeLookupService.postAPropertyFeatures(selectedPropertyFeatures);
-            await PropertyNearbyLandmarkService.postAPropertyNearbyLandmark(nearbyLandmarkVisuals);
-            await NeighborhoodVisualsService.postNeighborhoodVisuals(neighborhoodVisuals);
-            await PropertyVisualsService.postPropertyVisuals(propertyVisuals);
+            const locationResponse = await PropertyLocationService.postAPropertyLocation(propertyLocation);
+            const featureTypeResponse = await FeatureTypeLookupService.postAPropertyFeatures(selectedPropertyFeatures);
+            const nearbyLandmarkResponse = await PropertyNearbyLandmarkService.postAPropertyNearbyLandmark(nearbyLandmarkVisuals);
+            const neighborhoodVisualsResponse = await NeighborhoodVisualsService.postNeighborhoodVisuals(neighborhoodVisuals);
+            const propertyVisualsResponse = await PropertyVisualsService.postPropertyVisuals(propertyVisuals);
             // Check to either submit to the property_value or property_rental_value
             let propertyValueResponse = null;
 
@@ -205,14 +205,27 @@ const actions = {
             } else if(state.propertySubmissionState == 2) {
                propertyValueResponse = await PropertyRentalValueService.postPropertyRentalValue(propertyRentalValue);
             }  
+                
+            return {
+                value: propertyValueResponse,
+                location: locationResponse,
+                feature: featureTypeResponse,
+                landmark: nearbyLandmarkResponse,
+                neighborhood: neighborhoodVisualsResponse,
+                propertyVisuals: propertyVisualsResponse
+            };
 
-            if (propertyValueResponse.status === 200 || propertyValueResponse.status === 201) {
-                return propertyValueResponse;
-            }
+            // if (propertyValueResponse.status === 201) {
+            //     console.log('Location', locationResponse);
+            //     console.log('feature', featureTypeResponse);
+            //     console.log('nearbyLandmark', nearbyLandmarkResponse);
+            //     console.log('neighborhoodvisuals', neighborhoodVisualsResponse);  
+            //     console.log('propertyvisuals', propertyVisualsResponse);
+
+            //     return propertyValueResponse;
+            // }
         } catch (error) {
             console.log(error);
-            // this.$swal('ooh!','Unable to finish!','error');
-            // throw new Error('Failed to fully create a property');
         }
     },
     async getListedPropertyVisualsByUsername({ commit, rootState }) {

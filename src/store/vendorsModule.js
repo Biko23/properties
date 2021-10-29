@@ -21,9 +21,9 @@ const actions = {
         try {
             const response = await vendorsBackOfficeService.getVendorsCategories();
             commit('setVendorCategories', response.data);
+            return response;
         } catch (error) {
             console.log(error);
-            // throw new Error("Failed on loading current Vendors")
         }
     },
     async postVendor(_ , newVendor) {

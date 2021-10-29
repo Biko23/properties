@@ -1,5 +1,10 @@
 <template>
   <div>
+    <base-dialog :message="message" :title="title" :dialogState="state">
+        <template v-slot:button>
+            <v-btn text @click="state = !state">close</v-btn>
+        </template>
+    </base-dialog>
     <v-container>
       <v-row>
         <v-col cols="12" sm="12" md="12" xl="12">
@@ -38,7 +43,6 @@
                     placeholder="Telephone number"
                     solo
                     v-model="newVendor.vendor_primary_phone_number"
-                    readonly
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -91,21 +95,12 @@ export default {
   data: () => ({
     vendorCategories: [],
     editedIndex: -1,
+    message: '',
+    title: '',
+    state: false,
     newVendor: {
-      vendor_name: "",
-      vendor_primary_phone_number: "",
-      vendor_secondary_phone_number: "",
-      vendor_primary_email: "",
-      vendor_secondary_email: "",
-      category_type: "",
     },
     defaultItem: {
-      vendor_name: "",
-      vendor_primary_phone_number: "",
-      vendor_secondary_phone_number: "",
-      vendor_primary_email: "",
-      vendor_secondary_email: "",
-      category_type: "",
     },
     valid: true,
     vendorRules: {
@@ -121,13 +116,34 @@ export default {
   },
 
   created() {
-    this.fetchVendorsCategories();
+    this.getVendorsCategories();
   },
   mounted() {
     this.loadVendorData();
   },
   methods: {
     ...mapActions(["fetchVendorsCategories", "postVendor", "postAUserLog"]),
+    defaultResponse(msg, heading, status) {
+      this.message = msg
+      this.title = heading
+      this.state = status
+
+      setTimeout(() => {
+        this.message = ""
+        this.title = ""
+        this.state = false
+      }, 3000);
+    },
+    async getVendorsCategories(){
+      try {
+        const response = await this.fetchVendorsCategories();
+        if(response.data.hasOwnProperty('status')){
+          this.defaultResponse(response.data.message, 'Error', true);
+        }
+      } catch (error) {
+        this.defaultResponse(error.message, 'Error', true);
+      }
+    },
     async postingVendor() {
        this.postAUserLog({
             activity: `Registered as a Service provider Page`,
@@ -135,11 +151,16 @@ export default {
         });
       try {
         const response = await this.postVendor(this.newVendor);
-        if (response.status === 201 || response.status === 200) {
-          this.$router.push("/register");
+        if (response.status === 201) {
+          this.defaultResponse('Request successfully sent. Wait for approval from SPL', 'Success', true);
+          setTimeout(() => {
+             this.$router.push("/");
+          }, 3000);
+        } else {
+          this.defaultResponse(response.data.message, 'Error', true);
         }
       } catch (error) {
-        console.log(error);
+        this.defaultResponse(error.message, 'Error', true);
       }
     },
     loadVendorData() {
