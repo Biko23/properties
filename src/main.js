@@ -7,16 +7,16 @@ import VueSession from 'vue-session'
 
 // import VuetifyGoogleAutocomplete from 'vuetify-google-autocomplete';
 
+import BaseSpinner from '@/components/BaseSpinner.vue'
 import BaseDialog from '@/components/BaseDialog.vue'
 
-// import BaseSpinner from '@/components/BaseSpinner.vue'
 // To load sharing icons
 import vuetifyIcon from 'vuetify'
 import VueSocialSharing from 'vue-social-sharing'
 // End load sharing icons
 
 Vue.component('base-dialog', BaseDialog)
-// Vue.component('base-spinner', BaseSpinner)
+Vue.component('base-spinner', BaseSpinner)
 
 Vue.config.productionTip = false
 

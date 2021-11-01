@@ -417,7 +417,7 @@ export default {
             try {
                 await setTimeout(()=>{
                     this.fetchAutoCompleteWords();
-                },500);
+                },2000);
             } catch (error) {
                 console.log(error);
             }

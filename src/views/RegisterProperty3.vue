@@ -93,7 +93,7 @@
                             </v-btn>
                         </router-link>
                         <div>
-                             <v-col cols="12" sm="12" md="12" v-if="submitting">
+                            <v-col cols="12" sm="12" md="12" v-if="submitting">
                                 <base-spinner />
                             </v-col>
                             <v-btn 
@@ -129,8 +129,6 @@
 import BottonNav from "../components/BottonNav.vue";
 import { mapGetters, mapActions } from "vuex";
 import UploadImages from "vue-upload-drop-images";
-import BaseSpinner from '../components/BaseSpinner.vue';
-
 
 export default {
     name: "RegisterProperty3",
@@ -158,8 +156,7 @@ export default {
     }),
     components: {
         BottonNav,
-        UploadImages,
-        BaseSpinner
+        UploadImages
     },
     created() {
         this.postAUserLog({

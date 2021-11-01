@@ -1,5 +1,10 @@
 <template>
 <div>
+    <base-dialog :message="message" :title="title" :dialogState="state">
+      <template v-slot:button>
+        <v-btn text @click="state = !state">close</v-btn>
+      </template>
+    </base-dialog>
     <v-container>
         <v-row>
             <v-col>
@@ -72,6 +77,9 @@ export default {
         Button
     },
     data: () => ({
+        message: '',
+        title: '',
+        state: false,
         tab: null,
         listedHeaders: [{
                 text: 'Property Id',
@@ -133,46 +141,107 @@ export default {
             "updatePropertyVisualNotAvailabilityStatus",
             "postAUserLog"
         ]),
+        defaultResponse(msg, heading, status) {
+            this.message = msg
+            this.title = heading
+            this.state = status
+            setTimeout(() => {
+                this.message = ""
+                this.title = ""
+                this.state = false
+            }, 2000);
+        },
         async changeAvailabilityToNotAvailable(property) {
             try {
                 await this.updatePropertyVisualAvailabilityStatus(property.property_id)
-                    .then(() => {
+                    .then(response => {
                         const payload = {
                             activity: "Moved property to Unavailable section",
                             button_clicked: "Unlist Button"
                         }
-                        this.postAUserLog(payload);
-                        this.getUnlistedPropertyVisualsByUsername();
-                        });
-
+                        if(
+                            response.visualsResponse.data.status === 1 && 
+                            response.propertyResponse.data.status === 1
+                        ){
+                            this.postAUserLog(payload);
+                            this.getUnlistedPropertyVisualsByUsername();
+                            this.defaultResponse('Property successfully unlisted from market place', 'Success', true);
+                        } else {
+                            response.visualsResponse.data.status == 0 ? 
+                            this.defaultResponse(response.visualsResponse.data.message, 'Error', true) :
+                            this.defaultResponse(response.propertyResponse.data.message, 'Error', true);
+                        }
+                    });
             } catch (error) {
-                throw new Error(error);
+                this.defaultResponse(error.message, 'Error', true);
             }
         },
         async changeAvailabilityToAvailable(property) {
             try {
                 await this.updatePropertyVisualNotAvailabilityStatus(property.property_id)
-                    .then(() =>{
+                    .then((response) =>{
                         const payload = {
                             activity: "Moved property to Available section",
                             button_clicked: "Unlist Button"
                         }
-                        this.postAUserLog(payload);
-                        this.getListedPropertyVisualsByUsername()
+                        if(
+                            response.visualsResponse.data.status === 1 && 
+                            response.propertyResponse.data.status === 1
+                        ){
+                            this.postAUserLog(payload);
+                            this.getListedPropertyVisualsByUsername();
+                            this.defaultResponse('Property successfully listed on market place', 'Success', true);
+                        } else {
+                            response.visualsResponse.data.status == 0 ? 
+                            this.defaultResponse(response.visualsResponse.data.message, 'Error', true) :
+                            this.defaultResponse(response.propertyResponse.data.message, 'Error', true);
+                        }
                     });
             } catch (error) {
-                throw new Error(error);
+                this.defaultResponse(error.message, 'Error', true);
             }
-        }
+        },
+        async fetchListedProperties(){
+            try {
+                const response = await this.getListedPropertyVisualsByUsername();
+                console.log(response);
+                if(response.data.status == 0){
+                    this.defaultResponse(response.data.message, 'Error', true);
+                }
+            } catch (error) {
+                this.defaultResponse(error.message, 'Error', true);
+            }
+        },
+        async fetchUnlistedProperties(){
+            try {
+                const response = await this.getUnlistedPropertyVisualsByUsername();
+                console.log(response);
+                if(response.data.status == 0){
+                    this.defaultResponse(response.data.message, 'Error', true);
+                }
+            } catch (error) {
+                this.defaultResponse(error.message, 'Error', true);
+            }
+        },
+        async fetchUncertifiedProperties(){
+            try {
+                const response = await this.getUncertifiedPropertyVisualsByUsername();
+                if(response.data.status == 0){
+                    this.defaultResponse(response.data.message, 'Error', true);
+                }
+            } catch (error) {
+                this.defaultResponse(error.message, 'Error', true);
+            }
+        },
     },
     created() {
-         this.postAUserLog({
+        this.postAUserLog({
             activity: "Visited Seller Details page",
             button_clicked: "Seller Details Page"
         })
-        this.getListedPropertyVisualsByUsername();
-        this.getUnlistedPropertyVisualsByUsername();
-        this.getUncertifiedPropertyVisualsByUsername();
+        this.fetchListedProperties();
+        this.fetchUnlistedProperties();
+        this.fetchUncertifiedProperties();
     }
 }
 </script>

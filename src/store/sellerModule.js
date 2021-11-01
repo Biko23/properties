@@ -55,8 +55,9 @@ const actions = {
             const response = await PropertyTypeService.getPropertyListingTypes();
             commit('setRentPropertyCategory', response.data.result);
             commit('setSalePropertyCategory', response.data.result);
+            return response;
         } catch (error) {
-            console.log(error);
+            throw new Error(error.message);
         }
     },
     async fetchPropertyTypes({ commit }) { // Apartments, Houses, land, Banglow,  many more
@@ -103,9 +104,9 @@ const actions = {
             }
             const response = await PropertyService.postAProperty(newProperty);
             commit('setCreatedProperty', response.data.result);
+            return response;
         } catch (error) {
-            console.log(error);
-            // throw new Error('Failed to save property details')
+            throw new Error(error.message)
         }
     },
     // First page logic to register property for rent
@@ -214,16 +215,6 @@ const actions = {
                 neighborhood: neighborhoodVisualsResponse,
                 propertyVisuals: propertyVisualsResponse
             };
-
-            // if (propertyValueResponse.status === 201) {
-            //     console.log('Location', locationResponse);
-            //     console.log('feature', featureTypeResponse);
-            //     console.log('nearbyLandmark', nearbyLandmarkResponse);
-            //     console.log('neighborhoodvisuals', neighborhoodVisualsResponse);  
-            //     console.log('propertyvisuals', propertyVisualsResponse);
-
-            //     return propertyValueResponse;
-            // }
         } catch (error) {
             console.log(error);
         }
@@ -232,52 +223,58 @@ const actions = {
         try {
             let username = rootState.AuthModule.currentUser.username;
             const response = await PropertyVisualsService.getListedPropertyVisualsByUsername(username);
-            commit('setCurrentUserListedPropertyVisuals', response.data.result);
+            if(response.data.status == 1){
+                commit('setCurrentUserListedPropertyVisuals', response.data.result);
+            }
+            return response;
         } catch (error) {
-            console.log(error);
-            // throw new Error(error);
+            throw new Error(error.message);
         }
     },
     async getUnlistedPropertyVisualsByUsername({ commit, rootState }) {
         try {
             let username = rootState.AuthModule.currentUser.username;
             const response = await PropertyVisualsService.getUnlistedPropertyVisualsByUsername(username);
-            commit('setCurrentUserUnlistedPropertyVisuals', response.data.result);
+            if(response.data.status == 1){
+                commit('setCurrentUserUnlistedPropertyVisuals', response.data.result);
+            }
+            return response;
         } catch (error) {
-            console.log(error);
-            // throw new Error(error);
+            throw new Error(error.message);
         }
     },
     async getUncertifiedPropertyVisualsByUsername({ commit, rootState }) {
         try {
             let username = rootState.AuthModule.currentUser.username;
             const response = await PropertyVisualsService.getUncertifiedPropertyVisualsByUsername(username);
-            commit('setCurrentUserUncertifiedPropertyVisuals', response.data.result);
+            if(response.data.status == 1){
+                commit('setCurrentUserUncertifiedPropertyVisuals', response.data.result);
+            }
+            return response;
         } catch (error) {
-            console.log(error);
-            // throw new Error(error);
+            throw new Error(error.message);
         }
     },
     async updatePropertyVisualAvailabilityStatus({ commit }, property_id) {
         try {
             const response = await PropertyVisualsService.updatePropertyVisualAvailabilityStatus(property_id);
-            if (response.visualsResponse.status === 200) {
+            if (response.visualsResponse.data.status === 1) {
                 commit('updatePropertyVisualsList', property_id);
             }
+            return response;
         } catch (error) {
-            console.log(error);
-            // throw new Error(error);
+            throw new Error(error.message);
         }
     },
     async updatePropertyVisualNotAvailabilityStatus({ commit }, property_id) {
         try {
             const response = await PropertyVisualsService.updatePropertyVisualAvailabilityStatus(property_id);
-            if (response.visualsResponse.status === 200) {
+            if (response.visualsResponse.data.status === 1) {
                 commit('updatePropertyVisualsUnlist', property_id);
             }
+            return response;
         } catch (error) {
-            console.log(error);
-            // throw new Error(error);
+            throw new Error(error.message);
         }
     }
 }

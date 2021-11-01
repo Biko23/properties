@@ -65,6 +65,7 @@ const actions = {
             const is_listed_for_id = rootState.SellerModule.saleCategory[0].id
             const response = await PropertyService.getAllPropertyForSale(is_listed_for_id);
             commit('setPropertyForSale', response.data.result);
+            return response;
         } catch (error) {
             console.log(error);
             // throw new Error("Failed on loading current properties")
@@ -75,6 +76,7 @@ const actions = {
             const is_listed_for_id = rootState.SellerModule.rentCategory[0].id
             const response = await PropertyService.getAllPropertyForRent(is_listed_for_id);
             commit('setPropertyForRent', response.data.result);
+            return response;
         } catch (error) {
             console.log(error);
             // throw new Error("Failed on loading current properties")
@@ -206,8 +208,7 @@ const actions = {
             const searchList = mergedList.map(eachItem => eachItem.option);
             commit("setSearchList", searchList);
         } catch (error) {
-            console.log(error);
-            // throw new Error("Failed to fetch your data");
+            throw new Error(error.message);
         }
     },
     // Viewed Properties

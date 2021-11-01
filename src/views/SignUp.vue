@@ -62,7 +62,8 @@
                         </v-row>
                         <v-row>
                             <v-col cols="12" sm="12" md="12">
-                                <v-btn color="primary" :disabled="!valid" @click="postNewUserData" block> Sign Up </v-btn>
+                                 <base-spinner v-if="submitting" />
+                                <v-btn color="primary" :disabled="!valid" @click="postNewUserData" block v-else> Sign Up </v-btn>
                             </v-col>
                         </v-row>
                         <!-- <v-row>
@@ -114,6 +115,7 @@ export default {
     name: "SignUp",
     data: () => ({
         show1: false,
+        submitting: false,
         message: '',
         title: '',
         state: false,
@@ -155,8 +157,10 @@ export default {
                 if (this.$refs.signupForm.validate()) {
                     this.userSignupDetails.created_by = this.userSignupDetails.username;
                     this.userSignupDetails.updated_by = this.userSignupDetails.username;
+                    this.submitting = true;
                     const response = await this.signupANewUser(this.userSignupDetails);
                     if (response.status === 201) {
+                        this.submitting = false;
                         this.defaultResponse('Account successfully created', 'Success', true);
                         setTimeout(() => {
                             this.$router.push('/login');
@@ -164,10 +168,12 @@ export default {
                         return;
                     }
                     if(response.status === 200) {
+                        this.submitting = false;
                         this.defaultResponse(response.data.message, 'Error', true);
                     }
                 }
             } catch (error) {
+                this.submitting = false;
                 this.defaultResponse(error.message, 'Error', true);
             }
         },

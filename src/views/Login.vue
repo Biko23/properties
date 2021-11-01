@@ -51,7 +51,8 @@
                         </v-row>
                         <v-row>
                             <v-col cols="12" sm="12" md="12">
-                                <v-btn color="primary" :disabled="!valid" @click="postLoginData" large block>
+                                <base-spinner v-if="submitting"/>
+                                <v-btn color="primary" :disabled="!valid" @click="postLoginData" large block v-else>
                                     Login
                                 </v-btn>
                             </v-col>
@@ -112,6 +113,7 @@ export default {
     data: () => ({
         show1: false,
         valid: true,
+        submitting: false,
         message: '',
         title: '',
         state: false,
@@ -138,8 +140,10 @@ export default {
         async postLoginData() {
             try {
                 if (this.$refs.loginForm.validate()) {
+                    this.submitting = true;
                     const response = await this.login(this.loginDetails);
                     if (response.status === 200) {
+                        this.submitting = false;
                         if (response.data.hasOwnProperty("token")) {
                             this.fetchLoggedUser().then(() => {                                
                                this.fetchTotalFavoriteCount();
@@ -159,6 +163,7 @@ export default {
                     }
                 }
             } catch (error) {
+                this.submitting = false;
                 this.defaultResponse(error.message, 'Error', true);
             }
         }

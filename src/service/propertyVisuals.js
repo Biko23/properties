@@ -43,8 +43,7 @@ export default {
       const response = await API.marketPlaceApi.get(`/property-visuals/display-listed-property-by-username/${username}`);
       return response;
     } catch (error) {
-      console.log(error);
-      // throw new Error(error);
+      throw new Error(error);
     }
   },
   async getUnlistedPropertyVisualsByUsername(username) {
@@ -52,8 +51,7 @@ export default {
       const response = await API.marketPlaceApi.get(`/property-visuals/display-unlisted-property-by-username/${username}`);
       return response;
     } catch (error) {
-      console.log(error);
-      // throw new Error(error);
+      throw new Error(error.message);
     }
   },
   async updatePropertyVisualAvailabilityStatus(property_id){
@@ -61,16 +59,15 @@ export default {
       const visualsResponse = await API.marketPlaceApi.put(`/property-visuals/property-visual-available-or-unavailable/${property_id}`);
       const propertyResponse = await API.marketPlaceApi.put(`/properties/change-property-available-status/${property_id}`);
       if(
-        (visualsResponse.status === 200 || visualsResponse.status === 201) &&
-        (propertyResponse.status === 200 || propertyResponse.status === 201)
+        (visualsResponse.status === 200) &&
+        (propertyResponse.status === 200)
         ){
           return {
             visualsResponse, propertyResponse
           }
         }
     } catch (error) {
-      console.log(error);
-      // throw new Error(error);
+      throw new Error(error.message);
     }
   },
   async getPropertyVisualsByPropertyId(property_id) {

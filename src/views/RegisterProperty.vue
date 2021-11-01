@@ -1,5 +1,10 @@
 <template>
   <div id="main-div">
+    <base-dialog :message="message" :title="title" :dialogState="state">
+      <template v-slot:button>
+        <v-btn text @click="state = !state">close</v-btn>
+      </template>
+    </base-dialog>
     <v-container>
       <div style="text-align: center">
         <h3 style="color: white">Add A property</h3>
@@ -112,10 +117,12 @@
                   justify-content: flex-end;
                 "
               >
+                <base-spinner style="margin-left: 40px;" v-if="submitting"/>
                 <v-btn
                   style="background-color: #3b6ef3; width: 200px"
                   :disabled="!valid"
                   @click="storePropertyData"
+                  v-else
                 >
                   <span
                     style="
@@ -153,6 +160,10 @@ export default {
     UploadImages
   },
   data: () => ({
+    submitting: false,
+    message: '',
+    title: '',
+    state: false,
     property: {
       type: "",
       location: "",
@@ -173,16 +184,7 @@ export default {
         return !!value || "Features are required.";
       }, 
       imageSelectCheck: (value) => !!value || 'At least one image is required.'
-      // visuals(value) {
-      //   if (value instanceof Array && value.length == 0) {
-      //     return "Visuals are required";
-      //   }
-      //   return !!value || "Visuals are required.";
-      // },
     },
-    //  imageRules: [
-    //     value => !value || value.size < 2000000 || 'Avatar size should be less than 2 MB!'
-    // ],
     hide: true,
   }),
   methods: {
@@ -198,11 +200,33 @@ export default {
       this.property.visuals.splice(0, this.property.visuals.length);
       this.property.visuals.push(...files);
     },
+    defaultResponse(msg, heading, status) {
+      this.message = msg
+      this.title = heading
+      this.state = status
+      setTimeout(() => {
+          this.message = ""
+          this.title = ""
+          this.state = false
+      }, 3000);
+    },
     storePropertyData() {
       if (this.$refs.propertyForm1.validate()) {
-        this.addPropertyDataFromPageOne(this.property).then(() =>
-          this.$router.push("/register2")
-        );
+        this.submitting = true
+        this.addPropertyDataFromPageOne(this.property)
+          .then(response => {
+             this.submitting = false
+              if(response.status == 201){
+                this.$router.push("/register2");
+              } else {
+                this.defaultResponse(response.data.message, 'Error', true);
+              }
+            }
+          )
+          .catch(error => {
+             this.submitting = false
+            this.defaultResponse(error.message, 'Error', true)
+            });
       }
     },
   },

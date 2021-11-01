@@ -1,27 +1,11 @@
 <template>
   <div>
-    <v-container id="container" fluid>
-      <!-- favorite Dialog -->
-      <v-dialog
-        transition="dialog-top-transition"
-        persistent
-        v-model="favoriteDialog"
-        max-width="600"
-      >
-        <template>
-          <v-card>
-            <v-toolbar color="blue" dark>Warning</v-toolbar>
-            <v-card-text class="pt-5">
-              <p style="font-size: 16px">{{ alertMessage }}</p>
-            </v-card-text>
-            <v-card-actions class="justify-end">
-              <v-btn text @click="closeFavoriteDialog">ok</v-btn>
-            </v-card-actions>
-          </v-card>
+    <base-dialog :message="message" :title="title" :dialogState="state">
+        <template v-slot:button>
+            <v-btn text @click="state = !state">close</v-btn>
         </template>
-      </v-dialog>
-      <!-- end favorite Dialog -->
-
+    </base-dialog>
+    <v-container id="container" fluid>
       <v-row id="property-header">
         <div id="result-total">
           <h3>Properties</h3>
@@ -169,11 +153,12 @@ export default {
   },
   data() {
     return {
-      favoriteDialog: "",
-      alertMessage: false,
       selection: null,
       startPrice: 0,
-      endPrice: null
+      endPrice: null,
+      message: '',
+      title: '',
+      state: false
     };
   },
   methods: {
@@ -185,6 +170,16 @@ export default {
       "removePropertyFromFavorites",
       "postAUserLog"
     ]),
+    defaultResponse(msg, heading, status) {
+      this.message = msg
+      this.title = heading
+      this.state = status
+      setTimeout(() => {
+          this.message = ""
+          this.title = ""
+          this.state = false
+      }, 3000);
+    },
     commaFormatted(amount) {
       let price = amount.toLocaleString("en-US");
       return price;
@@ -249,24 +244,25 @@ export default {
         });
     },
     showLoginMessage() {
-      this.favoriteDialog = true;
-      this.alertMessage = "Please login to add this property to your favorites";
-      setTimeout(() => {
-        this.favoriteDialog = false;
-        this.alertMessage = "";
-      }, 1500);
-    },
-    closeFavoriteDialog() {
-      this.favoriteDialog = false;
-      this.alertMessage = "";
+      this.defaultResponse("Please login to add this property to your favorites", 'Error', true);
     },
     async fetchAllProperties() {
       try {
-        await this.fetchPropertyCategories().then(() =>
-          this.fetchPropertyForSale()
-        );
+        await this.fetchPropertyCategories()
+        .then(response => {
+          if(response.data.status == 1){
+            this.fetchPropertyForSale()
+            .then(sales => {
+              if(sales.data.status == 0){
+                this.defaultResponse(sales.data.message, 'Error', true);
+              }
+            }).catch(error => this.defaultResponse(error.message, 'Error', true))
+          } else {
+            this.defaultResponse(response.data.message, 'Error', true);
+          }
+        })
       } catch (error) {
-        throw new Error("Failed to fetch data");
+        this.defaultResponse(error.message, 'Error', true);
       }
     },
     resetSelection() {

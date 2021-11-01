@@ -1,26 +1,11 @@
 <template>
   <div>
+    <base-dialog :message="message" :title="title" :dialogState="state">
+      <template v-slot:button>
+        <v-btn text @click="state = !state">close</v-btn>
+      </template>
+    </base-dialog>
     <v-container>
-      <!-- Like Dialog -->
-      <v-dialog
-        transition="dialog-top-transition"
-        persistent
-        v-model="likeDialog"
-        max-width="600"
-      >
-        <template>
-          <v-card>
-            <v-toolbar color="blue" dark>Alert</v-toolbar>
-            <v-card-text class="pt-5">
-              <p style="font-size: 16px">{{ alertMessage }}</p>
-            </v-card-text>
-            <v-card-actions class="justify-end">
-              <v-btn text @click="closeLikedDialog">ok</v-btn>
-            </v-card-actions>
-          </v-card>
-        </template>
-      </v-dialog>
-      <!-- end Like Dialog -->
       <v-row>
         <v-col style="text-align: center">
           <h1>
@@ -151,11 +136,12 @@ import ServiceProviderCard from "./ServiceProviderCard.vue";
 export default {
   data() {
     return {
-      likeDialog: false,
-      alertMessage: "",
       currentVendorCategoryId: this.vendorCategoryId || this.vendor_category_id,
       fullName: null,
       phoneNumber: null,
+      message: '',
+      title: '',
+      state: false
     };
   },
   components: {
@@ -214,9 +200,12 @@ export default {
   watch: {
     vendorCategoryId: async function () {
       try {
-        await this.fetchVendors(this.vendorCategoryId);
+        const response = await this.fetchVendors(this.vendorCategoryId);
+        if(response.data.hasOwnProperty('status')){
+          this.defaultResponse(response.data.message, 'Error', true);
+        }
       } catch (error) {
-        console.log(error);
+        this.defaultResponse(error.message, 'Error', true);
       }
     },
   },
@@ -244,6 +233,16 @@ export default {
         this.fullName = null;
       }
     },
+    defaultResponse(msg, heading, status) {
+      this.message = msg
+      this.title = heading
+      this.state = status
+      setTimeout(() => {
+        this.message = ""
+        this.title = ""
+        this.state = false
+      }, 2000);
+    },
     // searchCurrentKeyword() {
     //   if (this.searchKeyword === null) {
     //     return this.allVendors;
@@ -267,9 +266,12 @@ export default {
         button_clicked: "Like Button",
       });
       try {
-        await this.likeVendor(data);
+        const response = await this.likeVendor(data);
+        if(response.data.hasOwnProperty('status')){
+          this.defaultResponse(response.data.message, 'Error', true);
+        }
       } catch (error) {
-        console.log(error);
+        this.defaultResponse(error.message, 'Error', true);
       }
     },
     async unlikingVendor(vendor_id) {
@@ -282,39 +284,28 @@ export default {
         button_clicked: "Unlike Button",
       });
       try {
-        await this.unLikeVendor(data);
+        const response = await this.unLikeVendor(data);
+        if(response.data.hasOwnProperty('status')){
+          this.defaultResponse(response.data.message, 'Error', true);
+        }
       } catch (error) {
-        console.log(error);
+        this.defaultResponse(error.message, 'Error', true);
       }
     },
     vendorAlreadyLikedOrDisliked(check) {
-      this.likeDialog = true;
       if (check === 1) {
-        this.alertMessage = "You liked this provider already";
+        this.defaultResponse("You liked this provider already", 'Warning', true);
       } else {
-        this.alertMessage = "You disliked this provider already";
+        this.defaultResponse("You disliked this provider already", 'Warning', true);
       }
-      setTimeout(() => {
-        this.likeDialog = false;
-        this.alertMessage = "";
-      }, 1500);
     },
     loginRequired(value) {
-      this.likeDialog = true;
       if (value === 1) {
-        this.alertMessage = "Please login to add a like to this provider";
+        this.defaultResponse("Please login to add a like to this provider", 'Warning', true);
       } else {
-        this.alertMessage = "Please login to dislike this provider";
+        this.defaultResponse("Please login to dislike this provider", 'Warning', true);
       }
-      setTimeout(() => {
-        this.likeDialog = false;
-        this.alertMessage = "";
-      }, 1500);
-    },
-    closeLikedDialog() {
-      this.likeDialog = false;
-      this.alertMessage = "";
-    },
+    }
   },
 };
 </script>
