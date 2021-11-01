@@ -1,5 +1,10 @@
 <template>
   <div>
+    <base-dialog :message="message" :title="title" :dialogState="state">
+      <template v-slot:button>
+        <v-btn text @click="state = !state">close</v-btn>
+      </template>
+    </base-dialog>
     <v-app-bar color="#3B6EF3" dense dark>
       <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
 
@@ -103,6 +108,13 @@
 import { mapActions, mapGetters } from "vuex";
 export default {
   name: "TopNav",
+  data() {
+    return {
+        message: '',
+        title: '',
+        state: false
+    };
+  },
   computed: {
     ...mapGetters(["loginState", "currentLoggedinUser", "currentUserFavoriteTotalCount"]),
     userIntials(){
@@ -112,10 +124,32 @@ export default {
   },
   created() {
     this.fetchVendorsCategories();
-    this.fetchTotalFavoriteCount();
+    this.fetchUserFavoriteCount();
   },
   methods: {
     ...mapActions(["logout", "fetchVendorsCategories", "fetchTotalFavoriteCount", "postAUserLog"]),
+    defaultResponse(msg, heading, status) {
+      this.message = msg
+      this.title = heading
+      this.state = status
+      setTimeout(() => {
+          this.message = ""
+          this.title = ""
+          this.state = false
+      }, 2000);
+    },
+    async fetchUserFavoriteCount(){
+      try {
+        if(this.loginState == true){
+          const response = await this.fetchTotalFavoriteCount();
+          if(response.data.status == 0){
+            this.defaultResponse(response.data.message, 'Error', true);
+          }
+        }
+      } catch (error) {
+        throw new Error(error.message);
+      }
+    },
     async logingOut() {
         const payload = {
               "activity":"Logout", 
@@ -127,7 +161,7 @@ export default {
           this.$router.push("/");
         });
        } catch (error) {
-        throw new Error(error);
+        throw new Error(error.message);
       }
     },
     navigateToFavoriteScreen(){

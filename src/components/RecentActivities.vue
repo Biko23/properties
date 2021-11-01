@@ -1,5 +1,10 @@
 <template>
 <div>
+    <base-dialog :message="message" :title="title" :dialogState="state">
+        <template v-slot:button>
+            <v-btn text @click="state = !state">close</v-btn>
+        </template>
+    </base-dialog>
     <v-container>
         <v-row>
             <v-col style="text-align: center">
@@ -58,8 +63,25 @@ export default {
     components: {
         BaseViewedCard,
     },
+    data() {
+        return {
+            message: '',
+            title: '',
+            state: false
+        };
+    },
     methods: {
         ...mapActions(["fetchViewedRentalProperties", "fetchViewedSaleProperties", "postAUserLog"]),
+        defaultResponse(msg, heading, status) {
+            this.message = msg
+            this.title = heading
+            this.state = status
+            setTimeout(() => {
+                this.message = ""
+                this.title = ""
+                this.state = false
+            }, 2000);
+        },
         formatDate(dateToFormat) {
             let currentDate = new Date();
             let returnedFormattedDate = new Date(dateToFormat);
@@ -98,6 +120,21 @@ export default {
             }
             return result;
         },
+        async fetchRecentlyViewedProperties() {
+            try {
+                const rentalResponse = await this.fetchViewedRentalProperties();
+                const saleResponse = await this.fetchViewedSaleProperties();
+                if(rentalResponse.data.status == 0 && saleResponse.data.status == 0){
+                    this.defaultResponse(rentalResponse.data.message, 'Error', true);
+                } else if (rentalResponse.data.status == 1 && saleResponse.data.status == 0) {
+                    this.defaultResponse("Failed while fetching properties for sale", 'Error', true);
+                } else if (rentalResponse.data.status == 0 && saleResponse.data.status == 1){
+                    this.defaultResponse("Failed while fetching properties for rent", 'Error', true);
+                }
+            } catch (error) {
+                this.defaultResponse(error.message, 'Error', true);
+            }
+        },
     },
     computed: {
         ...mapGetters(["allRecentViewedRentals", "allRecentViewedProperties"]),
@@ -107,8 +144,7 @@ export default {
             activity: `Visited Recent Activities Page`,
             button_clicked: "View Recent Activities Page"
         });
-        this.fetchViewedRentalProperties();
-        this.fetchViewedSaleProperties();
+        this.fetchRecentlyViewedProperties();
     },
 };
 </script>

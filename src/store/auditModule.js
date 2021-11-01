@@ -24,12 +24,12 @@ const actions = {
     async getAUserLog(context) {
         try {
             const response = await UserAuditService.getASingleUserLog(context.rootState.AuthModule.currentUser.username);
-            if (response.status == 200 && response.data.status == 1) {
+            if (response.data.status == 1) {
                 context.commit('setCurrentUserAuditLogs', response.data.result);
             }
+            return response;
         } catch (error) {
-            console.log(error);
-            // throw new Error(error);
+            throw new Error(error.message);
         }
     }
 }

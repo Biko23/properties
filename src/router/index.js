@@ -56,8 +56,7 @@ const routes = [
     name: 'UserSettings',
     component: () => import('@/views/ViewUserProfile.vue'),
     meta: { 
-       requiresAuth: true 
-      // requireSellerRole: true
+       requiresAuth: true
     }
   },
   {

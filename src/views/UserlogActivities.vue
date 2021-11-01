@@ -1,7 +1,6 @@
 <template>
   <div>
       <user-logs />
-<!-- only footer no about -->
   </div>
 </template>
 

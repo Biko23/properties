@@ -235,23 +235,23 @@ const actions = {
     async fetchViewedRentalProperties({ commit, rootState }) {
         try {
             const response = await ViewedPropertiesService.getViewedPropertyForRent(rootState.AuthModule.currentUser.username);
-            if (response.status === 200) {
+            if (response.data.status === 1) {
                 commit('setRecentViewedRentals', response.data.result);
             }
+            return response;
         } catch (error) {
-            console.log(error);
-            // throw new Error("Failed to post your data");
+            throw new Error(error.message);
         }
     },
     async fetchViewedSaleProperties({ commit, rootState }) {
         try {
             const response = await ViewedPropertiesService.getViewedPropertyForSale(rootState.AuthModule.currentUser.username);
-            if (response.status === 200) {
+            if (response.data.status === 1) {
                 commit('setRecentViewedSale', response.data.result);
             }
+            return response;
         } catch (error) {
-            console.log(error);
-            // throw new Error("Failed to post your data");
+            throw new Error(error.message);
         }
     },
 
@@ -264,9 +264,10 @@ const actions = {
             } else if (response.data.status == 0) {
                 commit('setTotalFavoriteCount', 0);
             }
+            
+            return response;
         } catch (error) {
-            console.log(error);
-            // throw new Error("Failed to post your data");
+            throw new Error(error.message);
         }
     },
     async fetchFavoritePropertiesForComparision({ commit, rootState }) {

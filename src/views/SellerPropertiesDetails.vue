@@ -204,7 +204,6 @@ export default {
         async fetchListedProperties(){
             try {
                 const response = await this.getListedPropertyVisualsByUsername();
-                console.log(response);
                 if(response.data.status == 0){
                     this.defaultResponse(response.data.message, 'Error', true);
                 }
@@ -215,7 +214,6 @@ export default {
         async fetchUnlistedProperties(){
             try {
                 const response = await this.getUnlistedPropertyVisualsByUsername();
-                console.log(response);
                 if(response.data.status == 0){
                     this.defaultResponse(response.data.message, 'Error', true);
                 }
