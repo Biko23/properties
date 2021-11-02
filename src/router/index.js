@@ -113,6 +113,16 @@ const routes = [
     }
   },
   {
+    path: '/edit-property/:property_id',
+    name: 'edit-property',
+    props: true,
+    component: () => import('@/views/EditProperty'),
+    meta: {
+      requireSellerRole: true,
+      hideFooterAndAbout: true
+    }
+  },
+  {
     path: '/signup',
     name: 'SignUp',
     component: () => import('@/views/SignUp'),

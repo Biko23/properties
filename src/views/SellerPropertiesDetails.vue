@@ -38,7 +38,12 @@
                         <v-tab-item>
                             <v-card color="basil" flat>
                                 <v-card-text>
-                                    <v-data-table :headers="listedHeaders" :items="allCurrentUserUnlistedPropertyVisuals" :items-per-page="5" class="elevation-1">
+                                    <v-data-table 
+                                        :headers="listedHeaders" 
+                                        :items="allCurrentUserUnlistedPropertyVisuals" 
+                                        :items-per-page="5" 
+                                        class="elevation-1"
+                                    >
                                         <template v-slot:item.actions="{ item }">
                                             <v-btn @click="changeAvailabilityToAvailable(item)">
                                                 <v-icon small class="mr-2">
@@ -50,8 +55,26 @@
                                 </v-card-text>
                             </v-card>
                         </v-tab-item>
+
                         <v-tab-item>
-                            <seller-property-details :headers="certifiedHeaders" :items="allCurrentUserUncertifiedPropertyVisuals" />
+                            <v-card color="basil" flat>
+                                <v-card-text>
+                                    <v-data-table 
+                                        :headers="listedHeaders" 
+                                        :items="allCurrentUserUncertifiedPropertyVisuals" 
+                                        :items-per-page="5" 
+                                        class="elevation-1"
+                                    >
+                                       <template v-slot:item.actions="{ item }">
+                                            <v-btn @click="navigateToEditSection(item)">
+                                                <v-icon small class="mr-2">
+                                                    mdi-pencil
+                                                </v-icon>Edit
+                                            </v-btn>
+                                        </template> 
+                                    </v-data-table>
+                                </v-card-text>
+                            </v-card>
                         </v-tab-item>
                     </v-tabs-items>
                 </v-card>
@@ -104,26 +127,7 @@ export default {
                 value: 'actions',
                 sortable: false
             }
-        ],
-        certifiedHeaders: [{
-                text: 'Property Id',
-                align: 'start',
-                sortable: false,
-                value: 'property_id',
-            },
-            {
-                text: 'Description',
-                value: 'description'
-            },
-            {
-                text: 'Created By',
-                value: 'created_by'
-            },
-            {
-                text: 'Creation Date',
-                value: 'when_created'
-            }
-        ],
+        ]
     }),
     computed: {
         ...mapGetters([
@@ -200,6 +204,9 @@ export default {
             } catch (error) {
                 this.defaultResponse(error.message, 'Error', true);
             }
+        },
+        navigateToEditSection(item){
+            this.$router.push(`/edit-property/${item.property_id}`);
         },
         async fetchListedProperties(){
             try {

@@ -9,7 +9,7 @@
       <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
 
       <v-toolbar-title class="toolbar-title"
-        >Mon - Sat 8.00 - 18.00. Sunday CLOSED</v-toolbar-title
+        >Open 24/7 a week</v-toolbar-title
       >
 
       <v-spacer></v-spacer>

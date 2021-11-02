@@ -212,7 +212,7 @@ const actions = {
         }
     },
     // Viewed Properties
-    async addAViewedProperty({ rootState }, property_id) {
+    async addAViewedProperty({ rootState, commit }, property_id) {
         try {
             const propertyViewed = {
                 property_id,
