@@ -51,7 +51,8 @@
                         </v-row>
                         <v-row>
                             <v-col cols="12" sm="12" md="12">
-                                <base-spinner v-if="submitting"/>
+                                <v-progress-circular v-if="submitting" indeterminate color="primary"></v-progress-circular>
+                                <!-- <base-spinner v-if="submitting"/> -->
                                 <v-btn color="primary" :disabled="!valid" @click="postLoginData" large block v-else>
                                     Login
                                 </v-btn>

@@ -358,8 +358,7 @@ const actions = {
                 commit("setDetailedCurrentUserFavoriteList", favorites);
             }
         } catch (error) {
-            console.log(error);
-            // throw new Error("Failed to fetch your data");
+            throw new Error(error.message);
         }
     }
 }
@@ -412,7 +411,12 @@ const mutations = {
         }
         )),
     setCurrentPropertyFeatures: (state, propertySelectedFeatures) => (state.currentPropertyFeatures = propertySelectedFeatures
-        .map(eachFeature => { return { name: eachFeature.name } })),
+        .map(eachFeature => { 
+            return { 
+                name: eachFeature.name, 
+                feature_type_lk_id: eachFeature.feature_type_lk_id 
+            } 
+        })),
     setSearchKey: (state, searchKeyword) => state.searchKeyword = searchKeyword,
     setSearchedPropertyResult: (state, returnedResults) => state.searchedResults = returnedResults.map(eachResult => {
         return {

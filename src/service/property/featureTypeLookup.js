@@ -30,8 +30,15 @@ export default {
             }
 
         } catch (error) {
-            console.log(error);
-            // throw new Error('An error occured when sending data')
+            throw new Error(error.message);
+        }
+    },
+    async deleteAPropertyFeature(feature_type_lk_id){
+        try {
+            const response = await API.marketPlaceApi.delete(`/feature-type-lookup/${feature_type_lk_id}`);
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
         }
     }
 

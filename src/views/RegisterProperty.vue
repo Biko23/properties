@@ -231,7 +231,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["allPropertyTypes", "allPropertyFeatures"]),
+    ...mapGetters(["allPropertyTypes", "allPropertyFeatures"])
   },
   created() {
     this.postAUserLog({

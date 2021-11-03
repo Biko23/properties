@@ -19,7 +19,7 @@ export default {
   },
   async updateAPropertyLegalProtection (legalDetails) {
     try {
-      const response = await API.marketPlaceApi.put(`/property-locations/${legalDetails.legal_protection_id}`, legalDetails)
+      const response = await API.marketPlaceApi.put(`/property-legal-protections/${legalDetails.legal_protection_id}`, legalDetails)
       return response
     } catch (error) {
         throw new Error(error.message);

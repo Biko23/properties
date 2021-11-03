@@ -153,6 +153,7 @@ const actions = {
                 // created_by: rootState.AuthModule.currentUser.username,
                 // updated_by: rootState.AuthModule.currentUser.username
             }
+
             const propertyVisuals = {
                 description: state.propertyFirstPageData.description,
                 files: state.propertyFirstPageData.visuals,
@@ -310,6 +311,26 @@ const actions = {
     async clearPropertyLegalDetails({ commit }){
         try {
             commit('setPropertyLegalProtection', {});
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    async deleteAPropertyFeature(_, feature_type_lk_id){
+        try {
+            const response = await FeatureTypeLookupService.deleteAPropertyFeature(feature_type_lk_id);
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    async addMoreFeaturesToAProperty(_, selectedDetails){
+        try {
+            const selectedPropertyFeatures = {
+                propertyFeatures: selectedDetails.features,
+                property_id: selectedDetails.property_id
+            }
+            const response = await FeatureTypeLookupService.postAPropertyFeatures(selectedPropertyFeatures);
+            return response;
         } catch (error) {
             throw new Error(error.message);
         }
