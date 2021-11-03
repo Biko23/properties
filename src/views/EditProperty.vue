@@ -11,19 +11,11 @@
             <v-card-title>
                 <span class="text-h5">{{ formTitle }} property Legal Details</span>
             </v-card-title>
-            <v-card-text>.
+            <v-card-text>
                 <v-form ref="legalProtectionForm" v-model="valid" lazy-validation>
                     <v-container>
                         <v-row>
-                            <v-col cols="12" sm="6" md="6">
-                                <v-textarea
-                                    outlined
-                                    v-model="legalProtection.description" 
-                                    :rules="[protectionRules.min, protectionRules.char]" 
-                                    label="Legal Description *"
-                                ></v-textarea>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="6">
+                            <v-col cols="12" sm="12" md="6">
                                 <v-text-field 
                                     type="number"
                                     v-model="legalProtection.primary_phone_contact" 
@@ -32,42 +24,69 @@
                                     hint="0780111111"
                                 ></v-text-field>
                             </v-col>
-                            <v-col cols="12" sm="6" md="6">
-                                 <v-text-field 
-                                    type="number"
-                                    v-model="legalProtection.secondary_phone_contact" 
-                                    :rules="legalProtection.secondary_phone_contact > 0 ? [protectionRules.phoneLength, protectionRules.numb] : ''" 
-                                    label="Secondary Number *" 
-                                    hint="0780111111"
-                                ></v-text-field>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="6">
+                            <v-col cols="12" sm="12" md="6">
                                 <v-text-field 
                                     v-model="legalProtection.primary_email_contact" 
                                     :rules="[protectionRules.email]" 
                                     label="Primary Email *"
                                 ></v-text-field>
                             </v-col>
-                            <v-col cols="12" sm="6" md="6">
+                            <v-col cols="12" sm="12" md="6">
+                                 <v-text-field 
+                                    type="number"
+                                    v-model="legalProtection.secondary_phone_contact" 
+                                    :rules="legalProtection.secondary_phone_contact > 0 ? [protectionRules.phoneLength, protectionRules.numb] : ''" 
+                                    label="Secondary Number" 
+                                    hint="0780111111"
+                                ></v-text-field>
+                            </v-col>
+                            <v-col cols="12" sm="12" md="6">
                                 <v-text-field 
                                     v-model="legalProtection.secondary_email_contact"
                                     :rules="legalProtection.secondary_email_contact > 0 ? [protectionRules.email] : ''"
                                     label="Secondary Email"
                                 ></v-text-field>
                             </v-col>
-                            <!-- 
-                                @Column(nullable = false) private Long property_id;
-                                @Column(nullable = false) private String created_by;
-                                @Column(nullable = false) private LocalDateTime when_created;
-                                @Column(nullable = false) private String updated_by;
-                                @Column(nullable = false) private LocalDateTime when_updated;
-                             -->
+                            <v-col cols="12" sm="12" md="12">
+                                <v-textarea
+                                    outlined
+                                    v-model="legalProtection.description" 
+                                    :rules="[protectionRules.min, protectionRules.char]" 
+                                    label="Legal Description *"
+                                ></v-textarea>
+                            </v-col>
                             <v-col cols="12">
-                                <template>
-                                    <v-btn block color="primary" :disabled="!valid" @click="postLegalData">
-                                        {{formTitle}} legal Details
-                                    </v-btn>
-                                </template>
+                                <v-row>
+                                    <v-col cols="12" sm="6" md="6">
+                                        <template>
+                                            <v-btn block color="warning" @click="closeLegalDialog">
+                                                Cancel
+                                            </v-btn>
+                                        </template>
+                                    </v-col>
+                                    <v-col cols="12" sm="6" md="6">
+                                        <template>
+                                            <v-btn
+                                                v-if="currentPropertyLegalProtection == {}"
+                                                block 
+                                                color="primary" 
+                                                :disabled="!valid" 
+                                                @click="postLegalData"
+                                            >
+                                                {{formTitle}} legal Details 1
+                                            </v-btn>
+                                            <v-btn
+                                                v-else
+                                                block 
+                                                color="primary" 
+                                                :disabled="!valid" 
+                                                @click="updateLegalData"
+                                            >
+                                                {{formTitle}} legal Details 2
+                                            </v-btn>
+                                        </template>
+                                    </v-col>
+                                </v-row>
                             </v-col>
                         </v-row>
                     </v-container>
@@ -135,7 +154,7 @@
                                     <p class="text-h6" style="font-weight: 400;">Property Legal Protection:</p>
                                 </v-col>
                                 <v-col cols="12" sm="12" md="6">
-                                    <v-btn class="ma-2" outlined color="indigo" block @click="legalDialog = true">Edit Property Legal Protection</v-btn>
+                                    <v-btn class="ma-2" outlined color="indigo" block @click="loadLegalDialog">Edit Property Legal Protection</v-btn>
                                 </v-col>
                             </v-row>
                              <v-row>
@@ -153,20 +172,20 @@
 </template>
 
 <script>
-import {
-    mapActions,
-    mapGetters
-} from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import BottonNav from "../components/BottonNav.vue";
 export default {
     components: {
         BottonNav
     },
     name: "EditProfile",
+    props: ["property_id"],
     data: () => ({
         legalDialog: false,
         valid: true,
-        userData: {},
+        legalProtection: {},
+        protectionRules: [],
+        formTitle: '',
         message: '',
         title: '',
         state: false,
@@ -189,17 +208,26 @@ export default {
         // ],
     }),
     created() {
-        this.fetchAllUserRoles();
         this.postAUserLog({
             "activity":`Visited Edit Profile Page`, 
             "button_clicked":"View EditProfile Page"
         });
+        this.fetchPropertyLegalDetails();
+    },
+    beforeUnmount(){
+        this.clearPropertyLegalDetails();
     },
     computed: {
-        ...mapGetters(["currentLoggedinUser", "iAmASeller", "iAmACertifiedSeller"]),
+        ...mapGetters(["currentPropertyLegalProtection", "currentLoggedinUser"]),
     },
     methods: {
-        ...mapActions(["updateUserProfile", "fetchAllUserRoles", "fetchLoggedUser", "postAUserLog"]),
+        ...mapActions([
+            "getPropertyLegalProtection", 
+            "postAPropertyLegalProtection", 
+            "updateAPropertyLegalProtection",
+            "clearPropertyLegalDetails",
+            "postAUserLog"
+        ]),
         defaultResponse(msg, heading, status) {
             this.message = msg
             this.title = heading
@@ -208,10 +236,68 @@ export default {
                 this.message = ""
                 this.title = ""
                 this.state = false
-            }, 3000);
+            }, 2000);
         },
-        postLegalData(){
-
+        async fetchPropertyLegalDetails(){
+            try {
+                const response = await this.getPropertyLegalProtection(this.property_id);
+                if(response.data.status === 1){
+                    if(response.data.result != {}) {
+                        this.formTitle = 'Edit';
+                        this.legalProtection = this.currentPropertyLegalProtection;
+                    } else {
+                        this.formTitle = 'Create';
+                        this.legalProtection = {};
+                    }
+                } else {
+                    this.formTitle = 'Create';
+                    this.legalProtection = {};
+                    response.data.message ? this.defaultResponse(response.data.message, 'Error', true) : '';
+                }
+            } catch (error) {
+                this.defaultResponse(error.message, 'Error', true); 
+            }
+        },
+        async postLegalData(){
+            try {
+                this.legalProtection.property_id = this.property_id;
+                this.legalProtection.created_by = this.currentLoggedinUser.username;
+                this.legalProtection.updated_by = this.currentLoggedinUser.username;
+                const response = await this.postAPropertyLegalProtection(this.legalProtection);
+                if(response.data.status === 1){
+                    this.defaultResponse(response.data.message, 'Success', true);
+                    this.fetchPropertyLegalDetails();
+                } else {
+                    this.defaultResponse(response.data.message, 'Error', true);
+                }
+            } catch (error) {
+                this.defaultResponse(error.message, 'Error', true);
+            }
+        },
+        async updateLegalData(){
+           try {
+                this.legalProtection.property_id = this.property_id;
+                this.legalProtection.updated_by = this.currentLoggedinUser.username;
+                const response = await this.updateAPropertyLegalProtection(this.legalProtection);
+                if(response.data.status === 1){
+                    this.defaultResponse(response.data.message, 'Success', true);
+                } else {
+                    this.defaultResponse(response.data.message, 'Error', true);
+                }
+           } catch (error) {
+               this.defaultResponse(error.message, 'Error', true);
+           } 
+        },
+        closeLegalDialog(){
+            this.legalDialog = false;
+            this.legalProtection = {};
+        },
+        async loadLegalDialog(){
+            try {
+                this.legalDialog = true
+            } catch (error) {
+                
+            }
         }
         // async updateUserDetails() {
         //      this.postAUserLog({

@@ -11,6 +11,7 @@ import PropertyTypeService from '@/service/property/propertyListedAs';
 import PropertyFeatureService from '@/service/propertyFeatures';
 import PropertyLandmarkTypeService from '@/service/propertyLandmarkTypes';
 import FeatureTypeLookupService from '@/service/property/featureTypeLookup';
+import PropertyLegalProtectionService from '@/service/propertyLegalProtection';
 import { formatDate } from '@/helpers/helpers';
 
 const state = {
@@ -28,7 +29,8 @@ const state = {
     currentUserListedPropertyVisuals: [],
     currentUserUnlistedPropertyVisuals: [],
     currentUserUncertifiedPropertyVisuals: [],
-    currencies: []
+    currencies: [],
+    propertyLegalProtection: {}
 }
 
 const getters = {
@@ -46,7 +48,8 @@ const getters = {
     // current user getters
     allCurrentUserListedPropertyVisuals: (state) => state.currentUserListedPropertyVisuals,
     allCurrentUserUnlistedPropertyVisuals: (state) => state.currentUserUnlistedPropertyVisuals,
-    allCurrentUserUncertifiedPropertyVisuals: (state) => state.currentUserUncertifiedPropertyVisuals
+    allCurrentUserUncertifiedPropertyVisuals: (state) => state.currentUserUncertifiedPropertyVisuals,
+    currentPropertyLegalProtection: state => state.propertyLegalProtection
 };
 
 const actions = {
@@ -276,6 +279,40 @@ const actions = {
         } catch (error) {
             throw new Error(error.message);
         }
+    },
+    async getPropertyLegalProtection({ commit }, property_id){
+        try {
+            const response = await PropertyLegalProtectionService.getPropertyLegalProtectionByPropertyId(property_id);
+            if(response.data.status === 1){
+                commit('setPropertyLegalProtection', response.data.result);
+            }
+            return response;
+        } catch (error) {
+            throw new Error(error.message); 
+        }
+    },
+    async postAPropertyLegalProtection(_, legalDetails){
+        try {
+            const response = await PropertyLegalProtectionService.postAPropertyLegalProtection(legalDetails);
+            return response;
+        } catch (error) {
+            throw new Error(error.message); 
+        }
+    },
+    async updateAPropertyLegalProtection(_, legalDetails){
+        try {
+            const response = await PropertyLegalProtectionService.updateAPropertyLegalProtection(legalDetails);
+            return response;
+        } catch (error) {
+            throw new Error(error.message); 
+        }
+    },
+    async clearPropertyLegalDetails({ commit }){
+        try {
+            commit('setPropertyLegalProtection', {});
+        } catch (error) {
+            throw new Error(error.message);
+        }
     }
 }
 
@@ -347,7 +384,8 @@ const mutations = {
         })),
     updatePropertyVisualsList: (state, property_id) => state.currentUserListedPropertyVisuals = state.currentUserListedPropertyVisuals.filter(currentUserListedPropertyVisual => currentUserListedPropertyVisual.property_id !== property_id),
     updatePropertyVisualsUnlist: (state, property_id) => state.currentUserUnlistedPropertyVisuals = state.currentUserUnlistedPropertyVisuals.filter(currentUserUnlistedPropertyVisual => currentUserUnlistedPropertyVisual.property_id !== property_id),
-    setPropertySubmissionState: (state, submissionState) => state.propertySubmissionState = submissionState
+    setPropertySubmissionState: (state, submissionState) => state.propertySubmissionState = submissionState,
+    setPropertyLegalProtection: (state, legalProtection) => state.propertyLegalProtection = legalProtection
 }
 
 export default {
