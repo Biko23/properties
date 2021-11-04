@@ -25,10 +25,15 @@
                                         class="elevation-1"
                                     >
                                         <template v-slot:item.actions="{ item }">
-                                            <v-btn @click="changeAvailabilityToNotAvailable(item)">
-                                                <v-icon small class="mr-2">
+                                            <v-btn class="mr-2" @click="changeAvailabilityToNotAvailable(item)">
+                                                <v-icon small>
                                                     mdi-arrow-right-bold
                                                 </v-icon>Unlist
+                                            </v-btn>
+                                             <v-btn class="mr-2" @click="viewPropertyDetails(item)">
+                                                <v-icon small>
+                                                    mdi-eye
+                                                </v-icon>View
                                             </v-btn>
                                         </template>
                                     </v-data-table>
@@ -45,10 +50,15 @@
                                         class="elevation-1"
                                     >
                                         <template v-slot:item.actions="{ item }">
-                                            <v-btn @click="changeAvailabilityToAvailable(item)">
-                                                <v-icon small class="mr-2">
+                                            <v-btn class="mr-2" @click="changeAvailabilityToAvailable(item)">
+                                                <v-icon small>
                                                     mdi-arrow-left-bold
                                                 </v-icon>List
+                                            </v-btn>
+                                            <v-btn class="mr-2" @click="viewPropertyDetails(item)">
+                                                <v-icon small>
+                                                    mdi-eye
+                                                </v-icon>View
                                             </v-btn>
                                         </template>
                                     </v-data-table>
@@ -66,10 +76,15 @@
                                         class="elevation-1"
                                     >
                                        <template v-slot:item.actions="{ item }">
-                                            <v-btn @click="navigateToEditSection(item)">
-                                                <v-icon small class="mr-2">
+                                            <v-btn class="mr-2" @click="navigateToEditSection(item)">
+                                                <v-icon small>
                                                     mdi-pencil
                                                 </v-icon>Edit
+                                            </v-btn>
+                                            <v-btn class="mr-2" @click="viewPropertyDetails(item)">
+                                                <v-icon small>
+                                                    mdi-eye
+                                                </v-icon>View
                                             </v-btn>
                                         </template> 
                                     </v-data-table>
@@ -207,6 +222,9 @@ export default {
         },
         navigateToEditSection(item){
             this.$router.push(`/edit-property/${item.property_id}`);
+        },
+        viewPropertyDetails(item){
+            this.$router.push(`/single-property/${item.property_id}`);
         },
         async fetchListedProperties(){
             try {

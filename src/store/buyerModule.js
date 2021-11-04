@@ -95,6 +95,7 @@ const actions = {
         try {
             const response = await PropertyVisualsService.getPropertyVisualsByPropertyId(property_id);
             commit("setSinglePropertyVisuals", response.data.result);
+            return response;
         } catch (error) {
             console.log(error);
             // throw new Error("Failed on loading current property visuals")
@@ -131,6 +132,7 @@ const actions = {
         try {
             const response = await PropertyValueService.getPropertyValueByPropertyId(property_id);
             commit("setSinglePropertyValue", response.data.result);
+            return response;
         } catch (error) {
             console.log(error);
             // throw new Error("Failed on loading current property value")

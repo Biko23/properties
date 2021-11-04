@@ -123,6 +123,16 @@ const routes = [
     }
   },
   {
+    path: '/single-property/:property_id',
+    name: 'single-property',
+    props: true,
+    component: () => import('@/views/SingleProperty'),
+    meta: {
+      requireSellerRole: true,
+      hideFooterAndAbout: true
+    }
+  },
+  {
     path: '/signup',
     name: 'SignUp',
     component: () => import('@/views/SignUp'),

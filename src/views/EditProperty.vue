@@ -19,7 +19,7 @@
                                 <v-text-field 
                                     type="number"
                                     v-model="legalProtection.primary_phone_contact" 
-                                    :rules="[protectionRules.phoneLength, protectionRules.numb]" 
+                                    :rules="phoneNumberRules" 
                                     label="Primary Number *" 
                                     hint="0780111111"
                                 ></v-text-field>
@@ -27,7 +27,7 @@
                             <v-col cols="12" sm="12" md="6">
                                 <v-text-field 
                                     v-model="legalProtection.primary_email_contact" 
-                                    :rules="[protectionRules.email]" 
+                                    :rules="emailRules" 
                                     label="Primary Email *"
                                 ></v-text-field>
                             </v-col>
@@ -35,7 +35,7 @@
                                  <v-text-field 
                                     type="number"
                                     v-model="legalProtection.secondary_phone_contact" 
-                                    :rules="legalProtection.secondary_phone_contact > 0 ? [protectionRules.phoneLength, protectionRules.numb] : ''" 
+                                    :rules="legalProtection.secondary_phone_contact > 0 ? phoneNumberRules : ''" 
                                     label="Secondary Number" 
                                     hint="0780111111"
                                 ></v-text-field>
@@ -43,7 +43,7 @@
                             <v-col cols="12" sm="12" md="6">
                                 <v-text-field 
                                     v-model="legalProtection.secondary_email_contact"
-                                    :rules="legalProtection.secondary_email_contact > 0 ? [protectionRules.email] : ''"
+                                    :rules="legalProtection.secondary_email_contact> 0 ? emailRules : ''"
                                     label="Secondary Email"
                                 ></v-text-field>
                             </v-col>
@@ -160,6 +160,68 @@
         </v-card>
     </v-dialog>
     <!-- End edit property features -->
+    <!-- edit property values -->
+    <v-dialog v-model="valuesDialog" max-width="500px">
+        <v-card>
+            <v-card-title>
+                <span class="text-h5">Edit property Cost</span>
+            </v-card-title>
+            <v-card-text>
+                <v-form ref="featuresForm" v-model="valid" lazy-validation>
+                    <v-container>
+                        <v-row>
+                            <p>Property current Cost</p>
+                            <v-col class="d-flex" cols="12" sm="12">
+                                <v-row>
+                                    <v-col cols="12" sm="12" md="3">
+                                         <v-select
+                                            v-model="propertyValue.currency_id"
+                                            :rules="[currencyRules.required]"
+                                            :items="allCurrencies"
+                                            label="Unit"
+                                            multiple
+                                        ></v-select>
+                                    </v-col>
+                                    <v-col cols="12" sm="12" md="9">
+                                        <v-text-field 
+                                            v-model="propertyValue.actual_value" 
+                                            :rules="[currencyRules.required, currencyRules.numb]" 
+                                            label="Property Cost" 
+                                            placeholder="Enter new property price" 
+                                        ></v-text-field>
+                                    </v-col> 
+                                </v-row>
+                            </v-col>
+                            <v-col cols="12">
+                                <v-row>
+                                    <v-col cols="12" sm="6" md="6">
+                                        <template>
+                                            <v-btn block color="warning" @click="valuesDialog = false">
+                                                Cancel
+                                            </v-btn>
+                                        </template>
+                                    </v-col>
+                                    <v-col cols="12" sm="6" md="6">
+                                        <template>
+                                            <v-btn
+                                                block 
+                                                color="primary" 
+                                                :disabled="!valid" 
+                                                @click="updatePropertyValue"
+                                            >
+                                                Update Cost
+                                            </v-btn>
+                                        </template>
+                                    </v-col>
+                                </v-row>
+                            </v-col>
+                        </v-row>
+                    </v-container>
+                </v-form>
+            </v-card-text>
+        </v-card>
+    </v-dialog>
+    <!-- End edit property values -->
     <v-container>
         <v-row>
             <v-col cols="12" sm="12" md="12" xl="12">
@@ -203,7 +265,7 @@
                                     <p class="text-h6" style="font-weight: 400;">Property Value:</p>
                                 </v-col>
                                 <v-col cols="12" sm="12" md="6">
-                                    <v-btn class="ma-2" outlined color="indigo" block to="/edit-property-value">Edit Property Value</v-btn>
+                                    <v-btn class="ma-2" outlined color="indigo" block @click="valuesDialog = true">Edit Property Value</v-btn>
                                 </v-col>
                             </v-row>
                             <v-row>
@@ -255,15 +317,19 @@ export default {
     props: ["property_id"],
     data: () => ({
         legalDialog: false,
+        featuresDialog: false,
+        valuesDialog: false,
         valid: true,
         legalProtection: {},
-        protectionRules: [],
+        propertyValue: {},
+        features: [],
         formTitle: '',
         message: '',
         title: '',
         state: false,
-        features: [],
-        featuresDialog: false,
+        currencyRules: {
+
+        },
         propertyRules: {
             features(value) {
                 if (value instanceof Array && value.length == 0) {
@@ -272,32 +338,31 @@ export default {
                 return !!value || "At least one feature is required!";
             }
         },
-        // userRules: {
-        //     secondary_email: (value) => !!value || "Secondary email is required.",
-        //     secondary_contact: (v) => (v && v.length >= 7) || "Min characters should be 8",
-        //     business_location: (value) => !!value || "Business location is required.",
-        // },
-        // min
-        // char
-        // phoneLength
-        // phoneLength
-        // numb
-        // email
-        // phoneNumberRules: [
-        //     (v) => !!v || "Phone Number Required",
-        //     (v) => (v && v.length >= 10) || "Number should not be less than 9",
-        //     (v) => (v && v.length < 11) || "Number should not exceed 10 characters",
-        //     (v) => /[0-9]/.test(v) || "Number should not contains letters",
-        // ],
+        protectionRules: {
+            numb: v => /[0-9]/.test(v) || "Number should not contains letters",
+            char: v => /[0-9]/.test(v) || "Letters should not contains numbers",
+            min: v => (v && v.length >= 2) || "Min characters should be 3"
+        },
+        emailRules: [
+            v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+        ],
+        phoneNumberRules: [
+            (v) => !!v || "Phone Number Required",
+            (v) => (v && v.length >= 10) || "Number should not be less than 9",
+            (v) => (v && v.length < 15) || "Number should not exceed 16 characters",
+            (v) => /[0-9]/.test(v) || "Number should not contains letters",
+        ]        
     }),
     created() {
         this.postAUserLog({
-            "activity":`Visited Edit Profile Page`, 
-            "button_clicked":"View EditProfile Page"
+            "activity":`Visited Edit Property Page`, 
+            "button_clicked":"View Edit Property Page"
         });
         this.fetchPropertyLegalDetails();
         this.fetchPropertyFeatures();
         this.fetchCurrentPropertySelectedFeatures(this.property_id);
+        this.getCurrentPropertyPriceDetails();
+        this.fetchAllCurrencyTypes();
     },
     beforeRouteLeave (to, from , next) {
         this.clearPropertyLegalDetails();
@@ -309,7 +374,9 @@ export default {
             "currentPropertyLegalProtection", 
             "currentLoggedinUser", 
             "allCurrentPropertyFeatures",
-            "allPropertyFeatures"
+            "currentPropertyValue",
+            "allPropertyFeatures",
+            "allCurrencies"
         ])
     },
     methods: {
@@ -322,6 +389,8 @@ export default {
             "fetchCurrentPropertySelectedFeatures",
             "deleteAPropertyFeature",
             "addMoreFeaturesToAProperty",
+            "fetchCurrentPropertyValue",
+            "fetchCurrencies",
             "postAUserLog"
         ]),
         defaultResponse(msg, heading, status) {
@@ -355,40 +424,60 @@ export default {
             }
         },
         async postLegalData(){
-            try {
-                this.legalProtection.property_id = this.property_id;
-                this.legalProtection.created_by = this.currentLoggedinUser.username;
-                this.legalProtection.updated_by = this.currentLoggedinUser.username;
-                const response = await this.postAPropertyLegalProtection(this.legalProtection);
-                if(response.data.status === 1){
+            if(this.$refs.legalProtectionForm.validate()){
+                try {
+                    this.legalProtection.property_id = this.property_id;
+                    this.legalProtection.created_by = this.currentLoggedinUser.username;
+                    this.legalProtection.updated_by = this.currentLoggedinUser.username;
+                    const response = await this.postAPropertyLegalProtection(this.legalProtection);
+                    if(response.data.status === 1){
+                        this.legalDialog = false;
+                        this.defaultResponse(response.data.message, 'Success', true);
+                        this.fetchPropertyLegalDetails();
+                        this.postAUserLog({
+                            "activity":`Added legal protection details`, 
+                            "button_clicked":"Add legal protection details"
+                        });
+                    } else {
+                        this.legalDialog = false;
+                        this.defaultResponse(response.data.message, 'Error', true);
+                        this.postAUserLog({
+                            "activity":`Failed to add legal protection details`, 
+                            "button_clicked":"Failed to add legal protection details"
+                        });
+                    }
+                } catch (error) {
                     this.legalDialog = false;
-                    this.defaultResponse(response.data.message, 'Success', true);
-                    this.fetchPropertyLegalDetails();
-                } else {
-                    this.legalDialog = false;
-                    this.defaultResponse(response.data.message, 'Error', true);
+                    this.defaultResponse(error.message, 'Error', true);
                 }
-            } catch (error) {
-                this.legalDialog = false;
-                this.defaultResponse(error.message, 'Error', true);
             }
         },
         async updateLegalData(){
-           try {
-                this.legalProtection.property_id = this.property_id;
-                this.legalProtection.updated_by = this.currentLoggedinUser.username;
-                const response = await this.updateAPropertyLegalProtection(this.legalProtection);
-                if(response.data.status === 1){
+            if(this.$refs.legalProtectionForm.validate()){
+                try {
+                        this.legalProtection.property_id = this.property_id;
+                        this.legalProtection.updated_by = this.currentLoggedinUser.username;
+                        const response = await this.updateAPropertyLegalProtection(this.legalProtection);
+                        if(response.data.status === 1){
+                            this.legalDialog = false;
+                            this.defaultResponse(response.data.message, 'Success', true);
+                            this.postAUserLog({
+                            "activity":`Updated legal protection details`, 
+                            "button_clicked":"Updated legal protection details"
+                        });
+                        } else {
+                            this.legalDialog = false;
+                            this.defaultResponse(response.data.message, 'Error', true);
+                            this.postAUserLog({
+                                "activity":`Failed to update legal protection details`, 
+                                "button_clicked":"Failed to update legal protection details"
+                            });
+                        }
+                } catch (error) {
                     this.legalDialog = false;
-                    this.defaultResponse(response.data.message, 'Success', true);
-                } else {
-                    this.legalDialog = false;
-                    this.defaultResponse(response.data.message, 'Error', true);
-                }
-           } catch (error) {
-               this.legalDialog = false;
-               this.defaultResponse(error.message, 'Error', true);
-           } 
+                    this.defaultResponse(error.message, 'Error', true);
+                } 
+            }
         },
         async deletePropertyFeature(item){
             try {
@@ -396,8 +485,16 @@ export default {
                 if(response.data.status == 1){
                     this.defaultResponse(response.data.message, 'Success', true);
                     this.fetchCurrentPropertySelectedFeatures(this.property_id);
+                    this.postAUserLog({
+                        "activity":`Deleted property feature with id ${item.feature_type_lk_id}`, 
+                        "button_clicked":`Deleted property feature with id ${item.feature_type_lk_id}`
+                    });
                 } else {
                     this.defaultResponse(response.data.message, 'Error', true);
+                    this.postAUserLog({
+                        "activity":`Failed to delete property feature with id ${item.feature_type_lk_id}`, 
+                        "button_clicked":`Failed to deleted property feature with id ${item.feature_type_lk_id}`
+                    });
                 }
             } catch (error) {
                 this.defaultResponse(error.message, 'Error', true);
@@ -406,7 +503,6 @@ export default {
         async addNewFeatures(){
             if (this.$refs.featuresForm.validate()) {
                 try {
-                    console.log(this.features);
                     const selectedDetails = {
                         features: this.features,
                         property_id: this.property_id
@@ -417,10 +513,18 @@ export default {
                         this.featuresDialog = false;
                         this.defaultResponse(response.data.message, 'Success', true);
                         this.fetchCurrentPropertySelectedFeatures(this.property_id);
+                        this.postAUserLog({
+                            "activity":`Added new property features ${JSON.stringify(selectedDetails.features)} to property with id ${selectedDetails.property_id}`, 
+                            "button_clicked":`Added new property features ${JSON.stringify(selectedDetails.features)} to property with id ${selectedDetails.property_id}`
+                        });
                     } else {
                         this.features = [];
                         this.featuresDialog = false;
                         this.defaultResponse(response.data.message, 'Error', true);
+                        this.postAUserLog({
+                            "activity":`Failed to add new property features ${JSON.stringify(selectedDetails.features)} to property with id ${selectedDetails.property_id}`, 
+                            "button_clicked":`Failed to add new property features ${JSON.stringify(selectedDetails.features)} to property with id ${selectedDetails.property_id}`
+                        });
                     }
                 } catch (error) {
                     this.featuresDialog = false;
@@ -428,6 +532,38 @@ export default {
                 }
             }
         },
+        // ----------------------------------------------
+        // Property value
+        // feature currency code 
+        async  fetchAllCurrencyTypes(){
+            try {
+                const response = await this.fetchCurrencies();
+                if(response.data.status == 0){
+                    this.defaultResponse(response.data.message, 'Error', true);
+                }
+            } catch (error) {
+                this.defaultResponse(error.message, 'Error', true);
+            }
+        }, 
+        // feature current property price
+        async getCurrentPropertyPriceDetails(){
+            try {
+                const response = await this.fetchCurrentPropertyValue(this.property_id);
+                console.log(response);
+                if(response.data.status == 1){
+                    this.propertyValue = this.currentPropertyValue;
+                } else {
+                    this.defaultResponse(response.data.message, 'Error', true);
+                }
+            } catch (error) {
+                this.defaultResponse(error.message, 'Error', true);
+            }
+        },
+        // allow updating a property price
+        async updatePropertyValue(){
+
+        },
+        // ---------------------------------------------------
         closeLegalDialog(){
             this.legalDialog = false;
             this.legalProtection = {};

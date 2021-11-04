@@ -49,7 +49,7 @@
                         </v-row>
                         <v-row>
                             <v-col cols="12" sm="12" md="12">
-                                <v-text-field v-model="userSignupDetails.telephone" :rules="phoneNumberRules" label="Phone number" placeholder="Enter yourPhone number" solo></v-text-field>
+                                <v-text-field v-model="userSignupDetails.telephone" :rules="phoneNumberRules" label="Phone number" placeholder="Enter your Phone number" solo></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>

@@ -30,7 +30,8 @@ const state = {
     currentUserUnlistedPropertyVisuals: [],
     currentUserUncertifiedPropertyVisuals: [],
     currencies: [],
-    propertyLegalProtection: {}
+    propertyLegalProtection: {},
+    currentPropertyDetails: {}
 }
 
 const getters = {
@@ -49,7 +50,8 @@ const getters = {
     allCurrentUserListedPropertyVisuals: (state) => state.currentUserListedPropertyVisuals,
     allCurrentUserUnlistedPropertyVisuals: (state) => state.currentUserUnlistedPropertyVisuals,
     allCurrentUserUncertifiedPropertyVisuals: (state) => state.currentUserUncertifiedPropertyVisuals,
-    currentPropertyLegalProtection: state => state.propertyLegalProtection
+    currentPropertyLegalProtection: state => state.propertyLegalProtection,
+    currentPropertyDetails: state => state.currentPropertyDetails
 };
 
 const actions = {
@@ -75,6 +77,7 @@ const actions = {
         try {
             const response = await CurrencyService.getCurrencies();
             commit('setCurrencies', response.data.result);
+            return response;
         } catch (error) {
             console.log(error);
         }
@@ -334,6 +337,15 @@ const actions = {
         } catch (error) {
             throw new Error(error.message);
         }
+    },
+    async fetchCurrentPropertyDetails({ commit }, property_id) {
+        try {
+            const response = await PropertyService.getPropertyById(property_id);
+            commit('setCurrentPropertyDetails', response.data.result);
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
     }
 }
 
@@ -406,7 +418,8 @@ const mutations = {
     updatePropertyVisualsList: (state, property_id) => state.currentUserListedPropertyVisuals = state.currentUserListedPropertyVisuals.filter(currentUserListedPropertyVisual => currentUserListedPropertyVisual.property_id !== property_id),
     updatePropertyVisualsUnlist: (state, property_id) => state.currentUserUnlistedPropertyVisuals = state.currentUserUnlistedPropertyVisuals.filter(currentUserUnlistedPropertyVisual => currentUserUnlistedPropertyVisual.property_id !== property_id),
     setPropertySubmissionState: (state, submissionState) => state.propertySubmissionState = submissionState,
-    setPropertyLegalProtection: (state, legalProtection) => state.propertyLegalProtection = legalProtection
+    setPropertyLegalProtection: (state, legalProtection) => state.propertyLegalProtection = legalProtection,
+    setCurrentPropertyDetails: (state, propertydetails) => state.currentPropertyDetails = propertydetails
 }
 
 export default {
