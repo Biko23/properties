@@ -86,11 +86,9 @@ export default {
         let formData = new FormData();
         if(typeof(files)  == Array){
           for (let file of files) {
-          console.log('not executed');
             formData.append("file", file, file.name);
           }
         } else {
-          console.log('executed');
           formData.append("file", files, files.name);
         }
        
