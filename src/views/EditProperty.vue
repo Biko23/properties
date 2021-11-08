@@ -241,7 +241,7 @@
                                     <p class="text-h6" style="font-weight: 400;">Property Visuals:</p>
                                 </v-col>
                                 <v-col cols="12" sm="12" md="6">
-                                    <v-btn class="ma-2" outlined color="indigo" block to="/edit-property-visuals">Edit property Visuals</v-btn>
+                                    <v-btn class="ma-2" outlined color="indigo" block @click="navigateToEditPropertyVisuals">Edit property Visuals</v-btn>
                                 </v-col>
                             </v-row>
                             <v-row>
@@ -570,13 +570,10 @@ export default {
         },
         async loadLegalDialog(){
             this.legalDialog = true
+        },
+        async navigateToEditPropertyVisuals(){
+            this.$router.push(`/edit-property-visuals/${this.property_id}`);
         }
-        // async updateUserDetails() {
-        //      this.postAUserLog({
-        //         "activity":`Updated my personal profile`, 
-        //         "button_clicked":"Update Profile Button"
-        //     });
-        // }
     },
 };
 </script>

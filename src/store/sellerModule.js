@@ -346,6 +346,22 @@ const actions = {
         } catch (error) {
             throw new Error(error.message);
         }
+    },
+    async updatedPropertyVisual(_, propertyDetails){
+        try {
+            const response = await PropertyVisualsService.updateAPropertyVisual(propertyDetails);
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    async createSinglePropertyVisual(_, propertyDetails){
+        try {
+            const response = await PropertyVisualsService.postPropertyVisuals(propertyDetails);
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
     }
 }
 

@@ -82,15 +82,24 @@ export default {
   async postPropertyVisuals(propertyVisuals) {
     try {
       if (propertyVisuals) {
+        const { created_by, description, files, property_id, updated_by } = propertyVisuals;
         let formData = new FormData();
-        for (let file of propertyVisuals.files) {
-          formData.append("file", file, file.name);
+        if(typeof(files)  == Array){
+          for (let file of files) {
+          console.log('not executed');
+            formData.append("file", file, file.name);
+          }
+        } else {
+          console.log('executed');
+          formData.append("file", files, files.name);
         }
-        formData.append("description", propertyVisuals.description);
-        formData.append("property_id", propertyVisuals.property_id);
-        formData.append("created_by", propertyVisuals.created_by);
-        formData.append("updated_by", propertyVisuals.updated_by);
-        const response = await API.marketPlaceApi.post('/property-visuals', formData)
+       
+        formData.append("description", description);
+        formData.append("property_id", property_id);
+        formData.append("created_by", created_by);
+        formData.append("updated_by", updated_by);
+        const response = await API.marketPlaceApi.post('/property-visuals', formData);
+        console.log(response);
         return response
       } else {
         console.log("there are no files.");
@@ -102,11 +111,15 @@ export default {
   },
   async updateAPropertyVisual(propertyVisuals) {
     try {
-      const response = await API.marketPlaceApi.put(`/property-visuals/${propertyVisuals.visuals_id}`, propertyVisuals)
+      let formData = new FormData();
+      formData.append("file", propertyVisuals.editedVisualImage, propertyVisuals.editedVisualImage.name);
+      formData.append("description", propertyVisuals.description);
+      formData.append("visuals_id", propertyVisuals.visuals_id);
+      formData.append("updated_by", propertyVisuals.updated_by);
+      const response = await API.marketPlaceApi.put(`/property-visuals/${propertyVisuals.visuals_id}`, formData)
       return response
     } catch (error) {
-      console.log(error);
-      // throw new Error('An error occured when updating data')
+      throw new Error(error.message);
     }
   },
   async deleteAPropertyVisual(propertyVisuals) {
