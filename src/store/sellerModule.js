@@ -347,6 +347,7 @@ const actions = {
             throw new Error(error.message);
         }
     },
+    // ------------ Handle property visual
     async updatedPropertyVisual(_, propertyDetails){
         try {
             const response = await PropertyVisualsService.updateAPropertyVisual(propertyDetails);
@@ -358,6 +359,40 @@ const actions = {
     async createSinglePropertyVisual(_, propertyDetails){
         try {
             const response = await PropertyVisualsService.postPropertyVisuals(propertyDetails);
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    // -------------- Handle landmark visual
+    async updatedLandmarkVisual(_, landmarkDetails){
+        try {
+            const response = await PropertyNearbyLandmarkService.updateAPropertyNearbyLandmark(landmarkDetails);
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    async createSingleLandmarkVisual(_, landmarkDetails){
+        try {
+            const response = await PropertyNearbyLandmarkService.postAPropertyNearbyLandmark(landmarkDetails);
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    // ------- Handle neighborhood visual
+    async updatedNeighborhoodVisual(_, neighborhoodDetails){
+        try {
+            const response = await NeighborhoodVisualsService.updateAProperty(neighborhoodDetails);
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    async createSingleNeighborhoodVisual(_, neighborhoodDetails){
+        try {
+            const response = await NeighborhoodVisualsService.postNeighborhoodVisuals(neighborhoodDetails);
             return response;
         } catch (error) {
             throw new Error(error.message);

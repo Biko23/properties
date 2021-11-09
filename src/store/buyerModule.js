@@ -105,6 +105,7 @@ const actions = {
         try {
             const response = await PropertyNearbyLandmarkService.getPropertyNearbyLandmarkByPropertyId(property_id);
             commit("setSinglePropertyNearbyLandmarkVisuals", response.data.result);
+            return response;
         } catch (error) {
             console.log(error);
             // throw new Error("Failed on loading current property visuals")
@@ -114,6 +115,7 @@ const actions = {
         try {
             const response = await NeighborhoodVisualsService.getNeighborhoodVisualsByPropertyId(property_id);
             commit("setSinglePropertyNeighborhoodVisuals", response.data.result);
+            return response;
         } catch (error) {
             console.log(error);
             // throw new Error("Failed on loading current property visuals")

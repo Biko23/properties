@@ -249,7 +249,7 @@
                                     <p class="text-h6" style="font-weight: 400;">Neighborhood Visuals:</p>
                                 </v-col>
                                 <v-col cols="12" sm="12" md="6">
-                                    <v-btn class="ma-2" outlined color="indigo" block to="/edit-neighborhood-visuals">Edit Neighborhood Visuals</v-btn>
+                                    <v-btn class="ma-2" outlined color="indigo" block :to="`/edit-neighborhood-visuals/${property_id}`">Edit Neighborhood Visuals</v-btn>
                                 </v-col>
                             </v-row>
                             <v-row>
@@ -257,7 +257,7 @@
                                     <p class="text-h6" style="font-weight: 400;">Landmark Visuals:</p>
                                 </v-col>
                                 <v-col cols="12" sm="12" md="6">
-                                    <v-btn class="ma-2" outlined color="indigo" block to="/edit-landmark-visuals">Edit Landmark Visuals</v-btn>
+                                    <v-btn class="ma-2" outlined color="indigo" block @click="navigateToEditLandmarkVisuals">Edit Landmark Visuals</v-btn>
                                 </v-col>
                             </v-row>
                             <v-row>
@@ -549,7 +549,6 @@ export default {
         async getCurrentPropertyPriceDetails(){
             try {
                 const response = await this.fetchCurrentPropertyValue(this.property_id);
-                console.log(response);
                 if(response.data.status == 1){
                     this.propertyValue = this.currentPropertyValue;
                 } else {
@@ -573,7 +572,13 @@ export default {
         },
         async navigateToEditPropertyVisuals(){
             this.$router.push(`/edit-property-visuals/${this.property_id}`);
-        }
+        },
+        async navigateToEditLandmarkVisuals(){
+            this.$router.push(`/edit-landmark-visuals/${this.property_id}`);
+        },
+        // async navigateToEditNeighborhoodVisuals(){
+        //     this.$router.push(`/edit-neighborhood-visuals/${this.property_id}`);
+        // }
     },
 };
 </script>

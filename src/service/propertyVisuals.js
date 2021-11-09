@@ -81,10 +81,12 @@ export default {
   },
   async postPropertyVisuals(propertyVisuals) {
     try {
+      // review
       if (propertyVisuals) {
         const { created_by, description, files, property_id, updated_by } = propertyVisuals;
         let formData = new FormData();
-        if(typeof(files)  == Array){
+        // if(typeof(files)  == Array){
+        if(Array.isArray(files)){
           for (let file of files) {
             formData.append("file", file, file.name);
           }

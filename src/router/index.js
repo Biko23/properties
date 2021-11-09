@@ -143,6 +143,26 @@ const routes = [
     }
   },
   {
+    path: '/edit-landmark-visuals/:property_id',
+    name: 'edit-landmark-visual',
+    props: true,
+    component: () => import('@/views/EditLandmarkVisuals'),
+    meta: {
+      requireSellerRole: true,
+      hideFooterAndAbout: true
+    }
+  },
+  {
+    path: '/edit-neighborhood-visuals/:property_id',
+    name: 'edit-neighborhood-visual',
+    props: true,
+    component: () => import('@/views/EditNeighborhoodVisuals'),
+    meta: {
+      requireSellerRole: true,
+      hideFooterAndAbout: true
+    }
+  },
+  {
     path: '/signup',
     name: 'SignUp',
     component: () => import('@/views/SignUp'),
