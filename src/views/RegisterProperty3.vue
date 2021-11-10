@@ -42,7 +42,7 @@
                                 <v-col cols="12" md="12">
                                     <UploadImages 
                                         style="background-color: #e7f0ff z-index: 100;" 
-                                        :max="4" 
+                                        :max="6" 
                                         uploadMsg="click or drag n' drop images" 
                                         fileError="images files only accepted" 
                                         clearAll="Clear" 

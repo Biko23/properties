@@ -85,7 +85,6 @@ export default {
       if (propertyVisuals) {
         const { created_by, description, files, property_id, updated_by } = propertyVisuals;
         let formData = new FormData();
-        // if(typeof(files)  == Array){
         if(Array.isArray(files)){
           for (let file of files) {
             formData.append("file", file, file.name);
@@ -99,7 +98,6 @@ export default {
         formData.append("created_by", created_by);
         formData.append("updated_by", updated_by);
         const response = await API.marketPlaceApi.post('/property-visuals', formData);
-        console.log(response);
         return response
       } else {
         console.log("there are no files.");

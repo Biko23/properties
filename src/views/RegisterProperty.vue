@@ -15,18 +15,76 @@
         <v-row id="form-row">
           <v-col cols="12" md="12">
             <v-row>
-              <v-col class="d-flex" cols="12" sm="6">
-                <v-select
-                  v-model="property.type"
-                  :rules="[propertyRules.type]"
-                  :items="allPropertyTypes"
-                  label="Select Property Type"
-                  solo
-                ></v-select>
+             <v-col cols="12" md="12">
+               <v-row>
+                   <v-col cols="12" sm="12" md="6">
+                      <v-select
+                        v-model="property.type"
+                        :rules="[propertyRules.type]"
+                        :items="allPropertyTypes"
+                        label="Select Property Type"
+                        solo
+                      ></v-select>
+                    </v-col>
+                    <v-col class="d-flex" cols="12" sm="6">
+                      <v-combobox
+                        v-model="property.features"
+                        :rules="[propertyRules.features]"
+                        :items="allPropertyFeatures"
+                        label="Select Feature"
+                        multiple
+                        solo
+                      ></v-combobox>
+                    </v-col>
+                </v-row>
+             </v-col>
+              <v-col class="d-flex" cols="12" sm="12" md="12">
+                <v-row>
+                  <v-col class="d-flex" cols="12" sm="4">
+                    <v-select
+                      v-model="property.type"
+                      :rules="[propertyRules.type]"
+                      :items="allPropertyTypes"
+                      label="Select District"
+                      solo
+                    ></v-select>
+                  </v-col>
+                  <v-col class="d-flex" cols="12" sm="4">
+                    <v-select
+                      v-model="property.type"
+                      :rules="[propertyRules.type]"
+                      :items="allPropertyTypes"
+                      label="Select Division"
+                      persistent-hint="Select district first"
+                      solo
+                    ></v-select>
+                  </v-col>
+                  <v-col class="d-flex" cols="12" sm="4">
+                    <v-select
+                      v-model="property.type"
+                      :rules="[propertyRules.type]"
+                      :items="allPropertyTypes"
+                      label="Select Suburb"
+                      persistent-hint="Select suburb first"
+                      solo
+                    ></v-select>
+                  </v-col>
+                </v-row>
               </v-col>
 
-              <v-col class="d-flex" cols="12" sm="6">
+               <v-col cols="12" sm="12">
                 <!-- Type as you search -->
+                <v-textarea
+                  v-model="property.location"
+                  :rules="[propertyRules.location]"
+                  class="custom-label-color"
+                  label="Property Description"
+                  placeholder="Describe the property beliefly i.e, a two storeyed building with tiles roof located in kampala 20 kms off masaka highway"
+                  solo
+                ></v-textarea>
+              </v-col>
+
+              <!-- <v-col class="d-flex" cols="12" sm="6">
                 <v-text-field
                   v-model="property.location"
                   :rules="[propertyRules.location]"
@@ -34,19 +92,7 @@
                   label="Property Location"
                   solo
                 ></v-text-field>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col class="d-flex" cols="12" sm="12">
-                <v-combobox
-                  v-model="property.features"
-                  :rules="[propertyRules.features]"
-                  :items="allPropertyFeatures"
-                  label="Select Feature"
-                  multiple
-                  solo
-                ></v-combobox>
-              </v-col>
+              </v-col> -->
             </v-row>
             <v-row>
               <v-col cols="12" sm="12">
@@ -77,7 +123,7 @@
                       <v-col cols="12" md="12">
                             <UploadImages
                               style="background-color: #e7f0ff; height: 100%; z-index: 100;"
-                              :max="8"
+                              :max="6"
                               uploadMsg="Drag n' drop. The first image should be the main image"
                               fileError="Image files only accepted"
                               maxError="Max files exceed"
