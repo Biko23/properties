@@ -31,7 +31,11 @@ const state = {
     currentUserUncertifiedPropertyVisuals: [],
     currencies: [],
     propertyLegalProtection: {},
-    currentPropertyDetails: {}
+    currentPropertyDetails: {},
+    // districts
+    districts: [],
+    divisions: [],
+    suburbs: []
 }
 
 const getters = {
@@ -51,7 +55,11 @@ const getters = {
     allCurrentUserUnlistedPropertyVisuals: (state) => state.currentUserUnlistedPropertyVisuals,
     allCurrentUserUncertifiedPropertyVisuals: (state) => state.currentUserUncertifiedPropertyVisuals,
     currentPropertyLegalProtection: state => state.propertyLegalProtection,
-    currentPropertyDetails: state => state.currentPropertyDetails
+    currentPropertyDetails: state => state.currentPropertyDetails,
+    // districts
+    allDistricts: state => state.districts,
+    allDivisions: state => state.divisions,
+    allSuburbs: state => state.suburbs
 };
 
 const actions = {
@@ -105,6 +113,7 @@ const actions = {
             const newProperty = {
                 isListedForId: state.saleCategory[0].id,
                 property_type_id:propertyDataOne.type,
+                description: propertyDataOne.propertyDescription,
                 created_by: rootState.AuthModule.currentUser.username,
                 updated_by: rootState.AuthModule.currentUser.username
             }
@@ -123,11 +132,13 @@ const actions = {
             const newProperty = {
                 isListedForId: state.rentCategory[0].id, 
                 property_type_id: rentPropertyDataOne.type,
+                description: rentPropertyDataOne.propertyDescription,
                 created_by: rootState.AuthModule.currentUser.username,
                 updated_by: rootState.AuthModule.currentUser.username
             }
             const response = await PropertyService.postAProperty(newProperty);
             commit('setCreatedProperty', response.data.result);
+            return response;
         } catch (error) {
             console.log(error);
             // throw new Error('Failed to save property details')
@@ -143,10 +154,10 @@ const actions = {
     async submitAllPropertyData({ state, rootState }) {
         try {
             const propertyLocation = {
-                name: state.propertyFirstPageData.location,
                 property_id: state.createdProperty.property_id,
-                latitude: 19393982,
-                longitude: 1959494,
+                district_id: state.propertyFirstPageData.district_id,
+                division_id: state.propertyFirstPageData.division_id,
+                suburb_id: state.propertyFirstPageData.suburb_id,
                 created_by: rootState.AuthModule.currentUser.username,
                 updated_by: rootState.AuthModule.currentUser.username
             }
@@ -177,6 +188,7 @@ const actions = {
             const propertyRentalValue = {
                 rental_value_amt: state.propertySecondPageData.expected_value,
                 property_id: state.createdProperty.property_id,
+                currency_id: state.propertySecondPageData.currency_id,
                 created_by: rootState.AuthModule.currentUser.username,
                 updated_by: rootState.AuthModule.currentUser.username
             }
@@ -397,6 +409,40 @@ const actions = {
         } catch (error) {
             throw new Error(error.message);
         }
+    },
+    // ============================ districts
+    async fetchAllDistricts ({ commit }){
+        try {
+            const response = await PropertyLocationService.getAllDistricts();
+            if(response.data.status == 1){
+                commit('setAllDistricts', response.data.result);
+            }
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    async fetchDivisionsByDistrictId({ commit }, district_id){
+        try {
+            const response = await PropertyLocationService.getDivisionsByDistrictId(district_id);
+            if(response.data.status ==1){
+                commit('setSelectedDivisions', response.data.result);
+            }
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    async fetchSuburbsByDistrictId({ commit }, division_id){
+        try {
+            const response = await PropertyLocationService.getSuburbsByDivisionId (division_id);
+            if(response.data.status == 1){
+                commit('setSelectedSuburbs', response.data.result);
+            }
+            return response;
+        } catch (error) {
+            throw new Error(error.message); 
+        }
     }
 }
 
@@ -470,7 +516,11 @@ const mutations = {
     updatePropertyVisualsUnlist: (state, property_id) => state.currentUserUnlistedPropertyVisuals = state.currentUserUnlistedPropertyVisuals.filter(currentUserUnlistedPropertyVisual => currentUserUnlistedPropertyVisual.property_id !== property_id),
     setPropertySubmissionState: (state, submissionState) => state.propertySubmissionState = submissionState,
     setPropertyLegalProtection: (state, legalProtection) => state.propertyLegalProtection = legalProtection,
-    setCurrentPropertyDetails: (state, propertydetails) => state.currentPropertyDetails = propertydetails
+    setCurrentPropertyDetails: (state, propertydetails) => state.currentPropertyDetails = propertydetails,
+    // ======================== Districts
+    setAllDistricts: (state, allDistricts) => state.districts = allDistricts,
+    setSelectedDivisions: (state, returnedDivisions) => state.divisions = returnedDivisions,
+    setSelectedSuburbs: (state, returnedSuburbs) => state.suburbs = returnedSuburbs
 }
 
 export default {

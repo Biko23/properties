@@ -103,16 +103,17 @@
               justify-content: space-around;
             "
           >
-            <v-col style="flex: 1">
+            <v-col style="flex: 6">
               <h3>Property Details</h3>
               <p style="font-weight: 300">
-                {{ spreadFeatures }} <br />
+                {{ spreadFeatures }} <br /><br />
                 Location: {{ $route.query.location }}
               </p>
             </v-col>
             <v-col
               style="
                 display: flex;
+                flex: 1;
                 align-items: center;
                 justify-content: flex-end;
               "
@@ -345,6 +346,56 @@
         </v-col>
       </v-row>
     </v-container>
+    <!--  -->
+    <v-container>
+      <v-row>
+        <v-col>
+          <v-card color="basil">
+            <v-card-title class="text-center justify-center py-6">
+              <h1 class="font-weight-bold text-h6 basil--text">
+                Similar Properties
+              </h1>
+            </v-card-title>
+            <v-tabs
+              v-model="tab"
+              background-color="transparent"
+              color="basil"
+              grow
+            >
+              <v-tab></v-tab>
+            </v-tabs>
+
+            <v-tabs-items v-model="tab">
+              <v-tab-item>
+                <v-card color="basil" flat>
+                  <v-card-text>
+                    <!-- Content for neighborhood -->
+                    <v-row v-if="allSingleNeighborhoodVisuals.length > 0">
+                      <v-col
+                        v-for="neighborhoodVisual in allSingleNeighborhoodVisuals"
+                        :key="neighborhoodVisual.neighborhood_visuals_id"
+                      >
+                        <v-img
+                          :src="
+                            'http://localhost:9003/' +
+                            neighborhoodVisual.snapshot
+                          "
+                          aspect-ratio="1"
+                          class="grey lighten-2"
+                          height="200"
+                        ></v-img>
+                      </v-col>
+                    </v-row>
+                    <p v-else>No Neighborhood images to display</p>
+                  </v-card-text>
+                </v-card>
+              </v-tab-item>
+            </v-tabs-items>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+    <!--  -->
   </div>
 </template>
 

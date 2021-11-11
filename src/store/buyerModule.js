@@ -377,7 +377,7 @@ const mutations = {
                 category: eachPropertyForSale.property_type_,
                 actual_value: eachPropertyForSale.actualvalue,
                 visuals_id: eachPropertyForSale.visualsid,
-                name: eachPropertyForSale.location_name,
+                name: `${eachPropertyForSale.district}, ${eachPropertyForSale.division}, ${eachPropertyForSale.suburb} suburb`,
                 when_created: eachPropertyForSale.whencreated,
                 created_by: eachPropertyForSale.createdby
             }
@@ -392,7 +392,7 @@ const mutations = {
                 category: eachPropertyForRent.property_type_,
                 actual_value: eachPropertyForRent.rental_value,
                 visuals_id: eachPropertyForRent.visualsid,
-                name: eachPropertyForRent.location_name,
+                name: `${eachPropertyForRent.district}, ${eachPropertyForRent.division}, ${eachPropertyForRent.suburb} suburb`,
                 when_created: eachPropertyForRent.whencreated,
                 created_by: eachPropertyForRent.createdby
             }
@@ -428,7 +428,7 @@ const mutations = {
             snapshot: eachResult.property_visual,
             actual_value: eachResult.actual_value_,
             category: eachResult.property_type_,
-            name: eachResult.location_name,
+            name: `${eachResult.district}, ${eachResult.division}, ${eachResult.suburb} suburb`,
             when_created: eachResult.when_created_,
             created_by: eachResult.created_by_
         }
@@ -442,7 +442,7 @@ const mutations = {
             snapshot: eachRental.snapshot_,
             actual_value: eachRental.rental_value,
             category: eachRental.property_type_,
-            name: eachRental.location_name,
+            name: `${eachRental.district}, ${eachRental.division}, ${eachRental.suburb} suburb`,
             last_viewed: eachRental.when_viewed_,
             created_by: eachRental.property_created_by
         }
@@ -454,7 +454,7 @@ const mutations = {
                 snapshot: eachSale.snapshot_,
                 actual_value: eachSale.actualvalue,
                 category: eachSale.property_type_,
-                name: eachSale.location_name,
+                name: `${eachSale.district}, ${eachSale.division}, ${eachSale.suburb} suburb`,
                 last_viewed: eachSale.when_viewed_,
                 created_by: eachSale.property_created_by
             }

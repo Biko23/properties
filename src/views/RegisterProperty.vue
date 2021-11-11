@@ -42,30 +42,38 @@
                 <v-row>
                   <v-col class="d-flex" cols="12" sm="4">
                     <v-select
-                      v-model="property.type"
+                      v-model="property.district_id"
                       :rules="[propertyRules.type]"
-                      :items="allPropertyTypes"
+                      :items="districts"
+                      item-text="district_name"
+                      item-value="district_id"
+                      @change="fetchDivisions"
                       label="Select District"
                       solo
                     ></v-select>
                   </v-col>
                   <v-col class="d-flex" cols="12" sm="4">
                     <v-select
-                      v-model="property.type"
+                      v-model="property.division_id"
                       :rules="[propertyRules.type]"
-                      :items="allPropertyTypes"
+                      :items="divisions"
+                      @change="fetchSuburbs"
+                      item-text="division_name"
+                      item-value="division_id"
                       label="Select Division"
-                      persistent-hint="Select district first"
+                      hint="Select district first"
                       solo
                     ></v-select>
                   </v-col>
                   <v-col class="d-flex" cols="12" sm="4">
                     <v-select
-                      v-model="property.type"
+                      v-model="property.suburb_id"
                       :rules="[propertyRules.type]"
-                      :items="allPropertyTypes"
+                      :items="suburbs"
+                      item-text="suburb_name"
+                      item-value="suburb_id"
                       label="Select Suburb"
-                      persistent-hint="Select suburb first"
+                      hint="Select suburb first"
                       solo
                     ></v-select>
                   </v-col>
@@ -73,26 +81,15 @@
               </v-col>
 
                <v-col cols="12" sm="12">
-                <!-- Type as you search -->
                 <v-textarea
-                  v-model="property.location"
-                  :rules="[propertyRules.location]"
+                  v-model="property.propertyDescription"
+                  :rules="[propertyRules.propertyDescription]"
                   class="custom-label-color"
                   label="Property Description"
                   placeholder="Describe the property beliefly i.e, a two storeyed building with tiles roof located in kampala 20 kms off masaka highway"
                   solo
                 ></v-textarea>
               </v-col>
-
-              <!-- <v-col class="d-flex" cols="12" sm="6">
-                <v-text-field
-                  v-model="property.location"
-                  :rules="[propertyRules.location]"
-                  class="custom-label-color"
-                  label="Property Location"
-                  solo
-                ></v-text-field>
-              </v-col> -->
             </v-row>
             <v-row>
               <v-col cols="12" sm="12">
@@ -210,9 +207,15 @@ export default {
     message: '',
     title: '',
     state: false,
+    districts: [],
+    divisions: [],
+    suburbs: [],
     property: {
       type: "",
-      location: "",
+      district_id: 0,
+      division_id: 0,
+      suburb_id: 0,
+      propertyDescription: "",
       description: "",
       imageValidatorField: "",
       features: [],
@@ -220,9 +223,9 @@ export default {
     },
     valid: true,
     propertyRules: {
-      type: (value) => !!value || "Type is required.",
+      type: (value) => !!value || "Field is required.",
       description: (v) => (v && v.length >= 4) || "Min characters should be 5",
-      location: (value) => !!value || "Location is required.",
+      propertyDescription: (value) => !!value || "Property Description is required.",
       features(value) {
         if (value instanceof Array && value.length == 0) {
           return "Features are required";
@@ -233,14 +236,70 @@ export default {
     },
     hide: true,
   }),
+   computed: {
+    ...mapGetters([
+      "allPropertyTypes", ,
+      "allPropertyFeatures", 
+      "allDistricts", 
+      "allDivisions", 
+      "allSuburbs"
+    ])
+  },
   methods: {
     ...mapActions([
       "fetchPropertyTypes",
       "fetchPropertyFeatures",
       "addPropertyDataFromPageOne",
       "fetchPropertyCategories",
-      "postAUserLog"
+      "postAUserLog",
+      "fetchAllDistricts",
+      "fetchDivisionsByDistrictId",
+      "fetchSuburbsByDistrictId"
     ]),
+    async fetchDistricts(){
+      try {
+        const response = await this.fetchAllDistricts();
+        if(response.data.status == 1){
+          this.districts = this.allDistricts;
+        } else {
+          this.defaultResponse(response.data.message, 'Error', true);
+        }
+      } catch (error) {
+        this.defaultResponse(error.message, 'Error', true);
+      }
+    },
+    async fetchDivisions(){
+      try {
+        if(this.property.district_id == 0){
+          this.defaultResponse('No district selected yet', 'Error', true);
+        } else {
+          const response = await this.fetchDivisionsByDistrictId(this.property.district_id);
+          if(response.data.status == 1){
+            this.divisions = this.allDivisions;
+          } else {
+            this.defaultResponse(response.data.message, 'Error', true);
+          }
+        }
+      } catch (error) {
+        this.defaultResponse(error.message, 'Error', true);
+      }
+    },
+    async fetchSuburbs(){
+      try {
+        if(this.property.division_id == 0){
+          this.defaultResponse('No division selected yet', 'Error', true);
+        } else {
+          const response = await this.fetchSuburbsByDistrictId(this.property.division_id);
+          if(response.data.status == 1){
+            this.suburbs = this.allSuburbs;
+          } else {
+            this.defaultResponse(response.data.message, 'Error', true);
+          }
+        }
+      } catch (error) {
+        this.defaultResponse(error.message, 'Error', true);
+      }
+    },
     handleImages(files) {
       this.property.imageValidatorField = files.length <= 0 ? "" : files[0].name;
       this.property.visuals.splice(0, this.property.visuals.length);
@@ -276,9 +335,6 @@ export default {
       }
     },
   },
-  computed: {
-    ...mapGetters(["allPropertyTypes", "allPropertyFeatures"])
-  },
   created() {
     this.postAUserLog({
       activity: "Visited the Property Listing first page",
@@ -287,6 +343,7 @@ export default {
     this.fetchPropertyTypes();
     this.fetchPropertyFeatures();
     this.fetchPropertyCategories();
+    this.fetchDistricts();
   },
 };
 </script>

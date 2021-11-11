@@ -140,7 +140,10 @@ const actions = {
             // }
             userDetails.role_id = state.userRoleIdentifier
             const response = await AuthService.updateUserProfile(userDetails);
-            return response;
+            return {
+                userUpdateResponse: response.userUpdateResponse,
+                roleResponse: response.roleResponse
+            }
         } catch (error) {
             console.log(error);
             // throw new Error('An error occured when sending data');

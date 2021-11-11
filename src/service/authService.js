@@ -50,7 +50,10 @@ export default {
     try {
       const response = await API.marketPlaceApi.put(`/users/${user.user_id}`, user)
       const roleResponse = await API.marketPlaceApi.post(`/users/add-role/${user.user_id}/${user.role_id}`)
-      return response
+      return {
+        userUpdateResponse: response,
+        roleResponse: roleResponse
+      }
     } catch (error) {
       console.log(error);
       // throw new Error('An error occured when updating data')

@@ -75,10 +75,10 @@
               justify-content: space-around;
             "
           >
-            <v-col>
+            <v-col style="flex:6;">
               <h3>Property Details</h3>
               <p style="font-weight: 300">
-                {{ spreadFeatures }} <br />
+                {{ spreadFeatures }} <br /><br />
                 Location: {{ $route.query.location }}
                 <!-- plot 3421, Muyenga, Kampala -->
               </p>
@@ -86,6 +86,7 @@
             <v-col
               style="
                 display: flex;
+                flex: 1;
                 align-items: center;
                 justify-content: flex-end;
               "
