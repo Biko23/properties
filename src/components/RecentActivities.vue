@@ -18,7 +18,7 @@
             <v-col cols="12" md="6" xs="12">
                 <p style="font-weight: bold;">Properties For Sale</p>
                 <v-row class="recent">
-                    <v-col cols="12" xl="2" md="6" xs="12" v-for="(viewedSaleProperty, index) in allRecentViewedProperties" :key="index">
+                    <v-col cols="12" xl="4" md="6" xs="12" v-for="(viewedSaleProperty, index) in allRecentViewedProperties" :key="index">
                         <BaseViewedCard 
                             :src="'http://localhost:8002/' + viewedSaleProperty.snapshot" 
                             :date="formatDate(viewedSaleProperty.last_viewed)" 
@@ -30,7 +30,7 @@
                     </v-col>
                 </v-row>
             </v-col>
-            <v-col cols="12" md="6" xs="12">
+            <v-col cols="12" xl="4" md="6" xs="12">
                 <p style="font-weight: bold;">Properties For Rent</p>
                 <v-row class="recent">
                     <v-col cols="12" xl="2" md="6" xs="12" v-for="(viewedRentProperty, index) in allRecentViewedRentals" :key="index">

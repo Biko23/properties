@@ -65,9 +65,10 @@
             :date="formatDate(propertyVisual.when_created)"
             :category="propertyVisual.category"
             :cost="commaFormatted(propertyVisual.actual_value)"
+            :propertyCode="propertyVisual.property_number"
             :postedBy="propertyVisual.created_by"
             :src="'http://localhost:8002/' + propertyVisual.snapshot"
-            :to="`/view/${propertyVisual.property_id}?location=${propertyVisual.name}`"
+            :to="`/view/${propertyVisual.property_id}?code=${propertyVisual.property_number}&location=${propertyVisual.name}`"
           >
             <template v-slot:share>
               <!--  -->
@@ -83,7 +84,7 @@
                 <v-list style="display: flex;">
                   <network-sharing
                     @click.native="logActivity(propertyVisual.property_id)"
-                    :url="`http://localhost:8080/view/${propertyVisual.property_id}?location=${propertyVisual.name}`"
+                    :url="`http://localhost:8080/view/${propertyVisual.property_id}?code=${propertyVisual.property_number}&location=${propertyVisual.name}`"
                   />
                 </v-list>
               </v-menu>
@@ -184,44 +185,24 @@ export default {
       let price = amount.toLocaleString("en-US");
       return price;
     },
-    // refactoring needed
     formatDate(dateToFormat) {
       let currentDate = new Date();
       let returnedFormattedDate = new Date(dateToFormat);
       let difference = Math.abs(returnedFormattedDate - currentDate);
       let days = (difference / (1000 * 3600 * 24)).toFixed(0);
 
-      let result;
-      switch (+days) {
-        case 0:
-          result = "Added today";
-          break;
-        case 1:
-          result = "1 days ago";
-          break;
-        case 2:
-          result = "2 days ago";
-          break;
-        case 3:
-          result = "3 days ago";
-          break;
-        case 4:
-          result = "4 days ago";
-          break;
-        case 5:
-          result = "5 days ago";
-          break;
-        case 6:
-          result = "6 days ago";
-          break;
-        case 7:
-          result = "7 days ago";
-          break;
-        default:
-          result = dateFormat(returnedFormattedDate, "ddd, mmm dS, yyyy");
-          break;
+      const DATES = {
+        "0": "Added today",
+        "1": "1 day ago",
+        "2": "2 days ago",
+        "3": "3 days ago",
+        "4": "4 days ago",
+        "5": "5 days ago",
+        "6": "6 days ago",
+        "7": "7 days ago"
       }
-      return result;
+      
+      return DATES[days] ?? dateFormat(returnedFormattedDate, "ddd, mmm dS, yyyy");
     },
     onRemove(property_id) {
       this.removePropertyFromFavorites(property_id)

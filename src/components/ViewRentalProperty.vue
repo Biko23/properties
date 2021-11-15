@@ -78,9 +78,9 @@
             <v-col style="flex:6;">
               <h3>Property Details</h3>
               <p style="font-weight: 300">
-                {{ spreadFeatures }} <br /><br />
-                Location: {{ $route.query.location }}
-                <!-- plot 3421, Muyenga, Kampala -->
+                {{ spreadFeatures }} <br />
+                Location: {{ $route.query.location }} <br /> <br />
+                <span style="font-weight: 600;">CODE: {{ $route.query.code }}</span>
               </p>
             </v-col>
             <v-col
@@ -139,7 +139,7 @@
             <h4 style="margin: 1em 0 0 10px;">Social Platform</h4>
             <v-list style="display: flex; flex-direction: row;  flex-wrap: wrap; justify-content: flex-start; margin-left:10px;">
               <network-sharing 
-                :url="`http://localhost:8080/view-rental/${allSinglePropertyVisuals[0].property_id}?location=${$route.query.location}`"
+                :url="`http://localhost:8080/view-rental/${allSinglePropertyVisuals[0].property_id}?code=${$route.query.code}&location=${$route.query.location}`"
                 />
                 </v-list>
           </div>

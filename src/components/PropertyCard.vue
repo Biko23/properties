@@ -7,11 +7,25 @@
     <div style="display: flex; flex-direction: row; justify-content: space-between;">
         <v-card-subtitle>
             <small style="font-weight: bold; color: #000000; margin-bottom: 0; font-size: 18px;">UGX: {{cost}}</small><br>
+            <small style="font-weight: 500; color: #000000; margin-bottom: 5px; font-size: 14px;">Code: {{propertyCode}}</small><br>
             <slot name="type"></slot>
             <small>Category: {{category}}</small><br>
             <small>Located: {{location}}</small><br>
             <small>Posted by: {{postedBy}}</small>
         </v-card-subtitle>
+        <!-- 
+            actual_value: eachPropertyForSale.actualvalue,
+                created_by: eachPropertyForSale.createdby,
+                description: eachPropertyForSale.description_,
+                name: `${eachPropertyForSale.division}, ${eachPropertyForSale.suburb}`,
+                property_description: eachPropertyForSale.property_description,
+                property_number: eachPropertyForSale.property_number_,
+                category: eachPropertyForSale.property_type_,
+                property_id: eachPropertyForSale.propertyid_,
+                snapshot: eachPropertyForSale.snapshot_,
+                visuals_id: eachPropertyForSale.visualsid,
+                when_created: eachPropertyForSale.whencreated
+         -->
         <!-- <v-icon>mdi-eye</v-icon> -->
         <div style="display: flex; flex-direction: row; align-items: flex-end;">
             <div style="flex: 1; align-items: center; justify-content: flex-end;">
@@ -53,6 +67,10 @@ export default {
         date: {
             type: String,
             default: dateFormat(new Date(), "DDDD")
+        },
+        propertyCode: {
+            type: String,
+            default: 'No code'
         },
         cost: {
             type: String,

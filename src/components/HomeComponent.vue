@@ -1,23 +1,5 @@
 <template>
 <div>
-    <!-- 
-         <v-container id="container" fluid>
-        <v-row >
-            <v-col cols="12" sm="6" md="6" xs="12">
-                <p id="intro">Are You looking for your dream house or property?</p>
-            </v-col>
-            <v-col cols="12" sm="6" md="6" xs="12" >
-
-                        <input placeholder="Search Properties" v-model="keyword" />
-                        <span style="margin-left: -50px; padding-top: 300px">
-                            <button @click="searchProperties">
-                                <img src="https://res.cloudinary.com/diued7ugb/image/upload/v1625824148/Vector_jyqs4g.svg" alt="" width="20" srcset="" style="margin-top: -12px; position: absolute" />
-                            </button>
-                        </span>
-            </v-col>
-        </v-row>
-    </v-container>
-     -->
     <v-container id="container" fluid>
         <div id="search-section">
             <div style="flex: 1">
@@ -349,7 +331,6 @@
             <v-col cols="12" md="3" xs="12" v-for="propertyVisual in allLatestProperties" :key="propertyVisual.visuals_id">
                 <recent-properties-component :description="propertyVisual.description" :created_by="propertyVisual.created_by" :src="'http://localhost:8002/' + propertyVisual.snapshot" />
             </v-col>
-
             <!-- <v-col cols="12" md="3" xs="12">
                 <v-card max-width="auto">
                     <v-img src="https://res.cloudinary.com/diued7ugb/image/upload/v1625732723/house1_svrut7.jpg" height="200px"></v-img>

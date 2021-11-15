@@ -95,29 +95,15 @@
               </a>
             </v-col>
           </div>
-          <div
-            style="
-              display: flex;
-              flex-direction: row;
-              flex-wrap: wrap;
-              justify-content: space-around;
-            "
-          >
+          <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-around;">
             <v-col style="flex: 6">
               <h3>Property Details</h3>
-              <p style="font-weight: 300">
-                {{ spreadFeatures }} <br /><br />
-                Location: {{ $route.query.location }}
+              <p style="font-weight: 300"> {{ spreadFeatures }} <br />
+              Location: {{ $route.query.location }} <br/><br />
+              <span style="font-weight: 600;">CODE: {{ $route.query.code }}</span>
               </p>
             </v-col>
-            <v-col
-              style="
-                display: flex;
-                flex: 1;
-                align-items: center;
-                justify-content: flex-end;
-              "
-            >
+            <v-col style="display: flex; flex: 1; align-items: center; justify-content: flex-end;">
               <template v-if="loginState">
                 <template
                   v-if="
@@ -174,7 +160,7 @@
               "
             >
               <network-sharing 
-                :url="`http://localhost:8080/view/${allSinglePropertyVisuals[0].property_id}?location=${$route.query.location}`"
+                :url="`http://localhost:8080/view/${allSinglePropertyVisuals[0].property_id}?code=${$route.query.code}&location=${$route.query.location}`"
                 />
             </v-list>
           </div>

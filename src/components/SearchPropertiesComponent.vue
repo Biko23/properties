@@ -73,11 +73,12 @@
           <property-card
             :location="currentProperty.name"
             :date="formatDate(currentProperty.when_created)"
+            :propertyCode="currentProperty.property_number"
             :cost="commaFormatted(currentProperty.actual_value)"
             :category="currentProperty.category"
             :postedBy="currentProperty.created_by"
             :src="'http://localhost:8002/' + currentProperty.snapshot"
-            :to="`/view/${currentProperty.property_id}?location=${currentProperty.name}`"
+            :to="`/view/${currentProperty.property_id}?code=${currentProperty.property_number}&location=${currentProperty.name}`"
           >
            <template v-slot:share>
               <v-menu bottom offset-y>
@@ -91,7 +92,7 @@
                 </template>
                 <v-list style="display: flex; flex-direction: column;">
                   <network-sharing
-                    :url="`http://localhost:8080/view/${currentProperty.property_id}?location=${currentProperty.name}`"
+                    :url="`http://localhost:8080/view/${currentProperty.property_id}?code=${currentProperty.property_number}&location=${currentProperty.name}`"
                   />
                 </v-list>
               </v-menu>

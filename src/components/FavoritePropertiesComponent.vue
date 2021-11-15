@@ -30,13 +30,14 @@
               :location="favoriteProperty.name"
               :date="formatDate(favoriteProperty.when_saved)"
               :category="favoriteProperty.category"
+              :propertyCode="favoriteProperty.property_number"
               :cost="commaFormatted(favoriteProperty.actual_value)"
               :postedBy="favoriteProperty.created_by"
               :src="'http://localhost:8002/' + favoriteProperty.snapshot"
               :to="
                 favoriteProperty.listed_for_name == ('Rent' || 'rent' || 'RENT')
-                  ? `/view-rental/${favoriteProperty.property_id}?location=${favoriteProperty.name}`
-                  : `/view/${favoriteProperty.property_id}?location=${favoriteProperty.name}`
+                  ? `/view-rental/${favoriteProperty.property_id}?code=${favoriteProperty.property_number}&location=${favoriteProperty.name}`
+                  : `/view/${favoriteProperty.property_id}?code=${favoriteProperty.property_number}&location=${favoriteProperty.name}`
               "
             >
               <template v-slot:type>
