@@ -516,7 +516,8 @@ export default {
       "removePropertyFromFavorites",
       "addPropertyToFavorites",
       "checkIfUserIsAlreadyInterestedInAProperty",
-      "expressInterestInBuyingAProperty"
+      "expressInterestInBuyingAProperty",
+      "postAUserLog"
     ]),
     defaultResponse(msg, heading, status) {
       this.message = msg
@@ -547,6 +548,11 @@ export default {
          if(response.data.status == 1){
           this.confirmIfPropertyIsAlreaydAddedToInterests();
           this.defaultResponse(response.data.message, 'Success', true);
+          const payload = {
+            "activity":`Added Property with id ${this.property_id} to my interested properties`, 
+            "button_clicked":"Add property to my interested properties"
+          }
+          this.postAUserLog(payload);
         } else {
           this.defaultResponse(response.data.message, 'Error', true);
         } 
