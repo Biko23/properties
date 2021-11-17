@@ -47,10 +47,7 @@
         <template v-slot:activator="{ on }">
           <v-btn icon x-large v-on="on">
             <v-avatar color="#3B6EF3" size="38">
-              <img
-                alt="Avatar"
-                src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460"
-              />
+              <v-icon>mdi-account-circle</v-icon>
             </v-avatar>
           </v-btn>
         </template>
@@ -71,6 +68,10 @@
               <v-divider class="my-3"></v-divider>
               <router-link to="/editprofile" style="text-decoration: none">
                 <v-btn depressed rounded text> Edit Account </v-btn>
+              </router-link>
+              <v-divider class="my-3"></v-divider>
+              <router-link to="/user-interest-properties" style="text-decoration: none">
+                <v-btn depressed rounded text>Interested Properties</v-btn>
               </router-link>
               <v-divider class="my-3"></v-divider>
               <router-link to="/recentactivities" style="text-decoration: none">

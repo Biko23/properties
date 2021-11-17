@@ -1,5 +1,10 @@
 <template>
   <div>
+     <base-dialog :message="message" :title="title" :dialogState="state">
+        <template v-slot:button>
+            <v-btn text @click="state = !state">close</v-btn>
+        </template>
+    </base-dialog>
     <v-container>
       <!-- favorite Dialog -->
       <v-dialog
@@ -98,54 +103,90 @@
           <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-around;">
             <v-col style="flex: 6">
               <h3>Property Details</h3>
-              <p style="font-weight: 300"> {{ spreadFeatures }} <br />
-              Location: {{ $route.query.location }} <br/><br />
-              <span style="font-weight: 600;">CODE: {{ $route.query.code }}</span>
-              </p>
+              <p style="font-weight: 600; margin-top: 5px;">CODE: {{ $route.query.code }}</p>
+              <p style="margin-bottom: 0;">Location:</p>
+              <p style="font-weight: 300;"> {{ $route.query.location }}</p>
             </v-col>
-            <v-col style="display: flex; flex: 1; align-items: center; justify-content: flex-end;">
-              <template v-if="loginState">
-                <template
-                  v-if="
-                    currentLoggedinUser.username !==
-                    allSinglePropertyVisuals[0].created_by
-                  "
-                >
-                  <v-icon
-                    v-if="
-                      allCurrentUserFavoriteProperties.includes(
-                        allSinglePropertyVisuals[0].property_id
-                      )
-                    "
-                    small
-                    style="font-size: 40px; color: #3b6ef3"
-                    @click.stop="
-                      onRemove(allSinglePropertyVisuals[0].property_id)
-                    "
-                  >
-                    mdi-heart
-                  </v-icon>
-                  <v-icon
-                    v-else
-                    small
-                    style="font-size: 40px; color: black"
-                    @click.stop="onAdd(allSinglePropertyVisuals[0].property_id)"
-                  >
-                    mdi-heart-outline
-                  </v-icon>
-                </template>
-                <template v-else />
-              </template>
-              <template v-else>
-                <v-icon
-                  small
-                  style="font-size: 40px; color: black; z-index: 100"
-                  @click.stop="showLoginMessage"
-                >
-                  mdi-heart-outline
-                </v-icon>
-              </template>
+            <v-col 
+              style="
+                display: flex; 
+                flex: 1; 
+                align-items: flex-start; 
+                justify-content: flex-end;
+              "
+            >
+              <v-row>
+                <v-col>
+                  <template v-if="loginState">
+                    <v-btn 
+                      v-if="
+                        (checkUserInterestInProperty == 0 || checkUserInterestInProperty == undefined) && 
+                        currentLoggedinUser.username !== allSinglePropertyVisuals[0].created_by"
+                      color="primary" 
+                      @click="expressInterestInProperty"
+                    >Interested</v-btn>
+                    <p v-else></p> 
+                  </template>
+                  <template v-else>
+                    <v-btn
+                      title="Express interested"
+                      @click="showLoginInterestMessage"
+                      color="primary"
+                    >Interested</v-btn>
+                  </template>
+                </v-col>
+                <v-col style="display: flex; justify-content: center;">
+                  <template v-if="loginState">
+                    <template
+                      v-if="
+                        currentLoggedinUser.username !==
+                        allSinglePropertyVisuals[0].created_by
+                      "
+                    >
+                      <v-icon
+                        v-if="
+                          allCurrentUserFavoriteProperties.includes(
+                            allSinglePropertyVisuals[0].property_id
+                          )
+                        "
+                        small
+                        style="font-size: 40px; color: #3b6ef3"
+                        title="Remove from favorites"
+                        @click.stop="
+                          onRemove(allSinglePropertyVisuals[0].property_id)
+                        "
+                      >
+                        mdi-heart
+                      </v-icon>
+                      <v-icon
+                        v-else
+                        small
+                        style="font-size: 40px; color: black"
+                        title="Add to favorites"
+                        @click.stop="onAdd(allSinglePropertyVisuals[0].property_id)"
+                      >
+                        mdi-heart-outline
+                      </v-icon>
+                    </template>
+                    <template v-else />
+                  </template>
+                  <template v-else>
+                    <v-icon
+                      small
+                      style="font-size: 40px; color: black; z-index: 100"
+                      title="Add to favorites"
+                      @click.stop="showLoginMessage"
+                    >
+                      mdi-heart-outline
+                    </v-icon>
+                  </template>
+                </v-col>
+              </v-row>
             </v-col>
+          </div>
+          <div style="margin-left: 10px;">
+            <p style="margin-bottom: 0;">Features</p>
+            <p style="font-weight: 300"> {{ spreadFeatures }}</p>
           </div>
           <!--  -->
           <div>
@@ -400,6 +441,9 @@ export default {
   data: () => ({
     favoriteDialog: "",
     alertMessage: false,
+    message: '',
+    title: '',
+    state: false,
     propertyMonthtyCosts: [
       {
         monthly_costs_id: 1,
@@ -447,6 +491,7 @@ export default {
       "allCurrentPropertyFeatures",
       "allCurrentUserFavoriteProperties",
       "loginState",
+      "checkUserInterestInProperty"
     ]),
     dollarExchange() {
       // const USCost = (this.currentPropertyValue.actual_value / 3500).toFixed(2);
@@ -470,7 +515,46 @@ export default {
       "addAViewedProperty",
       "removePropertyFromFavorites",
       "addPropertyToFavorites",
+      "checkIfUserIsAlreadyInterestedInAProperty",
+      "expressInterestInBuyingAProperty"
     ]),
+    defaultResponse(msg, heading, status) {
+      this.message = msg
+      this.title = heading
+      this.state = status
+      setTimeout(() => {
+          this.message = ""
+          this.title = ""
+          this.state = false
+      }, 2000);
+    },
+    // ==========================================
+    async confirmIfPropertyIsAlreaydAddedToInterests(){
+      if(this.loginState == true){
+        try {
+          const response = await this.checkIfUserIsAlreadyInterestedInAProperty(this.property_id);
+          if(response.data.status == 0){
+            this.defaultResponse(response.data.message, 'Error', true);
+          }        
+        } catch (error) {
+          this.defaultResponse(error.message, 'Error', true);
+        }
+      }
+    },
+    async expressInterestInProperty(){
+      try {
+        const response = await this.expressInterestInBuyingAProperty(this.property_id);
+         if(response.data.status == 1){
+          this.confirmIfPropertyIsAlreaydAddedToInterests();
+          this.defaultResponse(response.data.message, 'Success', true);
+        } else {
+          this.defaultResponse(response.data.message, 'Error', true);
+        } 
+      } catch (error) {
+        this.defaultResponse(error.message, 'Error', true);
+      }
+    },
+    // ===============================================
     addUserView() {
       if (this.loginState === true) {
         this.addAViewedProperty(this.property_id);
@@ -494,6 +578,14 @@ export default {
         this.alertMessage = "";
       }, 1500);
     },
+    showLoginInterestMessage() {
+      this.favoriteDialog = true;
+      this.alertMessage = "Please login to perform this action";
+      setTimeout(() => {
+        this.favoriteDialog = false;
+        this.alertMessage = "";
+      }, 1500);
+    },
     closeFavoriteDialog() {
       this.favoriteDialog = false;
       this.alertMessage = "";
@@ -507,6 +599,7 @@ export default {
     this.fetchCurrentPropertyValue(this.property_id);
     this.fetchCurrentPropertySelectedFeatures(this.property_id);
     this.fetchPropertyPriceHistories(this.property_id);
+    this.confirmIfPropertyIsAlreaydAddedToInterests();
   },
 };
 </script>

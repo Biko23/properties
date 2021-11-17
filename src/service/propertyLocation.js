@@ -49,7 +49,14 @@ export default {
       throw new Error(error.message)
     }
   },
-
+  async getAPropertyLocationByPropertyId (property_id) {
+    try {
+      const response = await API.marketPlaceApi.get(`/property-locations/by-property-id/${property_id}`)
+      return response
+    } catch (error) {
+      throw new Error(error.message)
+    }
+  },
   // =========================================
 
   async getAllDistricts () {

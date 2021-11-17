@@ -11,6 +11,7 @@ import PropertyLocationService from '@/service/propertyLocation';
 import PropertyLandmarkTypeService from '@/service/propertyLandmarkTypes';
 import ViewedPropertiesService from '@/service/property/viewedProperties';
 import FavoritePropertiesService from '@/service/property/favoriteProperties';
+import HighValuePropertyService from '@/service/property/highValuePropertyService';
 
 import { formatDate } from '@/helpers/helpers';
 
@@ -33,7 +34,10 @@ const state = {
     recentViewedSales: [],
     totalFavoriteCount: 0,
     currentUserFavoriteProperties: [],
-    detailedCurrentUserFavoriteList: []
+    detailedCurrentUserFavoriteList: [],
+    alreadyInterestedInAProperty: undefined,
+    userInterestedProperties: [],
+    userInterestedRentals: []
 }
 
 const getters = {
@@ -55,7 +59,10 @@ const getters = {
     allRecentViewedProperties: state => state.recentViewedSales,
     currentUserFavoriteTotalCount: state => state.totalFavoriteCount,
     allCurrentUserFavoriteProperties: state => state.currentUserFavoriteProperties,
-    allDetailedCurrentFavoriteList: state => state.detailedCurrentUserFavoriteList
+    allDetailedCurrentFavoriteList: state => state.detailedCurrentUserFavoriteList,
+    checkUserInterestInProperty: state => state.alreadyInterestedInAProperty,
+    allUserInterestedProperties: state => state.userInterestedProperties,
+    allUserInterestedRentals: state => state.userInterestedRentals
 };
 
 const actions = {
@@ -185,30 +192,34 @@ const actions = {
             const valueResponse = await PropertyValueService.getApprovedPropertyValue(rootState.SellerModule.saleCategory[0].id);
             const categoryResponse = await PropertyCategoryService.getPropertyCategory();
 
-            const locationList = (locationResponse.data.result).map(location => {
-                return {
-                    option: location.name_
-                }
+            const districtList = (locationResponse.data.result).map(location => {
+                return {option: location.district}
             })
-
+            const divisionList = (locationResponse.data.result).map(location => {
+                return {option: location.division}
+            })
+            const suburbList = (locationResponse.data.result).map(location => {
+                return {option: location.suburb}
+            })
             const categoryList = (categoryResponse.data.result).map(category => {
-                return {
-                    option: category.property_type
-                }
+                return {option: category.property_type}
             })
 
             const landmarkList = (landmarkTypeResponse.data.result).map(landmark => {
-                return {
-                    option: landmark.landmark_type
-                }
+                return {option: landmark.landmark_type}
             })
             const valueList = (valueResponse.data.result).map(value => {
-                return {
-                    option: value.actualvalue
-                }
+                return {option: value.actualvalue}
             })
 
-            const mergedList = [...locationList, ...categoryList, ...landmarkList, ...valueList];
+            const mergedList = [
+                ...districtList, 
+                ...divisionList, 
+                ...suburbList,  
+                ...categoryList, 
+                ...landmarkList, 
+                ...valueList
+            ];
             const searchList = mergedList.map(eachItem => eachItem.option);
             commit("setSearchList", searchList);
         } catch (error) {
@@ -369,7 +380,58 @@ const actions = {
         } catch (error) {
             throw new Error(error.message);
         }
+    },
+    // =================================================
+    async checkIfUserIsAlreadyInterestedInAProperty({commit, rootState}, property_id){
+        try {
+            const propertyDetails = {
+                property_id: property_id,
+                username: rootState.AuthModule.currentUser.username
+            }
+            const response = await HighValuePropertyService.checkIfUserIsInterestedInAProperty(propertyDetails);
+            if(response.data.status == 1){
+                commit('setUserPropertyInterest', response.data.result);
+            } 
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    async expressInterestInBuyingAProperty({ rootState }, property_id){
+        try {
+            const propertyDetails = {
+                property_id: property_id,
+                interested_by: rootState.AuthModule.currentUser.username
+            }
+            const response = await HighValuePropertyService.expressInterestInProperty(propertyDetails);
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    async getCurrentUserPropertiesOfInterest({commit, rootState}){
+        try {
+            const response = await HighValuePropertyService.getCurrentUserInterestedInProperties(rootState.AuthModule.currentUser.username);
+            if(response.data.status == 1){
+                commit('userInterestedInProperties', response.data.result);
+            }
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    async getCurrentUserRentalsOfInterest({commit, rootState}){
+        try {
+            const response = await HighValuePropertyService.getCurrentUserInterestedInRentals(rootState.AuthModule.currentUser.username);
+            if(response.data.status == 1){
+                commit('userInterestedInRentals', response.data.result);
+            }
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
     }
+    // ================================================
 }
 
 const mutations = {
@@ -492,7 +554,10 @@ const mutations = {
         state.currentUserFavoriteProperties = state.currentUserFavoriteProperties.filter(favoriteProperty => favoriteProperty !== returnedPropertyId),
         state.detailedCurrentUserFavoriteList = state.detailedCurrentUserFavoriteList.filter(currentUserFavorite => currentUserFavorite.property_id !== returnedPropertyId),
         state.totalFavoriteCount = state.totalFavoriteCount - 1
-    )
+    ),
+    setUserPropertyInterest: (state, userInterestedResponse) => state.alreadyInterestedInAProperty = userInterestedResponse,
+    userInterestedInProperties: (state, returnedUserInterestedProperties) => state.userInterestedProperties = returnedUserInterestedProperties,
+    userInterestedInRentals:  (state, returnedUserInterestedRentals) => state.userInterestedRentals = returnedUserInterestedRentals
 }
 
 export default {

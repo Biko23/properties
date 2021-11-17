@@ -35,7 +35,8 @@ const state = {
     // districts
     districts: [],
     divisions: [],
-    suburbs: []
+    suburbs: [],
+    currentLocation: {}
 }
 
 const getters = {
@@ -59,7 +60,8 @@ const getters = {
     // districts
     allDistricts: state => state.districts,
     allDivisions: state => state.divisions,
-    allSuburbs: state => state.suburbs
+    allSuburbs: state => state.suburbs,
+    currentPropertyLocation: state => state.currentLocation
 };
 
 const actions = {
@@ -443,7 +445,27 @@ const actions = {
         } catch (error) {
             throw new Error(error.message); 
         }
+    },
+    async fetchPropertyLocationByPropertyId({ commit }, property_id){
+        try {
+            const response = await PropertyLocationService.getAPropertyLocationByPropertyId(property_id);
+            if(response.data.status == 1){
+                commit('setCurrentPropertyLocation', response.data.result);
+            }
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    async updateCurrentPropertyLocation(_, propertyLocation){
+        try {
+            const response = await PropertyLocationService.updateAPropertyLocation(propertyLocation);
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
     }
+    // ==========================================
 }
 
 // mutations
@@ -520,7 +542,8 @@ const mutations = {
     // ======================== Districts
     setAllDistricts: (state, allDistricts) => state.districts = allDistricts,
     setSelectedDivisions: (state, returnedDivisions) => state.divisions = returnedDivisions,
-    setSelectedSuburbs: (state, returnedSuburbs) => state.suburbs = returnedSuburbs
+    setSelectedSuburbs: (state, returnedSuburbs) => state.suburbs = returnedSuburbs,
+    setCurrentPropertyLocation: (state, currentPropertyLocation) => state.currentLocation = currentPropertyLocation
 }
 
 export default {

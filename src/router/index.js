@@ -143,6 +143,16 @@ const routes = [
     }
   },
   {
+    path: '/user-interest-properties',
+    name: 'user-interested-properties',
+    props: true,
+    component: () => import('@/views/UserInterestedProperties'),
+    meta: {
+      requireSellerRole: true,
+      hideFooterAndAbout: true
+    }
+  },
+  {
     path: '/edit-landmark-visuals/:property_id',
     name: 'edit-landmark-visual',
     props: true,

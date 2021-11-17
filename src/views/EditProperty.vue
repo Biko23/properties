@@ -179,7 +179,6 @@
                                             :rules="[currencyRules.required]"
                                             :items="allCurrencies"
                                             label="Unit"
-                                            multiple
                                         ></v-select>
                                     </v-col>
                                     <v-col cols="12" sm="12" md="9">
@@ -222,6 +221,83 @@
         </v-card>
     </v-dialog>
     <!-- End edit property values -->
+    <!-- edit property location -->
+    <v-dialog v-model="locationDialog" max-width="600px">
+        <v-card>
+            <v-card-title>
+                <span class="text-h5">Edit property Location</span>
+            </v-card-title>
+            <v-card-text>
+                <v-form ref="locationForm" v-model="valid" lazy-validation>
+                    <v-container>
+                        <v-row>
+                            <p style="font-weight: 500; font-size: 16px;">Property current Location: {{propertyLocation.district}}, {{propertyLocation.division}}, {{propertyLocation.suburb_name}} suburb</p>
+                            <v-col class="d-flex" cols="12" sm="12">
+                                <v-row>
+                                    <v-col cols="12" sm="12" md="12">
+                                         <v-select
+                                            v-model="propertyLocation.district_id"
+                                            :rules="[locationRules.required]"
+                                            :items="districts"
+                                            @change="fetchDivisions"
+                                            item-text="district_name"
+                                            item-value="district_id"
+                                            label="District"
+                                        ></v-select>
+                                    </v-col>
+                                    <v-col cols="12" sm="12" md="12">
+                                         <v-select
+                                            v-model="propertyLocation.division_id"
+                                            :rules="[locationRules.required]"
+                                            :items="divisions"
+                                             @change="fetchSuburbs"
+                                             item-text="division_name"
+                                            item-value="division_id"
+                                            label="Division"
+                                        ></v-select>
+                                    </v-col>
+                                    <v-col cols="12" sm="12" md="12">
+                                         <v-select
+                                            v-model="propertyLocation.suburb_id"
+                                            :rules="[locationRules.required]"
+                                            :items="suburbs"
+                                             item-text="suburb_name"
+                                            item-value="suburb_id"
+                                            label="Suburb"
+                                        ></v-select>
+                                    </v-col>
+                                </v-row>
+                            </v-col>
+                            <v-col cols="12">
+                                <v-row>
+                                    <v-col cols="12" sm="6" md="6">
+                                        <template>
+                                            <v-btn block color="warning" @click="locationDialog = false">
+                                                Cancel
+                                            </v-btn>
+                                        </template>
+                                    </v-col>
+                                    <v-col cols="12" sm="6" md="6">
+                                        <template>
+                                            <v-btn
+                                                block 
+                                                color="primary" 
+                                                :disabled="!valid" 
+                                                @click="updatePropertyLocation"
+                                            >
+                                                Update Location
+                                            </v-btn>
+                                        </template>
+                                    </v-col>
+                                </v-row>
+                            </v-col>
+                        </v-row>
+                    </v-container>
+                </v-form>
+            </v-card-text>
+        </v-card>
+    </v-dialog>
+    <!-- End edit property location -->
     <v-container>
         <v-row>
             <v-col cols="12" sm="12" md="12" xl="12">
@@ -281,7 +357,7 @@
                                     <p class="text-h6" style="font-weight: 400;">Property Location:</p>
                                 </v-col>
                                 <v-col cols="12" sm="12" md="6">
-                                    <v-btn class="ma-2" outlined color="indigo" block to="/edit-property-location">Edit Property Location</v-btn>
+                                    <v-btn class="ma-2" outlined color="indigo" block @click="loadLocationDialog">Edit Property Location</v-btn>
                                 </v-col>
                             </v-row>
                             <v-row>
@@ -319,17 +395,19 @@ export default {
         legalDialog: false,
         featuresDialog: false,
         valuesDialog: false,
+        locationDialog: false,
         valid: true,
         legalProtection: {},
         propertyValue: {},
+        propertyLocation: {},
+        districts: [],
+        divisions: [],
+        suburbs: [],
         features: [],
         formTitle: '',
         message: '',
         title: '',
         state: false,
-        currencyRules: {
-
-        },
         propertyRules: {
             features(value) {
                 if (value instanceof Array && value.length == 0) {
@@ -337,6 +415,10 @@ export default {
                 }
                 return !!value || "At least one feature is required!";
             }
+        },
+        currencyRules: {},
+        locationRules: {
+            required: (v) => !!v || "Field is Required"
         },
         protectionRules: {
             numb: v => /[0-9]/.test(v) || "Number should not contains letters",
@@ -363,6 +445,7 @@ export default {
         this.fetchCurrentPropertySelectedFeatures(this.property_id);
         this.getCurrentPropertyPriceDetails();
         this.fetchAllCurrencyTypes();
+        this.findPropertyLocation();
     },
     beforeRouteLeave (to, from , next) {
         this.clearPropertyLegalDetails();
@@ -376,7 +459,11 @@ export default {
             "allCurrentPropertyFeatures",
             "currentPropertyValue",
             "allPropertyFeatures",
-            "allCurrencies"
+            "allCurrencies",
+            "currentPropertyLocation",
+            "allDistricts",
+            "allDivisions",
+            "allSuburbs"
         ])
     },
     methods: {
@@ -391,8 +478,14 @@ export default {
             "addMoreFeaturesToAProperty",
             "fetchCurrentPropertyValue",
             "fetchCurrencies",
+            "fetchPropertyLocationByPropertyId",
+            "fetchAllDistricts",
+            "fetchDivisionsByDistrictId",
+            "fetchSuburbsByDistrictId",
+            "updateCurrentPropertyLocation",
             "postAUserLog"
         ]),
+        
         defaultResponse(msg, heading, status) {
             this.message = msg
             this.title = heading
@@ -562,7 +655,91 @@ export default {
         async updatePropertyValue(){
 
         },
-        // ---------------------------------------------------
+        // --------------------- location section
+        async findPropertyLocation(){
+            try {
+                const response = await this.fetchPropertyLocationByPropertyId(this.property_id);
+                if(response.data.status == 1){
+                    const propertyData = response.data.result;
+                    this.propertyLocation = {
+                        location_id: propertyData.location_id,
+                        district_id: propertyData.district_id,
+                        division_id: propertyData.division_id,
+                        suburb_id: propertyData.suburb_id,
+                        property_id: propertyData.property_id,
+                        created_by: propertyData.created_by,
+                        updated_by: propertyData.updated_by,
+                        district: propertyData.suburb.division.district.district_name,
+                        division: propertyData.suburb.division.division_name,
+                        suburb_name: propertyData.suburb.suburb_name
+                    } 
+                } else {
+                    this.defaultResponse(response.data.message, 'Error', true);
+                }
+            } catch (error) {
+                this.defaultResponse(error.message, 'Error', true);
+            }
+        },
+        async loadLocationDialog(){
+            this.locationDialog = true; 
+            await this.fetchDistricts();    
+        },
+        async fetchDistricts(){
+            try {
+                const response = await this.fetchAllDistricts();  
+                if(response.data.status == 1){
+                    this.districts = this.allDistricts;
+                    this.fetchDivisions();
+                    this.fetchSuburbs();
+                } else {
+                    this.defaultResponse(response.data.message, 'Error', true);
+                }
+            } catch (error) {
+                this.defaultResponse(error.message, 'Error', true);
+            }    
+        },
+        async fetchDivisions(){
+            try {
+                const response = await this.fetchDivisionsByDistrictId(this.propertyLocation.district_id);
+                if(response.data.status == 1){
+                    this.divisions = this.allDivisions;
+                } else {
+                    this.defaultResponse(response.data.message, 'Error', true);
+                }
+            } catch (error) {
+                this.defaultResponse(error.message, 'Error', true);
+            }
+        },
+        async fetchSuburbs(){
+            try {
+                const response = await this.fetchSuburbsByDistrictId(this.propertyLocation.division_id);
+                 if(response.data.status == 1){
+                    this.suburbs = this.allSuburbs;
+                } else {
+                    this.defaultResponse(response.data.message, 'Error', true);
+                }
+            } catch (error) {
+                this.defaultResponse(error.message, 'Error', true);
+            }
+        },
+        async updatePropertyLocation(){
+            if (this.$refs.locationForm.validate()) {
+                try {
+                    this.propertyLocation.updated_by = this.currentLoggedinUser.username;
+                    const response = await this.updateCurrentPropertyLocation(this.propertyLocation);
+                    if(response.data.status == 1){
+                        this.findPropertyLocation();
+                        this.locationDialog = false; 
+                        this.defaultResponse(response.data.message, 'Success', true);
+                    } else {
+                        this.defaultResponse(response.data.message, 'Error', true);
+                    }
+                } catch (error) {
+                    this.defaultResponse(error.message, 'Error', true);
+                }
+            }
+        },
+        // ---------------------- end location section
         closeLegalDialog(){
             this.legalDialog = false;
             this.legalProtection = {};
