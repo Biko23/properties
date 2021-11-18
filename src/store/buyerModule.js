@@ -12,6 +12,7 @@ import PropertyLandmarkTypeService from '@/service/propertyLandmarkTypes';
 import ViewedPropertiesService from '@/service/property/viewedProperties';
 import FavoritePropertiesService from '@/service/property/favoriteProperties';
 import HighValuePropertyService from '@/service/property/highValuePropertyService';
+import AcquiredPropertyService from '@/service/property/acquiredPropertiesService';
 
 import { formatDate } from '@/helpers/helpers';
 
@@ -37,7 +38,9 @@ const state = {
     detailedCurrentUserFavoriteList: [],
     alreadyInterestedInAProperty: undefined,
     userInterestedProperties: [],
-    userInterestedRentals: []
+    userInterestedRentals: [],
+    userAcquiredProperties: [],
+    userAcquiredRentals: []
 }
 
 const getters = {
@@ -62,7 +65,9 @@ const getters = {
     allDetailedCurrentFavoriteList: state => state.detailedCurrentUserFavoriteList,
     checkUserInterestInProperty: state => state.alreadyInterestedInAProperty,
     allUserInterestedProperties: state => state.userInterestedProperties,
-    allUserInterestedRentals: state => state.userInterestedRentals
+    allUserInterestedRentals: state => state.userInterestedRentals,
+    allUserAcquiredProperties: state => state.userAcquiredProperties,
+    allUserAcquiredRentals: state => state.userAcquiredRentals
 };
 
 const actions = {
@@ -430,6 +435,28 @@ const actions = {
         } catch (error) {
             throw new Error(error.message);
         }
+    },
+    async getCurrentUserAcquiredProperties({commit, rootState}){
+        try {
+            const response = await AcquiredPropertyService.getCurrentUserBoughtProperties(rootState.AuthModule.currentUser.username);
+            if(response.data.status == 1){
+                commit('userAcquiredProperties', response.data.result);
+            }
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    async getCurrentUserAcquiredRentals({commit, rootState}){
+        try {
+            const response = await AcquiredPropertyService.getCurrentUserBoughtRentals(rootState.AuthModule.currentUser.username);
+            if(response.data.status == 1){
+                commit('userAcquiredRentals', response.data.result);
+            }
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
     }
     // ================================================
 }
@@ -557,7 +584,9 @@ const mutations = {
     ),
     setUserPropertyInterest: (state, userInterestedResponse) => state.alreadyInterestedInAProperty = userInterestedResponse,
     userInterestedInProperties: (state, returnedUserInterestedProperties) => state.userInterestedProperties = returnedUserInterestedProperties,
-    userInterestedInRentals:  (state, returnedUserInterestedRentals) => state.userInterestedRentals = returnedUserInterestedRentals
+    userInterestedInRentals:  (state, returnedUserInterestedRentals) => state.userInterestedRentals = returnedUserInterestedRentals,
+    userAcquiredProperties: (state, returnedAcquiredProperties) => state.userAcquiredProperties = returnedAcquiredProperties,
+    userAcquiredRentals: (state, returnedAcquiredRentals) => state.userAcquiredRentals = returnedAcquiredRentals
 }
 
 export default {

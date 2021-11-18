@@ -153,6 +153,16 @@ const routes = [
     }
   },
   {
+    path: '/user-acquired-properties',
+    name: 'user-acquired-properties',
+    props: true,
+    component: () => import('@/views/UserAcquiredProperties'),
+    meta: {
+      requireSellerRole: true,
+      hideFooterAndAbout: true
+    }
+  },
+  {
     path: '/edit-landmark-visuals/:property_id',
     name: 'edit-landmark-visual',
     props: true,

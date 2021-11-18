@@ -74,6 +74,10 @@
                 <v-btn depressed rounded text>Interested Properties</v-btn>
               </router-link>
               <v-divider class="my-3"></v-divider>
+              <router-link to="/user-acquired-properties" style="text-decoration: none">
+                <v-btn depressed rounded text>my Acquired Properties</v-btn>
+              </router-link>
+              <v-divider class="my-3"></v-divider>
               <router-link to="/recentactivities" style="text-decoration: none">
                 <v-btn depressed rounded text> Recent Activities </v-btn>
               </router-link>
