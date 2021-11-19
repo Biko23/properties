@@ -124,7 +124,7 @@ export default {
     ...mapGetters(["loginState", "currentLoggedinUser", "currentUserFavoriteTotalCount"]),
     userIntials(){
       const secondName = this.currentLoggedinUser.vendor_name.split(' ')[1] || '';
-      return () => this.currentLoggedinUser.vendor_name[0] + secondName[0];
+      return () => this.currentLoggedinUser.vendor_name[0].toUpperCase() + secondName[0].toUpperCase();
     }
   },
   created() {

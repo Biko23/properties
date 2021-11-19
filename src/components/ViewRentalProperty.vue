@@ -476,7 +476,7 @@ export default {
         const response = await this.expressInterestInBuyingAProperty(this.property_id);
          if(response.data.status == 1){
           this.confirmIfPropertyIsAlreaydAddedToInterests();
-          this.defaultResponse(response.data.message, 'Success', true);
+          this.defaultResponse('Interest submitted to SPL, they will engage you soon', 'Success', true);
           const payload = {
             "activity":`Added Rental with id ${this.property_id} to my interested properties`, 
             "button_clicked":"Add Rental to my interested properties"

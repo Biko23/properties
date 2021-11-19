@@ -47,7 +47,7 @@ const routes = [
     name: 'EditProfile',
     component: () => import('@/views/EditProfile.vue'),
     meta: { 
-       requiresAuth: true 
+      requiresAuth: true 
       // requireSellerRole: true
     }
   },
@@ -148,7 +148,7 @@ const routes = [
     props: true,
     component: () => import('@/views/UserInterestedProperties'),
     meta: {
-      requireSellerRole: true,
+      requiresAuth: true,
       hideFooterAndAbout: true
     }
   },
@@ -158,7 +158,7 @@ const routes = [
     props: true,
     component: () => import('@/views/UserAcquiredProperties'),
     meta: {
-      requireSellerRole: true,
+      requiresAuth: true,
       hideFooterAndAbout: true
     }
   },
