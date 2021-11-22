@@ -72,5 +72,30 @@ export default {
       console.log(error);
       // throw new Error('An error occured when deleting data')
     }
+  },
+  async getListedPropertiesByUsername(username) {
+    try {
+      const response = await API.marketPlaceApi.get(`/properties/listed-properties/by-username?username=${username}`);
+      return response;
+    } catch (error) {
+      throw new Error(error);
+    }
+  },
+  async getUncertifiedPropertiesByUsername(username) {
+    try {
+      const response = await API.marketPlaceApi.get(`/properties/pending-certification-properties/by-username?username=${username}`);
+      return response;
+    } catch (error) {
+      console.log(error);
+      // throw new Error(error);
+    }
+  },
+  async getUnlistedPropertiesByUsername(username) {
+    try {
+      const response = await API.marketPlaceApi.get(`/properties/unlisted-properties/by-username?username=${username}`);
+      return response;
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 }

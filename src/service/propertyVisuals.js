@@ -11,6 +11,7 @@ export default {
       // throw new Error('An error occured when retrieving data')
     }
   },
+  // ------------------------------------------ latest properties
   async getLatestPropertyVisuals() {
     try {
       const response = await API.marketPlaceApi.get(`/property-visuals/display-latest-properties`)
@@ -27,31 +28,6 @@ export default {
     } catch (error) {
       console.log(error);
       // throw new Error('An error occured when retrieving data')
-    }
-  },
-  async getUncertifiedPropertyVisualsByUsername(username) {
-    try {
-      const response = await API.marketPlaceApi.get(`/property-visuals/display-uncertified-property-by-username/${username}`);
-      return response;
-    } catch (error) {
-      console.log(error);
-      // throw new Error(error);
-    }
-  },
-  async getListedPropertyVisualsByUsername(username) {
-    try {
-      const response = await API.marketPlaceApi.get(`/property-visuals/display-listed-property-by-username/${username}`);
-      return response;
-    } catch (error) {
-      throw new Error(error);
-    }
-  },
-  async getUnlistedPropertyVisualsByUsername(username) {
-    try {
-      const response = await API.marketPlaceApi.get(`/property-visuals/display-unlisted-property-by-username/${username}`);
-      return response;
-    } catch (error) {
-      throw new Error(error.message);
     }
   },
   async updatePropertyVisualAvailabilityStatus(property_id){

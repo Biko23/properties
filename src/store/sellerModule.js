@@ -26,9 +26,9 @@ const state = {
     propertySecondPageData: null,
     propertyThirdPageData: null,
     createdProperty: {},
-    currentUserListedPropertyVisuals: [],
-    currentUserUnlistedPropertyVisuals: [],
-    currentUserUncertifiedPropertyVisuals: [],
+    currentUserListedProperties: [],
+    currentUserUnlistedProperties: [],
+    currentUserUncertifiedProperties: [],
     currencies: [],
     propertyLegalProtection: {},
     currentPropertyDetails: {},
@@ -52,9 +52,9 @@ const getters = {
     newCreatedProperty: (state) => state.createdProperty,
     registeredPropertySubmissionState: (state) => state.propertySubmissionState,
     // current user getters
-    allCurrentUserListedPropertyVisuals: (state) => state.currentUserListedPropertyVisuals,
-    allCurrentUserUnlistedPropertyVisuals: (state) => state.currentUserUnlistedPropertyVisuals,
-    allCurrentUserUncertifiedPropertyVisuals: (state) => state.currentUserUncertifiedPropertyVisuals,
+    allCurrentUserListedProperties: (state) => state.currentUserListedProperties,
+    allCurrentUserUnlistedProperties: (state) => state.currentUserUnlistedProperties,
+    allCurrentUserUncertifiedProperties: (state) => state.currentUserUncertifiedProperties,
     currentPropertyLegalProtection: state => state.propertyLegalProtection,
     currentPropertyDetails: state => state.currentPropertyDetails,
     // districts
@@ -240,36 +240,36 @@ const actions = {
             console.log(error);
         }
     },
-    async getListedPropertyVisualsByUsername({ commit, rootState }) {
+    async getListedPropertiesByUsername({ commit, rootState }) {
         try {
             let username = rootState.AuthModule.currentUser.username;
-            const response = await PropertyVisualsService.getListedPropertyVisualsByUsername(username);
+            const response = await PropertyService.getListedPropertiesByUsername(username);
             if(response.data.status == 1){
-                commit('setCurrentUserListedPropertyVisuals', response.data.result);
+                commit('setCurrentUserListedProperties', response.data.result);
             }
             return response;
         } catch (error) {
             throw new Error(error.message);
         }
     },
-    async getUnlistedPropertyVisualsByUsername({ commit, rootState }) {
+    async getUnlistedPropertiesByUsername({ commit, rootState }) {
         try {
             let username = rootState.AuthModule.currentUser.username;
-            const response = await PropertyVisualsService.getUnlistedPropertyVisualsByUsername(username);
+            const response = await PropertyService.getUnlistedPropertiesByUsername(username);
             if(response.data.status == 1){
-                commit('setCurrentUserUnlistedPropertyVisuals', response.data.result);
+                commit('setCurrentUserUnlistedProperties', response.data.result);
             }
             return response;
         } catch (error) {
             throw new Error(error.message);
         }
     },
-    async getUncertifiedPropertyVisualsByUsername({ commit, rootState }) {
+    async getUncertifiedPropertiesByUsername({ commit, rootState }) {
         try {
             let username = rootState.AuthModule.currentUser.username;
-            const response = await PropertyVisualsService.getUncertifiedPropertyVisualsByUsername(username);
+            const response = await PropertyService.getUncertifiedPropertiesByUsername(username);
             if(response.data.status == 1){
-                commit('setCurrentUserUncertifiedPropertyVisuals', response.data.result);
+                commit('setCurrentUserUncertifiedProperties', response.data.result);
             }
             return response;
         } catch (error) {
@@ -507,35 +507,56 @@ const mutations = {
     setPropertyRegisterTwoData: (state, propertyDataTwo) => (state.propertySecondPageData = propertyDataTwo),
     setPropertyRegisterThreeData: (state, propertyDataThree) => (state.propertyThirdPageData = propertyDataThree),
     setCreatedProperty: (state, returnedProperty) => (state.createdProperty = returnedProperty),
-    setCurrentUserListedPropertyVisuals: (state, returnedCurrentUserListedProperties) => (state.currentUserListedPropertyVisuals = returnedCurrentUserListedProperties
+    setCurrentUserListedProperties: (state, returnedCurrentUserListedProperties) => (state.currentUserListedProperties = returnedCurrentUserListedProperties
         .map(currentProperty => {
             return {
-                property_id: currentProperty.property_id,
-                description: currentProperty.description,
-                created_by: currentProperty.created_by,
-                when_created: formatDate(currentProperty.when_created)
+                property_id: currentProperty.propertyid_,
+                code: currentProperty.property_number_,
+                type: currentProperty.is_listed_for_name,
+                category: currentProperty.property_type_,
+                cost: currentProperty.actual_value_,
+                description: currentProperty.property_description,
+                location: `${currentProperty.suburb} - ${currentProperty.division}`,
+                created_by: currentProperty.listed_by,
+                creator_name: currentProperty.listed_by_name,
+                snapshot: currentProperty.snapshot_,
+                when_created: formatDate(currentProperty.when_listed)
             }
         })),
-    setCurrentUserUnlistedPropertyVisuals: (state, returnedCurrentUserUnlistedProperties) => (state.currentUserUnlistedPropertyVisuals = returnedCurrentUserUnlistedProperties
+    setCurrentUserUnlistedProperties: (state, returnedCurrentUserUnlistedProperties) => (state.currentUserUnlistedProperties = returnedCurrentUserUnlistedProperties
         .map(currentProperty => {
             return {
-                property_id: currentProperty.property_id,
-                description: currentProperty.description,
-                created_by: currentProperty.created_by,
-                when_created: formatDate(currentProperty.when_created)
+                property_id: currentProperty.propertyid_,
+                code: currentProperty.property_number_,
+                type: currentProperty.is_listed_for_name,
+                category: currentProperty.property_type_,
+                cost: currentProperty.actual_value_,
+                description: currentProperty.property_description,
+                location: `${currentProperty.suburb} - ${currentProperty.division}`,
+                created_by: currentProperty.listed_by,
+                creator_name: currentProperty.listed_by_name,
+                snapshot: currentProperty.snapshot_,
+                when_created: formatDate(currentProperty.when_listed)
             }
         })),
-    setCurrentUserUncertifiedPropertyVisuals: (state, returnedCurrentUserUncertifiedProperties) => (state.currentUserUncertifiedPropertyVisuals = returnedCurrentUserUncertifiedProperties
+    setCurrentUserUncertifiedProperties: (state, returnedCurrentUserUncertifiedProperties) => (state.currentUserUncertifiedProperties = returnedCurrentUserUncertifiedProperties
         .map(currentProperty => {
             return {
-                property_id: currentProperty.property_id,
-                description: currentProperty.description,
-                created_by: currentProperty.created_by,
-                when_created: formatDate(currentProperty.when_created)
+                property_id: currentProperty.propertyid_,
+                code: currentProperty.property_number_,
+                type: currentProperty.is_listed_for_name,
+                category: currentProperty.property_type_,
+                cost: currentProperty.actual_value_,
+                description: currentProperty.property_description,
+                location: `${currentProperty.suburb} - ${currentProperty.division}`,
+                created_by: currentProperty.listed_by,
+                creator_name: currentProperty.listed_by_name,
+                snapshot: currentProperty.snapshot_,
+                when_created: formatDate(currentProperty.when_listed)
             }
         })),
-    updatePropertyVisualsList: (state, property_id) => state.currentUserListedPropertyVisuals = state.currentUserListedPropertyVisuals.filter(currentUserListedPropertyVisual => currentUserListedPropertyVisual.property_id !== property_id),
-    updatePropertyVisualsUnlist: (state, property_id) => state.currentUserUnlistedPropertyVisuals = state.currentUserUnlistedPropertyVisuals.filter(currentUserUnlistedPropertyVisual => currentUserUnlistedPropertyVisual.property_id !== property_id),
+    updatePropertyVisualsList: (state, property_id) => state.currentUserListedProperties = state.currentUserListedProperties.filter(currentUserListedProperty => currentUserListedProperty.property_id !== property_id),
+    updatePropertyVisualsUnlist: (state, property_id) => state.currentUserUnlistedProperties = state.currentUserUnlistedProperties.filter(currentUserUnlistedProperty => currentUserUnlistedProperty.property_id !== property_id),
     setPropertySubmissionState: (state, submissionState) => state.propertySubmissionState = submissionState,
     setPropertyLegalProtection: (state, legalProtection) => state.propertyLegalProtection = legalProtection,
     setCurrentPropertyDetails: (state, propertydetails) => state.currentPropertyDetails = propertydetails,

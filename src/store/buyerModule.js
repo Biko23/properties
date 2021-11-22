@@ -94,6 +94,11 @@ const actions = {
             // throw new Error("Failed on loading current properties")
         }
     },
+    /**
+     *
+     * to refactor
+     *   */ 
+
     async fetchLatestPropertyVisuals({ commit }) {
         try {
             const response = await PropertyVisualsService.getLatestPropertyVisuals();
