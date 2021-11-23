@@ -30,22 +30,6 @@ export default {
       // throw new Error('An error occured when retrieving data')
     }
   },
-  async updatePropertyVisualAvailabilityStatus(property_id){
-    try {
-      const visualsResponse = await API.marketPlaceApi.put(`/property-visuals/property-visual-available-or-unavailable/${property_id}`);
-      const propertyResponse = await API.marketPlaceApi.put(`/properties/change-property-available-status/${property_id}`);
-      if(
-        (visualsResponse.status === 200) &&
-        (propertyResponse.status === 200)
-        ){
-          return {
-            visualsResponse, propertyResponse
-          }
-        }
-    } catch (error) {
-      throw new Error(error.message);
-    }
-  },
   async getPropertyVisualsByPropertyId(property_id) {
     try {
       const response = await API.marketPlaceApi.get(`/property-visuals/display-by-property-id/${property_id}`)

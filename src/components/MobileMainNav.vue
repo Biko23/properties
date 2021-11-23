@@ -20,7 +20,11 @@
         <links title="Sell A Property" link="/property-requirement" />
         <!-- <links title="Current market trends" /> -->
         <links title="Seller's guide" link="/learn" />
-        <links v-if="iAmACertifiedSeller" title="Property Details" link="/property-details" />
+        <links 
+          v-if="iAmACertifiedSeller" 
+          title="Property Details" 
+          link="/property-details" 
+        />
         <!-- <links title="Price Conversion Calculator" /> -->
       </v-list>
     </v-list-group>
@@ -31,7 +35,7 @@
       </template>
       <v-list>
         <links link="/properties-for-rent" title="Houses for Rent" />
-        <links link="/register" title="List A Rental" />
+        <links link="/rental-requirement" title="List A Rental" />
         <!-- <links link="/login" title="Apartments for Rent" />
                         <links link="/description" title="Your Rentals" /> -->
       </v-list>
@@ -82,8 +86,8 @@
         <router-link to="/login" style="text-decoration: none" v-else
           >Login</router-link
         >
-        <span v-if="!loginState">OR</span>
-        <router-link to="/signup" v-if="!loginState" style="text-decoration: none">Sign up</router-link>
+        <span v-if="!loginState" style="margin-left: 15px;">OR</span>
+        <router-link to="/signup" v-if="!loginState" style="text-decoration: none; margin-left: 15px;">Sign up</router-link>
       </v-col>
   </v-list>
 </template>

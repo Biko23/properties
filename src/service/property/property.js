@@ -97,5 +97,47 @@ export default {
     } catch (error) {
       throw new Error(error.message);
     }
-  }
+  },
+  // ----------- Rentals
+  async getListedRentalsByUsername(username) {
+    try {
+      const response = await API.marketPlaceApi.get(`/properties/listed-rentals/by-username?username=${username}`);
+      return response;
+    } catch (error) {
+      throw new Error(error);
+    }
+  },
+  async getUnlistedRentalsByUsername(username) {
+    try {
+      const response = await API.marketPlaceApi.get(`/properties/unlisted-rentals/by-username?username=${username}`);
+      return response;
+    } catch (error) {
+      throw new Error(error);
+    }
+  },
+  async getUncertifiedRentalsByUsername(username) {
+    try {
+      const response = await API.marketPlaceApi.get(`/properties/pending-certification-rentals/by-username?username=${username}`);
+      return response;
+    } catch (error) {
+      throw new Error(error);
+    }
+  },
+  async unlistPropertyFromMarketPlace(property_id){
+    try {
+      const response = await API.marketPlaceApi.put(`/properties/unlist-property-by-landlord/${property_id}`);
+      return response;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
+  async requestToListPropertyBackOnMarketPlace(property_id){
+    try {
+      const response = await API.marketPlaceApi.put(`/properties/request-to-recertify-property/${property_id}`);
+      return response;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
 }
+
