@@ -439,7 +439,7 @@ export default {
         },
         // =============== End rentals
          navigateToEditSection(item){
-            this.$router.push(`/edit-property/${item.property_id}`);
+            this.$router.push(`/edit-property/${item.property_id}?type=${item.type}`);
         },
         viewPropertyDetails(item){
             this.$router.push(`/single-property/${item.property_id}`);

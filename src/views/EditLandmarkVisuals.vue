@@ -357,7 +357,7 @@ export default {
             this.landmarkVisualCreateDialog = true;
         },
         backToEditScreen(){
-            this.$router.push(`/edit-property/${this.property_id}`);
+            this.$router.push(`/edit-property/${this.property_id}?type=${this.$route.query.type}`);
         },
         async createLandmarkVisual(){
             if(this.$refs.createLandmarkVisualForm.validate()){

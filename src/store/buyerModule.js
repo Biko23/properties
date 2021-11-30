@@ -161,11 +161,34 @@ const actions = {
         try {
             const response = await PropertyRentalValueService.getPropertyRentalValueByPropertyId(property_id);
             commit("setSingleRentalValue", response.data.result);
+            return response;
         } catch (error) {
             console.log(error);
             // throw new Error("Failed on loading current property value")
         }
     },
+    async updateAPropertyValue(context, property) {
+        try {
+            const response = await PropertyValueService.updateAPropertyValue(property);
+            if(response.data.status == 1){
+                context.dispatch('fetchCurrentPropertyValue', property.property_id);
+            }
+            return response;
+        } catch (error) {
+            throw new Error(error.message)
+        }
+    },
+    async updatePropertyRentalValue(context, rental) {
+        try {
+            const response = await PropertyRentalValueService.updatePropertyRentalValue(rental);
+            if(response.data.status == 1){
+                context.dispatch('fetchPropertyRentalValue', rental.property_id);
+            }
+            return response;
+        } catch (error) {
+            throw new Error(error.message)
+        }
+    },     
     async fetchPropertyPriceHistories({ commit }, property_id) {
         try {
             const response = await PropertyPriceHistoryService.getPropertyPriceHistoriesByPropertyId(property_id);

@@ -40,7 +40,7 @@ export default {
       const response = await API.marketPlaceApi.put(`/property-value/${propertyValue.property_value_id}`, propertyValue)
       return response
     } catch (error) {
-      throw new Error('An error occured when updating data')
+      throw new Error(error.message)
     }
   },
   async deleteAPropertyValue (propertyValue) {

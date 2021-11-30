@@ -17,7 +17,7 @@
                         <v-row>
                             <v-col cols="12" sm="12" md="6">
                                 <v-text-field 
-                                    type="number"
+                                    type="text"
                                     v-model="legalProtection.primary_phone_contact" 
                                     :rules="phoneNumberRules" 
                                     label="Primary Number *" 
@@ -33,7 +33,7 @@
                             </v-col>
                             <v-col cols="12" sm="12" md="6">
                                  <v-text-field 
-                                    type="number"
+                                    type="text"
                                     v-model="legalProtection.secondary_phone_contact" 
                                     :rules="legalProtection.secondary_phone_contact > 0 ? phoneNumberRules : ''" 
                                     label="Secondary Number" 
@@ -325,7 +325,7 @@
                                     <p class="text-h6" style="font-weight: 400;">Neighborhood Visuals:</p>
                                 </v-col>
                                 <v-col cols="12" sm="12" md="6">
-                                    <v-btn class="ma-2" outlined color="indigo" block :to="`/edit-neighborhood-visuals/${property_id}`">Edit Neighborhood Visuals</v-btn>
+                                    <v-btn class="ma-2" outlined color="indigo" block :to="`/edit-neighborhood-visuals/${property_id}?type=${$route.query.type}`">Edit Neighborhood Visuals</v-btn>
                                 </v-col>
                             </v-row>
                             <v-row>
@@ -416,13 +416,16 @@ export default {
                 return !!value || "At least one feature is required!";
             }
         },
-        currencyRules: {},
+        currencyRules: {
+            required: (v) => !!v || "Field is Required",
+            numb: v => /[0-9]/.test(v) || "Number should not contains letters"
+        },
         locationRules: {
             required: (v) => !!v || "Field is Required"
         },
         protectionRules: {
             numb: v => /[0-9]/.test(v) || "Number should not contains letters",
-            char: v => /[0-9]/.test(v) || "Letters should not contains numbers",
+            char: v => /[a-zA-Z]/.test(v) || "Letters should not contains numbers",
             min: v => (v && v.length >= 2) || "Min characters should be 3"
         },
         emailRules: [
@@ -443,7 +446,7 @@ export default {
         this.fetchPropertyLegalDetails();
         this.fetchPropertyFeatures();
         this.fetchCurrentPropertySelectedFeatures(this.property_id);
-        this.getCurrentPropertyPriceDetails();
+        this.loadCurrentPropertyPrice();
         this.fetchAllCurrencyTypes();
         this.findPropertyLocation();
     },
@@ -458,6 +461,7 @@ export default {
             "currentLoggedinUser", 
             "allCurrentPropertyFeatures",
             "currentPropertyValue",
+            "currentRentalValue",
             "allPropertyFeatures",
             "allCurrencies",
             "currentPropertyLocation",
@@ -477,13 +481,16 @@ export default {
             "deleteAPropertyFeature",
             "addMoreFeaturesToAProperty",
             "fetchCurrentPropertyValue",
+            "fetchPropertyRentalValue",
             "fetchCurrencies",
             "fetchPropertyLocationByPropertyId",
             "fetchAllDistricts",
             "fetchDivisionsByDistrictId",
             "fetchSuburbsByDistrictId",
             "updateCurrentPropertyLocation",
-            "postAUserLog"
+            "postAUserLog",
+            "updateAPropertyValue",
+            "updatePropertyRentalValue"
         ]),
         
         defaultResponse(msg, heading, status) {
@@ -522,6 +529,8 @@ export default {
                     this.legalProtection.property_id = this.property_id;
                     this.legalProtection.created_by = this.currentLoggedinUser.username;
                     this.legalProtection.updated_by = this.currentLoggedinUser.username;
+                    this.legalProtection.primary_phone_contact[0] != '+' ? '+' + this.legalProtection.primary_phone_contact : this.legalProtection.primary_phone_contact;
+                    this.legalProtection.secondary_phone_contact[0] != '+' ? '+' + this.legalProtection.secondary_phone_contact : this.legalProtection.secondary_phone_contact;
                     const response = await this.postAPropertyLegalProtection(this.legalProtection);
                     if(response.data.status === 1){
                         this.legalDialog = false;
@@ -643,7 +652,10 @@ export default {
             try {
                 const response = await this.fetchCurrentPropertyValue(this.property_id);
                 if(response.data.status == 1){
-                    this.propertyValue = this.currentPropertyValue;
+                    this.propertyValue = {
+                        ...this.currentPropertyValue,
+                        property_type: this.$route.query.type
+                    }
                 } else {
                     this.defaultResponse(response.data.message, 'Error', true);
                 }
@@ -651,9 +663,65 @@ export default {
                 this.defaultResponse(error.message, 'Error', true);
             }
         },
+        async getCurrentRentalPriceDetails(){
+            try {
+                const response = await this.fetchPropertyRentalValue(this.property_id);
+                if(response.data.status == 1){
+                    this.propertyValue = {
+                        property_value_id: this.currentRentalValue.rental_value_id,
+                        // rental_value_id: this.currentRentalValue.rental_value_id,
+                        property_type: this.$route.query.type,
+                        created_by: this.currentRentalValue.created_by,
+                        currency_id: this.currentRentalValue.currency_id,
+                        property_id: this.currentRentalValue.property_id,
+                        actual_value: this.currentRentalValue.rental_value_amt,
+                        updated_by: this.currentRentalValue.updated_by,
+                        when_created: this.currentRentalValue.when_created,
+                        when_updated: this.currentRentalValue.when_updated
+                    }
+                } else {
+                    this.defaultResponse(response.data.message, 'Error', true);
+                }
+            } catch (error) {
+                this.defaultResponse(error.message, 'Error', true);
+            }
+        },
+        async loadCurrentPropertyPrice (){
+            try {
+                if(this.$route.query.type == 'Rent'){
+                    await this.getCurrentRentalPriceDetails();
+                } else if(this.$route.query.type == 'Sale'){
+                    await this.getCurrentPropertyPriceDetails();
+                }
+            } catch (error) {
+               this.defaultResponse(error.message, 'Error', true); 
+            }
+        },
         // allow updating a property price
         async updatePropertyValue(){
+            try {
+                let response;
+                if(this.propertyValue.property_type == 'Rent'){
+                    this.propertyValue.rental_value_id = this.propertyValue.property_value_id
+                    this.propertyValue.rental_value_amt = this.propertyValue.actual_value
+                }
+                this.propertyValue.updated_by = this.currentLoggedinUser.username;
 
+                if(this.propertyValue.property_type == 'Rent'){
+                    response = await this.updatePropertyRentalValue(this.propertyValue);
+                } else if(this.propertyValue.property_type == 'Sale'){
+                    response = await this.updateAPropertyValue(this.propertyValue);
+                }  
+                
+                if(response.data.status == 1){
+                    this.defaultResponse('Property Cost successfully saved', 'Success', true);
+                    this.valuesDialog = false;
+                } else {
+                    this.defaultResponse(response.data.message, 'Error', true);
+                }
+            } catch (error) {
+                this.defaultResponse(error.message, 'Error', true);
+            }  
         },
         // --------------------- location section
         async findPropertyLocation(){
@@ -748,10 +816,10 @@ export default {
             this.legalDialog = true
         },
         async navigateToEditPropertyVisuals(){
-            this.$router.push(`/edit-property-visuals/${this.property_id}`);
+            this.$router.push(`/edit-property-visuals/${this.property_id}?type=${this.$route.query.type}`);
         },
         async navigateToEditLandmarkVisuals(){
-            this.$router.push(`/edit-landmark-visuals/${this.property_id}`);
+            this.$router.push(`/edit-landmark-visuals/${this.property_id}?type=${this.$route.query.type}`);
         },
         // async navigateToEditNeighborhoodVisuals(){
         //     this.$router.push(`/edit-neighborhood-visuals/${this.property_id}`);

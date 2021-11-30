@@ -48,7 +48,6 @@
           ></v-select>
         </div>
       </v-row>
-
       <v-row id="main-property">
         <v-col
           cols="12"

@@ -301,7 +301,7 @@ export default {
             this.neighborhoodVisualCreateDialog = true;
         },
         backToEditScreen(){
-            this.$router.push(`/edit-property/${this.property_id}`);
+            this.$router.push(`/edit-property/${this.property_id}?type=${this.$route.query.type}`);
         },
         async createNeighborhoodVisual(){
             if(this.$refs.createNeighborhoodVisualForm.validate()){

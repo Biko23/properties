@@ -299,7 +299,7 @@ export default {
             this.propertyVisualCreateDialog = true;
         },
         backToEditScreen(){
-            this.$router.push(`/edit-property/${this.property_id}`);
+            this.$router.push(`/edit-property/${this.property_id}?type=${this.$route.query.type}`);
         },
         async createPropertyVisual(){
             if(this.$refs.createPropertyVisualForm.validate()){
