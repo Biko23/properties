@@ -31,8 +31,8 @@ backOfficeApi.interceptors.request.use(
     config.baseURL = URL.backOfficeUrl,
     config.timeout= 10000,
     config.headers = { 
-      'Authorization': localStorage.getItem('token'),
-      'username': localStorage.getItem('username'),
+      'Authorization': process.env.VUE_APP_ACCESS_TOKEN,
+      'username': process.env.VUE_APP_ACCESS_USERNAME,
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*'
     }
