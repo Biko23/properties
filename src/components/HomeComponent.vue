@@ -325,33 +325,46 @@
     <div style="text-align: center; margin-top: 15px">
         <h3><span style="color: #3b6ef3"> RECENT </span>PROPERTIES</h3>
     </div>
-
     <v-container>
         <v-row style="display: flex; flex-direction: row; justify-content: space-evenly;">
-            <v-col cols="12" md="3" xs="12" v-for="propertyVisual in allLatestProperties" :key="propertyVisual.visuals_id">
-                <recent-properties-component :description="propertyVisual.description" :created_by="propertyVisual.created_by" :src="'http://localhost:8002/' + propertyVisual.snapshot" />
+            <v-col cols="12" md="3" xs="12" v-for="(property, index) in allLatestProperties" :key="index">
+                <property-card 
+                    :date="property.whenListed"
+                    :category="property.propertyCategory"
+                    :location="property.propertyLocation"
+                    :postedBy="property.listedBy"
+                    :cost="property.propertyCost"
+                    :propertyCode="property.propertyCode"
+                    :src="'http://localhost:8002/' + property.propertySnapshot" 
+                    :to="`/view/${property.propertyId}?code=${property.propertyCode}&location=${property.propertyLocation}`"
+                />
             </v-col>
-            <!-- <v-col cols="12" md="3" xs="12">
-                <v-card max-width="auto">
-                    <v-img src="https://res.cloudinary.com/diued7ugb/image/upload/v1625732723/house1_svrut7.jpg" height="200px"></v-img>
-
-                    <v-card-title style="color: #3b6ef3"> Luxury Villas </v-card-title>
-
-                    <v-card-subtitle>
-                        Luxurious and upgraded, this 4 bedroom, 4.5 bathroom home of 5,281
-                        sq. ft. (including poolhouse, per independent third-party
-                        measurement) rests on a lot of 1.23 acres (per county) on a
-                        peaceful cul-de-sac in the Lakeside neighborhood.
-                    </v-card-subtitle>
-                </v-card>
-            </v-col> -->
+        </v-row>
+    </v-container>
+    <div style="text-align: center; margin-top: 15px">
+        <h3><span style="color: #3b6ef3"> RECENT </span>RENTALS</h3>
+    </div>
+    <v-container>
+        <v-row style="display: flex; flex-direction: row; justify-content: space-evenly;">
+            <v-col cols="12" md="3" xs="12" v-for="(property, index) in allLatestRentals" :key="index">
+                <property-card 
+                    :date="property.whenListed"
+                    :category="property.propertyCategory"
+                    :location="property.propertyLocation"
+                    :postedBy="property.listedBy"
+                    :cost="property.propertyCost"
+                    :propertyCode="property.propertyCode"
+                    :src="'http://localhost:8002/' + property.propertySnapshot" 
+                    :to="`/view-rental/${property.propertyId}?code=${property.propertyCode}&location=${property.propertyLocation}`"
+                />
+            </v-col>
         </v-row>
     </v-container>
 </div>
 </template>
 
 <script>
-import RecentPropertiesComponent from './RecentPropertiesComponent'
+import PropertyCard from './PropertyCard'
 import {
     mapActions,
     mapGetters
@@ -359,7 +372,7 @@ import {
 export default {
     name: "Home2",
     components: {
-        RecentPropertiesComponent
+        PropertyCard
     },
     data: () => ({
         keyword: '',
@@ -370,7 +383,8 @@ export default {
     }),
     methods: {
         ...mapActions([
-            "fetchLatestPropertyVisuals",
+            "fetchLatestListedProperties",
+            "fetchLatestListedRentals",
             "fetchPropertiesBySearchKeyword",
             "loadSearchKeywordIntoGlobalState",
             "fetchAutoCompleteWords",
@@ -407,6 +421,7 @@ export default {
     computed: {
         ...mapGetters([
             "allLatestProperties",
+            "allLatestRentals",
             "iAmACertifiedSeller",
             "allVendorsCategories",
             "allAutocompletedList"
@@ -417,7 +432,8 @@ export default {
     },
     created() {
         this.fetchPropertyCategories();
-        this.fetchLatestPropertyVisuals();
+        this.fetchLatestListedProperties();
+        this.fetchLatestListedRentals();
     }
 };
 </script>

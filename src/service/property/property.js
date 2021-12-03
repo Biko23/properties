@@ -139,5 +139,22 @@ export default {
       throw new Error(error.message);
     }
   },
+  // ------------------------------------------ latest properties
+  async getLatestListedProperties() {
+    try {
+      const response = await API.marketPlaceApi.get(`/properties/latest-properties-for-sale`)
+      return response
+    } catch (error) {
+      throw new Error(error.message)
+    }
+  },
+  async getLatestListedRentals() {
+    try {
+      const response = await API.marketPlaceApi.get(`/properties/latest-rentals`)
+      return response
+    } catch (error) {
+      throw new Error(error.message)
+    }
+  },
 }
 

@@ -23,6 +23,7 @@ const state = {
     singlePropertyNearbyLandmarkVisuals: [],
     singleNeighborhoodVisuals: [],
     latestProperties: [],
+    latestRentals: [],
     propertyValue: {},
     rentalValue: {},
     propertyPriceHistory: [],
@@ -50,6 +51,7 @@ const getters = {
     allSinglePropertyNearbyLandmarkVisuals: (state) => state.singlePropertyNearbyLandmarkVisuals,
     allSingleNeighborhoodVisuals: (state) => state.singleNeighborhoodVisuals,
     allLatestProperties: (state) => state.latestProperties,
+    allLatestRentals: (state) => state.latestRentals,
     currentPropertyValue: (state) => state.propertyValue,
     currentRentalValue: (state) => state.rentalValue,
     currentPropertyPriceHistory: (state) => state.propertyPriceHistory,
@@ -99,13 +101,26 @@ const actions = {
      * to refactor
      *   */ 
 
-    async fetchLatestPropertyVisuals({ commit }) {
+    async fetchLatestListedProperties({ commit }) {
         try {
-            const response = await PropertyVisualsService.getLatestPropertyVisuals();
-            commit('setLatestPropertyVisuals', response.data.result);
+            const response = await PropertyService.getLatestListedProperties();
+            if(response.data.status == 1){
+                commit('setLatestListedProperties', response.data.result);
+            }
+            return response;
         } catch (error) {
-            console.log(error);
-            // throw new Error("Failed on loading latest properties")
+            throw new Error(error.message)
+        }
+    },
+    async fetchLatestListedRentals({ commit }){
+        try {
+            const response = await PropertyService.getLatestListedRentals();
+            if(response.data.status == 1){
+                commit('setLatestListedRentals', response.data.result);
+            }
+            return response;
+        } catch (error) {
+            throw new Error(error.message)
         }
     },
     async fetchSinglePropertyVisuals({ commit }, property_id) {
@@ -526,8 +541,35 @@ const mutations = {
         )),
     setSinglePropertyVisuals: (state, returnedSinglePropertyVisuals) => (state.singlePropertyVisuals = returnedSinglePropertyVisuals),
     setSinglePropertyNearbyLandmarkVisuals: (state, returnedSinglePropertyLandmarkVisuals) => (state.singlePropertyNearbyLandmarkVisuals = returnedSinglePropertyLandmarkVisuals),
-    setSinglePropertyNeighborhoodVisuals: (state, returnedSinglePropertyNeighborhoodVisuals) => (state.singleNeighborhoodVisuals = returnedSinglePropertyNeighborhoodVisuals),
-    setLatestPropertyVisuals: (state, returnedLatestProperties) => (state.latestProperties = returnedLatestProperties),
+    setSinglePropertyNeighborhoodVisuals: (state, returnedSinglePropertyNeighborhoodVisuals) => (state.singleNeighborhoodVisuals = returnedSinglePropertyNeighborhoodVisuals),   
+    setLatestListedProperties: (state, returnedLatestProperties) => state.latestProperties = returnedLatestProperties
+        .map(eachLatestProperty => {
+            return {
+                propertyId: eachLatestProperty.propertyid_,
+                propertyCode: eachLatestProperty.property_number_,
+                propertyType: eachLatestProperty.is_listed_for_name,
+                propertyCategory: eachLatestProperty.property_type_,
+                propertyCost: eachLatestProperty.actual_value_,
+                propertySnapshot: eachLatestProperty.snapshot_,
+                propertyLocation: `${eachLatestProperty.division}, ${eachLatestProperty.suburb}`,
+                listedBy: eachLatestProperty.listed_by,
+                whenListed: eachLatestProperty.when_listed
+            }
+        }),
+    setLatestListedRentals: (state, returnedLatestRentals) => state.latestRentals = returnedLatestRentals
+        .map(eachLatestRental => {
+            return {
+                propertyId: eachLatestRental.propertyid_,
+                propertyCode: eachLatestRental.property_number_,
+                propertyType: eachLatestRental.is_listed_for_name,
+                propertyCategory: eachLatestRental.property_type_,
+                propertyCost: eachLatestRental.rental_value,
+                propertySnapshot: eachLatestRental.snapshot_,
+                propertyLocation: `${eachLatestRental.division}, ${eachLatestRental.suburb}`,
+                listedBy: eachLatestRental.listed_by,
+                whenListed: eachLatestRental.when_listed
+            }
+        }),
     setSinglePropertyValue: (state, returnedSinglePropertyValue) => (state.propertyValue = returnedSinglePropertyValue),
     setSingleRentalValue: (state, returnedSingleRentalValue) => (state.rentalValue = returnedSingleRentalValue),
     setSinglePropertyPriceHistory: (state, returnedSinglePropertyPriceHistories) => (state.propertyPriceHistory = returnedSinglePropertyPriceHistories
