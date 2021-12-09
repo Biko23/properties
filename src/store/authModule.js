@@ -21,7 +21,9 @@ const state = {
     is_certified_investor: !!user.is_certified_investor,
     is_certified_professional_service_provider: !!user.is_certified_professional_service_provider,
     roles: [],
-    userRoleIdentifier: 1
+    userRoleIdentifier: 1,
+    userEmail: '',
+    userOTP: ''
 }
 
 const getters = {
@@ -225,6 +227,44 @@ const actions = {
         catch (error) {
             console.log(error);
         }
+    },
+    async generatePasswordResetOTP({ commit }, userEmail) {
+        try {
+            commit('setUserEmail', userEmail);
+            const response = await AuthService.generatePasswordResetOTP(userEmail);
+            return response;
+        }
+        catch (error) {
+            console.log(error);
+        }
+    },
+    async validateSubmittedOTP({ commit, state }, userOTP) {
+        try {
+            commit('setUserOTP', userOTP);
+            const user = {
+                userOTP,
+                userEmail: state.userEmail
+            }
+            const response = await AuthService.validateSubmittedOTP(user);
+            return response;
+        }
+        catch (error) {
+            console.log(error);
+        }
+    },
+    async resetPassword({ state }, password) {
+        try {
+            const user = {
+                userPassword: password,
+                userOTP: state.userOTP,
+                userEmail: state.userEmail
+            }
+            const response = await AuthService.resetPassword(user);
+            return response;
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
 }
 
@@ -257,7 +297,9 @@ const mutations = {
             name: (role.name).toLowerCase()
         }
     }),
-    setUserRoleIdentifier: (state, userRoleIdentifier) => state.userRoleIdentifier = userRoleIdentifier
+    setUserRoleIdentifier: (state, userRoleIdentifier) => state.userRoleIdentifier = userRoleIdentifier,
+    setUserEmail: (state, userEmail) => state.userEmail = userEmail,
+    setUserOTP: (state, userOTP) => state.userOTP = userOTP
 }
 
 export default {

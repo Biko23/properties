@@ -67,7 +67,7 @@
             :propertyCode="propertyVisual.property_number"
             :postedBy="propertyVisual.created_by"
             :src="'http://localhost:8002/' + propertyVisual.snapshot"
-            :to="`/view/${propertyVisual.property_id}?code=${propertyVisual.property_number}&location=${propertyVisual.name}`"
+            :to="`/view/${propertyVisual.property_id}?code=${propertyVisual.property_number}&location=${propertyVisual.name}&cost=${propertyVisual.actual_value}&district=${propertyVisual.district}&category=${propertyVisual.category}&type=Sale`"
           >
             <template v-slot:share>
               <!--  -->
@@ -83,7 +83,7 @@
                 <v-list style="display: flex;">
                   <network-sharing
                     @click.native="logActivity(propertyVisual.property_id)"
-                    :url="`http://localhost:8080/view/${propertyVisual.property_id}?code=${propertyVisual.property_number}&location=${propertyVisual.name}`"
+                    :url="`http://localhost:8080/view/${propertyVisual.property_id}?code=${propertyVisual.property_number}&location=${propertyVisual.name}&cost=${propertyVisual.actual_value}&district=${propertyVisual.district}&category=${propertyVisual.category}&type=Sale`"
                   />
                 </v-list>
               </v-menu>

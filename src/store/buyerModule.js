@@ -41,7 +41,8 @@ const state = {
     userInterestedProperties: [],
     userInterestedRentals: [],
     userAcquiredProperties: [],
-    userAcquiredRentals: []
+    userAcquiredRentals: [],
+    similarProperties: []
 }
 
 const getters = {
@@ -69,7 +70,8 @@ const getters = {
     allUserInterestedProperties: state => state.userInterestedProperties,
     allUserInterestedRentals: state => state.userInterestedRentals,
     allUserAcquiredProperties: state => state.userAcquiredProperties,
-    allUserAcquiredRentals: state => state.userAcquiredRentals
+    allUserAcquiredRentals: state => state.userAcquiredRentals,
+    allSimilarProperties: state => state.similarProperties
 };
 
 const actions = {
@@ -500,8 +502,19 @@ const actions = {
         } catch (error) {
             throw new Error(error.message);
         }
-    }
+    },
     // ================================================
+    async getSimilarProperties({ commit }, mainPropertyDetails){
+        try {
+            const response = await PropertyService.getSimilarProperties(mainPropertyDetails);
+            if(response.data.status == 1){
+                commit('setSimilarProperties', response.data.result);
+            }
+            return response; 
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
 }
 
 const mutations = {
@@ -511,6 +524,7 @@ const mutations = {
                 actual_value: eachPropertyForSale.actualvalue,
                 created_by: eachPropertyForSale.createdby,
                 description: eachPropertyForSale.description_,
+                district: eachPropertyForSale.district,
                 name: `${eachPropertyForSale.division}, ${eachPropertyForSale.suburb}`,
                 property_description: eachPropertyForSale.property_description,
                 property_number: eachPropertyForSale.property_number_,
@@ -528,6 +542,7 @@ const mutations = {
                 actual_value: eachPropertyForRent.rental_value,
                 created_by: eachPropertyForRent.createdby,
                 description: eachPropertyForRent.description_,
+                district: eachPropertyForRent.district,
                 name: `${eachPropertyForRent.division}, ${eachPropertyForRent.suburb}`,
                 property_description: eachPropertyForRent.property_description,
                 property_number: eachPropertyForRent.property_number_,
@@ -551,6 +566,7 @@ const mutations = {
                 propertyCategory: eachLatestProperty.property_type_,
                 propertyCost: eachLatestProperty.actual_value_,
                 propertySnapshot: eachLatestProperty.snapshot_,
+                district: eachLatestProperty.district,
                 propertyLocation: `${eachLatestProperty.division}, ${eachLatestProperty.suburb}`,
                 listedBy: eachLatestProperty.listed_by,
                 whenListed: eachLatestProperty.when_listed
@@ -565,6 +581,7 @@ const mutations = {
                 propertyCategory: eachLatestRental.property_type_,
                 propertyCost: eachLatestRental.rental_value,
                 propertySnapshot: eachLatestRental.snapshot_,
+                district: eachLatestRental.district,
                 propertyLocation: `${eachLatestRental.division}, ${eachLatestRental.suburb}`,
                 listedBy: eachLatestRental.listed_by,
                 whenListed: eachLatestRental.when_listed
@@ -590,18 +607,20 @@ const mutations = {
             } 
         })),
     setSearchKey: (state, searchKeyword) => state.searchKeyword = searchKeyword,
-    setSearchedPropertyResult: (state, returnedResults) => state.searchedResults = returnedResults.map(eachResult => {
-        return {
-            actual_value: eachResult.actual_value_,
-            created_by: eachResult.created_by_,
-            name: `${eachResult.division}, ${eachResult.suburb}`,
-            property_description: eachResult.property_description,
-            property_number: eachResult.property_number_,
-            category: eachResult.property_type_,
-            property_id: eachResult.property_id_,
-            snapshot: eachResult.property_visual,
-            when_created: eachResult.when_created_
-        }
+    setSearchedPropertyResult: (state, returnedResults) => state.searchedResults = returnedResults
+        .map(eachResult => {
+            return {
+                actual_value: eachResult.actual_value_,
+                created_by: eachResult.created_by_,
+                district: eachResult.district,
+                name: `${eachResult.division}, ${eachResult.suburb}`,
+                property_description: eachResult.property_description,
+                property_number: eachResult.property_number_,
+                category: eachResult.property_type_,
+                property_id: eachResult.property_id_,
+                snapshot: eachResult.property_visual,
+                when_created: eachResult.when_created_
+            }
         // description: eachPropertyForRent.description_,
     }),
     setSearchList: (state, returnedSearchOptionsList) => state.autocompleteList = [...new Set(returnedSearchOptionsList)],
@@ -656,7 +675,23 @@ const mutations = {
     userInterestedInProperties: (state, returnedUserInterestedProperties) => state.userInterestedProperties = returnedUserInterestedProperties,
     userInterestedInRentals:  (state, returnedUserInterestedRentals) => state.userInterestedRentals = returnedUserInterestedRentals,
     userAcquiredProperties: (state, returnedAcquiredProperties) => state.userAcquiredProperties = returnedAcquiredProperties,
-    userAcquiredRentals: (state, returnedAcquiredRentals) => state.userAcquiredRentals = returnedAcquiredRentals
+    userAcquiredRentals: (state, returnedAcquiredRentals) => state.userAcquiredRentals = returnedAcquiredRentals,
+    setSimilarProperties: (state, returnedSimilarProperties) => state.similarProperties = returnedSimilarProperties
+        .map(similarProperty => {
+            return {
+                actual_value: similarProperty.actual_value_,
+                created_by: similarProperty.listed_by,
+                district: similarProperty.district,
+                name: `${similarProperty.division}, ${similarProperty.suburb}`,
+                property_description: similarProperty.property_description,
+                property_number: similarProperty.property_number_,
+                category: similarProperty.property_type_,
+                property_id: similarProperty.propertyid_,
+                listed_type: similarProperty.is_listed_for_name,
+                snapshot: similarProperty.snapshot_,
+                when_created: similarProperty.when_listed
+            }
+        })
 }
 
 export default {

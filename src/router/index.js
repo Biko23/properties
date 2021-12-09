@@ -268,6 +268,30 @@ const routes = [
     path:'/logs',
     name:'UserlogActivities',
     component:() => import(/* webpackChunkName: "about" */ '../views/UserlogActivities.vue')
+  },
+  {
+    path: '/email-reset-password',
+    name: 'EmailResetPassword',
+    component:() => import('../views/passwordReset/EmailResetPassword.vue'),
+    meta: {
+      hideFooterAndAbout: true
+    }
+  },
+  {
+    path: '/otp-reset-password',
+    name: 'OTPResetPassword',
+    component:() => import('../views/passwordReset/OTPResetPassword.vue'),
+    meta: {
+      hideFooterAndAbout: true
+    }
+  },
+  {
+    path: '/new-password-reset-page',
+    name: 'NewPasswordResetPassword',
+    component:() => import('../views/passwordReset/NewPasswordResetPassword.vue'),
+    meta: {
+      hideFooterAndAbout: true
+    }
   }
 ]
 

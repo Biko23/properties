@@ -201,7 +201,7 @@
               "
             >
               <network-sharing 
-                :url="`http://localhost:8080/view/${allSinglePropertyVisuals[0].property_id}?code=${$route.query.code}&location=${$route.query.location}`"
+                :url="`http://localhost:8080/view/${allSinglePropertyVisuals[0].property_id}?code=${$route.query.code}&location=${$route.query.location}&cost=${$route.query.cost}&district=${$route.query.district}&category=${$route.query.category}&type=${$route.query.type}`"
                 />
             </v-list>
           </div>
@@ -383,42 +383,32 @@
                 Similar Properties
               </h1>
             </v-card-title>
-            <v-tabs
-              v-model="tab"
-              background-color="transparent"
-              color="basil"
-              grow
-            >
-              <v-tab></v-tab>
-            </v-tabs>
-
-            <v-tabs-items v-model="tab">
-              <v-tab-item>
-                <v-card color="basil" flat>
-                  <v-card-text>
-                    <!-- Content for neighborhood -->
-                    <v-row v-if="allSingleNeighborhoodVisuals.length > 0">
-                      <v-col
-                        v-for="neighborhoodVisual in allSingleNeighborhoodVisuals"
-                        :key="neighborhoodVisual.neighborhood_visuals_id"
-                      >
-                        <v-img
-                          :src="
-                            'http://localhost:9003/' +
-                            neighborhoodVisual.snapshot
-                          "
-                          aspect-ratio="1"
-                          class="grey lighten-2"
-                          height="200"
-                        ></v-img>
-                      </v-col>
-                    </v-row>
-                    <p v-else>No Neighborhood images to display</p>
-                  </v-card-text>
-                </v-card>
-              </v-tab-item>
-            </v-tabs-items>
+            <v-card-text v-if="fetching">
+              <v-card elevation="4" class="mx-auto">
+                <base-spinner style="align-items: center;"/>
+              </v-card>
+            </v-card-text>
+             <v-card-text v-else>
+               <v-row>
+                 <v-col cols="12" xs="12" sm="6" md="4" lg="3" v-for="(item, index) in similarProperties" :key="index">
+                  <PropertyCard 
+                    :location="item.name"
+                    :date="item.when_created"
+                    :category="item.category"
+                    :cost="item.actual_value"
+                    :propertyCode="item.property_number"
+                    :postedBy="item.created_by"
+                    :src="'http://localhost:8002/' + item.snapshot"
+                    :to="`/view/${item.property_id}?code=${item.property_number}&location=${item.name}&cost=${item.actual_value}&district=${item.district}&category=${item.category}&type=${item.listed_type}`"
+                  />
+                </v-col>
+              </v-row>
+            </v-card-text>
           </v-card>
+          <!-- 
+                  :date="formatDate(propertyVisual.when_created)"
+                  :cost="commaFormatted(propertyVisual.actual_value)"
+                 -->
         </v-col>
       </v-row>
     </v-container>
@@ -429,15 +419,15 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import NetworkSharing from "./BaseShareComponent.vue";
+import PropertyCard from './PropertyCard'
 import About from "../views/About.vue";
 import Footer from "./Footer.vue";
 import MainNav from "./MainNav.vue";
 import TopNav from "./TopNav.vue";
 export default {
-  components: { NetworkSharing, TopNav, MainNav, About, Footer },
+  components: { NetworkSharing, TopNav, MainNav, About, Footer, PropertyCard },
   name: "ViewProperty",
   props: ["property_id"],
-  // $route.params.propertyId
   data: () => ({
     favoriteDialog: "",
     alertMessage: false,
@@ -478,7 +468,10 @@ export default {
       { text: "Price", value: "price" },
       { text: "Payment Date", value: "when_created" },
     ],
-    tab: null
+    tab: null,
+    benched: 6,
+    fetching: false,
+    similarProperties: []
   }),
   computed: {
     ...mapGetters([
@@ -491,11 +484,13 @@ export default {
       "allCurrentPropertyFeatures",
       "allCurrentUserFavoriteProperties",
       "loginState",
-      "checkUserInterestInProperty"
+      "checkUserInterestInProperty",
+      "allSimilarProperties"
     ]),
+    // filteredSimilarProperties () {
+    //   return Array.from({ length: this.similarProperties.length }, (k, v) => v + 1)
+    // },
     dollarExchange() {
-      // const USCost = (this.currentPropertyValue.actual_value / 3500).toFixed(2);
-      // return () => this.commaFormatted(USCost);
       return () => (this.currentPropertyValue.actual_value / 3500).toFixed(2);
     },
     spreadFeatures: function () {
@@ -505,6 +500,7 @@ export default {
     },
   },
   methods: {
+    // value => this.currentPropertyValue.actual_value, 
     ...mapActions([
       "fetchSinglePropertyVisuals",
       "fetchPropertyNearbyLandmarkVisuals",
@@ -517,6 +513,7 @@ export default {
       "addPropertyToFavorites",
       "checkIfUserIsAlreadyInterestedInAProperty",
       "expressInterestInBuyingAProperty",
+      "getSimilarProperties",
       "postAUserLog"
     ]),
     defaultResponse(msg, heading, status) {
@@ -528,6 +525,28 @@ export default {
           this.title = ""
           this.state = false
       }, 2000);
+    },
+    async fetchSimilarProperties(){
+      try {
+        const propertyDetails = {
+          property_value: this.$route.query.cost,
+          property_type: this.$route.query.category,
+          property_district: this.$route.query.district,
+          listed_for: this.$route.query.type
+        }
+        this.fetching = true;
+        const response = await this.getSimilarProperties(propertyDetails);
+        if(response.data.status == 0){
+          this.fetching = false;
+          this.defaultResponse('Failed to fetch similar properties', 'Error', true);
+        } else if (response.data.status == 1){
+          this.fetching = false;
+          this.similarProperties = this.allSimilarProperties
+        }
+      } catch (error) {
+        this.fetching = false;
+        this.defaultResponse(error.message, 'Error', true);
+      }
     },
     // ==========================================
     async confirmIfPropertyIsAlreaydAddedToInterests(){
@@ -606,6 +625,7 @@ export default {
     this.fetchCurrentPropertySelectedFeatures(this.property_id);
     this.fetchPropertyPriceHistories(this.property_id);
     this.confirmIfPropertyIsAlreaydAddedToInterests();
+    this.fetchSimilarProperties();
   },
 };
 </script>

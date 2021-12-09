@@ -156,5 +156,13 @@ export default {
       throw new Error(error.message)
     }
   },
+  async getSimilarProperties(propertyDetails){
+    try {
+      const response = await API.marketPlaceApi.get(`/properties/similar-properties?property_value=${propertyDetails.property_value}&property_type=${propertyDetails.property_type}&district=${propertyDetails.property_district}&listed_for=${propertyDetails.listed_for}`);
+      return response;
+    } catch (error) {
+      throw new Error(error.message)
+    }
+  }
 }
 

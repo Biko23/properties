@@ -85,5 +85,30 @@ export default {
       console.log(error);
       // throw new Error('An error occured while fetching user roles')
     }
+  },
+
+  async generatePasswordResetOTP (userEmail) {
+    try {
+      const response = await API.marketPlaceApi.post(`/users/generate-password-reset-otp/${userEmail}`)
+      return response;
+    } catch (error) {
+      throw new Error(error.message)
+    }
+  },
+  async validateSubmittedOTP (user) {
+    try {
+      const response = await API.marketPlaceApi.post(`/users/validate-otp?email=${user.userEmail}&otp=${user.userOTP}`)
+      return response;
+    } catch (error) {
+      throw new Error(error.message)
+    }
+  },
+  async resetPassword (user) {
+    try {
+      const response = await API.marketPlaceApi.post(`/users/reset-password?email=${user.userEmail}&otp=${user.userOTP}&new_password=${user.userPassword}`)
+      return response;
+    } catch (error) {
+      throw new Error(error.message)
+    }
   }
 }

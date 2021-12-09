@@ -91,9 +91,12 @@
                 </v-col> </v-row 
               >-->
                         <br />
-                        <p style="font-size: 0.75rem">
+                        <p style="font-size: 0.85rem">
                             Have No Accont?
                             <router-link to="/signup">Sign up</router-link>
+                        </p>
+                        <p style="font-size: 0.75rem">
+                            <router-link to="/email-reset-password">Forgot Password</router-link>
                         </p>
                         <br /><br />
                     </v-container>
@@ -159,7 +162,7 @@ export default {
                                 sessionStorage.removeItem("redirectPath");
                             });
                         } else if (response.data.status === 0) {
-                            this.defaultResponse("Wrong Username and/ or password.", 'Error', true);
+                            this.defaultResponse(response.data.message, 'Error', true);
                         }
                     }
                 }

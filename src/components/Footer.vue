@@ -48,9 +48,8 @@
               letter-spacing: 0em;
               color: #ffff;
             "
-          >
-            cccug@stanbic.com
-          </p>
+            id="email-btn"
+          >cccug@stanbic.com</p>
         </v-col>
 
         <v-col md="3" xs="6">

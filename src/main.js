@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
+import VueOtp2 from 'vue-otp-2';
 import VueSession from 'vue-session'
 
 // import VuetifyGoogleAutocomplete from 'vuetify-google-autocomplete';
@@ -20,6 +21,7 @@ Vue.component('base-spinner', BaseSpinner)
 
 Vue.config.productionTip = false
 
+Vue.use(VueOtp2)
 // Session
 Vue.use(VueSession)
 

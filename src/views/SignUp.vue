@@ -161,7 +161,7 @@ export default {
                     const response = await this.signupANewUser(this.userSignupDetails);
                     if (response.status === 201) {
                         this.submitting = false;
-                        this.defaultResponse('Account successfully created', 'Success', true);
+                        this.defaultResponse(response.data.message, 'Success', true);
                         setTimeout(() => {
                             this.$router.push('/login');
                         }, 3000);
