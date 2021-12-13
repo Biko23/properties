@@ -2,7 +2,7 @@
     <v-dialog transition="dialog-top-transition" persistent :value="dialogState" max-width="600">
         <template>
             <v-card>
-                <v-toolbar color="deep-purple accent-4" dark>{{title}}</v-toolbar>
+                <v-toolbar color="#3B6EF3" dark>{{title}}</v-toolbar>
                 <v-card-text class="pt-5">
                     <p style="font-size: 16px">{{ message }}</p>
                 </v-card-text>
@@ -23,7 +23,7 @@
             },
             title: {
                 type: String,
-                default: "No title"
+                default: null
             },
             dialogState: {
                 type: Boolean,

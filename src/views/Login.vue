@@ -162,7 +162,7 @@ export default {
                                 sessionStorage.removeItem("redirectPath");
                             });
                         } else if (response.data.status === 0) {
-                            this.defaultResponse(response.data.message, 'Error', true);
+                            this.defaultResponse(response.data.message, '', true);
                         }
                     }
                 }

@@ -394,6 +394,7 @@ const actions = {
                     return {
                         actual_value: sale.actual_value_,
                         created_by: sale.property_created_by,
+                        district: sale.district,
                         name: `${sale.division}, ${sale.suburb}`,
                         property_description: sale.property_description,
                         property_number: sale.property_number_,
@@ -411,6 +412,7 @@ const actions = {
                     return {
                         actual_value: rental.rental_value,
                         created_by: rental.property_created_by, 
+                        district: rental.district,
                         name: `${rental.division}, ${rental.suburb}`,
                         property_description: rental.property_description,
                         property_number: rental.property_number_,

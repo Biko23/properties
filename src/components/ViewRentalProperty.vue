@@ -43,25 +43,38 @@
           </div>
           <br />
           <div style="background-color: #f2f2f2; border-radius: 6px">
+            <!--  -->
             <v-col>
-              <p style="color: #3b6ef3l display: flex;">
-                Price:
-                <span style="color: black; margin-left: 180px"
-                  >UGX
-                  {{
-                    commaFormatted(currentRentalValue.rental_value_amt)
-                  }}</span
-                >
-                <br />
+              <div style="display: flex; flex-direction: column">
                 <span
-                  >Equavalent To:
-                  <span style="color: black; margin-left: 154px"
-                    >$ {{ dollarExchange() }}</span
-                  ></span
+                  style="
+                    flex: 1;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    flex-wrap: wrap;
+                  "
                 >
-              </p>
+                  <span> Price: </span>
+                  <span>
+                    UGX {{ commaFormatted(currentRentalValue.rental_value_amt) }}
+                  </span>
+                </span>
+                <span
+                  style="
+                    flex: 1;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    flex-wrap: wrap;
+                  "
+                >
+                  <span> Equavalent To: </span>
+                  <span> $ {{ dollarExchange() }} </span>
+                </span>
+              </div>
             </v-col>
-
+            <!--  -->
             <v-col>
               <a
                 href="tel:+256782456789"
@@ -160,12 +173,16 @@
               </v-row>
             </v-col>
           </div>
+          <div style="margin-left: 10px;">
+            <p style="margin-bottom: 0;">Features</p>
+            <p style="font-weight: 300"> {{ spreadFeatures }}</p>
+          </div>
            <!--  -->
           <div>
             <h4 style="margin: 1em 0 0 10px;">Social Platform</h4>
             <v-list style="display: flex; flex-direction: row;  flex-wrap: wrap; justify-content: flex-start; margin-left:10px;">
               <network-sharing 
-                :url="`http://localhost:8080/view-rental/${allSinglePropertyVisuals[0].property_id}?code=${$route.query.code}&location=${$route.query.location}`"
+                :url="`http://localhost:8080/view-rental/${allSinglePropertyVisuals[0].property_id}?code=${$route.query.code}&location=${$route.query.location}&cost=${$route.query.cost}&district=${$route.query.district}&category=${$route.query.category}&type=${$route.query.type}`"
                 />
                 </v-list>
           </div>
@@ -189,7 +206,6 @@
         <v-col cols="12" md="4">
           <v-img
             src="https://res.cloudinary.com/diued7ugb/image/upload/v1626370006/google-maps-759_1_zqu50z.png"
-            :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
             aspect-ratio="1"
             class="grey lighten-2"
             height="200"
@@ -338,12 +354,53 @@
         </v-col>
       </v-row>
     </v-container>
+    <!--  -->
+    <v-container>
+      <v-row>
+        <v-col>
+          <v-card color="basil">
+            <v-card-title class="text-center justify-center py-6">
+              <h1 class="font-weight-bold text-h6 basil--text">
+                Similar Properties
+              </h1>
+            </v-card-title>
+            <v-card-text v-if="fetching">
+              <v-card elevation="4" class="mx-auto">
+                <base-spinner style="align-items: center;"/>
+              </v-card>
+            </v-card-text>
+             <v-card-text v-else>
+               <v-row>
+                 <v-col cols="12" xs="12" sm="6" md="4" lg="3" v-for="(item, index) in similarProperties" :key="index">
+                  <PropertyCard 
+                    :location="item.name"
+                    :date="item.when_created"
+                    :category="item.category"
+                    :cost="item.actual_value"
+                    :propertyCode="item.property_number"
+                    :postedBy="item.created_by"
+                    :src="'http://localhost:8002/' + item.snapshot"
+                    :to="`/view/${item.property_id}?code=${item.property_number}&location=${item.name}&cost=${item.actual_value}&district=${item.district}&category=${item.category}&type=${item.listed_type}`"
+                  />
+                </v-col>
+              </v-row>
+            </v-card-text>
+          </v-card>
+          <!-- 
+                  :date="formatDate(propertyVisual.when_created)"
+                  :cost="commaFormatted(propertyVisual.actual_value)"
+                 -->
+        </v-col>
+      </v-row>
+    </v-container>
+    <!--  -->
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
 import NetworkSharing from "./BaseShareComponent.vue";
+import PropertyCard from './PropertyCard'
 import About from "../views/About.vue";
 import Footer from "./Footer.vue";
 import MainNav from "./MainNav.vue";
@@ -369,6 +426,13 @@ export default {
         utility_costs: 500000.0,
       },
     ],
+    monthlyCostHeaders: [
+      { text: "Principal Plus Interest", value: "principal_plus_interest" },
+      { text: "Mortgage Insurance", value: "mortgage_insurance" },
+      { text: "Tax", value: "property_tax" },
+      { text: "Home Insurance", value: "home_insurance" },
+      { text: "Utility Costs", value: "utility_costs" },
+    ],
     propertyNeiborhood: [],
     propertyRating: [],
     propertyRentalValue: [
@@ -386,30 +450,9 @@ export default {
       { text: "Price", value: "price" },
       { text: "Payment Date", value: "when_created" },
     ],
-    monthlyCostHeaders: [
-      { text: "Principal Plus Interest", value: "principal_plus_interest" },
-      { text: "Mortgage Insurance", value: "mortgage_insurance" },
-      { text: "Tax", value: "property_tax" },
-      { text: "Home Insurance", value: "home_insurance" },
-      { text: "Utility Costs", value: "utility_costs" },
-    ],
     tab: null,
-    itemss: ["Appetizers", "Entrees", "Deserts", "Cocktails"],
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, ",
-    items: [
-      {
-        src: "https://res.cloudinary.com/diued7ugb/image/upload/v1626369977/og_dqwykp.jpg",
-      },
-      {
-        src: "https://res.cloudinary.com/diued7ugb/image/upload/v1625732723/house1_svrut7.jpg",
-      },
-      {
-        src: "https://cdn.vuetifyjs.com/images/carousel/bird.jpg",
-      },
-      {
-        src: "https://cdn.vuetifyjs.com/images/carousel/planet.jpg",
-      },
-    ]
+    fetching: false,
+    similarProperties: []
   }),
   computed: {
     ...mapGetters([
@@ -422,7 +465,8 @@ export default {
       "loginState",
       "currentLoggedinUser",
       "allCurrentUserFavoriteProperties",
-      "checkUserInterestInProperty"
+      "checkUserInterestInProperty",
+       "allSimilarProperties"
     ]),
     dollarExchange() {
       return () => (this.currentRentalValue.rental_value_amt / 3500).toFixed(2);
@@ -444,9 +488,10 @@ export default {
       "addAViewedProperty",
       "removePropertyFromFavorites",
       "addPropertyToFavorites",
-      "postAUserLog",
       "checkIfUserIsAlreadyInterestedInAProperty",
-      "expressInterestInBuyingAProperty"
+      "expressInterestInBuyingAProperty",
+      "getSimilarProperties",
+       "postAUserLog"
     ]),
     defaultResponse(msg, heading, status) {
       this.message = msg
@@ -457,6 +502,28 @@ export default {
           this.title = ""
           this.state = false
       }, 2000);
+    },
+    async fetchSimilarProperties(){
+      try {
+        const propertyDetails = {
+          property_value: this.$route.query.cost,
+          property_type: this.$route.query.category,
+          property_district: this.$route.query.district,
+          listed_for: this.$route.query.type
+        }
+        this.fetching = true;
+        const response = await this.getSimilarProperties(propertyDetails);
+        if(response.data.status == 0){
+          this.fetching = false;
+          this.defaultResponse(response.data.message, 'Error', true);
+        } else if (response.data.status == 1){
+          this.fetching = false;
+          this.similarProperties = this.allSimilarProperties
+        }
+      } catch (error) {
+        this.fetching = false;
+        this.defaultResponse(error.message, 'Error', true);
+      }
     },
     // ==========================================
     async confirmIfPropertyIsAlreaydAddedToInterests(){
@@ -563,6 +630,8 @@ export default {
     this.fetchPropertyRentalValue(this.property_id);
     this.fetchCurrentPropertySelectedFeatures(this.property_id);
     this.fetchPropertyPriceHistories(this.property_id);
+    this.confirmIfPropertyIsAlreaydAddedToInterests();
+    this.fetchSimilarProperties();
   },
 };
 </script>

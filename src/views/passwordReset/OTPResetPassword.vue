@@ -1,5 +1,10 @@
 <template>
   <v-container>
+    <base-dialog :message="message" :title="title" :dialogState="state">
+        <template v-slot:button>
+            <v-btn text @click="state = !state">close</v-btn>
+        </template>
+    </base-dialog>
       <v-row>
           <v-col cols="12" md="6" offset-md="3">
               <v-row style="margin: 20vh auto;">
@@ -11,30 +16,34 @@
                                 <v-col cols="12" md="12">
                                     <v-row>
                                         <!--  -->
-                                        <v-col cols="12" md="12">
-                                            <div class="ma-auto position-relative" style="max-width: 300px">
-                                            <!-- <vue-otp-2
-                                                length="6"
-                                                :otp="resetOTP"
-                                                join-character="-"
-                                                inputmode="numeric"
-                                                pattern="[0-9]*"
-                                                @onChange="logOTP"
-                                                @onComplete="onFinish" 
-                                            /> -->
-                                            <v-text-field v-model="resetOTP"/>
-                                            <v-btn @click="submitOTP">Submit OTP</v-btn>
+                                        <v-col cols="12" md="8" offset-md="2">
+                                            <div 
+                                                class="ma-auto mt-3 mb-3 position-relative" 
+                                                style="display: flex; justify-content: space-evenly;"
+                                            >
+                                                <base-spinner v-if="submittingToken"/>
+                                                <vue-otp-2
+                                                    v-else
+                                                    length="6"
+                                                    join-character="-"
+                                                    inputmode="numeric"
+                                                    pattern="[0-9]*"
+                                                    @onComplete="onFinish" 
+                                                />
                                             </div>
                                         </v-col>
-                                        <v-col cols="12" md="12">
-                                             <v-btn 
+                                        <v-col cols="12" md="8" offset-md="2" style="display: flex; justify-content: center;">
+                                             <base-spinner v-if="submitting"/>
+                                             <v-btn
+                                                v-else 
                                                 block 
-                                                color="#3B6EF3" 
+                                                color="#3B6EF3"
+                                                @click="resendOTP" 
                                             >
-                                                <span style="color: white;">Resend OTP</span>
+                                                <span style="color: white;">I can't see the OTP</span>
                                             </v-btn>
                                         </v-col>
-                                        <v-col cols="12" md="12" style="display: flex; justify-content: center;">
+                                        <v-col cols="12" md="12" style="display: flex; justify-content: space-evenly;">
                                             <router-link to="/email-reset-password">Re-enter your email</router-link>
                                         </v-col>
                                         <!--  -->
@@ -55,33 +64,63 @@ import { mapActions } from 'vuex';
 export default {
   name: 'OTPResetPassword',
    data: () => ({
-      loading: false,
-      resetOTP: ''
+        submitting: false,
+        message: '',
+        title: '',
+        state: false,
+        otp: [],
+        submittingToken: false
     }),
   methods: {
-      ...mapActions(['validateSubmittedOTP']),
-      async submitOTP(){
+    ...mapActions(['generatePasswordResetOTP', 'validateSubmittedOTP']),
+    defaultResponse(msg, heading, status) {
+        this.message = msg
+        this.title = heading
+        this.state = status
+        setTimeout(() => {
+            this.message = ""
+            this.title = ""
+            this.state = false
+        }, 3000);
+    },
+      async submitOTP(resetOTP){
           try {
-           if(this.resetOTP != ''){
-                const response = await this.validateSubmittedOTP(this.resetOTP);
-                if(response.data.status == 1){
-                    this.$router.push('/new-password-reset-page')
-                } else {
-                    alert(JSON.stringify(response.data.message))
-                }
-           }
+            this.submittingToken = true;
+            const response = await this.validateSubmittedOTP(resetOTP);
+            if(response.data.status == 1){
+                this.submittingToken = false;
+                setTimeout(() => this.$router.push('/new-password-reset-page'), 3000);        
+            } else {
+                this.submittingToken = false;
+                this.defaultResponse(response.data.message, 'Error', true);
+            }
           } catch (error) {
-              console.log(error.message);
+            this.submittingToken = false;
+            this.defaultResponse(error.message, 'Error', true);
           }
       },
-      logOTP(){
-          console.log(this.resetOTP);
+     async onFinish (otp) {
+        this.otp = otp
+        const finalOTP = (this.otp).reduce((a, b) => `${a}${b}`);
+        await this.submitOTP(finalOTP);  
       },
-      onFinish () {
-        this.loading = true
-        
-      },
-    },
+    async resendOTP(){
+        try {
+            this.submitting = true;
+            const response = await this.generatePasswordResetOTP(this.$store.getters.resetEmail);
+            if(response.data.status == 1){
+                this.submitting = false;
+                this.defaultResponse(`A new OTP has been re-sent to ${this.$store.getters.resetEmail}`, 'Success', true);                
+            } else {
+                this.submitting = false;
+                this.defaultResponse(response.data.message, 'Error', true);
+            }
+        } catch (error) {
+            this.submitting = false;
+            this.defaultResponse(error.message, 'Error', true);
+        }
+    }
+    }
 }
 </script>
 <style scoped>

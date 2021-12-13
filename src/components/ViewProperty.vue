@@ -469,7 +469,6 @@ export default {
       { text: "Payment Date", value: "when_created" },
     ],
     tab: null,
-    benched: 6,
     fetching: false,
     similarProperties: []
   }),
@@ -479,17 +478,14 @@ export default {
       "allSinglePropertyNearbyLandmarkVisuals",
       "allSingleNeighborhoodVisuals",
       "currentPropertyValue",
-      "currentLoggedinUser",
       "currentPropertyPriceHistory",
       "allCurrentPropertyFeatures",
-      "allCurrentUserFavoriteProperties",
       "loginState",
+      "currentLoggedinUser",
+      "allCurrentUserFavoriteProperties",
       "checkUserInterestInProperty",
       "allSimilarProperties"
     ]),
-    // filteredSimilarProperties () {
-    //   return Array.from({ length: this.similarProperties.length }, (k, v) => v + 1)
-    // },
     dollarExchange() {
       return () => (this.currentPropertyValue.actual_value / 3500).toFixed(2);
     },
@@ -500,7 +496,6 @@ export default {
     },
   },
   methods: {
-    // value => this.currentPropertyValue.actual_value, 
     ...mapActions([
       "fetchSinglePropertyVisuals",
       "fetchPropertyNearbyLandmarkVisuals",
@@ -538,7 +533,7 @@ export default {
         const response = await this.getSimilarProperties(propertyDetails);
         if(response.data.status == 0){
           this.fetching = false;
-          this.defaultResponse('Failed to fetch similar properties', 'Error', true);
+          this.defaultResponse(response.data.message, 'Error', true);
         } else if (response.data.status == 1){
           this.fetching = false;
           this.similarProperties = this.allSimilarProperties

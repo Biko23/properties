@@ -36,8 +36,8 @@
               :src="'http://localhost:8002/' + favoriteProperty.snapshot"
               :to="
                 favoriteProperty.listed_for_name == ('Rent' || 'rent' || 'RENT')
-                  ? `/view-rental/${favoriteProperty.property_id}?code=${favoriteProperty.property_number}&location=${favoriteProperty.name}`
-                  : `/view/${favoriteProperty.property_id}?code=${favoriteProperty.property_number}&location=${favoriteProperty.name}`
+                  ? `/view-rental/${favoriteProperty.property_id}?code=${favoriteProperty.property_number}&location=${favoriteProperty.name}&cost=${favoriteProperty.actual_value}&district=${favoriteProperty.district}&category=${favoriteProperty.category}&type=Rent`
+                  : `/view/${favoriteProperty.property_id}?code=${favoriteProperty.property_number}&location=${favoriteProperty.name}&cost=${favoriteProperty.actual_value}&district=${favoriteProperty.district}&category=${favoriteProperty.category}&type=Sale`
               "
             >
               <template v-slot:type>
@@ -85,47 +85,24 @@ export default {
       "removePropertyFromFavoriteSection",
       "postAUserLog",
     ]),
-    // refactoring needed
     formatDate(dateToFormat) {
       let currentDate = new Date();
       let returnedFormattedDate = new Date(dateToFormat);
       let difference = Math.abs(returnedFormattedDate - currentDate);
       let days = (difference / (1000 * 3600 * 24)).toFixed(0);
-      console.log(days);
 
-      let result;
-      switch (+days) {
-        case 0:
-          result = "Saved today";
-          break;
-        case 1:
-          result = "Saved a day ago";
-          break;
-        case 2:
-          result = "Saved 2 days ago";
-          break;
-        case 3:
-          result = "Saved 3 days ago";
-          break;
-        case 4:
-          result = "Saved 4 days ago";
-          break;
-        case 5:
-          result = "Saved 5 days ago";
-          break;
-        case 6:
-          result = "Saved 6 days ago";
-          break;
-        case 7:
-          result = "Saved 7 days ago";
-          break;
-        default:
-          result =
-            "Saved on " +
-            dateFormat(returnedFormattedDate, "dddd, mmmm dS, yyyy");
-          break;
+      const DATES = {
+        "0": "today",
+        "1": "a day ago",
+        "2": "2 days ago",
+        "3": "3 days ago",
+        "4": "4 days ago",
+        "5": "5 days ago",
+        "6": "6 days ago",
+        "7": "7 days ago"
       }
-      return result;
+      
+      return `Saved ${DATES[days]}` ?? dateFormat(returnedFormattedDate, "ddd, mmm dS, yyyy");
     },
     commaFormatted(amount) {
       let price = amount.toLocaleString("en-US");

@@ -40,7 +40,8 @@ const getters = {
     iAmACertifiedInvestor: state => state.is_certified_investor,
     iAmACertifiedProfessionalServiceProvider: state => state.is_certified_professional_service_provider,
     allRoles: state => state.roles,
-    currentUserRoleIdentifier: state => state.userRoleIdentifier
+    currentUserRoleIdentifier: state => state.userRoleIdentifier,
+    resetEmail: state => state.userEmail
 };
  
 const actions = {

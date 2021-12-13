@@ -67,7 +67,7 @@
             :cost="commaFormatted(propertyVisual.actual_value)"
             :postedBy="propertyVisual.created_by"
             :src="'http://localhost:8002/' + propertyVisual.snapshot"
-            :to="`/view-rental/${propertyVisual.property_id}?code=${propertyVisual.property_number}&location=${propertyVisual.name}`"
+            :to="`/view-rental/${propertyVisual.property_id}?code=${propertyVisual.property_number}&location=${propertyVisual.name}&cost=${propertyVisual.actual_value}&district=${propertyVisual.district}&category=${propertyVisual.category}&type=Rent`"
           >
             <template v-slot:share>
               <v-menu bottom offset-y>
@@ -81,7 +81,7 @@
                 </template>
                 <v-list style="display: flex; flex-direction: column;">
                   <network-sharing @click.native="logActivity(propertyVisual.property_id)"
-                    :url="`http://localhost:8080/view-rental/${propertyVisual.property_id}?code=${propertyVisual.property_number}&location=${propertyVisual.name}`"
+                    :url="`http://localhost:8080/view-rental/${propertyVisual.property_id}?code=${propertyVisual.property_number}&location=${propertyVisual.name}&cost=${propertyVisual.actual_value}&district=${propertyVisual.district}&category=${propertyVisual.category}&type=Rent`"
                   />
                 </v-list>
               </v-menu>
