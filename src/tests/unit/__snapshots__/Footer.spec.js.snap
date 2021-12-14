@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footer.vue renders a v-card-text 1`] = `
+Wrapper {
+  "isFunctionalComponent": true,
+  "selector": ".v-card__text",
+}
+`;
+
+exports[`Footer.vue renders a v-container 1`] = `
+ErrorWrapper {
+  "selector": ".v-container",
+}
+`;

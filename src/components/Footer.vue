@@ -1,25 +1,6 @@
 <template>
   <div>
     <v-divider></v-divider><br />
-    <v-container fluid style="background-color: #3b6ef3">
-      <v-row>
-        <!-- <v-col>
-          <v-card-text style="text-align: center">
-            <v-btn
-              v-for="icon in icons"
-              :key="icon"
-              class="mx-4 white--text"
-              icon
-            >
-              <v-icon size="24px">
-                {{ icon }}
-              </v-icon>
-            </v-btn>
-          </v-card-text>
-        </v-col> -->
-      </v-row>
-    </v-container>
-
     <v-container fluid style="background-color: #3b6ef3; color: #ffff">
       <v-row>
         <v-col md="3" xs="6">
@@ -141,6 +122,6 @@
 </template>
 <script>
 export default {
-  name: "Footer",
+  name: "Footer"
 };
 </script>

@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BaseDialog.vue should have a custom message and match snapshot 1`] = `
+"<div role=\\"dialog\\" class=\\"v-dialog__container\\">
+  <!---->
+</div>"
+`;
+
+exports[`BaseDialog.vue should have a custom title and match snapshot 1`] = `
+"<div role=\\"dialog\\" class=\\"v-dialog__container\\">
+  <!---->
+</div>"
+`;
