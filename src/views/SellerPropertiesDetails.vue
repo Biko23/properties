@@ -203,8 +203,6 @@
 </template>
 
 <script>
-import SellerPropertyDetails from '@/components/SellerPropertyDetailComponent'
-import Button from '@/components/Button'
 import {
     mapActions,
     mapGetters
@@ -212,10 +210,6 @@ import {
 
 export default {
     name: 'SellerPropertiesDetails',
-    components: {
-        SellerPropertyDetails,
-        Button
-    },
     data: () => ({
         message: '',
         title: '',

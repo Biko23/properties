@@ -5,7 +5,8 @@
   "jest": {
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "**/*.{js,vue}",
+      "<rootDir>/components/**/*.vue",
+      "<rootDir>/views/**/*.vue",
       "!**/node_modules/**"
     ],
     "moduleFileExtensions": [
@@ -18,7 +19,9 @@
       ".*\\.(js)$": "babel-jest"
     },
     "testEnvironment": "jsdom",
-    "setupFiles": ["./src/tests/setup.js"]
+    "setupFiles": [
+      "./src/tests/setup.js"
+    ]
   },
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -63,6 +66,7 @@
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^6.2.2",
     "jest": "^27.4.3",
+    "jest-pnp-resolver": "^1.2.2",
     "jsdom-global": "^3.0.2",
     "node-sass": "^6.0.1",
     "npm-check-updates": "^12.0.2",

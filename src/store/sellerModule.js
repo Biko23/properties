@@ -102,8 +102,9 @@ const actions = {
         try {
             const response = await PropertyFeatureService.getAllPropertyFeatures();
             commit('setPropertyFeatures', response.data.result);
+            return response;
         } catch (error) {
-            console.log(error);
+            throw new Error(error.message);
         }
     },
     async fetchPropertyLandmarkTypes({ commit }) {
@@ -528,6 +529,28 @@ const actions = {
     async updateCurrentPropertyLocation(_, propertyLocation){
         try {
             const response = await PropertyLocationService.updateAPropertyLocation(propertyLocation);
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    async getAllDivisions ({ commit }){
+        try {
+            const response = await PropertyLocationService.getAllDivisions();
+            if(response.data.status == 1){
+                commit('setSelectedDivisions', response.data.result);
+            }
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    async getAllSuburbs ({ commit }){
+        try {
+            const response = await PropertyLocationService.getAllSuburbs();
+            if(response.data.status == 1){
+                commit('setSelectedSuburbs', response.data.result);
+            }
             return response;
         } catch (error) {
             throw new Error(error.message);

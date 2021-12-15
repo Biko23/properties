@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BaseViewCard.vue should have a custom date and match snapshot 1`] = `
+"<div class=\\"v-card v-sheet theme--light\\" style=\\"max-width: auto;\\">
+  <div class=\\"v-card__subtitle time\\" style=\\"z-index: 1;\\">Viewed 13th/12/2021 </div>
+  <div class=\\"v-image v-responsive theme--light\\" style=\\"height: 200px;\\">
+    <transition-stub name=\\"fade-transition\\" mode=\\"in-out\\">
+      <div class=\\"v-image__image v-image__image--preload v-image__image--cover\\" style=\\"background-position: center center;\\"></div>
+    </transition-stub>
+    <div class=\\"v-responsive__content\\"></div>
+  </div>
+  <div style=\\"display: flex; flex-direction: row; justify-content: space-between;\\">
+    <div class=\\"v-card__subtitle test-subtitle\\"><small style=\\"font-weight: bold; color: rgb(0, 0, 0); margin-bottom: 0px;\\">UGX: 99738</small><br> <small>Category: Category missing</small><br> <small>Located: No available location</small><br> <small>Posted by: No name</small></div>
+  </div>
+</div>"
+`;

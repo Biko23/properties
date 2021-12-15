@@ -3,7 +3,7 @@
     <v-card-subtitle class="time" style="z-index: 1;">Viewed {{date}} </v-card-subtitle>
     <v-img :src="src" :lazy-src="lazy" height="200px"></v-img>
     <div style="display: flex; flex-direction: row; justify-content: space-between;">
-        <v-card-subtitle>
+        <v-card-subtitle class="test-subtitle">
             <small style="font-weight: bold; color: #000000; margin-bottom: 0;">UGX: {{cost}}</small><br>
             <small>Category: {{category}}</small><br>
             <small>Located: {{location}}</small><br>
@@ -14,7 +14,8 @@
 </template>
 
 <script>
-import dateFormat from 'dateformat'
+import dateFormat from 'dateformat';
+import lazyImage from '@/assets/lazy.jpg';
 export default {
     name: 'BaseViewedCard',
     props: {
@@ -36,7 +37,7 @@ export default {
         },
         lazy: {
             type: String,
-            default: require('../assets/lazy.jpg')
+            default: lazyImage
         },
         date: {
             type: String,

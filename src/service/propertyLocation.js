@@ -67,9 +67,25 @@ export default {
       throw new Error(error.message)
     }
   },
+  async getAllDivisions () {
+    try {
+      const response = await API.marketPlaceApi.get(`/divisions`)
+      return response
+    } catch (error) {
+      throw new Error(error.message)
+    }
+  },
   async getDivisionsByDistrictId (district_id) {
     try {
       const response = await API.marketPlaceApi.get(`/divisions/by-district/${district_id}`)
+      return response
+    } catch (error) {
+      throw new Error(error.message)
+    }
+  },
+  async getAllSuburbs () {
+    try {
+      const response = await API.marketPlaceApi.get(`/suburbs`)
       return response
     } catch (error) {
       throw new Error(error.message)

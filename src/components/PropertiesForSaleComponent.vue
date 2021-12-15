@@ -6,59 +6,153 @@
         </template>
     </base-dialog>
     <v-container id="container" fluid>
-      <v-row id="property-header">
-        <div id="result-total">
-          <h3>Properties</h3>
-          <small style="font-weight: bold"
-            >{{ allPropertyForSale.length }} results</small
-          >
-        </div>
-        <div id="search-field">
-          <v-btn
-            depressed
-            rounded
-            style="margin: 10px 5px 0 0"
-            color="#3b6ef3"
-            @click="resetSelection"
-            ><span style="color: white">All</span></v-btn
-          >
-          <v-select
-            v-model="startPrice"
-            :items="propertyCost()"
-            label="Start Price"
-            solo
-          ></v-select>
-          <v-select
-            v-model="endPrice"
-            :items="propertyCost()"
-            label="End Price"
-            solo
-          ></v-select>
-          <v-select
-            v-model="selection"
-            :items="propertyCategories()"
-            label="Category"
-            solo
-          ></v-select>
-          <v-select
-            v-model="selection"
-            :items="propertyLocation()"
-            label="Location"
-            solo
-          ></v-select>
-        </div>
+      <v-row>
+        <v-col cols="12" md="3" style="display: flex; flex-direction: row;">
+          <div>
+            <span style="margin: 0; padding: 0; margin-right: 20px;">Advanced Search {{ advancedSearch ? 'On' : 'Off' }}</span>
+            <v-switch v-model="advancedSearch" style="margin: 0; padding: 0;"></v-switch>
+          </div>
+          <div id="result-total">
+            <h3>Properties</h3>
+            <small style="font-weight: bold">{{ allPropertyForSale.length }} results</small>
+          </div>
+        </v-col>
+        <v-col cols="12" md="9">
+          <!--  -->
+          <v-row id="property-header" v-if="advancedSearch">
+            <!-- <div id="result-total">
+              <h3>Searched</h3>
+              <small style="font-weight: bold"
+                >{{ allPropertyForSale.length }} results</small
+              >
+            </div> -->
+            <div id="advanced-search-field">
+              <v-btn
+                depressed
+                rounded
+                style="margin: 10px 5px 0 0"
+                color="#3b6ef3"
+                @click="resetSelection"
+                ><span style="color: white">All</span></v-btn
+              >
+              <v-select
+                v-model="priceParameter"
+                :items="priceRanges"
+                item-value="id"
+                item-text="range"
+                label="Price range"
+                solo
+              ></v-select>
+              <v-select v-model="searchParameters.main_feature" :items="allPropertyFeatures" item-value="text"
+                item-text="text" label="Feature" solo></v-select>
+              <v-select
+                v-model="searchParameters.category"
+                :items="allPropertyTypes"
+                item-value="text"
+                item-text="text"
+                label="Category"
+                solo
+              ></v-select>
+              <v-select
+                v-model="searchParameters.landmark"
+                :items="allPropertyLandmarkTypes"
+                item-value="text"
+                item-text="text"
+                label="Landmark"
+                solo
+              ></v-select>
+              <v-select
+                v-model="searchParameters.district"
+                :items="allDistricts"
+                @change="getDivisionsByDistrictSelected"
+                label="District"
+                item-value="district_name"
+                item-text="district_name"
+                solo
+              ></v-select>
+              <v-select
+                v-model="searchParameters.division"
+                :items="allDivisions"
+                @change="getSuburbsByDistrictSelected"
+                item-value="division_name"
+                item-text="division_name"
+                label="Division"
+                solo
+              ></v-select>
+              <v-select
+                v-model="searchParameters.suburb"
+                :items="allSuburbs"
+                item-value="suburb_name"
+                item-text="suburb_name"
+                label="Suburb"
+                solo
+              ></v-select>
+              <v-btn
+                color="primary"
+                @click="advancedSearchMethod"
+                height="40px"
+                style="margin-left: 10px;"
+              >Search</v-btn>
+            </div>
+          </v-row>
+          <!--  -->
+          <!--  -->
+          <v-row id="property-header" v-else>
+            <!-- <div id="result-total">
+              <h3>Properties</h3>
+              <small style="font-weight: bold"
+                >{{ allPropertyForSale.length }} results</small
+              >
+            </div> -->
+            <!-- <div id="search-field">
+              <v-btn
+                depressed
+                rounded
+                style="margin: 10px 5px 0 0"
+                color="#3b6ef3"
+                @click="resetSelection"
+                ><span style="color: white">All</span></v-btn
+              >
+              <v-select
+                v-model="startPrice"
+                :items="propertyCost()"
+                label="Start Price"
+                solo
+              ></v-select>
+              <v-select
+                v-model="endPrice"
+                :items="propertyCost()"
+                label="End Price"
+                solo
+              ></v-select>
+              <v-select
+                v-model="selection"
+                :items="propertyCategories()"
+                label="Category"
+                solo
+              ></v-select>
+              <v-select
+                v-model="selection"
+                :items="propertyLocation()"
+                label="Location"
+                solo
+              ></v-select>
+            </div> -->
+          </v-row>
+          <!--  -->
+        </v-col>
       </v-row>
-      <v-row id="main-property">
-        <v-col
-          cols="12"
-          xl="2"
-          lg="3"
-          md="4"
-          sm="6"
-          xs="12"
-          v-for="(propertyVisual, index) in filteredProperties()"
+      <v-row id="main-property" v-if="loading">
+        <base-spinner />
+      </v-row>
+      <v-row id="main-property" v-else>
+        <v-col cols="12" v-if="allPropertyForSale.length == 0"><p class="text-h4">Not data Available</p></v-col>
+        <v-col cols="12" xl="2" lg="3" md="4" sm="6" xs="12"
+          v-else
+          v-for="(propertyVisual, index) in allPropertyForSale"
           :key="index"
         >
+        <!-- v-for="(propertyVisual, index) in filteredProperties()" -->
           <property-card
             :location="propertyVisual.name"
             :date="formatDate(propertyVisual.when_created)"
@@ -142,7 +236,6 @@
 <script>
 import PropertyCard from "@/components/PropertyCard";
 import dateFormat from "dateformat";
-// import { formatDate } from '@/helpers/helpers'
 import NetworkSharing from './BaseShareComponent.vue';
 import { mapActions, mapGetters } from "vuex";
 export default {
@@ -158,8 +251,39 @@ export default {
       endPrice: null,
       message: '',
       title: '',
-      state: false
-    };
+      state: false,
+      advancedSearch: true,
+      loading: false,
+      priceParameter: 0,
+      searchParameters: {
+        lower_price: 0,
+        upper_price: 0,
+        main_feature: null,
+        category: null,
+        landmark: null,
+        district: null,
+        division: null,
+        suburb: null
+      },
+      priceRanges: [
+        {id: 1, range: '0 - 1,000,000'},
+        {id: 2, range: '1000,001 - 2,000,000'},
+        {id: 3, range: '2000,001 - 5,000,000'},
+        {id: 4, range: '5000,001 - 10,000,000'},
+        {id: 5, range: '10,000,001 - 20,000,000'},
+        {id: 6, range: '20,000,001 - 40,000,000'},
+        {id: 7, range: '40,000,001 - 70,000,000'},
+        {id: 8, range: '70000001 - 100,000,000'},
+        {id: 9, range: '100,000,001 - 150,000,000'},
+        {id: 10, range: '150,000,001 - 200,000,000'},
+        {id: 11, range: '200,000,001 +'}
+      ]
+    }
+  },
+  watch: {
+    priceParameter() {
+      return this.changePriceRange();
+    },
   },
   methods: {
     ...mapActions([
@@ -168,7 +292,16 @@ export default {
       "fetchFavoritePropertiesForComparision",
       "addPropertyToFavorites",
       "removePropertyFromFavorites",
-      "postAUserLog"
+      "postAUserLog",
+      "fetchPropertyFeatures",
+      "fetchPropertyTypes",
+      "fetchPropertyLandmarkTypes",
+      "fetchAllDistricts",
+      "fetchDivisionsByDistrictId",
+      "fetchSuburbsByDistrictId",
+      "getAllDivisions",
+      "getAllSuburbs",
+      "getAdvancedSearchedProperties"
     ]),
     defaultResponse(msg, heading, status) {
       this.message = msg
@@ -183,6 +316,26 @@ export default {
     commaFormatted(amount) {
       let price = amount.toLocaleString("en-US");
       return price;
+    },
+    changePriceRange(){
+      const PRICERANGES = {
+        1: {lower_price: 0, upper_price: 1000000},
+        2: {lower_price: 1000001, upper_price: 2000000},
+        3: {lower_price: 2000001, upper_price: 5000000},
+        4: {lower_price: 5000001, upper_price: 10000000},
+        5: {lower_price: 10000001, upper_price: 20000000},
+        6: {lower_price: 20000001, upper_price: 40000000},
+        7: {lower_price: 40000001, upper_price: 70000000},
+        8: {lower_price: 70000001, upper_price: 100000000},
+        9: {lower_price: 100000001, upper_price: 150000000},
+        10: {lower_price: 150000001, upper_price: 200000000},
+        11: {lower_price: 200000001, upper_price: 0}
+      }
+      return PRICERANGES[this.priceParameter] 
+        ? (this.searchParameters.lower_price = PRICERANGES[this.priceParameter].lower_price,
+          this.searchParameters.upper_price = PRICERANGES[this.priceParameter].upper_price)
+        : (this.searchParameters.lower_price = 0,
+          this.searchParameters.upper_price = 0);
     },
     formatDate(dateToFormat) {
       let currentDate = new Date();
@@ -258,6 +411,44 @@ export default {
           "button_clicked":"Share Button"
       }
       this.postAUserLog(payload);
+    },
+    async getDivisionsByDistrictSelected(){
+      let selectedDistrictId;
+      if(this.searchParameters.district != null){
+        const selectedDistrict = this.allDistricts.filter(district => district.district_name == this.searchParameters.district);
+        selectedDistrictId = selectedDistrict[0].district_id;
+      }
+      try {
+        await this.fetchDivisionsByDistrictId(selectedDistrictId);
+      } catch (error) {
+        throw new Error(error.message)
+      }
+    },
+    async getSuburbsByDistrictSelected(){
+      let selectedDivisionId;
+      if(this.searchParameters.division != null){
+        const selectedDivision = this.allDivisions.filter(division => division.division_name == this.searchParameters.division);
+        selectedDivisionId = selectedDivision[0].division_id;
+      }
+      try {
+        await this.fetchSuburbsByDistrictId(selectedDivisionId);
+      } catch (error) {
+        throw new Error(error.message)
+      }
+    },
+    async advancedSearchMethod(){
+      try {
+        this.loading = true;
+        const response = await this.getAdvancedSearchedProperties(this.searchParameters);
+        this.loading = false;
+        if(response.data.status == 0){
+          
+        } else {
+        }
+      } catch (error) {
+        this.loading = false;
+        throw new Error(error.message)
+      }
     }
   },
   computed: {
@@ -266,6 +457,12 @@ export default {
       "loginState",
       "currentLoggedinUser",
       "allCurrentUserFavoriteProperties",
+      "allPropertyFeatures",
+      "allPropertyTypes",
+      "allPropertyLandmarkTypes",
+      "allDistricts",
+      "allDivisions",
+      "allSuburbs"
     ]),
     filteredProperties() {
       if (this.selection === null && this.endPrice === null) {
@@ -315,6 +512,12 @@ export default {
   created() {
     this.fetchAllProperties();
     this.fetchFavoritePropertiesForComparision();
+    this.fetchPropertyFeatures();
+    this.fetchPropertyTypes();
+    this.fetchPropertyLandmarkTypes();
+    this.fetchAllDistricts();
+    this.getAllDivisions();
+    this.getAllSuburbs();
   },
 };
 </script>
@@ -343,6 +546,13 @@ export default {
   justify-content: flex-start;
 }
 
+#advanced-search-field {
+  flex: 9;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+}
+
 @media only screen and (max-width: 768px) {
   #property-header {
     flex-direction: column;
@@ -350,6 +560,10 @@ export default {
 
   #search-field {
     order: 1;
+  }
+  #advanced-search-field {
+    order: 1;
+    flex-wrap: wrap;
   }
 
   #result-total {

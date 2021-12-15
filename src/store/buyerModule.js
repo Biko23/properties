@@ -516,6 +516,36 @@ const actions = {
         } catch (error) {
             throw new Error(error.message);
         }
+    },
+    // ===================================================
+    // Search Advanced properties
+    async getAdvancedSearchedProperties({ commit }, searchParameters) {
+        try {
+            const response = await PropertyService.getAdvancedSearchedProperties(searchParameters);
+            if(response.data.status == 1){
+                const properties = (response.data.result).map(eachResult => {
+                    return {
+                        actualvalue: eachResult.actual_value_,
+                        createdby: eachResult.created_by_,
+                        description: eachResult.property_description,
+                        district: eachResult.district,
+                        division: eachResult.division,
+                        suburb: eachResult.suburb, 
+                        property_description: eachResult.property_description,
+                        property_number_: eachResult.property_number_,
+                        property_type_: eachResult.property_type_,
+                        propertyid_: eachResult.property_id_,
+                        snapshot_: eachResult.property_visual,
+                        visualsid: 1,
+                        whencreated: eachResult.when_created_
+                    }  
+                })
+                commit('setPropertyForSale', properties);
+            }         
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
     }
 }
 
