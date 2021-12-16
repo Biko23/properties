@@ -171,6 +171,14 @@ export default {
     } catch (error) {
       throw new Error(error.message)
     }
+  },
+  async getAdvancedSearchedRentals(searchParameters){
+    try {
+      const response = await API.marketPlaceApi.get(`/properties/advanced-rental-search?lower_price=${searchParameters.lower_price}&upper_price=${searchParameters.upper_price}&main_feature=${searchParameters.main_feature}&category=${searchParameters.category}&landmark=${searchParameters.landmark}&district=${searchParameters.district}&division=${searchParameters.division}&suburb=${searchParameters.suburb}`);
+      return response;
+    } catch (error) {
+      throw new Error(error.message)
+    }
   }
 }
 

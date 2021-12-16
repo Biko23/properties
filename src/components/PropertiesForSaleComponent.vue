@@ -32,7 +32,7 @@
                 rounded
                 style="margin: 10px 5px 0 0"
                 color="#3b6ef3"
-                @click="resetSelection"
+                @click="refetchAllProperties"
                 ><span style="color: white">All</span></v-btn
               >
               <v-select
@@ -142,8 +142,10 @@
           <!--  -->
         </v-col>
       </v-row>
-      <v-row id="main-property" v-if="loading">
+      <v-row v-if="loading">
+        <v-col cols="12" offset="5" md="1" style="margin: 5em auto;">
         <base-spinner />
+        </v-col>
       </v-row>
       <v-row id="main-property" v-else>
         <v-col cols="12" v-if="allPropertyForSale.length == 0"><p class="text-h4">Not data Available</p></v-col>
@@ -266,17 +268,17 @@ export default {
         suburb: null
       },
       priceRanges: [
-        {id: 1, range: '0 - 1,000,000'},
-        {id: 2, range: '1000,001 - 2,000,000'},
-        {id: 3, range: '2000,001 - 5,000,000'},
-        {id: 4, range: '5000,001 - 10,000,000'},
-        {id: 5, range: '10,000,001 - 20,000,000'},
-        {id: 6, range: '20,000,001 - 40,000,000'},
-        {id: 7, range: '40,000,001 - 70,000,000'},
-        {id: 8, range: '70000001 - 100,000,000'},
-        {id: 9, range: '100,000,001 - 150,000,000'},
-        {id: 10, range: '150,000,001 - 200,000,000'},
-        {id: 11, range: '200,000,001 +'}
+        {id: 1, range: '0 - 1M'},
+        {id: 2, range: '1.01 - 2M'},
+        {id: 3, range: '2.01 - 5M'},
+        {id: 4, range: '500K - 10M'},
+        {id: 5, range: '1.01 - 20M'},
+        {id: 6, range: '2.01 - 40M'},
+        {id: 7, range: '4.01 - 70M'},
+        {id: 8, range: '7.01 - 100M'},
+        {id: 9, range: '10.01 - 150M'},
+        {id: 10, range: '15.01 - 200M'},
+        {id: 11, range: '20.01M +'}
       ]
     }
   },
@@ -316,6 +318,27 @@ export default {
     commaFormatted(amount) {
       let price = amount.toLocaleString("en-US");
       return price;
+    },
+    async refetchAllProperties(){
+      try {
+        await this.fetchAllProperties();
+        await this.fetchAllDistricts();
+        await this.getAllDivisions();
+        await this.getAllSuburbs();
+        this.priceParameter = 0;
+        this.searchParameters = Object.assign({}, {
+          lower_price: 0,
+          upper_price: 0,
+          main_feature: null,
+          category: null,
+          landmark: null,
+          district: null,
+          division: null,
+          suburb: null
+        })
+      } catch (error) {
+        throw new Error(error.message)
+      }
     },
     changePriceRange(){
       const PRICERANGES = {
@@ -441,8 +464,7 @@ export default {
         this.loading = true;
         const response = await this.getAdvancedSearchedProperties(this.searchParameters);
         this.loading = false;
-        if(response.data.status == 0){
-          
+        if(response.data.status == 0){ 
         } else {
         }
       } catch (error) {
