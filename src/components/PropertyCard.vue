@@ -59,7 +59,7 @@ export default {
             default: 'No code'
         },
         cost: {
-            type: String,
+            type: [String, Number],
             default: (Math.floor(Math.random() * 100000) + 1).toString()
         },
         to: {
@@ -67,12 +67,6 @@ export default {
             default: "/view"
         }
     }
-    // computed: {
-    //     formatAmount : (propertyCost)=> {
-    //         let internationalNumberFormat = new Intl.NumberFormat('en-US');
-    //         return internationalNumberFormat.format(propertyCost);
-    //     }
-    // }
 }
 </script>
 

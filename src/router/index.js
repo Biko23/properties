@@ -231,6 +231,18 @@ const routes = [
     component: () => import('@/components/ViewRentalProperty')
   },
   {
+    path: '/view-similar-property/:property_id',
+    props: true,
+    name: 'ViewSimilarProperty',
+    component:() => import('@/views/ViewSimilarProperty.vue')
+  },
+  {
+    path: '/view-similar-rental/:property_id',
+    props: true,
+    name: 'ViewSimilarRental',
+    component:() => import('@/views/ViewSimilarRental.vue')
+  },
+  {
     path: '/mortgage',
     name: 'Mortgage',
     component: () => import('@/views/Mortgage')
@@ -292,13 +304,26 @@ const routes = [
     meta: {
       hideFooterAndAbout: true
     }
+  },
+  {
+    path: '*',
+    // v3 "/:catchAll(.*)"
+    name: 'NotFoundPage',
+    component: () => import('@/components/NotFoundComponent.vue')
   }
 ]
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes,
+  scrollBehavior (to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { x: 0, y: 0 }
+    }
+  }
 })
 
 export default router

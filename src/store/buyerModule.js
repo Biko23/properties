@@ -399,12 +399,16 @@ const actions = {
                         property_description: sale.property_description,
                         property_number: sale.property_number_,
                         category: sale.property_type_,
+                        bought: sale.bought_,
                         property_id: sale.propertyid_,
                         snapshot: sale.snapshot_,
                         islistedforid: sale.islistedforid,
                         listed_for_name: sale.listed_for_name,
                         when_saved: sale.when_saved_ // returned when saved
                     }
+                    // 
+                    bought_: true
+                    // 
 
                 });
 
@@ -416,7 +420,8 @@ const actions = {
                         name: `${rental.division}, ${rental.suburb}`,
                         property_description: rental.property_description,
                         property_number: rental.property_number_,
-                        category: rental.property_type_,   
+                        category: rental.property_type_, 
+                        bought: rental.bought_,  
                         property_id: rental.propertyid_,
                         snapshot: rental.snapshot_,
                         islistedforid: rental.islistedforid,
@@ -521,6 +526,7 @@ const actions = {
     // Search Advanced properties
     async getAdvancedSearchedProperties({ commit }, searchParameters) {
         try {
+            commit('setPropertyForSale', []);
             const response = await PropertyService.getAdvancedSearchedProperties(searchParameters);
             if(response.data.status == 1){
                 const properties = (response.data.result).map(eachResult => {
@@ -550,6 +556,7 @@ const actions = {
     // Search Advanced rentals
     async getAdvancedSearchedRentals({ commit }, searchParameters) {
         try {
+            commit('setPropertyForRent', []);
             const response = await PropertyService.getAdvancedSearchedRentals(searchParameters);
             if(response.data.status == 1){
                 const rentals = (response.data.result).map(eachResult => {

@@ -1,31 +1,26 @@
 <template>
   <div>
-     <base-dialog :message="message" :title="title" :dialogState="state">
+    <base-dialog :message="message" :title="title" :dialogState="state">
         <template v-slot:button>
             <v-btn text @click="state = !state">close</v-btn>
         </template>
     </base-dialog>
     <v-container>
-      <!-- favorite Dialog -->
-      <v-dialog
-        transition="dialog-top-transition"
-        persistent
-        v-model="favoriteDialog"
-        max-width="600"
-      >
-        <template>
-          <v-card>
-            <v-toolbar color="blue" dark>Warning</v-toolbar>
-            <v-card-text class="pt-5">
-              <p style="font-size: 16px">{{ alertMessage }}</p>
-            </v-card-text>
-            <v-card-actions class="justify-end">
-              <v-btn text @click="closeFavoriteDialog">ok</v-btn>
-            </v-card-actions>
-          </v-card>
-        </template>
-      </v-dialog>
-      <!-- end favorite Dialog -->
+       <!-- favorite Dialog -->
+        <v-dialog transition="dialog-top-transition" persistent v-model="favoriteDialog" max-width="600">
+            <template>
+                <v-card>
+                    <v-toolbar color="blue" dark>Warning</v-toolbar>
+                    <v-card-text class="pt-5">
+                        <p style="font-size: 16px">{{ alertMessage }}</p>
+                    </v-card-text>
+                    <v-card-actions class="justify-end">
+                        <v-btn text @click="closeFavoriteDialog">ok</v-btn>
+                    </v-card-actions>
+                </v-card>
+            </template>
+        </v-dialog>
+        <!-- end favorite Dialog -->
       <v-row>
         <v-col cols="12" sm="12" md="8" lg="8">
           <v-carousel>
@@ -41,24 +36,14 @@
         <v-col>
           <div style="background-color: #f2f2f2; border-radius: 6px">
             <v-col>
-              <!-- <p style="color: #3b6ef3">
-                Posted By: {{allSingleNeighborhoodVisuals[0].created_by}} <br />
-                <span>Property Owner: {{allSingleNeighborhoodVisuals[0].created_by}}</span>
-              </p> -->
-            </v-col>
-            <!-- <v-col>
-              <v-btn color="primary" style="width: 160px">Call</v-btn>
-              <v-btn color="white" style="margin-left: 10px; width: 160px">
-                <span style="color: #3b6ef3"> Chat</span></v-btn>
-            </v-col> -->
-            <v-col>
               <a href="mailto:cccug@stanbic.com" style="text-decoration: none">
-                <v-btn color="primary" block>Email Us</v-btn>
+                <v-btn color="primary"  @click="emailOwner" block>Email Us</v-btn>
               </a>
             </v-col>
           </div>
           <br />
           <div style="background-color: #f2f2f2; border-radius: 6px">
+            <!--  -->
             <v-col>
               <div style="display: flex; flex-direction: column">
                 <span
@@ -72,7 +57,7 @@
                 >
                   <span> Price: </span>
                   <span>
-                    UGX {{ commaFormatted(currentPropertyValue.actual_value) }}
+                    UGX {{ commaFormatted(currentRentalValue.rental_value_amt) }}
                   </span>
                 </span>
                 <span
@@ -89,35 +74,42 @@
                 </span>
               </div>
             </v-col>
-
+            <!--  -->
             <v-col>
               <a
                 href="tel:+256782456789"
                 style="text-decoration: none"
                 title="+256782456789"
               >
-                <v-btn color="primary" block>Call Us</v-btn>
+                <v-btn color="primary" @click="callOwner" block>Call Us</v-btn>
               </a>
             </v-col>
           </div>
-          <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-around;">
+          <div
+            style="
+              display: flex;
+              flex-direction: row;
+              flex-wrap: wrap;
+              justify-content: space-around;
+            "
+          >
             <v-col style="flex: 6">
               <h3>Property Details</h3>
               <p style="font-weight: 600; margin-top: 5px;">CODE: {{ $route.query.code }}</p>
               <p style="margin-bottom: 0;">Location:</p>
               <p style="font-weight: 300;"> {{ $route.query.location }}</p>
             </v-col>
-            <v-col 
+            <v-col
               style="
-                display: flex; 
-                flex: 1; 
-                align-items: flex-start; 
+                display: flex;
+                flex: 1;
+                align-items: center;
                 justify-content: flex-end;
               "
             >
               <v-row>
                 <v-col>
-                  <template v-if="loginState">
+                   <template v-if="loginState">
                     <v-btn 
                       v-if="
                         (checkUserInterestInProperty == 0 || checkUserInterestInProperty == undefined) && 
@@ -151,7 +143,6 @@
                         "
                         small
                         style="font-size: 40px; color: #3b6ef3"
-                        title="Remove from favorites"
                         @click.stop="
                           onRemove(allSinglePropertyVisuals[0].property_id)
                         "
@@ -162,7 +153,6 @@
                         v-else
                         small
                         style="font-size: 40px; color: black"
-                        title="Add to favorites"
                         @click.stop="onAdd(allSinglePropertyVisuals[0].property_id)"
                       >
                         mdi-heart-outline
@@ -174,7 +164,6 @@
                     <v-icon
                       small
                       style="font-size: 40px; color: black; z-index: 100"
-                      title="Add to favorites"
                       @click.stop="showLoginMessage"
                     >
                       mdi-heart-outline
@@ -188,22 +177,14 @@
             <p style="margin-bottom: 0;">Features</p>
             <p style="font-weight: 300"> {{ spreadFeatures }}</p>
           </div>
-          <!--  -->
+           <!--  -->
           <div>
-            <h4 style="margin: 1em 0 0 10px">Social Platform</h4>
-            <v-list
-              style="
-                display: flex;
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: flex-start;
-                margin-left: 10px;
-              "
-            >
+            <h4 style="margin: 1em 0 0 10px;">Social Platform</h4>
+            <v-list style="display: flex; flex-direction: row;  flex-wrap: wrap; justify-content: flex-start; margin-left:10px;">
               <network-sharing 
-                :url="`http://localhost:8080/view/${allSinglePropertyVisuals[0].property_id}?code=${$route.query.code}&location=${$route.query.location}&cost=${$route.query.cost}&district=${$route.query.district}&category=${$route.query.category}&type=${$route.query.type}`"
+                :url="`http://localhost:8080/view-rental/${allSinglePropertyVisuals[0].property_id}?code=${$route.query.code}&location=${$route.query.location}&cost=${$route.query.cost}&district=${$route.query.district}&category=${$route.query.category}&type=${$route.query.type}`"
                 />
-            </v-list>
+                </v-list>
           </div>
           <!--  -->
         </v-col>
@@ -373,60 +354,17 @@
         </v-col>
       </v-row>
     </v-container>
-    <!--  -->
-    <v-container>
-      <v-row>
-        <v-col>
-          <v-card color="basil">
-            <v-card-title class="text-center justify-center py-6">
-              <h1 class="font-weight-bold text-h6 basil--text">
-                Similar Properties
-              </h1>
-            </v-card-title>
-            <v-card-text v-if="fetching">
-              <v-card elevation="4" class="mx-auto">
-                <base-spinner style="align-items: center;"/>
-              </v-card>
-            </v-card-text>
-             <v-card-text v-else>
-               <v-row>
-                  <v-col v-if="filteredSimilarProperties.length <= 0">
-                    <center><h3>No Similar Properties Available</h3></center>
-                  </v-col>
-                 <v-col cols="12" xs="12" sm="6" md="4" lg="3" v-for="(item, index) in filteredSimilarProperties" :key="index">
-                  <PropertyCard 
-                    :location="item.name"
-                    :date="item.when_created"
-                    :category="item.category"
-                    :cost="item.actual_value"
-                    :propertyCode="item.property_number"
-                    :postedBy="item.created_by"
-                    :src="'http://localhost:8002/' + item.snapshot"
-                    :to="`/view-similar-property/${item.property_id}?code=${item.property_number}&location=${item.name}&cost=${item.actual_value}&district=${item.district}&category=${item.category}&type=${item.listed_type}`"
-                  />
-                </v-col>
-              </v-row>
-            </v-card-text>
-          </v-card>
-          <!-- 
-                  :date="formatDate(propertyVisual.when_created)"
-                  :cost="commaFormatted(propertyVisual.actual_value)"
-                 -->
-        </v-col>
-      </v-row>
-    </v-container>
-    <!--  -->
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
 import NetworkSharing from "./BaseShareComponent.vue";
-import PropertyCard from './PropertyCard'
 export default {
-  components: { NetworkSharing, PropertyCard },
-  name: "ViewProperty",
+  components: { NetworkSharing },
+  name: "ViewRentalProperty",
   props: ["property_id"],
+  // $route.params.propertyId
   data: () => ({
     favoriteDialog: "",
     alertMessage: false,
@@ -476,33 +414,30 @@ export default {
       "allSinglePropertyVisuals",
       "allSinglePropertyNearbyLandmarkVisuals",
       "allSingleNeighborhoodVisuals",
-      "currentPropertyValue",
+      "currentRentalValue",
       "currentPropertyPriceHistory",
       "allCurrentPropertyFeatures",
       "loginState",
       "currentLoggedinUser",
       "allCurrentUserFavoriteProperties",
       "checkUserInterestInProperty",
-      "allSimilarProperties"
+       "allSimilarProperties"
     ]),
-    filteredSimilarProperties(){
-      return this.similarProperties.filter(property => this.property_id != property.property_id)
-    },
     dollarExchange() {
-      return () => (this.currentPropertyValue.actual_value / 3500).toFixed(2);
+      return () => (this.currentRentalValue.rental_value_amt / 3500).toFixed(2);
     },
     spreadFeatures: function () {
       return this.allCurrentPropertyFeatures
         .reduce((acc, currentFeature) => acc + "," + currentFeature.name, "")
         .slice(1);
-    },
+    }
   },
   methods: {
     ...mapActions([
       "fetchSinglePropertyVisuals",
       "fetchPropertyNearbyLandmarkVisuals",
       "fetchPropertyNeighborhoodVisuals",
-      "fetchCurrentPropertyValue",
+      "fetchPropertyRentalValue",
       "fetchPropertyPriceHistories",
       "fetchCurrentPropertySelectedFeatures",
       "addAViewedProperty",
@@ -511,7 +446,7 @@ export default {
       "checkIfUserIsAlreadyInterestedInAProperty",
       "expressInterestInBuyingAProperty",
       "getSimilarProperties",
-      "postAUserLog"
+       "postAUserLog"
     ]),
     defaultResponse(msg, heading, status) {
       this.message = msg
@@ -565,8 +500,8 @@ export default {
           this.confirmIfPropertyIsAlreaydAddedToInterests();
           this.defaultResponse('Interest submitted to SPL, they will engage you soon', 'Success', true);
           const payload = {
-            "activity":`Added Property with id ${this.property_id} to my interested properties`, 
-            "button_clicked":"Add property to my interested properties"
+            "activity":`Added Rental with id ${this.property_id} to my interested properties`, 
+            "button_clicked":"Add Rental to my interested properties"
           }
           this.postAUserLog(payload);
         } else {
@@ -577,27 +512,36 @@ export default {
       }
     },
     // ===============================================
-    addUserView() {
-      if (this.loginState === true) {
-        this.addAViewedProperty(this.property_id);
-      }
-    },
     commaFormatted(amount) {
       let price = amount.toLocaleString("en-US");
       return price;
     },
-    onRemove(property_id) {
-      this.removePropertyFromFavorites(property_id);
+     onRemove(property_id) {
+      this.removePropertyFromFavorites(property_id)
+      .then(() => {
+        const payload = {
+            "activity":`Removed Property with id ${property_id} from favorites`, 
+            "button_clicked":"Favorite Button"
+          }
+          this.postAUserLog(payload);
+      });
     },
     onAdd(property_id) {
-      this.addPropertyToFavorites(property_id);
+     this.addPropertyToFavorites(property_id)
+      .then(() => {
+        const payload = {
+            "activity":`Viewed similar Property with id ${this.$route.params.property_id}`, 
+            "button_clicked":"View similar property"
+          }
+          this.postAUserLog(payload);
+      });
     },
     showLoginMessage() {
       this.favoriteDialog = true;
       this.alertMessage = "Please login to add this property to your favorites";
       setTimeout(() => {
-        this.favoriteDialog = false;
-        this.alertMessage = "";
+          this.favoriteDialog = false;
+          this.alertMessage = "";
       }, 1500);
     },
     showLoginInterestMessage() {
@@ -608,21 +552,40 @@ export default {
         this.alertMessage = "";
       }, 1500);
     },
-    closeFavoriteDialog() {
+    closeFavoriteDialog(){
       this.favoriteDialog = false;
       this.alertMessage = "";
     },
+    async emailOwner(){
+       const payload = {
+          "activity":`Emailed owner about Rental Property with id ${this.property_id}`, 
+          "button_clicked":"Email Button"
+        }
+
+        await this.postAUserLog(payload);
+    },
+     async callOwner(){
+       const payload = {
+          "activity":`Called owner about Rental Property with id ${this.property_id}`, 
+          "button_clicked":"Call Button"
+        }
+
+        await this.postAUserLog(payload);
+     }
   },
   mounted() {
-    this.addUserView();
+    this.postAUserLog({
+      "activity":`Viewed a Similar Rental with id ${this.$route.params.property_id}`, 
+      "button_clicked":"Visit View Similar Page"
+    });
+    this.addAViewedProperty(this.property_id);
     this.fetchSinglePropertyVisuals(this.property_id);
     this.fetchPropertyNearbyLandmarkVisuals(this.property_id);
     this.fetchPropertyNeighborhoodVisuals(this.property_id);
-    this.fetchCurrentPropertyValue(this.property_id);
+    this.fetchPropertyRentalValue(this.property_id);
     this.fetchCurrentPropertySelectedFeatures(this.property_id);
     this.fetchPropertyPriceHistories(this.property_id);
     this.confirmIfPropertyIsAlreaydAddedToInterests();
-    this.fetchSimilarProperties();
   },
 };
 </script>

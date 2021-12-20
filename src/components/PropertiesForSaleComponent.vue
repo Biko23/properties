@@ -148,7 +148,9 @@
         </v-col>
       </v-row>
       <v-row id="main-property" v-else>
-        <v-col cols="12" v-if="allPropertyForSale.length == 0"><p class="text-h4">Not data Available</p></v-col>
+        <v-col cols="12" v-if="allPropertyForSale.length == 0">
+          <center class="text-h4">Not data Available</center>
+        </v-col>
         <v-col cols="12" xl="2" lg="3" md="4" sm="6" xs="12"
           v-else
           v-for="(propertyVisual, index) in allPropertyForSale"
@@ -260,25 +262,25 @@ export default {
       searchParameters: {
         lower_price: 0,
         upper_price: 0,
-        main_feature: null,
-        category: null,
-        landmark: null,
-        district: null,
-        division: null,
-        suburb: null
+        main_feature: undefined,
+        category: undefined,
+        landmark: undefined,
+        district: undefined,
+        division: undefined,
+        suburb: undefined
       },
       priceRanges: [
         {id: 1, range: '0 - 1M'},
         {id: 2, range: '1.01 - 2M'},
         {id: 3, range: '2.01 - 5M'},
-        {id: 4, range: '500K - 10M'},
-        {id: 5, range: '1.01 - 20M'},
-        {id: 6, range: '2.01 - 40M'},
-        {id: 7, range: '4.01 - 70M'},
-        {id: 8, range: '7.01 - 100M'},
-        {id: 9, range: '10.01 - 150M'},
-        {id: 10, range: '15.01 - 200M'},
-        {id: 11, range: '20.01M +'}
+        {id: 4, range: '5 - 10M'},
+        {id: 5, range: '10.1 - 20M'},
+        {id: 6, range: '20.1 - 40M'},
+        {id: 7, range: '40.1 - 70M'},
+        {id: 8, range: '70.1 - 100M'},
+        {id: 9, range: '100.1 - 150M'},
+        {id: 10, range: '150.1 - 200M'},
+        {id: 11, range: '200.1M +'}
       ]
     }
   },
@@ -329,12 +331,12 @@ export default {
         this.searchParameters = Object.assign({}, {
           lower_price: 0,
           upper_price: 0,
-          main_feature: null,
-          category: null,
-          landmark: null,
-          district: null,
-          division: null,
-          suburb: null
+          main_feature: undefined,
+          category: undefined,
+          landmark: undefined,
+          district: undefined,
+          division: undefined,
+          suburb: undefined
         })
       } catch (error) {
         throw new Error(error.message)

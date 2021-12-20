@@ -371,7 +371,10 @@
             </v-card-text>
              <v-card-text v-else>
                <v-row>
-                 <v-col cols="12" xs="12" sm="6" md="4" lg="3" v-for="(item, index) in similarProperties" :key="index">
+                 <v-col v-if="filteredSimilarRentals.length <= 0">
+                    <center><h3>No Similar Rentals Available</h3></center>
+                  </v-col>
+                 <v-col v-else  cols="12" xs="12" sm="6" md="4" lg="3" v-for="(item, index) in filteredSimilarRentals" :key="index">
                   <PropertyCard 
                     :location="item.name"
                     :date="item.when_created"
@@ -380,7 +383,7 @@
                     :propertyCode="item.property_number"
                     :postedBy="item.created_by"
                     :src="'http://localhost:8002/' + item.snapshot"
-                    :to="`/view/${item.property_id}?code=${item.property_number}&location=${item.name}&cost=${item.actual_value}&district=${item.district}&category=${item.category}&type=${item.listed_type}`"
+                    :to="`/view-similar-rental/${item.property_id}?code=${item.property_number}&location=${item.name}&cost=${item.actual_value}&district=${item.district}&category=${item.category}&type=${item.listed_type}`"
                   />
                 </v-col>
               </v-row>
@@ -401,12 +404,8 @@
 import { mapActions, mapGetters } from "vuex";
 import NetworkSharing from "./BaseShareComponent.vue";
 import PropertyCard from './PropertyCard'
-import About from "../views/About.vue";
-import Footer from "./Footer.vue";
-import MainNav from "./MainNav.vue";
-import TopNav from "./TopNav.vue";
 export default {
-  components: { NetworkSharing, TopNav, MainNav, About, Footer },
+  components: { NetworkSharing, PropertyCard },
   name: "ViewRentalProperty",
   props: ["property_id"],
   // $route.params.propertyId
@@ -468,6 +467,9 @@ export default {
       "checkUserInterestInProperty",
        "allSimilarProperties"
     ]),
+    filteredSimilarRentals(){
+      return this.similarProperties.filter(property => this.property_id != property.property_id)
+    },    
     dollarExchange() {
       return () => (this.currentRentalValue.rental_value_amt / 3500).toFixed(2);
     },

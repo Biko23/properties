@@ -13,13 +13,19 @@
         <v-row id="main-property">
             <v-col cols="12" xl="2" lg="3" md="4" sm="6" xs="12" v-for="(favoriteProperty, index) in allDetailedCurrentFavoriteList" :key="index">
                 <transition name="slide-fade">
-                    <!-- v-if="favoriteProperty.property_id ? hide : ''" -->
-                    <!-- v-if="hide" -->
-                    <property-card :location="favoriteProperty.name" :date="formatDate(favoriteProperty.when_saved)" :category="favoriteProperty.category" :propertyCode="favoriteProperty.property_number" :cost="commaFormatted(favoriteProperty.actual_value)" :postedBy="favoriteProperty.created_by" :src="'http://localhost:8002/' + favoriteProperty.snapshot" 
-                      :to="favoriteProperty.listed_for_name == ('Rent' || 'rent' || 'RENT')
-                        ? `/view-rental/${favoriteProperty.property_id}?code=${favoriteProperty.property_number}&location=${favoriteProperty.name}&cost=${favoriteProperty.actual_value}&district=${favoriteProperty.district}&category=${favoriteProperty.category}&type=Rent`
-                        : `/view/${favoriteProperty.property_id}?code=${favoriteProperty.property_number}&location=${favoriteProperty.name}&cost=${favoriteProperty.actual_value}&district=${favoriteProperty.district}&category=${favoriteProperty.category}&type=Sale`
-                      ">
+                    <property-card 
+                        :location="favoriteProperty.name" 
+                        :date="formatDate(favoriteProperty.when_saved)" 
+                        :category="favoriteProperty.category" 
+                        :propertyCode="favoriteProperty.property_number" 
+                        :cost="commaFormatted(favoriteProperty.actual_value)" 
+                        :postedBy="favoriteProperty.created_by" 
+                        :src="'http://localhost:8002/' + favoriteProperty.snapshot" 
+                        :to="favoriteProperty.listed_for_name == ('Rent' || 'rent' || 'RENT')
+                            ? `/view-rental/${favoriteProperty.property_id}?code=${favoriteProperty.property_number}&location=${favoriteProperty.name}&cost=${favoriteProperty.actual_value}&district=${favoriteProperty.district}&category=${favoriteProperty.category}&type=Rent`
+                            : `/view/${favoriteProperty.property_id}?code=${favoriteProperty.property_number}&location=${favoriteProperty.name}&cost=${favoriteProperty.actual_value}&district=${favoriteProperty.district}&category=${favoriteProperty.category}&type=Sale`
+                        "
+                      >
                         <template v-slot:type>
                             <small style="font-size: 14px">Type: <b>{{ favoriteProperty.listed_for_name }}</b></small><br />
                         </template>

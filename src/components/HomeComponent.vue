@@ -336,7 +336,7 @@
                     :cost="property.propertyCost"
                     :propertyCode="property.propertyCode"
                     :src="'http://localhost:8002/' + property.propertySnapshot" 
-                    :to="`/view/${property.propertyId}?code=${property.propertyCode}&location=${property.propertyLocation}`"
+                    :to="`/view/${property.propertyId}?code=${property.propertyCode}&location=${property.propertyLocation}&cost=${property.propertyCost}&district=${property.district}&category=${property.propertyCategory}&type=Sale`"
                 />
             </v-col>
         </v-row>
@@ -355,7 +355,7 @@
                     :cost="property.propertyCost"
                     :propertyCode="property.propertyCode"
                     :src="'http://localhost:8002/' + property.propertySnapshot" 
-                    :to="`/view-rental/${property.propertyId}?code=${property.propertyCode}&location=${property.propertyLocation}`"
+                    :to="`/view-rental/${property.propertyId}?code=${property.propertyCode}&location=${property.propertyLocation}&cost=${property.propertyCost}&district=${property.district}&category=${property.propertyCategory}&type=Rent`"
                 />
             </v-col>
         </v-row>

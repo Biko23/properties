@@ -55,7 +55,7 @@
           <v-list-item-content class="justify-center" style="z-index: 600;">
             <div class="mx-auto text-center">
               <v-avatar color="brown">
-                <span class="white--text text-h5">{{ userIntials() }}</span>
+                <span v-if="this.currentLoggedinUser.vendor_name" class="white--text text-h5">{{ userIntials() }}</span>
               </v-avatar>
               <h3>{{ currentLoggedinUser.vendor_name }}</h3>
               <p class="text-caption mt-1">

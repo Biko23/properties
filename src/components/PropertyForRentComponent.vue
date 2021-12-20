@@ -148,7 +148,9 @@
         </v-col>
     </v-row>
       <v-row id="main-property" v-else>
-        <v-col cols="12" v-if="allPropertyForRent.length == 0"><p class="text-h4">Not data Available</p></v-col>
+        <v-col cols="12" v-if="allPropertyForRent.length == 0">
+          <center class="text-h4">Not data Available</center>
+        </v-col>
         <v-col cols="12" xl="2" lg="3" md="4" sm="6" xs="12"
           v-else
           v-for="(propertyVisual, index) in allPropertyForRent"
@@ -260,12 +262,12 @@ export default {
       searchParameters: {
         lower_price: 0,
         upper_price: 0,
-        main_feature: null,
-        category: null,
-        landmark: null,
-        district: null,
-        division: null,
-        suburb: null
+        main_feature: undefined,
+        category: undefined,
+        landmark: undefined,
+        district: undefined,
+        division: undefined,
+        suburb: undefined
       },
       priceRanges: [
         {id: 1, range: '0 - 100K'},
@@ -325,12 +327,12 @@ export default {
         this.searchParameters = Object.assign({}, {
           lower_price: 0,
           upper_price: 0,
-          main_feature: null,
-          category: null,
-          landmark: null,
-          district: null,
-          division: null,
-          suburb: null
+          main_feature: undefined,
+          category: undefined,
+          landmark: undefined,
+          district: undefined,
+          division: undefined,
+          suburb: undefined
         })
       } catch (error) {
         throw new Error(error.message)
