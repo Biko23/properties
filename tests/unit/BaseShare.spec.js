@@ -1,7 +1,7 @@
 import 'jsdom-global'
 import { createLocalVue, mount } from '@vue/test-utils'
 import Vuetify from 'vuetify'
-import BaseShare from '../../components/BaseShareComponent.vue'
+import BaseShare from '@/components/BaseShareComponent.vue'
 
 describe('BaseDialog.vue', () => {
     const localVue = createLocalVue()

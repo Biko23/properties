@@ -1,7 +1,7 @@
 import 'jsdom-global'
 import { createLocalVue, mount } from '@vue/test-utils'
 import Vuetify from 'vuetify'
-import BaseViewCard from '../../components/BaseViewedCard.vue'
+import BaseViewCard from '@/components/BaseViewedCard.vue'
 
 describe('BaseViewCard.vue', () => {
   const localVue = createLocalVue()

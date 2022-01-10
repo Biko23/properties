@@ -1,7 +1,7 @@
 import 'jsdom-global'
 import { createLocalVue, mount } from '@vue/test-utils'
 import Vuetify from 'vuetify'
-import BaseSpinner from '../../components/BaseSpinner.vue'
+import BaseSpinner from '@/components/BaseSpinner.vue'
 
 describe('BaseSpinner.vue', () => {
   const localVue = createLocalVue()
