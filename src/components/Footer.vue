@@ -109,7 +109,7 @@
       <v-row>
         <v-col>
           <v-card-text class="white--text" style="text-align: center">
-            {{ new Date().getFullYear() }} —
+            <span data-testid="current-year">{{ currentYear() }}</span> —
             <small
               >©️ Stanbic Bank properties All right reserved. Developed By
               flyhub Limited</small
@@ -122,6 +122,11 @@
 </template>
 <script>
 export default {
-  name: "Footer"
+  name: "Footer",
+  computed: {
+    currentYear() {
+      return () => new Date().getFullYear();
+    },
+  }
 };
 </script>

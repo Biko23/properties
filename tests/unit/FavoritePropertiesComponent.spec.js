@@ -11,7 +11,7 @@ describe('FavoritePropertiesComponent.vue', () => {
         vuetify = new Vuetify()
     })
 
-    const mountFunction = options => {
+    const mountFactory = options => {
         return mount(FavoriteProperties, {
           localVue,
           vuetify,
@@ -20,9 +20,10 @@ describe('FavoritePropertiesComponent.vue', () => {
     }
 
   it('should have be an object and match snapshot', () => {
-    const wrapper = mountFunction()
+    const wrapper = mountFactory()
+    expect(wrapper.find('[data-testid="total-result-element"]').text()).toBe(' results')
   
-      expect(wrapper.methods).toBe('Object')
+      // expect(wrapper.methods).toBe('Object')
   })
 
   // it('should emit an event when the action v-btn is clicked', () => {
@@ -58,4 +59,3 @@ describe('FavoritePropertiesComponent.vue', () => {
 
 
 })
-

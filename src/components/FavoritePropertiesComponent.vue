@@ -4,7 +4,7 @@
         <v-row id="property-header">
             <div style="flex: 1">
                 <h3>Properties</h3>
-                <small style="font-weight: bold">{{ allDetailedCurrentFavoriteList.length }} results</small>
+                <small style="font-weight: bold" data-testid="total-result-element">{{ allDetailedCurrentFavoriteList.length }} results</small>
             </div>
             <div style="flex: 1">
                 <h3 style="color: #3b6ef3">Favorite List</h3>
@@ -45,11 +45,7 @@
 <script>
 import PropertyCard from "@/components/PropertyCard";
 import dateFormat from "dateformat";
-// import { formatDate } from '@/helpers/helpers'
-import {
-    mapActions,
-    mapGetters
-} from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
     name: "PropertiesForSaleComponent",
     components: {
@@ -114,26 +110,26 @@ export default {
 };
 </script>
 
-<style scoped>
-#property-header {
-    margin: 0 10px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
+<style lang="css" scoped>
+    #property-header {
+        margin: 0 10px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
 
-#main-property {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
+    #main-property {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
 
-.slide-fade-leave-active {
-    transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
-}
+    .slide-fade-leave-active {
+        transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+    }
 
-.slide-fade-leave-to {
-    transform: translateX(10px);
-    opacity: 0;
-}
+    .slide-fade-leave-to {
+        transform: translateX(10px);
+        opacity: 0;
+    }
 </style>

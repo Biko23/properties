@@ -1,6 +1,7 @@
 <template>
   <div>
     <ShareNetwork
+      data-testid="share-network-element"
       v-for="network in networks"
       :network="network.network"
       style="text-decoration: none"
@@ -13,7 +14,10 @@
       :hashtags="sharing.hashtags"
       :twitterUser="sharing.twitterUser"
     >
-      <v-icon :color="network.color">{{ network.icon }}</v-icon>
+      <v-icon
+        data-testid="icon-element" 
+        :color="network.color"
+        >{{ network.icon }}</v-icon>
     </ShareNetwork>
   </div>
 </template>

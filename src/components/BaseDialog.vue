@@ -1,10 +1,16 @@
 <template>
-    <v-dialog transition="dialog-top-transition" persistent :value="dialogState" max-width="600">
+    <v-dialog 
+        transition="dialog-top-transition"
+        data-testid="dialog-state-element" 
+        persistent 
+        :value="dialogState" 
+        max-width="600"
+    >
         <template>
             <v-card>
-                <v-toolbar color="#3B6EF3" dark>{{title}}</v-toolbar>
+                <v-toolbar color="#3B6EF3" data-testid="title-element" dark>{{title}}</v-toolbar>
                 <v-card-text class="pt-5">
-                    <p style="font-size: 16px">{{ message }}</p>
+                    <p style="font-size: 16px" data-testid="message-element">{{ message }}</p>
                 </v-card-text>
                 <v-card-actions class="justify-end">
                     <slot name="button" />

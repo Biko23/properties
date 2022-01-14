@@ -1,4 +1,3 @@
-import 'jsdom-global'
 import { createLocalVue, mount } from '@vue/test-utils'
 import Vuetify from 'vuetify'
 import Footer from '@/components/Footer.vue'
@@ -18,14 +17,11 @@ describe('Footer.vue', () => {
         })
     }
 
-  it('renders a v-container', () => {
+  it('Should output the current year', () => {
+      let currentYear = new Date().getFullYear();
       const wrapper = mountFunction()
-      expect(wrapper.find('.v-container')).toMatchSnapshot()
-  })
-  
-  it('renders a v-card-text', () => {
-      const wrapper = mountFunction()
-      expect(wrapper.find('.v-card__text')).toMatchSnapshot()
+
+      expect(wrapper.find('[data-testid="current-year"]').text()).toBe(currentYear.toString())
   })
 })
 

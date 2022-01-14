@@ -1,9 +1,8 @@
-import 'jsdom-global'
 import { createLocalVue, mount } from '@vue/test-utils'
 import Vuetify from 'vuetify'
-import Dialog from '@/components/BaseDialog.vue'
+import BaseDialog from '@/components/BaseDialog.vue'
 
-describe('BaseDialog.vue', () => {
+describe.skip('BaseDialog.vue', () => {
     const localVue = createLocalVue()
     let vuetify
 
@@ -12,27 +11,32 @@ describe('BaseDialog.vue', () => {
     })
 
     const mountFunction = options => {
-        return mount(Dialog, {
+        return mount(BaseDialog, {
           localVue,
           vuetify,
           ...options,
         })
     }
 
-  it('should have a custom message and match snapshot', () => {
-        const wrapper = mountFunction({
-          propsData: { message: 'Test message' }
-        })
-    
-        expect(wrapper.html()).toMatchSnapshot()
+  it('should have default props details', () => {
+        const wrapper = mountFunction()
+        expect(wrapper.find('[data-testid="dialog-state-element"]').props().value).toBe(false)
+        expect(wrapper.find('[data-testid="title-element"]').text()).toBe('No message')
+        expect(wrapper.find('[data-testid="message-element"]').text()).toBe(null)
     })
 
-    it('should have a custom title and match snapshot', () => {
+    it('should have modified props details', () => {
         const wrapper = mountFunction({
-            propsData: { title: 'Success' }
+            propsData: { 
+              dialogState: true,
+              title: 'Success',
+              message: 'Succeeded'
+            }
           })
         
-        expect(wrapper.html()).toMatchSnapshot()
+          expect(wrapper.find('[data-testid="dialog-state-element"]').props().value).toBe(true)
+          expect(wrapper.find('[data-testid="title-element"]').text()).toBe('Success')
+          expect(wrapper.find('[data-testid="message-element"]').text()).toEqual('Succeeded')
     })
 })
 

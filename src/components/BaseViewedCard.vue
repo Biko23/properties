@@ -1,13 +1,13 @@
 <template>
 <v-card max-width="auto">
-    <v-card-subtitle class="time" style="z-index: 1;">Viewed {{date}} </v-card-subtitle>
-    <v-img :src="src" :lazy-src="lazy" height="200px"></v-img>
+    <v-card-subtitle class="time" style="z-index: 1;" data-testid="date-element">Viewed {{date}}</v-card-subtitle>
+    <v-img :src="src" :lazy-src="lazy" height="200px" data-testid="image-element"></v-img>
     <div style="display: flex; flex-direction: row; justify-content: space-between;">
         <v-card-subtitle class="test-subtitle">
-            <small style="font-weight: bold; color: #000000; margin-bottom: 0;">UGX: {{cost}}</small><br>
-            <small>Category: {{category}}</small><br>
-            <small>Located: {{location}}</small><br>
-            <small>Posted by: {{postedBy}}</small>
+            <small style="font-weight: bold; color: #000000; margin-bottom: 0;" data-testid="cost-element">UGX: {{cost}}</small><br>
+            <small data-testid="category-element">Category: {{category}}</small><br>
+            <small data-testid="location-element">Located: {{location}}</small><br>
+            <small data-testid="posted-by-element">Posted by: {{postedBy}}</small>
         </v-card-subtitle>
     </div>
 </v-card>
@@ -41,11 +41,11 @@ export default {
         },
         date: {
             type: String,
-            default: dateFormat(new Date(), "DDDD")
+            default: dateFormat("01/01/1970", "DDDD")
         },
         cost: {
             type: Number,
-            default: Math.floor(Math.random() * 100000) + 1
+            default: 0
         }
     }
 }
