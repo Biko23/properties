@@ -22,6 +22,7 @@
                                         :items="userProperties" 
                                         :items-per-page="5" 
                                         class="elevation-1"
+                                        data-testid="property-table"
                                     >
                                     </v-data-table>
                                 </v-card-text>
@@ -35,6 +36,7 @@
                                         :items="userRentals" 
                                         :items-per-page="5" 
                                         class="elevation-1"
+                                        data-testid="rental-table"
                                     >
                                     </v-data-table>
                                 </v-card-text>

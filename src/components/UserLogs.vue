@@ -18,8 +18,8 @@
               </thead>
               <tbody>
                 <tr v-for="(log, index) in getCurrentUserAuditLogs" :key="index">
-                  <td>{{ log.activity }}</td>
-                  <td>{{ log.when_created }}</td>
+                  <td data-testid="log-activity">{{ log.activity }}</td>
+                  <td data-testid="log-creation-date">{{ log.when_created }}</td>
                 </tr>
               </tbody>
             </template>

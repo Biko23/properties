@@ -261,7 +261,12 @@ export default {
     this.fetchVendorsCategories();
   },
   methods: {
-    ...mapActions(["logout", "fetchVendorsCategories", "changeServiceProviderCategoryId", "postAUserLog"]),
+    ...mapActions([
+        "logout", 
+        "fetchVendorsCategories", 
+        "changeServiceProviderCategoryId", 
+        "postAUserLog"
+      ]),
     async logingOut() {
         const payload = {
               "activity":"Logout", 
