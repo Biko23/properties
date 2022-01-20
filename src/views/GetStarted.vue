@@ -5,6 +5,11 @@
       box-shadow: inset 0 4px 4px 0 rgba(0, 0, 0, 0.1);
     "
   >
+    <base-dialog :message="message" :title="title" :dialogState="state">
+        <template v-slot:button>
+            <v-btn text @click="state = !state">close</v-btn>
+        </template>
+    </base-dialog>
     <v-container>
       <v-row>
         <v-col cols="12" sm="12" md="12" xl="12">
@@ -177,6 +182,9 @@ export default {
       messageDialog: false,
       color: "",
       title: "",
+      message: '',
+      title: '',
+      state: false
     };
   },
   computed: {
@@ -191,6 +199,16 @@ export default {
   },
   methods: {
     ...mapActions(["assignUpdatingUserRole", "postAUserLog", "fetchAllUserRoles"]),
+    defaultResponse(msg, heading, status) {
+            this.message = msg
+            this.title = heading
+            this.state = status
+            setTimeout(() => {
+                this.message = ""
+                this.title = ""
+                this.state = false
+            }, 2000);
+      },
     checkUserSellerStatus(roleId) {
       if (this.iAmASeller && this.iAmACertifiedSeller) {
         this.messageDialog = true;
@@ -229,16 +247,18 @@ export default {
       }
     },
     assignRole(role){
-      try {
-        console.log(role);
-        const foundRole = this.allRoles.map(eachRole => eachRole.name).indexOf(role);
-        console.log(this.allRoles);
-        if(foundRole > -1){
-          const roleId = this.allRoles[foundRole].role_id
-          this.checkUserSellerStatus(roleId);
+      if(this.loginState == true) {
+        try {
+          const foundRole = this.allRoles.map(eachRole => eachRole.name).indexOf(role);
+          if(foundRole > -1){
+            const roleId = this.allRoles[foundRole].role_id
+            this.checkUserSellerStatus(roleId);
+          }
+        } catch (error) {
+          console.log(error);   
         }
-      } catch (error) {
-        console.log(error);   
+      } else {
+        this.defaultResponse("You need to be logged in to select an option", "", true)
       }
     }
   },

@@ -6,26 +6,6 @@
         </template>
     </base-dialog>
     <v-container>
-      <!-- favorite Dialog -->
-      <v-dialog
-        transition="dialog-top-transition"
-        persistent
-        v-model="favoriteDialog"
-        max-width="600"
-      >
-        <template>
-          <v-card>
-            <v-toolbar color="blue" dark>Warning</v-toolbar>
-            <v-card-text class="pt-5">
-              <p style="font-size: 16px">{{ alertMessage }}</p>
-            </v-card-text>
-            <v-card-actions class="justify-end">
-              <v-btn text @click="closeFavoriteDialog">ok</v-btn>
-            </v-card-actions>
-          </v-card>
-        </template>
-      </v-dialog>
-      <!-- end favorite Dialog -->
       <v-row>
         <v-col cols="12" sm="12" md="8" lg="8">
           <v-carousel>
@@ -201,7 +181,7 @@
               "
             >
               <network-sharing 
-                :url="`http://localhost:8080/view/${allSinglePropertyVisuals[0].property_id}?code=${$route.query.code}&location=${$route.query.location}&cost=${$route.query.cost}&district=${$route.query.district}&category=${$route.query.category}&type=${$route.query.type}`"
+                :url="`http://localhost:8080/view/${allSinglePropertyVisuals[0].property_id}?code=${codeParam}&location=${locationParam}&cost=${costParam}&district=${districtParam}&category=${categoryParam}&type=${typeParam}`"
                 />
             </v-list>
           </div>
@@ -496,6 +476,24 @@ export default {
         .reduce((acc, currentFeature) => acc + "," + currentFeature.name, "")
         .slice(1);
     },
+    codeParam(){
+      return this.$route.query.code
+    },
+    typeParam(){
+      return this.$route.query.type
+    },
+    categoryParam(){
+      return this.$route.query.category
+    },
+    districtParam(){
+      return this.$route.query.district
+    },
+    costParam(){
+      return this.$route.query.cost
+    },
+    locationParam(){
+      return this.$route.query.location
+    }
   },
   methods: {
     ...mapActions([
@@ -593,25 +591,11 @@ export default {
       this.addPropertyToFavorites(property_id);
     },
     showLoginMessage() {
-      this.favoriteDialog = true;
-      this.alertMessage = "Please login to add this property to your favorites";
-      setTimeout(() => {
-        this.favoriteDialog = false;
-        this.alertMessage = "";
-      }, 1500);
+      this.defaultResponse("Please login to add this property to your favorites", "", true)
     },
     showLoginInterestMessage() {
-      this.favoriteDialog = true;
-      this.alertMessage = "Please login to perform this action";
-      setTimeout(() => {
-        this.favoriteDialog = false;
-        this.alertMessage = "";
-      }, 1500);
-    },
-    closeFavoriteDialog() {
-      this.favoriteDialog = false;
-      this.alertMessage = "";
-    },
+      this.defaultResponse("Please login to perform this action", "", true)
+    }
   },
   mounted() {
     this.addUserView();

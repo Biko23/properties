@@ -1,4 +1,4 @@
-// import 'regenerator-runtime/runtime'
+import 'regenerator-runtime/runtime'
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 import VueSocialSharing from 'vue-social-sharing'

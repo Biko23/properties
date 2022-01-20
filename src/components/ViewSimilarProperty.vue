@@ -24,7 +24,13 @@
         <v-row>
             <v-col cols="12" sm="12" md="8" lg="8">
                 <v-carousel>
-                    <v-carousel-item v-for="propertyVisual in allSinglePropertyVisuals" :key="propertyVisual.visuals_id" :src="'http://localhost:8002/' + propertyVisual.snapshot" reverse-transition="fade-transition" transition="fade-transition"></v-carousel-item>
+                    <v-carousel-item 
+                        v-for="propertyVisual in allSinglePropertyVisuals" 
+                        :key="propertyVisual.visuals_id" 
+                        :src="'http://localhost:8002/' + propertyVisual.snapshot" 
+                        reverse-transition="fade-transition" 
+                        transition="fade-transition"
+                    ></v-carousel-item>
                 </v-carousel>
             </v-col>
             <v-col>
@@ -84,9 +90,9 @@
                 <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-around;">
                     <v-col style="flex: 6">
                         <h3>Property Details</h3>
-                        <p style="font-weight: 600; margin-top: 5px;">CODE: {{ $route.query.code }}</p>
+                        <p style="font-weight: 600; margin-top: 5px;">CODE: {{ codeParam }}</p>
                         <p style="margin-bottom: 0;">Location:</p>
-                        <p style="font-weight: 300;"> {{ $route.query.location }}</p>
+                        <p style="font-weight: 300;"> {{ locationParam }}</p>
                     </v-col>
                     <v-col style="
                 display: flex; 
@@ -97,9 +103,14 @@
                         <v-row>
                             <v-col>
                                 <template v-if="loginState">
-                                    <v-btn v-if="
-                        (checkUserInterestInProperty == 0 || checkUserInterestInProperty == undefined) && 
-                        currentLoggedinUser.username !== allSinglePropertyVisuals[0].created_by" color="primary" @click="expressInterestInProperty">Interested</v-btn>
+                                    <v-btn
+                                      class="express-interest-btn" 
+                                      v-if="
+                                      (checkUserInterestInProperty == 0 || checkUserInterestInProperty == undefined) && 
+                                      currentLoggedinUser.username !== allSinglePropertyVisuals[0].created_by" 
+                                      color="primary" 
+                                      @click="expressInterestInProperty"
+                                    >Interested</v-btn>
                                     <p v-else></p>
                                 </template>
                                 <template v-else>
@@ -150,7 +161,7 @@
                 justify-content: flex-start;
                 margin-left: 10px;
               ">
-                        <network-sharing :url="`http://localhost:8080/view/${allSinglePropertyVisuals[0].property_id}?code=${$route.query.code}&location=${$route.query.location}&cost=${$route.query.cost}&district=${$route.query.district}&category=${$route.query.category}&type=${$route.query.type}`" />
+                        <network-sharing :url="`http://localhost:8080/view/${allSinglePropertyVisuals[0].property_id}?code=${codeParam}&location=${locationParam}&cost=${costParam}&district=${districtParam}&category=${categoryParam}&type=${typeParam}`" />
                     </v-list>
                 </div>
                 <!--  -->
@@ -281,8 +292,6 @@ export default {
     name: "ViewProperty",
     props: ["property_id"],
     data: () => ({
-        favoriteDialog: "",
-        alertMessage: false,
         message: '',
         title: '',
         state: false,
@@ -368,6 +377,24 @@ export default {
                 .reduce((acc, currentFeature) => acc + "," + currentFeature.name, "")
                 .slice(1);
         },
+        locationParam() {
+            return this.$route.query.location
+        },
+        costParam(){
+            return this.$route.query.cost
+        },
+        districtParam(){
+            return this.$route.query.district
+        },
+        categoryParam(){
+            return this.$route.query.category
+        },
+        typeParam(){
+            return this.$route.query.type
+        },
+        codeParam(){
+            return this.$route.query.code
+        }
     },
     methods: {
         ...mapActions([

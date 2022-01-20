@@ -21,7 +21,7 @@ SearchPropertiesComponent
 ServiceProviderComponent => Done
 TopNav
 UserAcquiredProperies
-UserInterestedProperties
+UserInterestedProperties => Half-Done -> Components undiscoverable
 UserLogs => Done
 ViewProperty
 ViewRentalProperty

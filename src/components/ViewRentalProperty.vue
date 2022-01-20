@@ -6,21 +6,6 @@
         </template>
     </base-dialog>
     <v-container>
-       <!-- favorite Dialog -->
-        <v-dialog transition="dialog-top-transition" persistent v-model="favoriteDialog" max-width="600">
-            <template>
-                <v-card>
-                    <v-toolbar color="blue" dark>Warning</v-toolbar>
-                    <v-card-text class="pt-5">
-                        <p style="font-size: 16px">{{ alertMessage }}</p>
-                    </v-card-text>
-                    <v-card-actions class="justify-end">
-                        <v-btn text @click="closeFavoriteDialog">ok</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </template>
-        </v-dialog>
-        <!-- end favorite Dialog -->
       <v-row>
         <v-col cols="12" sm="12" md="8" lg="8">
           <v-carousel>
@@ -95,7 +80,7 @@
           >
             <v-col style="flex: 6">
               <h3>Property Details</h3>
-              <p style="font-weight: 600; margin-top: 5px;">CODE: {{ $route.query.code }}</p>
+              <p style="font-weight: 600; margin-top: 5px;">CODE: {{ codeParam }}</p>
               <p style="margin-bottom: 0;">Location:</p>
               <p style="font-weight: 300;"> {{ $route.query.location }}</p>
             </v-col>
@@ -182,7 +167,7 @@
             <h4 style="margin: 1em 0 0 10px;">Social Platform</h4>
             <v-list style="display: flex; flex-direction: row;  flex-wrap: wrap; justify-content: flex-start; margin-left:10px;">
               <network-sharing 
-                :url="`http://localhost:8080/view-rental/${allSinglePropertyVisuals[0].property_id}?code=${$route.query.code}&location=${$route.query.location}&cost=${$route.query.cost}&district=${$route.query.district}&category=${$route.query.category}&type=${$route.query.type}`"
+                :url="`http://localhost:8080/view-rental/${allSinglePropertyVisuals[0].property_id}?code=${codeParam}&location=${locationParam}&cost=${costParam}&district=${districtParam}&category=${categoryParam}&type=${typeParam}`"
                 />
                 </v-list>
           </div>
@@ -410,8 +395,6 @@ export default {
   props: ["property_id"],
   // $route.params.propertyId
   data: () => ({
-    favoriteDialog: "",
-    alertMessage: false,
     message: '',
     title: '',
     state: false,
@@ -477,6 +460,24 @@ export default {
       return this.allCurrentPropertyFeatures
         .reduce((acc, currentFeature) => acc + "," + currentFeature.name, "")
         .slice(1);
+    },
+    codeParam(){
+      return this.$route.query.code
+    },
+    typeParam(){
+      return this.$route.query.type
+    },
+    categoryParam(){
+      return this.$route.query.category
+    },
+    districtParam(){
+      return this.$route.query.district
+    },
+    costParam(){
+      return this.$route.query.cost
+    },
+    locationParam(){
+      return this.$route.query.location
     }
   },
   methods: {
@@ -584,24 +585,10 @@ export default {
       });
     },
     showLoginMessage() {
-      this.favoriteDialog = true;
-      this.alertMessage = "Please login to add this property to your favorites";
-      setTimeout(() => {
-          this.favoriteDialog = false;
-          this.alertMessage = "";
-      }, 1500);
+      this.defaultResponse("Please login to add this property to your favorites", "", true)
     },
     showLoginInterestMessage() {
-      this.favoriteDialog = true;
-      this.alertMessage = "Please login to perform this action";
-      setTimeout(() => {
-        this.favoriteDialog = false;
-        this.alertMessage = "";
-      }, 1500);
-    },
-    closeFavoriteDialog(){
-      this.favoriteDialog = false;
-      this.alertMessage = "";
+      this.defaultResponse("Please login to perform this action", "", true)
     },
     async emailOwner(){
        const payload = {

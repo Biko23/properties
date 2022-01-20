@@ -402,7 +402,7 @@ export default {
         });
     },
     showLoginMessage() {
-      this.defaultResponse("Please login to add this property to your favorites", 'Error', true);
+      this.defaultResponse("Please login to add this property to your favorites", '', true);
     },
     async fetchAllRentalProperties() {
       try {

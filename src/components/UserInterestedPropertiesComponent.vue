@@ -18,11 +18,11 @@
                             <v-card color="basil" flat>
                                 <v-card-text>
                                     <v-data-table 
+                                        id="property-table"
                                         :headers="listedHeaders" 
                                         :items="userProperties" 
                                         :items-per-page="5" 
                                         class="elevation-1"
-                                        data-testid="property-table"
                                     >
                                     </v-data-table>
                                 </v-card-text>

@@ -268,10 +268,10 @@ export default {
       try {
         const response = await this.likeVendor(data);
         if(response.data.hasOwnProperty('status')){
-          this.defaultResponse(response.data.message, 'Error', true);
+          this.defaultResponse(response.data.message, '', true);
         }
       } catch (error) {
-        this.defaultResponse(error.message, 'Error', true);
+        this.defaultResponse(error.message, '', true);
       }
     },
     async unlikingVendor(vendor_id) {
@@ -286,24 +286,24 @@ export default {
       try {
         const response = await this.unLikeVendor(data);
         if(response.data.hasOwnProperty('status')){
-          this.defaultResponse(response.data.message, 'Error', true);
+          this.defaultResponse(response.data.message, '', true);
         }
       } catch (error) {
-        this.defaultResponse(error.message, 'Error', true);
+        this.defaultResponse(error.message, '', true);
       }
     },
     vendorAlreadyLikedOrDisliked(check) {
       if (check === 1) {
-        this.defaultResponse("You liked this provider already", 'Warning', true);
+        this.defaultResponse("You liked this provider already", '', true);
       } else {
-        this.defaultResponse("You disliked this provider already", 'Warning', true);
+        this.defaultResponse("You disliked this provider already", '', true);
       }
     },
     loginRequired(value) {
       if (value === 1) {
-        this.defaultResponse("Please login to add a like to this provider", 'Warning', true);
+        this.defaultResponse("Please login to add a like to this provider", '', true);
       } else {
-        this.defaultResponse("Please login to dislike this provider", 'Warning', true);
+        this.defaultResponse("Please login to dislike this provider", '', true);
       }
     }
   },
