@@ -1,7 +1,10 @@
 <template>
   <div style="background-color: #3b6ef3">
-    <top-nav />
-    <main-nav />
+    <base-dialog :message="message" :title="title" :dialogState="state">
+        <template v-slot:button>
+            <v-btn text @click="state = !state">close</v-btn>
+        </template>
+    </base-dialog>
     <v-container>
       <v-row>
         <v-col cols="12" sm="12" md="12" xl="12">
@@ -81,30 +84,22 @@
         </v-col>
       </v-row>
     </v-container>
-    <about />
-    <Footer />
-    <h3></h3>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
 import BottonNav from "../components/BottonNav.vue";
-import About from "./About.vue";
-import Footer from "../components/Footer.vue";
-import MainNav from "../components/MainNav.vue";
-import TopNav from "../components/TopNav.vue";
 export default {
   components: {
-    TopNav,
-    MainNav,
-    BottonNav,
-    About,
-    Footer,
+    BottonNav
   },
   name: "UserProfile",
   data: () => ({
     valid: true,
+    message: '',
+    title: '',
+    state: false,
     userData: {
       user_id: 0,
       secondary_email: "",
@@ -125,25 +120,50 @@ export default {
     ...mapGetters(["currentLoggedinUser", "iAmASeller"]),
   },
   methods: {
-    ...mapActions(["updateUser", "fetchAllUserRoles", "fetchLoggedUser"]),
+    ...mapActions(["updateUser", "fetchAllUserRoles", "fetchLoggedUser", "postAUserLog"]),
+    defaultResponse(msg, heading, status) {
+      this.message = msg
+      this.title = heading
+      this.state = status
+
+      setTimeout(() => {
+          this.message = ""
+          this.title = ""
+          this.state = false
+      }, 2000);
+    },
     async updateUserDetails() {
       this.userData.user_id = this.currentLoggedinUser.user_id;
+      this.userData.name = this.currentLoggedinUser.vendor_name;
+      this.userData.telephone = this.currentLoggedinUser.vendor_primary_phone_number;
+      this.userData.username = this.currentLoggedinUser.username;
+      this.userData.updated_by = this.currentLoggedinUser.username;
+      this.postAUserLog({
+        "activity":`Update User Profile/ Register for a role`, 
+        "button_clicked":"Update User Button"
+      });
       try {
         if (this.$refs.moreUserDataForm.validate()) {
           const response = await this.updateUser(this.userData);
-          if (response.status == 200 || response.status === 201) {
-            this.fetchLoggedUser().then(() => {
-              // this.$router.push('/getstarted')
-              this.$router.replace(
-                sessionStorage.getItem("nextPath") || "/getstarted"
-              );
-              sessionStorage.removeItem("nextPath");
-            });
+          if (
+              response.userUpdateResponse.data.status == 1 &&
+              response.roleResponse.data.status == 1
+            ) {
+            this.defaultResponse(response.userUpdateResponse.data.message, 'Success', true);
+            setTimeout(() => {
+              this.fetchLoggedUser().then(() => {
+                this.$router.replace(
+                  sessionStorage.getItem("nextPath") || "/getstarted"
+                );
+                sessionStorage.removeItem("nextPath");
+              });
+            }, 2000);
+          } else {
+            this.defaultResponse(response.userUpdateResponse.data.message + "\n" +response.roleResponse.data.message , 'Error', true);
           }
         }
       } catch (error) {
-        console.log(error);
-        // throw new Error("Failed, Please try again");
+        this.defaultResponse(error.message, 'Error', true);
       }
     },
   },

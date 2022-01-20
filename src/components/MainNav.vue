@@ -261,8 +261,18 @@ export default {
     this.fetchVendorsCategories();
   },
   methods: {
-    ...mapActions(["logout", "fetchVendorsCategories", "changeServiceProviderCategoryId"]),
+    ...mapActions([
+        "logout", 
+        "fetchVendorsCategories", 
+        "changeServiceProviderCategoryId", 
+        "postAUserLog"
+      ]),
     async logingOut() {
+        const payload = {
+              "activity":"Logout", 
+              "button_clicked":"Logout button"
+        }
+        this.postAUserLog(payload);
       try {
         await this.logout().then(() => {
           this.$router.push("/");

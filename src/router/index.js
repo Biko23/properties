@@ -1,9 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-
 Vue.use(VueRouter)
-
 
 const routes = [
   {
@@ -28,7 +26,10 @@ const routes = [
   {
     path: '/user-favorite-properties',
     name: 'FavoriteProperties',
-    component: () => import('@/views/FavoriteProperties.vue')
+    component: () => import('@/views/FavoriteProperties.vue'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/register',
@@ -44,7 +45,7 @@ const routes = [
     name: 'EditProfile',
     component: () => import('@/views/EditProfile.vue'),
     meta: { 
-       requiresAuth: true 
+      requiresAuth: true 
       // requireSellerRole: true
     }
   },
@@ -53,8 +54,7 @@ const routes = [
     name: 'UserSettings',
     component: () => import('@/views/ViewUserProfile.vue'),
     meta: { 
-       requiresAuth: true 
-      // requireSellerRole: true
+       requiresAuth: true
     }
   },
   {
@@ -106,7 +106,78 @@ const routes = [
     name: 'seller-properties-details',
     component: () => import('@/views/SellerPropertiesDetails'),
     meta: {
-      requireSellerRole: true
+      requireSellerRole: true,
+      hideFooterAndAbout: true
+    }
+  },
+  {
+    path: '/edit-property/:property_id',
+    name: 'edit-property',
+    props: true,
+    component: () => import('@/views/EditProperty'),
+    meta: {
+      requireSellerRole: true,
+      hideFooterAndAbout: true
+    }
+  },
+  {
+    path: '/single-property/:property_id',
+    name: 'single-property',
+    props: true,
+    component: () => import('@/views/SingleProperty'),
+    meta: {
+      requireSellerRole: true,
+      hideFooterAndAbout: true
+    }
+  },
+  {
+    path: '/edit-property-visuals/:property_id',
+    name: 'edit-property-visual',
+    props: true,
+    component: () => import('@/views/EditPropertyVisuals'),
+    meta: {
+      requireSellerRole: true,
+      hideFooterAndAbout: true
+    }
+  },
+  {
+    path: '/user-interest-properties',
+    name: 'user-interested-properties',
+    props: true,
+    component: () => import('@/views/UserInterestedProperties'),
+    meta: {
+      requiresAuth: true,
+      hideFooterAndAbout: true
+    }
+  },
+  {
+    path: '/user-acquired-properties',
+    name: 'user-acquired-properties',
+    props: true,
+    component: () => import('@/views/UserAcquiredProperties'),
+    meta: {
+      requiresAuth: true,
+      hideFooterAndAbout: true
+    }
+  },
+  {
+    path: '/edit-landmark-visuals/:property_id',
+    name: 'edit-landmark-visual',
+    props: true,
+    component: () => import('@/views/EditLandmarkVisuals'),
+    meta: {
+      requireSellerRole: true,
+      hideFooterAndAbout: true
+    }
+  },
+  {
+    path: '/edit-neighborhood-visuals/:property_id',
+    name: 'edit-neighborhood-visual',
+    props: true,
+    component: () => import('@/views/EditNeighborhoodVisuals'),
+    meta: {
+      requireSellerRole: true,
+      hideFooterAndAbout: true
     }
   },
   {
@@ -135,6 +206,7 @@ const routes = [
     name: 'UserProfile',
     component: () => import('@/views/UserProfile'),
     meta: {
+      // hideAbout: true,
       requiresAuth: true
     }
   },
@@ -157,6 +229,18 @@ const routes = [
     props: true,
     name: 'ViewRentalProperty',
     component: () => import('@/components/ViewRentalProperty')
+  },
+  {
+    path: '/view-similar-property/:property_id',
+    props: true,
+    name: 'ViewSimilarProperty',
+    component:() => import('@/views/ViewSimilarProperty.vue')
+  },
+  {
+    path: '/view-similar-rental/:property_id',
+    props: true,
+    name: 'ViewSimilarRental',
+    component:() => import('@/views/ViewSimilarRental.vue')
   },
   {
     path: '/mortgage',
@@ -185,24 +269,61 @@ const routes = [
   {
     path:'/learn',
     name:'Learn',
-    component:() => import(/* webpackChunkName: "about" */ '../views/Learn.vue')
+    component:() => import('../views/Learn.vue')
   },
   {
     path:'/recentactivities',
     name:'Recent',
-    component:() => import(/* webpackChunkName: "about" */ '../views/Recent.vue')
+    component:() => import('../views/Recent.vue')
   },
   {
     path:'/logs',
     name:'UserlogActivities',
     component:() => import(/* webpackChunkName: "about" */ '../views/UserlogActivities.vue')
+  },
+  {
+    path: '/email-reset-password',
+    name: 'EmailResetPassword',
+    component:() => import('../views/passwordReset/EmailResetPassword.vue'),
+    meta: {
+      hideFooterAndAbout: true
+    }
+  },
+  {
+    path: '/otp-reset-password',
+    name: 'OTPResetPassword',
+    component:() => import('../views/passwordReset/OTPResetPassword.vue'),
+    meta: {
+      hideFooterAndAbout: true
+    }
+  },
+  {
+    path: '/new-password-reset-page',
+    name: 'NewPasswordResetPassword',
+    component:() => import('../views/passwordReset/NewPasswordResetPassword.vue'),
+    meta: {
+      hideFooterAndAbout: true
+    }
+  },
+  {
+    path: '*',
+    // v3 "/:catchAll(.*)"
+    name: 'NotFoundPage',
+    component: () => import('@/components/NotFoundComponent.vue')
   }
 ]
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes,
+  scrollBehavior (to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { x: 0, y: 0 }
+    }
+  }
 })
 
 export default router

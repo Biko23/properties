@@ -1,7 +1,5 @@
 <template>
 <div>
-    <top-nav />
-    <main-nav />
     <v-container>
         <v-row>
             <v-col cols="12" sm="12" md="8" xl="8" offset-lg="2" offset-md="2">
@@ -21,58 +19,58 @@
                 >
                     <v-row>
                         <v-col cols="12" sm="12" md="5">
-                            <v-text>Full Name:</v-text>
+                            <span>Full Name:</span>
                         </v-col>
                         <v-col cols="12" sm="12" md="7">
-                            <v-text>{{currentLoggedinUser.vendor_name}}</v-text>
+                            <span>{{currentLoggedinUser.vendor_name}}</span>
                         </v-col>
                     </v-row>
                     <v-row>
                         <v-col cols="12" sm="12" md="5">
-                            <v-text>Username:</v-text>
+                            <span>Username:</span>
                         </v-col>
                         <v-col cols="12" sm="12" md="7">
-                            <v-text>{{currentLoggedinUser.username}}</v-text>
+                            <span>{{currentLoggedinUser.username}}</span>
                         </v-col>
                     </v-row>
                     <v-row>
                         <v-col cols="12" sm="12" md="5">
-                            <v-text>Primary Phone:</v-text>
+                            <span>Primary Phone:</span>
                         </v-col>
                         <v-col cols="12" sm="12" md="7">
-                            <v-text>{{currentLoggedinUser.vendor_primary_phone_number}}</v-text>
+                            <span>{{currentLoggedinUser.vendor_primary_phone_number}}</span>
                         </v-col>
                     </v-row>
                     <v-row>
                         <v-col cols="12" sm="12" md="5">
-                            <v-text>Primary Email:</v-text>
+                            <span>Primary Email:</span>
                         </v-col>
                         <v-col cols="12" sm="12" md="7">
-                            <v-text>{{currentLoggedinUser.vendor_primary_email}}</v-text>
+                            <span>{{currentLoggedinUser.vendor_primary_email}}</span>
                         </v-col>
                     </v-row>
                     <v-row>
                         <v-col cols="12" sm="12" md="5">
-                            <v-text>Secondary Phone:</v-text>
+                            <span>Secondary Phone:</span>
                         </v-col>
                         <v-col cols="12" sm="12" md="7">
-                            <v-text>{{currentLoggedinUser.vendor_secondary_phone_number}}</v-text>
+                            <span>{{currentLoggedinUser.vendor_secondary_phone_number}}</span>
                         </v-col>
                     </v-row>
                     <v-row>
                         <v-col cols="12" sm="12" md="5">
-                            <v-text>Secondary Email:</v-text>
+                            <span>Secondary Email:</span>
                         </v-col>
                         <v-col cols="12" sm="12" md="7">
-                            <v-text>{{currentLoggedinUser.vendor_secondary_email}}</v-text>
+                            <span>{{currentLoggedinUser.vendor_secondary_email}}</span>
                         </v-col>
                     </v-row>
                      <v-row>
                         <v-col cols="12" sm="12" md="5">
-                            <v-text>Location:</v-text>
+                            <span>Location:</span>
                         </v-col>
                         <v-col cols="12" sm="12" md="7">
-                            <v-text>{{currentLoggedinUser.business_location}}</v-text>
+                            <span>{{currentLoggedinUser.business_location}}</span>
                         </v-col>
                     </v-row>
                     <v-row>
@@ -87,41 +85,17 @@
             </v-col>
         </v-row>
     </v-container><br><br>
-    <about />
-    <Footer />
-
 </div>
 </template>
-
 <script>
-import TopNav from '../components/TopNav.vue'
-import MainNav from '../components/MainNav.vue'
-import About from './About.vue';
-import Footer from '@/components/Footer.vue';
 import {
     mapGetters
 } from 'vuex';
 
 export default {
     name: 'Home',
-    components: {
-        TopNav,
-        MainNav,
-        About,
-        Footer
-    },
     computed: {
         ...mapGetters(["currentLoggedinUser"]),
     }
-
-    /**
-     * business_location: "Kololo"
-roles: [{role_id: 2, name: "Seller", description: "Sell a property", created_by: "Isaac",…}]
-user_id: 2
-vendor_primary_phone_number: "0786988019"
-vendor_secondary_email: "alex2@gmail.cmdf"
-vendor_secondary_phone_number: "07989606950"
-
-    */
 }
 </script>

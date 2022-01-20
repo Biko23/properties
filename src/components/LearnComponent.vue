@@ -155,15 +155,22 @@
         </v-col>
         <v-col></v-col>
       </v-row>
-    </v-container><br>
-    <Footer />
+    </v-container>
   </div>
 </template>
 <script>
-import Footer from "./Footer.vue";
+import { mapActions } from 'vuex';
 export default {
-  components: { Footer },
   name: "LearnComponent",
+  methods: {
+    ...mapActions(["postAUserLog"])
+  },
+  created(){
+    this.postAUserLog({
+        "activity":`Visited Learn Page'`, 
+        "button_clicked":"View Learn Page"
+    });
+  }
 };
 </script>
 <style scoped>

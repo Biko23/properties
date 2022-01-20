@@ -1,20 +1,25 @@
 <template>
   <div>
+    <base-dialog :message="message" :title="title" :dialogState="state">
+      <template v-slot:button>
+        <v-btn text @click="state = !state">close</v-btn>
+      </template>
+    </base-dialog>
     <v-container>
       <v-row>
         <v-col>
-          <v-simple-table fixed-header height="300px">
+          <v-simple-table fixed-header height="480px" dense>
             <template v-slot:default>
               <thead>
                 <tr>
-                  <th class="text-left">Last Activity</th>
-                  <th class="text-left">Date and Time</th>
+                  <th class="text-left">Activities</th>
+                  <th class="text-left">When Executed</th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="item in desserts" :key="item.name">
-                  <td>{{ item.name }}</td>
-                  <td>{{ item.calories }}</td>
+                <tr v-for="(log, index) in getCurrentUserAuditLogs" :key="index">
+                  <td data-testid="log-activity">{{ log.activity }}</td>
+                  <td data-testid="log-creation-date">{{ log.when_created }}</td>
                 </tr>
               </tbody>
             </template>
@@ -26,53 +31,42 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 export default {
   name: "UserLogsComponent",
-  data() {
-    return {
-      desserts: [
-        {
-          name: "Updated user details",
-          calories: "2 mins ago",
-        },
-        {
-          name: "Changed password",
-          calories: "3 mins ago",
-        },
-        {
-          name: "updated Property for sale",
-          calories: "1 day ago",
-        },
-        {
-          name: "Cancelled buyer request",
-          calories: "3rd July 2021 11:59 Am",
-        },
-        {
-          name: "Contacted Stanbic properties",
-          calories: "3rd July 2021 11:59 Am",
-        },
-        {
-          name: "Updated property Location",
-          calories: "3rd July 2021 11:56 Am",
-        },
-        {
-          name: "Updated property Location",
-          calories: "3rd July 2021 11:52 Am",
-        },
-        {
-          name: "Updated property Location",
-          calories: "3rd July 2021 11:50 Am",
-        },
-        {
-          name: "Updated property Location",
-          calories: "3rd July 2021 11:44 Am",
-        },
-        {
-          name: "Updated property price",
-          calories: "3rd July 2021 11:40 Am",
-        },
-      ],
-    };
+  data: () => ({
+        message: '',
+        title: '',
+        state: false
+  }),
+  computed: {
+    ...mapGetters(["getCurrentUserAuditLogs"])
+  },
+  methods: {
+    ...mapActions(["getAUserLog"]),
+    defaultResponse(msg, heading, status) {
+      this.message = msg
+      this.title = heading
+      this.state = status
+      setTimeout(() => {
+          this.message = ""
+          this.title = ""
+          this.state = false
+      }, 2000);
+    },
+    async fetchUserLogs(){
+      try {
+        const response = await this.getAUserLog();
+        if(response.data.status == 0){
+          this.defaultResponse(response.data.message, 'Error', true);
+        }
+      } catch (error) {
+        this.defaultResponse(error.message, 'Error', true);
+      }
+    }
+  },
+  created() {
+    this.fetchUserLogs();
   },
 };
 </script>

@@ -1,7 +1,5 @@
 <template>
 <div>
-    <top-nav />
-    <main-nav />
     <v-container id="container" fluid>
         <v-carousel cycle hide-delimiter-background show-arrows-on-hover>
             <v-carousel-item v-for="(image,i) in images" :key="i" :src="image.src">
@@ -151,20 +149,13 @@
             <v-col></v-col>
         </v-row>
     </v-container>
-    <Footer />
+<!-- footer only -->
 </div>
 </template>
 
 <script>
-import Footer from "../components/Footer";
-import MainNav from '../components/MainNav.vue';
-import TopNav from '../components/TopNav.vue';
+import { mapActions } from 'vuex';
 export default {
-    components: {
-        Footer,
-        TopNav,
-        MainNav
-    },
     name: "Mortgage",
     data() {
         return {
@@ -185,6 +176,15 @@ export default {
                 }
             ]
         }
+    },
+    methods: {
+        ...mapActions(["postAUserLog"])
+    },
+    created(){
+        this.postAUserLog({
+            activity: "Visited Mortgage page",
+            button_clicked: "Mortgage Page"
+        });
     }
 };
 </script>

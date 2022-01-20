@@ -1,23 +1,11 @@
 <template>
 <div>
-    <top-nav />
+    <base-dialog :message="message" :title="title" :dialogState="state">
+        <template v-slot:button>
+            <v-btn text @click="state = !state">close</v-btn>
+        </template>
+    </base-dialog>
     <v-container id="main-container" fluid>
-        <!-- failure Dialog -->
-        <v-dialog transition="dialog-top-transition" persistent v-model="failureDialog" max-width="600">
-            <template>
-                <v-card>
-                    <v-toolbar color="red" dark>Error</v-toolbar>
-                    <v-card-text class="pt-5">
-                        <p style="font-size: 16px">{{ responseMessage }}</p>
-                    </v-card-text>
-                    <v-card-actions class="justify-end">
-                        <v-btn text @click="closeFailureDialog">close</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </template>
-        </v-dialog>
-        <!-- end Failure Dialog -->
-
         <v-row>
             <v-col cols="12" sm="12" md="6" lg="6">
                 <router-link to="/" style="
@@ -53,7 +41,7 @@
                     <v-container>
                         <v-row>
                             <v-col cols="12" sm="12" md="12">
-                                <v-text-field v-model="loginDetails.username" :rules="[rules.required, rules.min]" label="Username or Email or phone number" placeholder="Username or Email or phone number" solo></v-text-field>
+                                <v-text-field v-model="loginDetails.username" :rules="[rules.required]" label="Username or Email or phone number" placeholder="Username or Email or phone number" solo></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
@@ -63,7 +51,9 @@
                         </v-row>
                         <v-row>
                             <v-col cols="12" sm="12" md="12">
-                                <v-btn color="primary" :disabled="!valid" @click="postLoginData" large block>
+                                <v-progress-circular v-if="submitting" indeterminate color="primary"></v-progress-circular>
+                                <!-- <base-spinner v-if="submitting"/> -->
+                                <v-btn color="primary" :disabled="!valid" @click="postLoginData" large block v-else>
                                     Login
                                 </v-btn>
                             </v-col>
@@ -101,9 +91,12 @@
                 </v-col> </v-row 
               >-->
                         <br />
-                        <p style="font-size: 0.75rem">
+                        <p style="font-size: 0.85rem">
                             Have No Accont?
                             <router-link to="/signup">Sign up</router-link>
+                        </p>
+                        <p style="font-size: 0.75rem">
+                            <router-link to="/email-reset-password">Forgot Password</router-link>
                         </p>
                         <br /><br />
                     </v-container>
@@ -118,21 +111,18 @@
 import {
     mapActions
 } from "vuex";
-import TopNav from "../components/TopNav.vue";
 
 export default {
     name: "Login",
-    components: {
-        TopNav,
-    },
     data: () => ({
         show1: false,
         valid: true,
-        responseMessage: "",
-        failureDialog: false,
+        submitting: false,
+        message: '',
+        title: '',
+        state: false,
         rules: {
-            required: (value) => !!value || "Required.",
-            min: (v) => (v && v.length >= 2) || "Min 3 characters",
+            required: (value) => !!value || "Required."
         },
         loginDetails: {
             username: "",
@@ -140,37 +130,47 @@ export default {
         },
     }),
     methods: {
-        ...mapActions(["login", "fetchLoggedUser"]),
+        ...mapActions(["login", "fetchLoggedUser", "fetchTotalFavoriteCount", "postAUserLog"]),
+        defaultResponse(msg, heading, status) {
+            this.message = msg
+            this.title = heading
+            this.state = status
+            setTimeout(() => {
+                this.message = ""
+                this.title = ""
+                this.state = false
+            }, 3000);
+        },
         async postLoginData() {
             try {
                 if (this.$refs.loginForm.validate()) {
+                    this.submitting = true;
                     const response = await this.login(this.loginDetails);
                     if (response.status === 200) {
+                        this.submitting = false;
                         if (response.data.hasOwnProperty("token")) {
-                            this.fetchLoggedUser().then(() => {
+                            this.fetchLoggedUser().then(() => {                                
+                               this.fetchTotalFavoriteCount();
+                               const payload = {
+                                   "activity":"Login", 
+                                   "button_clicked":"Login button"
+                               }
+                               this.postAUserLog(payload);
                                 this.$router.replace(
                                     sessionStorage.getItem("redirectPath") || "/"
                                 );
                                 sessionStorage.removeItem("redirectPath");
                             });
                         } else if (response.data.status === 0) {
-                            this.failureDialog = true;
-                            this.responseMessage = "Wrong Username and/ or password.";
-                            setTimeout(() => {
-                                this.failureDialog = false;
-                                this.responseMessage = "";
-                            }, 3000);
+                            this.defaultResponse(response.data.message, '', true);
                         }
                     }
                 }
             } catch (error) {
-                throw new Error("Failed, Please try again");
+                this.submitting = false;
+                this.defaultResponse(error.message, 'Error', true);
             }
-        },
-        closeFailureDialog() {
-            this.failureDialog = false;
-            this.responseMessage = "";
-        },
+        }
     },
 };
 </script>

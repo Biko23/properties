@@ -1,25 +1,6 @@
 <template>
   <div>
     <v-divider></v-divider><br />
-    <v-container fluid style="background-color: #3b6ef3">
-      <v-row>
-        <!-- <v-col>
-          <v-card-text style="text-align: center">
-            <v-btn
-              v-for="icon in icons"
-              :key="icon"
-              class="mx-4 white--text"
-              icon
-            >
-              <v-icon size="24px">
-                {{ icon }}
-              </v-icon>
-            </v-btn>
-          </v-card-text>
-        </v-col> -->
-      </v-row>
-    </v-container>
-
     <v-container fluid style="background-color: #3b6ef3; color: #ffff">
       <v-row>
         <v-col md="3" xs="6">
@@ -35,6 +16,7 @@
             "
           >
             Stanbic Bank Uganda, Crested Towers <br />
+            Tel No. (+256) 782-456-789 <br />
             Plot 17, Hannington Road, <br /> 
             Kampala - Uganda
           </p>
@@ -47,9 +29,8 @@
               letter-spacing: 0em;
               color: #ffff;
             "
-          >
-            cccug@stanbic.com
-          </p>
+            id="email-btn"
+          >cccug@stanbic.com</p>
         </v-col>
 
         <v-col md="3" xs="6">
@@ -128,7 +109,7 @@
       <v-row>
         <v-col>
           <v-card-text class="white--text" style="text-align: center">
-            {{ new Date().getFullYear() }} —
+            <span data-testid="current-year">{{ currentYear() }}</span> —
             <small
               >©️ Stanbic Bank properties All right reserved. Developed By
               flyhub Limited</small
@@ -142,5 +123,10 @@
 <script>
 export default {
   name: "Footer",
+  computed: {
+    currentYear() {
+      return () => new Date().getFullYear();
+    },
+  }
 };
 </script>

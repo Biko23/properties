@@ -1,31 +1,27 @@
 <template>
 <div>
-  <top-nav />
-  <main-nav />
   <PropertyForRentComponent />
-  <about />
-  <Footer />
-
 </div>
 </template>
 
 <script>
-import TopNav from '../components/TopNav.vue'
-import MainNav from '../components/MainNav.vue'
-import Footer from '../components/Footer'
-
 import PropertyForRentComponent from '@/components/PropertyForRentComponent'
-import About from './About.vue'
+import { mapActions } from 'vuex';
 
 export default {
   name: 'PropertiesForRent',
 
   components: {
-    TopNav,
-    MainNav,
-    PropertyForRentComponent,
-    Footer,
-    About
-  }
+    PropertyForRentComponent
+  },
+    methods: {
+        ...mapActions(["postAUserLog"])
+    },
+    created(){
+        this.postAUserLog({
+            activity: "Visited Rentals page",
+            button_clicked: "Rentals Page"
+        });
+    }
 }
 </script>

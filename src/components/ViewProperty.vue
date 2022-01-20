@@ -1,28 +1,11 @@
 <template>
   <div>
-    <top-nav />
-    <main-nav />
-    <v-container>
-      <!-- favorite Dialog -->
-      <v-dialog
-        transition="dialog-top-transition"
-        persistent
-        v-model="favoriteDialog"
-        max-width="600"
-      >
-        <template>
-          <v-card>
-            <v-toolbar color="blue" dark>Warning</v-toolbar>
-            <v-card-text class="pt-5">
-              <p style="font-size: 16px">{{ alertMessage }}</p>
-            </v-card-text>
-            <v-card-actions class="justify-end">
-              <v-btn text @click="closeFavoriteDialog">ok</v-btn>
-            </v-card-actions>
-          </v-card>
+     <base-dialog :message="message" :title="title" :dialogState="state">
+        <template v-slot:button>
+            <v-btn text @click="state = !state">close</v-btn>
         </template>
-      </v-dialog>
-      <!-- end favorite Dialog -->
+    </base-dialog>
+    <v-container>
       <v-row>
         <v-col cols="12" sm="12" md="8" lg="8">
           <v-carousel>
@@ -97,70 +80,93 @@
               </a>
             </v-col>
           </div>
-          <div
-            style="
-              display: flex;
-              flex-direction: row;
-              flex-wrap: wrap;
-              justify-content: space-around;
-            "
-          >
-            <v-col style="flex: 1">
+          <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-around;">
+            <v-col style="flex: 6">
               <h3>Property Details</h3>
-              <p style="font-weight: 300">
-                {{ spreadFeatures }} <br />
-                Location: {{ $route.query.location }}
-              </p>
+              <p style="font-weight: 600; margin-top: 5px;">CODE: {{ $route.query.code }}</p>
+              <p style="margin-bottom: 0;">Location:</p>
+              <p style="font-weight: 300;"> {{ $route.query.location }}</p>
             </v-col>
-            <v-col
+            <v-col 
               style="
-                display: flex;
-                align-items: center;
+                display: flex; 
+                flex: 1; 
+                align-items: flex-start; 
                 justify-content: flex-end;
               "
             >
-              <template v-if="loginState">
-                <template
-                  v-if="
-                    currentLoggedinUser.username !==
-                    allSinglePropertyVisuals[0].created_by
-                  "
-                >
-                  <v-icon
-                    v-if="
-                      allCurrentUserFavoriteProperties.includes(
-                        allSinglePropertyVisuals[0].property_id
-                      )
-                    "
-                    small
-                    style="font-size: 40px; color: #3b6ef3"
-                    @click.stop="
-                      onRemove(allSinglePropertyVisuals[0].property_id)
-                    "
-                  >
-                    mdi-heart
-                  </v-icon>
-                  <v-icon
-                    v-else
-                    small
-                    style="font-size: 40px; color: black"
-                    @click.stop="onAdd(allSinglePropertyVisuals[0].property_id)"
-                  >
-                    mdi-heart-outline
-                  </v-icon>
-                </template>
-                <template v-else />
-              </template>
-              <template v-else>
-                <v-icon
-                  small
-                  style="font-size: 40px; color: black; z-index: 100"
-                  @click.stop="showLoginMessage"
-                >
-                  mdi-heart-outline
-                </v-icon>
-              </template>
+              <v-row>
+                <v-col>
+                  <template v-if="loginState">
+                    <v-btn 
+                      v-if="
+                        (checkUserInterestInProperty == 0 || checkUserInterestInProperty == undefined) && 
+                        currentLoggedinUser.username !== allSinglePropertyVisuals[0].created_by"
+                      color="primary" 
+                      @click="expressInterestInProperty"
+                    >Interested</v-btn>
+                    <p v-else></p> 
+                  </template>
+                  <template v-else>
+                    <v-btn
+                      title="Express interested"
+                      @click="showLoginInterestMessage"
+                      color="primary"
+                    >Interested</v-btn>
+                  </template>
+                </v-col>
+                <v-col style="display: flex; justify-content: center;">
+                  <template v-if="loginState">
+                    <template
+                      v-if="
+                        currentLoggedinUser.username !==
+                        allSinglePropertyVisuals[0].created_by
+                      "
+                    >
+                      <v-icon
+                        v-if="
+                          allCurrentUserFavoriteProperties.includes(
+                            allSinglePropertyVisuals[0].property_id
+                          )
+                        "
+                        small
+                        style="font-size: 40px; color: #3b6ef3"
+                        title="Remove from favorites"
+                        @click.stop="
+                          onRemove(allSinglePropertyVisuals[0].property_id)
+                        "
+                      >
+                        mdi-heart
+                      </v-icon>
+                      <v-icon
+                        v-else
+                        small
+                        style="font-size: 40px; color: black"
+                        title="Add to favorites"
+                        @click.stop="onAdd(allSinglePropertyVisuals[0].property_id)"
+                      >
+                        mdi-heart-outline
+                      </v-icon>
+                    </template>
+                    <template v-else />
+                  </template>
+                  <template v-else>
+                    <v-icon
+                      small
+                      style="font-size: 40px; color: black; z-index: 100"
+                      title="Add to favorites"
+                      @click.stop="showLoginMessage"
+                    >
+                      mdi-heart-outline
+                    </v-icon>
+                  </template>
+                </v-col>
+              </v-row>
             </v-col>
+          </div>
+          <div style="margin-left: 10px;">
+            <p style="margin-bottom: 0;">Features</p>
+            <p style="font-weight: 300"> {{ spreadFeatures }}</p>
           </div>
           <!--  -->
           <div>
@@ -175,7 +181,7 @@
               "
             >
               <network-sharing 
-                :url="`http://localhost:8080/view/${allSinglePropertyVisuals[0].property_id}?location=${$route.query.location}`"
+                :url="`http://localhost:8080/view/${allSinglePropertyVisuals[0].property_id}?code=${codeParam}&location=${locationParam}&cost=${costParam}&district=${districtParam}&category=${categoryParam}&type=${typeParam}`"
                 />
             </v-list>
           </div>
@@ -347,26 +353,66 @@
         </v-col>
       </v-row>
     </v-container>
-    <about />
-    <Footer />
+    <!--  -->
+    <v-container>
+      <v-row>
+        <v-col>
+          <v-card color="basil">
+            <v-card-title class="text-center justify-center py-6">
+              <h1 class="font-weight-bold text-h6 basil--text">
+                Similar Properties
+              </h1>
+            </v-card-title>
+            <v-card-text v-if="fetching">
+              <v-card elevation="4" class="mx-auto">
+                <base-spinner style="align-items: center;"/>
+              </v-card>
+            </v-card-text>
+             <v-card-text v-else>
+               <v-row>
+                  <v-col v-if="filteredSimilarProperties.length <= 0">
+                    <center><h3>No Similar Properties Available</h3></center>
+                  </v-col>
+                 <v-col cols="12" xs="12" sm="6" md="4" lg="3" v-for="(item, index) in filteredSimilarProperties" :key="index">
+                  <PropertyCard 
+                    :location="item.name"
+                    :date="item.when_created"
+                    :category="item.category"
+                    :cost="item.actual_value"
+                    :propertyCode="item.property_number"
+                    :postedBy="item.created_by"
+                    :src="'http://localhost:8002/' + item.snapshot"
+                    :to="`/view-similar-property/${item.property_id}?code=${item.property_number}&location=${item.name}&cost=${item.actual_value}&district=${item.district}&category=${item.category}&type=${item.listed_type}`"
+                  />
+                </v-col>
+              </v-row>
+            </v-card-text>
+          </v-card>
+          <!-- 
+                  :date="formatDate(propertyVisual.when_created)"
+                  :cost="commaFormatted(propertyVisual.actual_value)"
+                 -->
+        </v-col>
+      </v-row>
+    </v-container>
+    <!--  -->
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
 import NetworkSharing from "./BaseShareComponent.vue";
-import About from "../views/About.vue";
-import Footer from "./Footer.vue";
-import MainNav from "./MainNav.vue";
-import TopNav from "./TopNav.vue";
+import PropertyCard from './PropertyCard'
 export default {
-  components: { NetworkSharing, TopNav, MainNav, About, Footer },
+  components: { NetworkSharing, PropertyCard },
   name: "ViewProperty",
   props: ["property_id"],
-  // $route.params.propertyId
   data: () => ({
     favoriteDialog: "",
     alertMessage: false,
+    message: '',
+    title: '',
+    state: false,
     propertyMonthtyCosts: [
       {
         monthly_costs_id: 1,
@@ -401,7 +447,9 @@ export default {
       { text: "Price", value: "price" },
       { text: "Payment Date", value: "when_created" },
     ],
-    tab: null
+    tab: null,
+    fetching: false,
+    similarProperties: []
   }),
   computed: {
     ...mapGetters([
@@ -409,15 +457,18 @@ export default {
       "allSinglePropertyNearbyLandmarkVisuals",
       "allSingleNeighborhoodVisuals",
       "currentPropertyValue",
-      "currentLoggedinUser",
       "currentPropertyPriceHistory",
       "allCurrentPropertyFeatures",
-      "allCurrentUserFavoriteProperties",
       "loginState",
+      "currentLoggedinUser",
+      "allCurrentUserFavoriteProperties",
+      "checkUserInterestInProperty",
+      "allSimilarProperties"
     ]),
+    filteredSimilarProperties(){
+      return this.similarProperties.filter(property => this.property_id != property.property_id)
+    },
     dollarExchange() {
-      // const USCost = (this.currentPropertyValue.actual_value / 3500).toFixed(2);
-      // return () => this.commaFormatted(USCost);
       return () => (this.currentPropertyValue.actual_value / 3500).toFixed(2);
     },
     spreadFeatures: function () {
@@ -425,6 +476,24 @@ export default {
         .reduce((acc, currentFeature) => acc + "," + currentFeature.name, "")
         .slice(1);
     },
+    codeParam(){
+      return this.$route.query.code
+    },
+    typeParam(){
+      return this.$route.query.type
+    },
+    categoryParam(){
+      return this.$route.query.category
+    },
+    districtParam(){
+      return this.$route.query.district
+    },
+    costParam(){
+      return this.$route.query.cost
+    },
+    locationParam(){
+      return this.$route.query.location
+    }
   },
   methods: {
     ...mapActions([
@@ -437,7 +506,75 @@ export default {
       "addAViewedProperty",
       "removePropertyFromFavorites",
       "addPropertyToFavorites",
+      "checkIfUserIsAlreadyInterestedInAProperty",
+      "expressInterestInBuyingAProperty",
+      "getSimilarProperties",
+      "postAUserLog"
     ]),
+    defaultResponse(msg, heading, status) {
+      this.message = msg
+      this.title = heading
+      this.state = status
+      setTimeout(() => {
+          this.message = ""
+          this.title = ""
+          this.state = false
+      }, 2000);
+    },
+    async fetchSimilarProperties(){
+      try {
+        const propertyDetails = {
+          property_value: this.$route.query.cost,
+          property_type: this.$route.query.category,
+          property_district: this.$route.query.district,
+          listed_for: this.$route.query.type
+        }
+        this.fetching = true;
+        const response = await this.getSimilarProperties(propertyDetails);
+        if(response.data.status == 0){
+          this.fetching = false;
+          this.defaultResponse(response.data.message, 'Error', true);
+        } else if (response.data.status == 1){
+          this.fetching = false;
+          this.similarProperties = this.allSimilarProperties
+        }
+      } catch (error) {
+        this.fetching = false;
+        this.defaultResponse(error.message, 'Error', true);
+      }
+    },
+    // ==========================================
+    async confirmIfPropertyIsAlreaydAddedToInterests(){
+      if(this.loginState == true){
+        try {
+          const response = await this.checkIfUserIsAlreadyInterestedInAProperty(this.property_id);
+          if(response.data.status == 0){
+            this.defaultResponse(response.data.message, 'Error', true);
+          }        
+        } catch (error) {
+          this.defaultResponse(error.message, 'Error', true);
+        }
+      }
+    },
+    async expressInterestInProperty(){
+      try {
+        const response = await this.expressInterestInBuyingAProperty(this.property_id);
+         if(response.data.status == 1){
+          this.confirmIfPropertyIsAlreaydAddedToInterests();
+          this.defaultResponse('Interest submitted to SPL, they will engage you soon', 'Success', true);
+          const payload = {
+            "activity":`Added Property with id ${this.property_id} to my interested properties`, 
+            "button_clicked":"Add property to my interested properties"
+          }
+          this.postAUserLog(payload);
+        } else {
+          this.defaultResponse(response.data.message, 'Error', true);
+        } 
+      } catch (error) {
+        this.defaultResponse(error.message, 'Error', true);
+      }
+    },
+    // ===============================================
     addUserView() {
       if (this.loginState === true) {
         this.addAViewedProperty(this.property_id);
@@ -454,17 +591,11 @@ export default {
       this.addPropertyToFavorites(property_id);
     },
     showLoginMessage() {
-      this.favoriteDialog = true;
-      this.alertMessage = "Please login to add this property to your favorites";
-      setTimeout(() => {
-        this.favoriteDialog = false;
-        this.alertMessage = "";
-      }, 1500);
+      this.defaultResponse("Please login to add this property to your favorites", "", true)
     },
-    closeFavoriteDialog() {
-      this.favoriteDialog = false;
-      this.alertMessage = "";
-    },
+    showLoginInterestMessage() {
+      this.defaultResponse("Please login to perform this action", "", true)
+    }
   },
   mounted() {
     this.addUserView();
@@ -474,6 +605,8 @@ export default {
     this.fetchCurrentPropertyValue(this.property_id);
     this.fetchCurrentPropertySelectedFeatures(this.property_id);
     this.fetchPropertyPriceHistories(this.property_id);
+    this.confirmIfPropertyIsAlreaydAddedToInterests();
+    this.fetchSimilarProperties();
   },
 };
 </script>

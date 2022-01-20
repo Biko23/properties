@@ -1,38 +1,11 @@
 <template>
 <div class="main-div">
-    <top-nav />
-    <main-nav />
+    <base-dialog :message="message" :title="title" :dialogState="state">
+        <template v-slot:button>
+            <v-btn text @click="state = !state">close</v-btn>
+        </template>
+    </base-dialog>
     <v-container>
-        <!-- success Dialog -->
-        <v-dialog transition="dialog-top-transition" persistent v-model="messageDialog" max-width="600">
-            <template>
-                <v-card>
-                    <v-toolbar color="success" dark>Success</v-toolbar>
-                    <v-card-text>
-                        {{responseMessage}}
-                    </v-card-text>
-                    <v-card-actions class="justify-end">
-                        <v-btn text @click="closeDialog">close</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </template>
-        </v-dialog>
-        <!-- end Success Dialog -->
-        <!-- failure Dialog -->
-        <v-dialog transition="dialog-top-transition" persistent v-model="failureDialog" max-width="600">
-            <template>
-                <v-card>
-                    <v-toolbar color="red" dark>Error</v-toolbar>
-                    <v-card-text>
-                        {{responseMessage}}
-                    </v-card-text>
-                    <v-card-actions class="justify-end">
-                        <v-btn text @click="closeFailureDialog">close</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </template>
-        </v-dialog>
-        <!-- end Failure Dialog -->
         <div style="text-align: center">
             <h3 style="color: white">Add A property</h3>
             <h4 style="color: #b9cbdb">Final Step 4/4</h4>
@@ -67,7 +40,27 @@
                             <h3>Add Landmark Photos</h3>
                             <v-row>
                                 <v-col cols="12" md="12">
-                                    <UploadImages style="background-color: #e7f0ff" :max="4" uploadMsg="click or drag n' drop images" fileError="images files only accepted" clearAll="Clear" @changed="handleImages" />
+                                    <UploadImages 
+                                        style="background-color: #e7f0ff z-index: 100;" 
+                                        :max="6" 
+                                        uploadMsg="click or drag n' drop images" 
+                                        fileError="images files only accepted" 
+                                        clearAll="Clear" 
+                                        @changed="handleImages" 
+                                    />
+                                </v-col>
+                                <v-col cols="12" md="12">
+                                    <v-text-field
+                                        background-color="#e7f0ff"
+                                        color="#e7f0ff"
+                                        style="margin-top: -7%; z-index: 0;"
+                                        v-model="property.imageValidatorField"
+                                        :rules="[propertyRules.imageSelectCheck]"
+                                        class="custom-label-color"
+                                        readonly
+                                        flat
+                                    >
+                                    </v-text-field>
                                 </v-col>
                             </v-row>
                             <p style="font-size: 12px; margin-right: 100px">
@@ -99,36 +92,40 @@
                                     Back</span>
                             </v-btn>
                         </router-link>
-                        <v-btn style="background-color: #3b6ef3; width: 200px" :disabled="!valid" @click="submitFinalData">
-                            <span style="
-                              color: #ffffff;
-                              font-size: 18px;
-                              font-style: normal;
-                              font-weight: 300;
-                              line-height: 30px;
-                              letter-spacing: 0em;
-                              text-align: center;
-                              text-transform: capitalize;
-                            ">
-                                Create Property</span>
-                        </v-btn>
+                        <div>
+                            <v-col cols="12" sm="12" md="12" v-if="submitting">
+                                <base-spinner />
+                            </v-col>
+                            <v-btn 
+                                v-else
+                                style="background-color: #3b6ef3; width: 200px" 
+                                :disabled="!valid" 
+                                @click="submitFinalData"
+                                >
+                                <span style="
+                                color: #ffffff;
+                                font-size: 18px;
+                                font-style: normal;
+                                font-weight: 300;
+                                line-height: 30px;
+                                letter-spacing: 0em;
+                                text-align: center;
+                                text-transform: capitalize;
+                                ">
+                                    Create Property</span>
+                            </v-btn>
+                        </div>
                     </v-col>
                 </v-row>
             </v-row>
         </v-form>
         <br />
     </v-container>
-    <about />
-    <Footer />
     <botton-nav />
 </div>
 </template>
 
 <script>
-import TopNav from "@/components/TopNav.vue";
-import MainNav from "@/components/MainNav.vue";
-import About from "./About.vue";
-import Footer from "../components/Footer.vue";
 import BottonNav from "../components/BottonNav.vue";
 import { mapGetters, mapActions } from "vuex";
 import UploadImages from "vue-upload-drop-images";
@@ -137,74 +134,109 @@ export default {
     name: "RegisterProperty3",
     data: () => ({
         valid: true,
-        responseMessage: '',
-        messageDialog: false,
-        failureDialog: false,
+        message: '',
+        title: '',
+        state: false,
+        submitting: false,
         propertyRules: {
             landmark_name: value => !!value || "Name is required.",
             distance_from_property: value => !!value || "Distance is required",
             landmark_type_id: value => !!value || "Type is required.",
+            imageSelectCheck: (value) => !!value || 'At least one image is required.',
             description: value => !!value || "Description is required",
         },
         property: {
             landmark_name: "",
             distance_from_property: "",
             landmark_type_id: 0,
+            imageValidatorField: "",
             description: "",
             landmarkVisuals: [],
         },
     }),
     components: {
-        TopNav,
-        MainNav,
         BottonNav,
-        UploadImages,
-        About,
-        Footer
+        UploadImages
     },
     created() {
+        this.postAUserLog({
+            activity: "Visited the Property Listing Third page",
+            button_clicked: "Property Listing Page"
+        });
         this.fetchPropertyLandmarkTypes();
     },
     methods: {
         ...mapActions([
             "fetchPropertyLandmarkTypes",
             "addPropertyDataFromPageThird",
-            "submitAllPropertyData"
+            "submitAllPropertyData",
+            "postAUserLog"
         ]),
         handleImages(files) {
+            this.property.imageValidatorField = files.length <= 0 ? "" : files[0].name;
             this.property.landmarkVisuals.splice(
                 0,
                 this.property.landmarkVisuals.length
             );
             this.property.landmarkVisuals.push(...files);
         },
+        defaultResponse(msg, heading, status) {
+            this.message = msg
+            this.title = heading
+            this.state = status
+
+            setTimeout(() => {
+                this.message = ""
+                this.title = ""
+                this.state = false
+            }, 3000);
+        },
         async submitFinalData() {
             if (this.$refs.propertyForm3.validate()) {
+                this.submitting = true;
                 await this.addPropertyDataFromPageThird(this.property);
-                const response = await this.submitAllPropertyData();
-                if (response.status === 200 || response.status === 201) {
-                    this.messageDialog = true;
-                    this.responseMessage = 'Property created successfully. Now waiting SPL approval!!';
-                    return;
+                const { 
+                        value, location, feature, landmark, neighborhood, propertyVisuals 
+                    } = await this.submitAllPropertyData();
+
+                if (
+                    value.status === 201 && 
+                    location.status === 201 &&
+                    feature.status === 201 &&
+                    landmark.status === 201 &&
+                    neighborhood.status === 201 &&
+                    propertyVisuals.status === 201 
+                ) {
+                    this.submitting = false;
+                    this.postAUserLog({
+                        activity: "Registered a property",
+                        button_clicked: "Create Property Btn"
+                    });
+                    this.defaultResponse('Property created successfully. Now waiting SPL approval!!', 'Success', true);
+                     setTimeout(() => {
+                        this.$router.push("/properties-for-sale");
+                    }, 3000);
                 }
 
-                if (response.status !== 200 || response.status !== 201) {
-                    this.failureDialog = true;
-                    this.responseMessage = 'Failed to create property. Please try again!!';
+                if (
+                    value.status === 200 || 
+                    location.status === 200 ||
+                    feature.status === 200 ||
+                    landmark.status === 200 ||
+                    neighborhood.status === 200 ||
+                    propertyVisuals.status === 200
+                ) {
+                    this.submitting = false;
+                    this.postAUserLog({
+                        activity: "Failure on registering a the Property",
+                        button_clicked: "Create Property Btn"
+                    });
+                    this.defaultResponse('Property partially created or failed to be created. Try again!!', 'Error', true);
+                    setTimeout(() => {
+                        this.$router.push("/properties-for-sale");
+                    }, 3000);
                 }
             }
-        },
-        closeDialog() {
-            this.messageDialog = false;
-            setTimeout(() => {
-                this.$router.push("/properties-for-sale");
-            }, 100);
-        },
-        closeFailureDialog() {
-            this.failureDialog = false;
-            setTimeout(() => {
-                this.$router.push("/register");
-            }, 100);
         }
     },
     computed: {

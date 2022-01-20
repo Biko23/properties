@@ -1,6 +1,6 @@
 <template>
-<v-list-item link :to="link">
-    <v-list-item-title id="link-title"> {{title}} </v-list-item-title>
+<v-list-item link :to="link" data-testid="link-element">
+    <v-list-item-title id="link-title" data-testid="title-element"> {{title}} </v-list-item-title>
 </v-list-item>
 </template>
 

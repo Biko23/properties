@@ -1,21 +1,20 @@
 <template>
   <div>
+    <base-dialog :message="message" :title="title" :dialogState="state">
+      <template v-slot:button>
+        <v-btn text @click="state = !state">close</v-btn>
+      </template>
+    </base-dialog>
     <v-app-bar color="#3B6EF3" dense dark>
       <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
 
       <v-toolbar-title class="toolbar-title"
-        >Mon - Sat 8.00 - 18.00. Sunday CLOSED</v-toolbar-title
+        >Open 24/7 a week</v-toolbar-title
       >
 
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>
 
-      <v-toolbar-title class="telephone"
-        >Tel No. (+256) 782-456-789</v-toolbar-title
-      >
-
-      <v-spacer></v-spacer>
-      <v-spacer></v-spacer>
       <v-btn icon 
         v-if="loginState && currentUserFavoriteTotalCount > 0" 
         @click="navigateToFavoriteScreen" 
@@ -48,10 +47,7 @@
         <template v-slot:activator="{ on }">
           <v-btn icon x-large v-on="on">
             <v-avatar color="#3B6EF3" size="38">
-              <img
-                alt="Avatar"
-                src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460"
-              />
+              <v-icon>mdi-account-circle</v-icon>
             </v-avatar>
           </v-btn>
         </template>
@@ -59,7 +55,7 @@
           <v-list-item-content class="justify-center" style="z-index: 600;">
             <div class="mx-auto text-center">
               <v-avatar color="brown">
-                <span class="white--text text-h5">{{ user.initials }}</span>
+                <span v-if="this.currentLoggedinUser.vendor_name" class="white--text text-h5">{{ userIntials() }}</span>
               </v-avatar>
               <h3>{{ currentLoggedinUser.vendor_name }}</h3>
               <p class="text-caption mt-1">
@@ -72,6 +68,14 @@
               <v-divider class="my-3"></v-divider>
               <router-link to="/editprofile" style="text-decoration: none">
                 <v-btn depressed rounded text> Edit Account </v-btn>
+              </router-link>
+              <v-divider class="my-3"></v-divider>
+              <router-link to="/user-interest-properties" style="text-decoration: none">
+                <v-btn depressed rounded text>Interested Properties</v-btn>
+              </router-link>
+              <v-divider class="my-3"></v-divider>
+              <router-link to="/user-acquired-properties" style="text-decoration: none">
+                <v-btn depressed rounded text>my Acquired Properties</v-btn>
               </router-link>
               <v-divider class="my-3"></v-divider>
               <router-link to="/recentactivities" style="text-decoration: none">
@@ -89,52 +93,80 @@
   </v-container> -->
       <!-- <a href="http://" class="sign-in">Sign In</a> -->
       <v-col class="hid-navbar sign-in">
-        <router-link
+        <v-btn
           color="primary"
           style="text-decoration: none; color: white"
           v-if="loginState"
           @click="logingOut"
-          >Logout</router-link
-        >
+          >Logout</v-btn>
         <router-link
           to="/login"
           style="text-decoration: none; color: white"
           v-else
-          >Login</router-link
-        >
+          >Login</router-link>
       </v-col>
     </v-app-bar>
   </div>
 </template>
 
 <script>
-// import { defineComponent } from '@vue/composition-api'
 import { mapActions, mapGetters } from "vuex";
 export default {
   name: "TopNav",
-  data: () => ({
-    user: {
-      initials: "PP",
-      fullName: "John Doe",
-      email: "john.doe@doe.com",
-    },
-  }),
+  data() {
+    return {
+        message: '',
+        title: '',
+        state: false
+    };
+  },
   computed: {
     ...mapGetters(["loginState", "currentLoggedinUser", "currentUserFavoriteTotalCount"]),
+    userIntials(){
+      const secondName = this.currentLoggedinUser.vendor_name.split(' ')[1] || '';
+      return () => this.currentLoggedinUser.vendor_name[0].toUpperCase() + secondName[0].toUpperCase();
+    }
   },
   created() {
     this.fetchVendorsCategories();
-    this.fetchTotalFavoriteCount();
+    this.fetchUserFavoriteCount();
   },
   methods: {
-    ...mapActions(["logout", "fetchVendorsCategories", "fetchTotalFavoriteCount"]),
+    ...mapActions(["logout", "fetchVendorsCategories", "fetchTotalFavoriteCount", "postAUserLog"]),
+    defaultResponse(msg, heading, status) {
+      this.message = msg
+      this.title = heading
+      this.state = status
+      setTimeout(() => {
+          this.message = ""
+          this.title = ""
+          this.state = false
+      }, 2000);
+    },
+    async fetchUserFavoriteCount(){
+      try {
+        if(this.loginState == true){
+          const response = await this.fetchTotalFavoriteCount();
+          if(response.data.status == 0){
+            this.defaultResponse(response.data.message, 'Error', true);
+          }
+        }
+      } catch (error) {
+        throw new Error(error.message);
+      }
+    },
     async logingOut() {
+        const payload = {
+              "activity":"Logout", 
+              "button_clicked":"Logout button"
+        }
+        this.postAUserLog(payload);
       try {
         await this.logout().then(() => {
           this.$router.push("/");
         });
-      } catch (error) {
-        throw new Error(error);
+       } catch (error) {
+        throw new Error(error.message);
       }
     },
     navigateToFavoriteScreen(){

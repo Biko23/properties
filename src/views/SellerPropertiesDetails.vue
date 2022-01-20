@@ -1,73 +1,208 @@
 <template>
 <div>
-    <top-nav />
-    <main-nav />
+    <base-dialog :message="message" :title="title" :dialogState="state">
+      <template v-slot:button>
+        <v-btn text @click="state = !state">close</v-btn>
+      </template>
+    </base-dialog>
     <v-container>
         <v-row>
             <v-col>
                 <v-card color="basil">
-                    <v-tabs v-model="tab" color="deep-purple accent-4" grow>
-                        <v-tab>My Listed Properties</v-tab>
-                        <v-tab>My Unlisted Properties</v-tab>
-                        <v-tab>Pending Certification</v-tab>
+                    <v-tabs 
+                        v-model="mainTab" 
+                        dark
+                        background-color="#3B6EF3"
+                        grow
+                    >
+                        <v-tab>My Property Details</v-tab>
+                        <v-tab>My Rental Details</v-tab>
                     </v-tabs>
-                    <v-tabs-items v-model="tab">
+                     <v-tabs-items v-model="mainTab">
                         <v-tab-item>
-                            <v-card color="basil" flat>
-                                <v-card-text>
-                                    <v-data-table 
-                                        :headers="listedHeaders" 
-                                        :items="allCurrentUserListedPropertyVisuals" 
-                                        :items-per-page="5" 
-                                        class="elevation-1"
-                                    >
-                                        <template v-slot:item.actions="{ item }">
-                                            <v-btn @click="changeAvailabilityToNotAvailable(item)">
-                                                <v-icon small class="mr-2">
-                                                    mdi-arrow-right-bold
-                                                </v-icon>Unlist
-                                            </v-btn>
-                                        </template>
-                                    </v-data-table>
-                                </v-card-text>
+                            <v-card color="basil">
+                                <v-tabs v-model="propertyTab" color="deep-purple accent-4" grow>
+                                    <v-tab>Listed Properties</v-tab>
+                                    <v-tab>Unlisted Properties</v-tab>
+                                    <v-tab>Pending Certification</v-tab>
+                                </v-tabs>
+                                <v-tabs-items v-model="propertyTab">
+                                    <v-tab-item>
+                                        <v-card color="basil" flat>
+                                            <v-card-text>
+                                                <v-data-table 
+                                                    :headers="listedHeaders" 
+                                                    :items="allCurrentUserListedProperties" 
+                                                    :items-per-page="5" 
+                                                    class="elevation-1"
+                                                >
+                                                    <template v-slot:item.actions="{ item }">
+                                                        <v-btn class="mr-2" @click="changeAvailabilityToNotAvailable(item)">
+                                                            <v-icon small>
+                                                                mdi-arrow-right-bold
+                                                            </v-icon>Unlist
+                                                        </v-btn>
+                                                        <v-btn class="mr-2" @click="viewPropertyDetails(item)">
+                                                            <v-icon small>
+                                                                mdi-eye
+                                                            </v-icon>View
+                                                        </v-btn>
+                                                    </template>
+                                                </v-data-table>
+                                            </v-card-text>
+                                        </v-card>
+                                    </v-tab-item>
+                                    <v-tab-item>
+                                        <v-card color="basil" flat>
+                                            <v-card-text>
+                                                <v-data-table 
+                                                    :headers="listedHeaders" 
+                                                    :items="allCurrentUserUnlistedProperties" 
+                                                    :items-per-page="5" 
+                                                    class="elevation-1"
+                                                >
+                                                    <template v-slot:item.actions="{ item }">
+                                                        <v-btn class="mr-2" @click="changeAvailabilityToAvailable(item)">
+                                                            <v-icon small>
+                                                                mdi-arrow-left-bold
+                                                            </v-icon>List
+                                                        </v-btn>
+                                                        <v-btn class="mr-2" @click="viewPropertyDetails(item)">
+                                                            <v-icon small>
+                                                                mdi-eye
+                                                            </v-icon>View
+                                                        </v-btn>
+                                                    </template>
+                                                </v-data-table>
+                                            </v-card-text>
+                                        </v-card>
+                                    </v-tab-item>
+                                    <v-tab-item>
+                                        <v-card color="basil" flat>
+                                            <v-card-text>
+                                                <v-data-table 
+                                                    :headers="listedHeaders" 
+                                                    :items="allCurrentUserUncertifiedProperties" 
+                                                    :items-per-page="5" 
+                                                    class="elevation-1"
+                                                >
+                                                <template v-slot:item.actions="{ item }">
+                                                        <v-btn class="mr-2" @click="navigateToEditSection(item)">
+                                                            <v-icon small>
+                                                                mdi-pencil
+                                                            </v-icon>Edit
+                                                        </v-btn>
+                                                        <v-btn class="mr-2" @click="viewPropertyDetails(item)">
+                                                            <v-icon small>
+                                                                mdi-eye
+                                                            </v-icon>View
+                                                        </v-btn>
+                                                    </template> 
+                                                </v-data-table>
+                                            </v-card-text>
+                                        </v-card>
+                                    </v-tab-item>
+                                </v-tabs-items>
                             </v-card>
                         </v-tab-item>
                         <v-tab-item>
-                            <v-card color="basil" flat>
-                                <v-card-text>
-                                    <v-data-table :headers="listedHeaders" :items="allCurrentUserUnlistedPropertyVisuals" :items-per-page="5" class="elevation-1">
-                                        <template v-slot:item.actions="{ item }">
-                                            <v-btn @click="-changeAvailabilityToAvailable(item)">
-                                                <v-icon small class="mr-2">
-                                                    mdi-arrow-left-bold
-                                                </v-icon>List
-                                            </v-btn>
-                                        </template>
-                                    </v-data-table>
-                                </v-card-text>
+                            <!--  -->
+                            <v-card color="basil">
+                                <v-tabs v-model="rentalTab" color="deep-purple accent-4" grow>
+                                    <v-tab>Listed Rentals</v-tab>
+                                    <v-tab>Unlisted Rentals</v-tab>
+                                    <v-tab>Pending Certification</v-tab>
+                                </v-tabs>
+                                <v-tabs-items v-model="rentalTab">
+                                    <v-tab-item>
+                                        <v-card color="basil" flat>
+                                            <v-card-text>
+                                                <v-data-table 
+                                                    :headers="listedHeaders" 
+                                                    :items="allCurrentUserListedRentals"
+                                                    :items-per-page="5" 
+                                                    class="elevation-1"
+                                                >
+                                                    <template v-slot:item.actions="{ item }">
+                                                        <v-btn class="mr-2" @click="changeRentalAvailabilityToNotAvailable(item)">
+                                                            <v-icon small>
+                                                                mdi-arrow-right-bold
+                                                            </v-icon>Unlist
+                                                        </v-btn>
+                                                        <v-btn class="mr-2" @click="viewPropertyDetails(item)">
+                                                            <v-icon small>
+                                                                mdi-eye
+                                                            </v-icon>View
+                                                        </v-btn>
+                                                    </template>
+                                                </v-data-table>
+                                            </v-card-text>
+                                        </v-card>
+                                    </v-tab-item>
+                                    <v-tab-item>
+                                        <v-card color="basil" flat>
+                                            <v-card-text>
+                                                <v-data-table 
+                                                    :headers="listedHeaders" 
+                                                    :items="allCurrentUserUnlistedRentals"                                                  
+                                                    :items-per-page="5" 
+                                                    class="elevation-1"
+                                                >
+                                                    <template v-slot:item.actions="{ item }">
+                                                        <v-btn class="mr-2" @click="changeRentalAvailabilityToAvailable(item)">
+                                                            <v-icon small>
+                                                                mdi-arrow-left-bold
+                                                            </v-icon>List
+                                                        </v-btn>
+                                                        <v-btn class="mr-2" @click="viewPropertyDetails(item)">
+                                                            <v-icon small>
+                                                                mdi-eye
+                                                            </v-icon>View
+                                                        </v-btn>
+                                                    </template>
+                                                </v-data-table>
+                                            </v-card-text>
+                                        </v-card>
+                                    </v-tab-item>
+                                    <v-tab-item>
+                                        <v-card color="basil" flat>
+                                            <v-card-text>
+                                                <v-data-table 
+                                                    :headers="listedHeaders" 
+                                                    :items="allCurrentUserUncertifiedRentals" 
+                                                    :items-per-page="5" 
+                                                    class="elevation-1"
+                                                >
+                                                <template v-slot:item.actions="{ item }">
+                                                        <v-btn class="mr-2" @click="navigateToEditSection(item)">
+                                                            <v-icon small>
+                                                                mdi-pencil
+                                                            </v-icon>Edit
+                                                        </v-btn>
+                                                        <v-btn class="mr-2" @click="viewPropertyDetails(item)">
+                                                            <v-icon small>
+                                                                mdi-eye
+                                                            </v-icon>View
+                                                        </v-btn>
+                                                    </template> 
+                                                </v-data-table>
+                                            </v-card-text>
+                                        </v-card>
+                                    </v-tab-item>
+                                </v-tabs-items>
                             </v-card>
-                        </v-tab-item>
-                        <v-tab-item>
-                            <seller-property-details :headers="certifiedHeaders" :items="allCurrentUserUncertifiedPropertyVisuals" />
+                            <!--  -->
                         </v-tab-item>
                     </v-tabs-items>
                 </v-card>
             </v-col>
         </v-row>
     </v-container>
-    <!-- <about />
-    <Footer /> -->
 
 </div>
 </template>
 
 <script>
-import TopNav from '@/components/TopNav.vue'
-import MainNav from '@/components/MainNav.vue'
-import SellerPropertyDetails from '@/components/SellerPropertyDetailComponent'
-import Button from '@/components/Button'
-// import About from './About.vue'
-// import Footer from '@/components/Footer'
 import {
     mapActions,
     mapGetters
@@ -75,29 +210,38 @@ import {
 
 export default {
     name: 'SellerPropertiesDetails',
-    components: {
-        TopNav,
-        MainNav,
-        SellerPropertyDetails,
-        Button
-        // Footer,
-        // About
-    },
     data: () => ({
-        tab: null,
-        listedHeaders: [{
-                text: 'Property Id',
+        message: '',
+        title: '',
+        state: false,
+        propertyTab: null,
+        rentalTab: null,
+        mainTab: null,
+        listedHeaders: [
+            {
+                text: 'Code',
                 align: 'start',
-                sortable: false,
-                value: 'property_id'
+                value: 'code'
             },
             {
-                text: 'Description',
-                value: 'description'
+                text: 'Type',
+                value: 'type'
             },
             {
-                text: 'Created by',
-                value: 'created_by'
+                text: 'Category',
+                value: 'category'
+            },
+            {
+                text: 'Cost',
+                value: 'cost'
+            },
+            {
+                text: 'Location',
+                value: 'location'
+            },
+            {
+                text: 'Created By',
+                value: 'creator_name'
             },
             {
                 text: 'Creation Date',
@@ -108,64 +252,204 @@ export default {
                 value: 'actions',
                 sortable: false
             }
-        ],
-        certifiedHeaders: [{
-                text: 'Property Id',
-                align: 'start',
-                sortable: false,
-                value: 'property_id',
-            },
-            {
-                text: 'Description',
-                value: 'description'
-            },
-            {
-                text: 'Created By',
-                value: 'created_by'
-            },
-            {
-                text: 'Creation Date',
-                value: 'when_created'
-            }
-        ],
+        ]
     }),
     computed: {
         ...mapGetters([
-            "allCurrentUserListedPropertyVisuals",
-            "allCurrentUserUnlistedPropertyVisuals",
-            "allCurrentUserUncertifiedPropertyVisuals"
+            "allCurrentUserListedProperties",
+            "allCurrentUserUnlistedProperties",
+            "allCurrentUserUncertifiedProperties",
+            "allCurrentUserListedRentals",
+            "allCurrentUserUnlistedRentals",
+            "allCurrentUserUncertifiedRentals"
         ])
     },
     methods: {
         ...mapActions([
-            "getListedPropertyVisualsByUsername",
-            "getUnlistedPropertyVisualsByUsername",
-            "getUncertifiedPropertyVisualsByUsername",
-            "updatePropertyVisualAvailabilityStatus",
-            "updatePropertyVisualNotAvailabilityStatus"
+            "getListedPropertiesByUsername",
+            "getUnlistedPropertiesByUsername",
+            "getUncertifiedPropertiesByUsername",
+            "getListedRentalsByUsername",
+            "getUnlistedRentalsByUsername",
+            "getUncertifiedRentalsByUsername",
+            "unlistPropertyFromMarketPlace",
+            "requestToListPropertyBackOnMarketPlace",
+            "unlistRentalFromMarketPlace",
+            "requestToListRentalBackOnMarketPlace",
+            "postAUserLog"
         ]),
+        defaultResponse(msg, heading, status) {
+            this.message = msg
+            this.title = heading
+            this.state = status
+            setTimeout(() => {
+                this.message = ""
+                this.title = ""
+                this.state = false
+            }, 2000);
+        },
+        // ============ Properties
         async changeAvailabilityToNotAvailable(property) {
             try {
-                await this.updatePropertyVisualAvailabilityStatus(property.property_id)
-                    .then(() => this.getUnlistedPropertyVisualsByUsername());
-
+                await this.unlistPropertyFromMarketPlace(property.property_id)
+                    .then(response => {
+                        const payload = {
+                            activity: "Moved property to Unavailable section",
+                            button_clicked: "Unlist Button"
+                        }
+                        if(response.data.status === 1){
+                            this.postAUserLog(payload);
+                            this.getUnlistedPropertiesByUsername();
+                            this.defaultResponse('Property successfully unlisted from market place', 'Success', true);
+                        } else {
+                            this.defaultResponse(response.data.message, 'Error', true);
+                        }
+                    });
             } catch (error) {
-                throw new Error(error);
+                this.defaultResponse(error.message, 'Error', true);
             }
         },
         async changeAvailabilityToAvailable(property) {
             try {
-                await this.updatePropertyVisualNotAvailabilityStatus(property.property_id)
-                    .then(() => this.getListedPropertyVisualsByUsername());
+                await this.requestToListPropertyBackOnMarketPlace(property.property_id)
+                    .then((response) =>{
+                        const payload = {
+                            activity: "Moved property to Available section",
+                            button_clicked: "Unlist Button"
+                        }
+                        if(response.propertyResponse.data.status === 1){
+                            this.postAUserLog(payload);
+                            this.getUncertifiedPropertiesByUsername();
+                            this.defaultResponse('Property successfully listed on market place', 'Success', true);
+                        } else {
+                            this.defaultResponse(response.data.message, 'Error', true);
+                        }
+                    });
             } catch (error) {
-                throw new Error(error);
+                this.defaultResponse(error.message, 'Error', true);
             }
-        }
+        },
+        async fetchListedProperties(){
+            try {
+                const response = await this.getListedPropertiesByUsername();
+                if(response.data.status == 0){
+                    this.defaultResponse(response.data.message, 'Error', true);
+                }
+            } catch (error) {
+                this.defaultResponse(error.message, 'Error', true);
+            }
+        },
+        async fetchUnlistedProperties(){
+            try {
+                const response = await this.getUnlistedPropertiesByUsername();
+                if(response.data.status == 0){
+                    this.defaultResponse(response.data.message, 'Error', true);
+                }
+            } catch (error) {
+                this.defaultResponse(error.message, 'Error', true);
+            }
+        },
+        async fetchUncertifiedProperties(){
+            try {
+                const response = await this.getUncertifiedPropertiesByUsername();
+                if(response.data.status == 0){
+                    this.defaultResponse(response.data.message, 'Error', true);
+                }
+            } catch (error) {
+                this.defaultResponse(error.message, 'Error', true);
+            }
+        },
+        // =============== End properties
+        // ============ Rentals
+        async changeRentalAvailabilityToNotAvailable(property) {
+            try {
+                await this.unlistRentalFromMarketPlace(property.property_id)
+                    .then(response => {
+                        const payload = {
+                            activity: "Moved rental to Unavailable section",
+                            button_clicked: "Unlist Button"
+                        }
+                        if(response.data.status === 1){
+                            this.postAUserLog(payload);
+                            this.getUnlistedRentalsByUsername();
+                            this.defaultResponse('Rental successfully unlisted from market place', 'Success', true);
+                        } else {
+                            this.defaultResponse(response.data.message, 'Error', true)
+                        }
+                    });
+            } catch (error) {
+                this.defaultResponse(error.message, 'Error', true);
+            }
+        },
+        async changeRentalAvailabilityToAvailable(property) {
+            try {
+                await this.requestToListRentalBackOnMarketPlace(property.property_id)
+                    .then((response) =>{
+                        const payload = {
+                            activity: "Moved rental to Available section",
+                            button_clicked: "Unlist Button"
+                        }
+                        if(response.data.status === 1){
+                            this.postAUserLog(payload);
+                            this.getUncertifiedRentalsByUsername();
+                            this.defaultResponse('Rental successfully listed on market place', 'Success', true);
+                        } else {
+                            this.defaultResponse(response.data.message, 'Error', true)
+                        }
+                    });
+            } catch (error) {
+                this.defaultResponse(error.message, 'Error', true);
+            }
+        },
+        async fetchListedRentals(){
+            try {
+                const response = await this.getListedRentalsByUsername();
+                if(response.data.status == 0){
+                    this.defaultResponse(response.data.message, 'Error', true);
+                }
+            } catch (error) {
+                this.defaultResponse(error.message, 'Error', true);
+            }
+        },
+        async fetchUnlistedRentals(){
+            try {
+                const response = await this.getUnlistedRentalsByUsername();
+                if(response.data.status == 0){
+                    this.defaultResponse(response.data.message, 'Error', true);
+                }
+            } catch (error) {
+                this.defaultResponse(error.message, 'Error', true);
+            }
+        },
+        async fetchUncertifiedRentals(){
+            try {
+                const response = await this.getUncertifiedRentalsByUsername();
+                if(response.data.status == 0){
+                    this.defaultResponse(response.data.message, 'Error', true);
+                }
+            } catch (error) {
+                this.defaultResponse(error.message, 'Error', true);
+            }
+        },
+        // =============== End rentals
+         navigateToEditSection(item){
+            this.$router.push(`/edit-property/${item.property_id}?type=${item.type}`);
+        },
+        viewPropertyDetails(item){
+            this.$router.push(`/single-property/${item.property_id}`);
+        },
     },
     created() {
-        this.getListedPropertyVisualsByUsername();
-        this.getUnlistedPropertyVisualsByUsername();
-        this.getUncertifiedPropertyVisualsByUsername();
+        this.postAUserLog({
+            activity: "Visited Seller Details page",
+            button_clicked: "Seller Details Page"
+        })
+        this.fetchListedProperties();
+        this.fetchUnlistedProperties();
+        this.fetchUncertifiedProperties();
+        this.fetchListedRentals();
+        this.fetchUnlistedRentals();
+        this.fetchUncertifiedRentals();
     }
 }
 </script>

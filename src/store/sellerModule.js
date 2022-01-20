@@ -11,6 +11,7 @@ import PropertyTypeService from '@/service/property/propertyListedAs';
 import PropertyFeatureService from '@/service/propertyFeatures';
 import PropertyLandmarkTypeService from '@/service/propertyLandmarkTypes';
 import FeatureTypeLookupService from '@/service/property/featureTypeLookup';
+import PropertyLegalProtectionService from '@/service/propertyLegalProtection';
 import { formatDate } from '@/helpers/helpers';
 
 const state = {
@@ -25,10 +26,20 @@ const state = {
     propertySecondPageData: null,
     propertyThirdPageData: null,
     createdProperty: {},
-    currentUserListedPropertyVisuals: [],
-    currentUserUnlistedPropertyVisuals: [],
-    currentUserUncertifiedPropertyVisuals: [],
-    currencies: []
+    currentUserListedProperties: [],
+    currentUserUnlistedProperties: [],
+    currentUserUncertifiedProperties: [],
+    currentUserListedRentals: [],
+    currentUserUnlistedRentals: [],
+    currentUserUncertifiedRentals: [],
+    currencies: [],
+    propertyLegalProtection: {},
+    currentPropertyDetails: {},
+    // districts
+    districts: [],
+    divisions: [],
+    suburbs: [],
+    currentLocation: {}
 }
 
 const getters = {
@@ -44,9 +55,19 @@ const getters = {
     newCreatedProperty: (state) => state.createdProperty,
     registeredPropertySubmissionState: (state) => state.propertySubmissionState,
     // current user getters
-    allCurrentUserListedPropertyVisuals: (state) => state.currentUserListedPropertyVisuals,
-    allCurrentUserUnlistedPropertyVisuals: (state) => state.currentUserUnlistedPropertyVisuals,
-    allCurrentUserUncertifiedPropertyVisuals: (state) => state.currentUserUncertifiedPropertyVisuals
+    allCurrentUserListedProperties: (state) => state.currentUserListedProperties,
+    allCurrentUserUnlistedProperties: (state) => state.currentUserUnlistedProperties,
+    allCurrentUserUncertifiedProperties: (state) => state.currentUserUncertifiedProperties,
+    allCurrentUserListedRentals: state => state.currentUserListedRentals,
+    allCurrentUserUnlistedRentals: state => state.currentUserUnlistedRentals,
+    allCurrentUserUncertifiedRentals: state => state.currentUserUncertifiedRentals,
+    currentPropertyLegalProtection: state => state.propertyLegalProtection,
+    currentPropertyDetails: state => state.currentPropertyDetails,
+    // districts
+    allDistricts: state => state.districts,
+    allDivisions: state => state.divisions,
+    allSuburbs: state => state.suburbs,
+    currentPropertyLocation: state => state.currentLocation
 };
 
 const actions = {
@@ -55,8 +76,9 @@ const actions = {
             const response = await PropertyTypeService.getPropertyListingTypes();
             commit('setRentPropertyCategory', response.data.result);
             commit('setSalePropertyCategory', response.data.result);
+            return response;
         } catch (error) {
-            console.log(error);
+            throw new Error(error.message);
         }
     },
     async fetchPropertyTypes({ commit }) { // Apartments, Houses, land, Banglow,  many more
@@ -71,6 +93,7 @@ const actions = {
         try {
             const response = await CurrencyService.getCurrencies();
             commit('setCurrencies', response.data.result);
+            return response;
         } catch (error) {
             console.log(error);
         }
@@ -79,8 +102,9 @@ const actions = {
         try {
             const response = await PropertyFeatureService.getAllPropertyFeatures();
             commit('setPropertyFeatures', response.data.result);
+            return response;
         } catch (error) {
-            console.log(error);
+            throw new Error(error.message);
         }
     },
     async fetchPropertyLandmarkTypes({ commit }) {
@@ -98,29 +122,32 @@ const actions = {
             const newProperty = {
                 isListedForId: state.saleCategory[0].id,
                 property_type_id:propertyDataOne.type,
+                description: propertyDataOne.propertyDescription,
                 created_by: rootState.AuthModule.currentUser.username,
                 updated_by: rootState.AuthModule.currentUser.username
             }
             const response = await PropertyService.postAProperty(newProperty);
             commit('setCreatedProperty', response.data.result);
+            return response;
         } catch (error) {
-            console.log(error);
-            // throw new Error('Failed to save property details')
+            throw new Error(error.message)
         }
     },
     // First page logic to register property for rent
-    async addPropertyForRentDataFromPageOne({ commit, rootState }, rentPropertyDataOne) {
+    async addPropertyForRentDataFromPageOne({ commit, rootState, state }, rentPropertyDataOne) {
         try {
             await commit('setPropertyRegisterFirstData', rentPropertyDataOne);
             await commit('setPropertySubmissionState', 2); // determine value table
             const newProperty = {
                 isListedForId: state.rentCategory[0].id, 
                 property_type_id: rentPropertyDataOne.type,
+                description: rentPropertyDataOne.propertyDescription,
                 created_by: rootState.AuthModule.currentUser.username,
                 updated_by: rootState.AuthModule.currentUser.username
             }
             const response = await PropertyService.postAProperty(newProperty);
             commit('setCreatedProperty', response.data.result);
+            return response;
         } catch (error) {
             console.log(error);
             // throw new Error('Failed to save property details')
@@ -136,10 +163,10 @@ const actions = {
     async submitAllPropertyData({ state, rootState }) {
         try {
             const propertyLocation = {
-                name: state.propertyFirstPageData.location,
                 property_id: state.createdProperty.property_id,
-                latitude: 19393982,
-                longitude: 1959494,
+                district_id: state.propertyFirstPageData.district_id,
+                division_id: state.propertyFirstPageData.division_id,
+                suburb_id: state.propertyFirstPageData.suburb_id,
                 created_by: rootState.AuthModule.currentUser.username,
                 updated_by: rootState.AuthModule.currentUser.username
             }
@@ -149,6 +176,7 @@ const actions = {
                 // created_by: rootState.AuthModule.currentUser.username,
                 // updated_by: rootState.AuthModule.currentUser.username
             }
+
             const propertyVisuals = {
                 description: state.propertyFirstPageData.description,
                 files: state.propertyFirstPageData.visuals,
@@ -169,6 +197,7 @@ const actions = {
             const propertyRentalValue = {
                 rental_value_amt: state.propertySecondPageData.expected_value,
                 property_id: state.createdProperty.property_id,
+                currency_id: state.propertySecondPageData.currency_id,
                 created_by: rootState.AuthModule.currentUser.username,
                 updated_by: rootState.AuthModule.currentUser.username
             }
@@ -192,11 +221,11 @@ const actions = {
                 updated_by: rootState.AuthModule.currentUser.username
             }
 
-            await PropertyLocationService.postAPropertyLocation(propertyLocation);
-            await FeatureTypeLookupService.postAPropertyFeatures(selectedPropertyFeatures);
-            await PropertyNearbyLandmarkService.postAPropertyNearbyLandmark(nearbyLandmarkVisuals);
-            await NeighborhoodVisualsService.postNeighborhoodVisuals(neighborhoodVisuals);
-            await PropertyVisualsService.postPropertyVisuals(propertyVisuals);
+            const locationResponse = await PropertyLocationService.postAPropertyLocation(propertyLocation);
+            const featureTypeResponse = await FeatureTypeLookupService.postAPropertyFeatures(selectedPropertyFeatures);
+            const nearbyLandmarkResponse = await PropertyNearbyLandmarkService.postAPropertyNearbyLandmark(nearbyLandmarkVisuals);
+            const neighborhoodVisualsResponse = await NeighborhoodVisualsService.postNeighborhoodVisuals(neighborhoodVisuals);
+            const propertyVisualsResponse = await PropertyVisualsService.postPropertyVisuals(propertyVisuals);
             // Check to either submit to the property_value or property_rental_value
             let propertyValueResponse = null;
 
@@ -205,62 +234,329 @@ const actions = {
             } else if(state.propertySubmissionState == 2) {
                propertyValueResponse = await PropertyRentalValueService.postPropertyRentalValue(propertyRentalValue);
             }  
-
-            if (propertyValueResponse.status === 200 || propertyValueResponse.status === 201) {
-                return propertyValueResponse;
-            }
+                
+            return {
+                value: propertyValueResponse,
+                location: locationResponse,
+                feature: featureTypeResponse,
+                landmark: nearbyLandmarkResponse,
+                neighborhood: neighborhoodVisualsResponse,
+                propertyVisuals: propertyVisualsResponse
+            };
         } catch (error) {
-            // this.$swal('ooh!','Unable to finish!','error');
-            throw new Error('Failed to fully create a property');
+            console.log(error);
         }
     },
-    async getListedPropertyVisualsByUsername({ commit, rootState }) {
+    // ============= properties
+    async getListedPropertiesByUsername({ commit, rootState }) {
         try {
             let username = rootState.AuthModule.currentUser.username;
-            const response = await PropertyVisualsService.getListedPropertyVisualsByUsername(username);
-            commit('setCurrentUserListedPropertyVisuals', response.data.result);
+            const response = await PropertyService.getListedPropertiesByUsername(username);
+            if(response.data.status == 1){
+                commit('setCurrentUserListedProperties', response.data.result);
+            }
+            return response;
         } catch (error) {
-            throw new Error(error);
+            throw new Error(error.message);
         }
     },
-    async getUnlistedPropertyVisualsByUsername({ commit, rootState }) {
+    async getUnlistedPropertiesByUsername({ commit, rootState }) {
         try {
             let username = rootState.AuthModule.currentUser.username;
-            const response = await PropertyVisualsService.getUnlistedPropertyVisualsByUsername(username);
-            commit('setCurrentUserUnlistedPropertyVisuals', response.data.result);
+            const response = await PropertyService.getUnlistedPropertiesByUsername(username);
+            if(response.data.status == 1){
+                commit('setCurrentUserUnlistedProperties', response.data.result);
+            }
+            return response;
         } catch (error) {
-            throw new Error(error);
+            throw new Error(error.message);
         }
     },
-    async getUncertifiedPropertyVisualsByUsername({ commit, rootState }) {
+    async getUncertifiedPropertiesByUsername({ commit, rootState }) {
         try {
             let username = rootState.AuthModule.currentUser.username;
-            const response = await PropertyVisualsService.getUncertifiedPropertyVisualsByUsername(username);
-            commit('setCurrentUserUncertifiedPropertyVisuals', response.data.result);
+            const response = await PropertyService.getUncertifiedPropertiesByUsername(username);
+            if(response.data.status == 1){
+                commit('setCurrentUserUncertifiedProperties', response.data.result);
+            }
+            return response;
         } catch (error) {
-            throw new Error(error);
+            throw new Error(error.message);
         }
     },
-    async updatePropertyVisualAvailabilityStatus({ commit }, property_id) {
+    async unlistPropertyFromMarketPlace({ commit }, property_id) {
         try {
-            const response = await PropertyVisualsService.updatePropertyVisualAvailabilityStatus(property_id);
-            if (response.visualsResponse.status === 200) {
-                commit('updatePropertyVisualsList', property_id);
+            const response = await PropertyService.unlistPropertyFromMarketPlace(property_id);
+            if (response.data.status === 1) {
+                commit('updatePropertiesList', property_id);
             }
+            return response;
         } catch (error) {
-            throw new Error(error);
+            throw new Error(error.message);
         }
     },
-    async updatePropertyVisualNotAvailabilityStatus({ commit }, property_id) {
+    async requestToListPropertyBackOnMarketPlace({ commit }, property_id) {
         try {
-            const response = await PropertyVisualsService.updatePropertyVisualAvailabilityStatus(property_id);
-            if (response.visualsResponse.status === 200) {
-                commit('updatePropertyVisualsUnlist', property_id);
+            const response = await PropertyService.requestToListPropertyBackOnMarketPlace(property_id);
+            if (response.data.status === 1) {
+                commit('updatePropertiesUnlist', property_id);
             }
+            return response;
         } catch (error) {
-            throw new Error(error);
+            throw new Error(error.message);
+        }
+    },
+    // ----------------end properties
+    //  ----------------- rentals
+    async unlistRentalFromMarketPlace({ commit }, property_id) {
+        try {
+            const response = await PropertyService.unlistPropertyFromMarketPlace(property_id);
+            if (response.data.status === 1) {
+                commit('updateRentalsList', property_id);
+            }
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    async requestToListRentalBackOnMarketPlace({ commit }, property_id) {
+        try {
+            const response = await PropertyService.requestToListPropertyBackOnMarketPlace(property_id);
+            if (response.data.status === 1) {
+                commit('updateRentalsUnlist', property_id);
+            }
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    async getListedRentalsByUsername({ commit, rootState }) {
+        try {
+            let username = rootState.AuthModule.currentUser.username;
+            const response = await PropertyService.getListedRentalsByUsername(username);
+            if(response.data.status == 1){
+                commit('setCurrentUserListedRentals', response.data.result);
+            }
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    async getUnlistedRentalsByUsername({ commit, rootState }) {
+        try {
+            let username = rootState.AuthModule.currentUser.username;
+            const response = await PropertyService.getUnlistedRentalsByUsername(username);
+            if(response.data.status == 1){
+                commit('setCurrentUserUnlistedRentals', response.data.result);
+            }
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    async getUncertifiedRentalsByUsername({ commit, rootState }) {
+        try {
+            let username = rootState.AuthModule.currentUser.username;
+            const response = await PropertyService.getUncertifiedRentalsByUsername(username);
+            if(response.data.status == 1){
+                commit('setCurrentUserUncertifiedRentals', response.data.result);
+            }
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    // =============== end rental
+    async getPropertyLegalProtection({ commit }, property_id){
+        try {
+            const response = await PropertyLegalProtectionService.getPropertyLegalProtectionByPropertyId(property_id);
+            if(response.data.status === 1){
+                commit('setPropertyLegalProtection', response.data.result);
+            }
+            return response;
+        } catch (error) {
+            throw new Error(error.message); 
+        }
+    },
+    async postAPropertyLegalProtection(_, legalDetails){
+        try {
+            const response = await PropertyLegalProtectionService.postAPropertyLegalProtection(legalDetails);
+            return response;
+        } catch (error) {
+            throw new Error(error.message); 
+        }
+    },
+    async updateAPropertyLegalProtection(_, legalDetails){
+        try {
+            const response = await PropertyLegalProtectionService.updateAPropertyLegalProtection(legalDetails);
+            return response;
+        } catch (error) {
+            throw new Error(error.message); 
+        }
+    },
+    async clearPropertyLegalDetails({ commit }){
+        try {
+            commit('setPropertyLegalProtection', {});
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    async deleteAPropertyFeature(_, feature_type_lk_id){
+        try {
+            const response = await FeatureTypeLookupService.deleteAPropertyFeature(feature_type_lk_id);
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    async addMoreFeaturesToAProperty(_, selectedDetails){
+        try {
+            const selectedPropertyFeatures = {
+                propertyFeatures: selectedDetails.features,
+                property_id: selectedDetails.property_id
+            }
+            const response = await FeatureTypeLookupService.postAPropertyFeatures(selectedPropertyFeatures);
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    async fetchCurrentPropertyDetails({ commit }, property_id) {
+        try {
+            const response = await PropertyService.getPropertyById(property_id);
+            commit('setCurrentPropertyDetails', response.data.result);
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    // ------------ Handle property visual
+    async updatedPropertyVisual(_, propertyDetails){
+        try {
+            const response = await PropertyVisualsService.updateAPropertyVisual(propertyDetails);
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    async createSinglePropertyVisual(_, propertyDetails){
+        try {
+            const response = await PropertyVisualsService.postPropertyVisuals(propertyDetails);
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    // -------------- Handle landmark visual
+    async updatedLandmarkVisual(_, landmarkDetails){
+        try {
+            const response = await PropertyNearbyLandmarkService.updateAPropertyNearbyLandmark(landmarkDetails);
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    async createSingleLandmarkVisual(_, landmarkDetails){
+        try {
+            const response = await PropertyNearbyLandmarkService.postAPropertyNearbyLandmark(landmarkDetails);
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    // ------- Handle neighborhood visual
+    async updatedNeighborhoodVisual(_, neighborhoodDetails){
+        try {
+            const response = await NeighborhoodVisualsService.updateAProperty(neighborhoodDetails);
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    async createSingleNeighborhoodVisual(_, neighborhoodDetails){
+        try {
+            const response = await NeighborhoodVisualsService.postNeighborhoodVisuals(neighborhoodDetails);
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    // ============================ districts
+    async fetchAllDistricts ({ commit }){
+        try {
+            const response = await PropertyLocationService.getAllDistricts();
+            if(response.data.status == 1){
+                commit('setAllDistricts', response.data.result);
+            }
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    async fetchDivisionsByDistrictId({ commit }, district_id){
+        try {
+            const response = await PropertyLocationService.getDivisionsByDistrictId(district_id);
+            if(response.data.status ==1){
+                commit('setSelectedDivisions', response.data.result);
+            }
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    async fetchSuburbsByDistrictId({ commit }, division_id){
+        try {
+            const response = await PropertyLocationService.getSuburbsByDivisionId (division_id);
+            if(response.data.status == 1){
+                commit('setSelectedSuburbs', response.data.result);
+            }
+            return response;
+        } catch (error) {
+            throw new Error(error.message); 
+        }
+    },
+    async fetchPropertyLocationByPropertyId({ commit }, property_id){
+        try {
+            const response = await PropertyLocationService.getAPropertyLocationByPropertyId(property_id);
+            if(response.data.status == 1){
+                commit('setCurrentPropertyLocation', response.data.result);
+            }
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    async updateCurrentPropertyLocation(_, propertyLocation){
+        try {
+            const response = await PropertyLocationService.updateAPropertyLocation(propertyLocation);
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    async getAllDivisions ({ commit }){
+        try {
+            const response = await PropertyLocationService.getAllDivisions();
+            if(response.data.status == 1){
+                commit('setSelectedDivisions', response.data.result);
+            }
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    async getAllSuburbs ({ commit }){
+        try {
+            const response = await PropertyLocationService.getAllSuburbs();
+            if(response.data.status == 1){
+                commit('setSelectedSuburbs', response.data.result);
+            }
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
         }
     }
+    // ==========================================
 }
 
 // mutations
@@ -302,36 +598,114 @@ const mutations = {
     setPropertyRegisterTwoData: (state, propertyDataTwo) => (state.propertySecondPageData = propertyDataTwo),
     setPropertyRegisterThreeData: (state, propertyDataThree) => (state.propertyThirdPageData = propertyDataThree),
     setCreatedProperty: (state, returnedProperty) => (state.createdProperty = returnedProperty),
-    setCurrentUserListedPropertyVisuals: (state, returnedCurrentUserListedProperties) => (state.currentUserListedPropertyVisuals = returnedCurrentUserListedProperties
+    setCurrentUserListedProperties: (state, returnedCurrentUserListedProperties) => (state.currentUserListedProperties = returnedCurrentUserListedProperties
         .map(currentProperty => {
             return {
-                property_id: currentProperty.property_id,
-                description: currentProperty.description,
-                created_by: currentProperty.created_by,
-                when_created: formatDate(currentProperty.when_created)
+                property_id: currentProperty.propertyid_,
+                code: currentProperty.property_number_,
+                type: currentProperty.is_listed_for_name,
+                category: currentProperty.property_type_,
+                cost: currentProperty.actual_value_,
+                description: currentProperty.property_description,
+                location: `${currentProperty.suburb} - ${currentProperty.division}`,
+                created_by: currentProperty.listed_by,
+                creator_name: currentProperty.listed_by_name,
+                snapshot: currentProperty.snapshot_,
+                when_created: formatDate(currentProperty.when_listed)
             }
         })),
-    setCurrentUserUnlistedPropertyVisuals: (state, returnedCurrentUserUnlistedProperties) => (state.currentUserUnlistedPropertyVisuals = returnedCurrentUserUnlistedProperties
+    setCurrentUserUnlistedProperties: (state, returnedCurrentUserUnlistedProperties) => (state.currentUserUnlistedProperties = returnedCurrentUserUnlistedProperties
         .map(currentProperty => {
             return {
-                property_id: currentProperty.property_id,
-                description: currentProperty.description,
-                created_by: currentProperty.created_by,
-                when_created: formatDate(currentProperty.when_created)
+                property_id: currentProperty.propertyid_,
+                code: currentProperty.property_number_,
+                type: currentProperty.is_listed_for_name,
+                category: currentProperty.property_type_,
+                cost: currentProperty.actual_value_,
+                description: currentProperty.property_description,
+                location: `${currentProperty.suburb} - ${currentProperty.division}`,
+                created_by: currentProperty.listed_by,
+                creator_name: currentProperty.listed_by_name,
+                snapshot: currentProperty.snapshot_,
+                when_created: formatDate(currentProperty.when_listed)
             }
         })),
-    setCurrentUserUncertifiedPropertyVisuals: (state, returnedCurrentUserUncertifiedProperties) => (state.currentUserUncertifiedPropertyVisuals = returnedCurrentUserUncertifiedProperties
+    setCurrentUserUncertifiedProperties: (state, returnedCurrentUserUncertifiedProperties) => (state.currentUserUncertifiedProperties = returnedCurrentUserUncertifiedProperties
         .map(currentProperty => {
             return {
-                property_id: currentProperty.property_id,
-                description: currentProperty.description,
-                created_by: currentProperty.created_by,
-                when_created: formatDate(currentProperty.when_created)
+                property_id: currentProperty.propertyid_,
+                code: currentProperty.property_number_,
+                type: currentProperty.is_listed_for_name,
+                category: currentProperty.property_type_,
+                cost: currentProperty.actual_value_,
+                description: currentProperty.property_description,
+                location: `${currentProperty.suburb} - ${currentProperty.division}`,
+                created_by: currentProperty.listed_by,
+                creator_name: currentProperty.listed_by_name,
+                snapshot: currentProperty.snapshot_,
+                when_created: formatDate(currentProperty.when_listed)
             }
         })),
-    updatePropertyVisualsList: (state, property_id) => state.currentUserListedPropertyVisuals = state.currentUserListedPropertyVisuals.filter(currentUserListedPropertyVisual => currentUserListedPropertyVisual.property_id !== property_id),
-    updatePropertyVisualsUnlist: (state, property_id) => state.currentUserUnlistedPropertyVisuals = state.currentUserUnlistedPropertyVisuals.filter(currentUserUnlistedPropertyVisual => currentUserUnlistedPropertyVisual.property_id !== property_id),
-    setPropertySubmissionState: (state, submissionState) => state.propertySubmissionState = submissionState
+    updatePropertiesList: (state, property_id) => state.currentUserListedProperties = state.currentUserListedProperties.filter(currentUserListedProperty => currentUserListedProperty.property_id !== property_id),
+    updatePropertiesUnlist: (state, property_id) => state.currentUserUnlistedProperties = state.currentUserUnlistedProperties.filter(currentUserUnlistedProperty => currentUserUnlistedProperty.property_id !== property_id),
+    setCurrentUserListedRentals: (state, returnedCurrentUserListedRentals) => (state.currentUserListedRentals = returnedCurrentUserListedRentals
+        .map(currentRental => {
+            return {
+                property_id: currentRental.propertyid_,
+                code: currentRental.property_number_,
+                type: currentRental.is_listed_for_name,
+                category: currentRental.property_type_,
+                cost: currentRental.rental_value,
+                description: currentRental.property_description,
+                location: `${currentRental.suburb} - ${currentRental.division}`,
+                created_by: currentRental.listed_by,
+                creator_name: currentRental.listed_by_name,
+                snapshot: currentRental.snapshot_,
+                when_created: formatDate(currentRental.when_listed)
+            }
+        })),
+    setCurrentUserUnlistedRentals: (state, returnedCurrentUserUnlistedRentals) => (state.currentUserUnlistedRentals = returnedCurrentUserUnlistedRentals
+        .map(currentRental => {
+            return {
+                property_id: currentRental.propertyid_,
+                code: currentRental.property_number_,
+                type: currentRental.is_listed_for_name,
+                category: currentRental.property_type_,
+                cost: currentRental.rental_value,
+                description: currentRental.property_description,
+                location: `${currentRental.suburb} - ${currentRental.division}`,
+                created_by: currentRental.listed_by,
+                creator_name: currentRental.listed_by_name,
+                snapshot: currentRental.snapshot_,
+                when_created: formatDate(currentRental.when_listed)
+            }
+        })),
+    setCurrentUserUncertifiedRentals: (state, returnedCurrentUserUncertifiedRentals) => (state.currentUserUncertifiedRentals = returnedCurrentUserUncertifiedRentals
+        .map(currentRental => {
+            return {
+                property_id: currentRental.propertyid_,
+                code: currentRental.property_number_,
+                type: currentRental.is_listed_for_name,
+                category: currentRental.property_type_,
+                cost: currentRental.rental_value,
+                description: currentRental.property_description,
+                location: `${currentRental.suburb} - ${currentRental.division}`,
+                created_by: currentRental.listed_by,
+                creator_name: currentRental.listed_by_name,
+                snapshot: currentRental.snapshot_,
+                when_created: formatDate(currentRental.when_listed)
+            }
+        })),
+    updateRentalsList: (state, property_id) => state.currentUserListedRentals = state.currentUserListedRentals.filter(currentUserListedRental => currentUserListedRental.property_id !== property_id),
+    updateRentalsUnlist: (state, property_id) => state.currentUserUnlistedRentals = state.currentUserUnlistedRentals.filter(currentUserUnlistedRental => currentUserUnlistedRental.property_id !== property_id),   
+    setPropertySubmissionState: (state, submissionState) => state.propertySubmissionState = submissionState,
+    setPropertyLegalProtection: (state, legalProtection) => state.propertyLegalProtection = legalProtection,
+    setCurrentPropertyDetails: (state, propertydetails) => state.currentPropertyDetails = propertydetails,
+    // ======================== Districts
+    setAllDistricts: (state, allDistricts) => state.districts = allDistricts,
+    setSelectedDivisions: (state, returnedDivisions) => state.divisions = returnedDivisions,
+    setSelectedSuburbs: (state, returnedSuburbs) => state.suburbs = returnedSuburbs,
+    setCurrentPropertyLocation: (state, currentPropertyLocation) => state.currentLocation = currentPropertyLocation
 }
 
 export default {

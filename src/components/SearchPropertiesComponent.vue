@@ -73,22 +73,26 @@
           <property-card
             :location="currentProperty.name"
             :date="formatDate(currentProperty.when_created)"
+            :propertyCode="currentProperty.property_number"
             :cost="commaFormatted(currentProperty.actual_value)"
             :category="currentProperty.category"
             :postedBy="currentProperty.created_by"
             :src="'http://localhost:8002/' + currentProperty.snapshot"
-            :to="`/view/${currentProperty.property_id}?location=${currentProperty.name}`"
+            :to="`/view/${currentProperty.property_id}?code=${currentProperty.property_number}&location=${currentProperty.name}`"
           >
            <template v-slot:share>
               <v-menu bottom offset-y>
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn class="ma-2" v-bind="attrs" v-on="on" icon>
-                    <v-icon>mdi-share-variant</v-icon>
+                    <v-icon 
+                      style="font-size: 36px;"
+                      title="Share this property"
+                      >mdi-share-variant</v-icon>
                   </v-btn>
                 </template>
                 <v-list style="display: flex; flex-direction: column;">
                   <network-sharing
-                    :url="`http://localhost:8080/view/${currentProperty.property_id}?location=${currentProperty.name}`"
+                    :url="`http://localhost:8080/view/${currentProperty.property_id}?code=${currentProperty.property_number}&location=${currentProperty.name}`"
                   />
                 </v-list>
               </v-menu>
@@ -108,7 +112,8 @@
                   "
                   small
                   class="mr-2"
-                  style="font-size: 40px; color: #3b6ef3; z-index: 100"
+                  style="font-size: 40px; color: #3b6ef3; z-index: 100; padding-bottom: 7px;"
+                  title="Add to Favorites"
                   @click="onRemove(currentProperty.property_id)"
                 >
                   mdi-heart
@@ -117,7 +122,8 @@
                   v-else
                   small
                   class="mr-2"
-                  style="font-size: 40px; color: black; z-index: 100"
+                  style="font-size: 40px; color: black; z-index: 100; padding-bottom: 7px;"
+                  title="Add to Favorites"
                   @click="onAdd(currentProperty.property_id)"
                 >
                   mdi-heart-outline
@@ -129,7 +135,8 @@
               <v-icon
                 small
                 class="mr-2"
-                style="font-size: 40px; color: black; z-index: 100"
+                style="font-size: 40px; color: black; z-index: 100; padding-bottom: 7px;"
+                title="Add to Favorites"
                 @click="showLoginMessage"
               >
                 mdi-heart-outline
@@ -170,6 +177,7 @@ export default {
       "fetchFavoritePropertiesForComparision",
       "removePropertyFromFavorites",
       "addPropertyToFavorites",
+      "postAUserLog"
     ]),
     commaFormatted(amount) {
       let price = amount.toLocaleString("en-US");
@@ -214,10 +222,24 @@ export default {
       return result;
     },
     onRemove(property_id) {
-      this.removePropertyFromFavorites(property_id);
+      this.removePropertyFromFavorites(property_id)
+        .then(()=>{
+           const payload = {
+            "activity":`Removed Property with id ${property_id} from favorites`, 
+            "button_clicked":"Favorite Button"
+          }
+          this.postAUserLog(payload);
+      });
     },
     onAdd(property_id) {
-      this.addPropertyToFavorites(property_id);
+      this.addPropertyToFavorites(property_id)
+        .then(()=>{
+           const payload = {
+            "activity":`Added Property with id ${property_id} in favorites`, 
+            "button_clicked":"Favorite Button"
+          }
+          this.postAUserLog(payload);
+        });
     },
     showLoginMessage() {
       this.favoriteDialog = true;
@@ -239,17 +261,16 @@ export default {
           this.searchKey = this.searchKeyword;
         }
         await this.fetchPropertiesBySearchKeyword(this.searchKey);
+        this.postAUserLog({
+          "activity":`Searched Properties with keyword '${this.searchKey}'`, 
+          "button_clicked":"Search Button"
+        });
         this.searchKeyword = "";
         this.search = null;
       } catch (error) {
         console.log(error);
       }
-    },
-    changeIcon() {
-      this.myIcon === "mdi-heart"
-        ? (this.myIcon = "mdi-heart-outline")
-        : (this.myIcon = "mdi-heart");
-    },
+    }
   },
   computed: {
     ...mapGetters([

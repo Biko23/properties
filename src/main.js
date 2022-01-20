@@ -3,14 +3,27 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
-import VuetifyGoogleAutocomplete from 'vuetify-google-autocomplete';
+import VueOtp2 from 'vue-otp-2';
+import VueSession from 'vue-session'
+
+// import VuetifyGoogleAutocomplete from 'vuetify-google-autocomplete';
+
+import BaseSpinner from '@/components/BaseSpinner.vue'
+import BaseDialog from '@/components/BaseDialog.vue'
 
 // To load sharing icons
 import vuetifyIcon from 'vuetify'
 import VueSocialSharing from 'vue-social-sharing'
 // End load sharing icons
 
+Vue.component('base-dialog', BaseDialog)
+Vue.component('base-spinner', BaseSpinner)
+
 Vue.config.productionTip = false
+
+Vue.use(VueOtp2)
+// Session
+Vue.use(VueSession)
 
 // To load sharing icons
 Vue.use(vuetifyIcon)

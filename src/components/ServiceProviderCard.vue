@@ -1,17 +1,17 @@
 <template>
   <v-card max-width="auto">
-    <v-card-subtitle class="time">{{ vendor_name }} </v-card-subtitle>
+    <v-card-subtitle id="name" data-testid="vendor-element">{{ vendor_name }} </v-card-subtitle>
     <div>
-      <v-img :src="src" height="200px"></v-img>
+      <v-img :src="src" height="200px" data-testid="image-element"></v-img>
     </div>
     <v-card-subtitle>
-      <small style="font-weight: bold; color: #000000; margin-bottom: 0">{{
+      <small style="font-weight: bold; color: #000000; margin-bottom: 0" data-testid="number-element">{{
         vendor_primary_phone_number
       }}</small
       ><br />
-      <small>Category: {{ vendorCategory }}</small
+      <small data-testid="category-element">Category: {{ vendorCategory }}</small
       ><br />
-      <small>Likes: {{ points }}</small>
+      <small data-testid="like-element">Likes: {{ points }}</small>
     </v-card-subtitle>
     <slot></slot>
   </v-card>
@@ -19,11 +19,7 @@
 
 <script>
 export default {
-  name: "PropertyCard",
-  data: () => ({
-    vendorCategories: [],
-    editedIndex: -1,
-  }),
+  name: "ServiceProviderCard",
   props: {
     vendor_name: {
       type: String,
@@ -31,11 +27,11 @@ export default {
     },
     vendor_primary_phone_number: {
       type: String,
-      default: "No available email",
+      default: "No available number",
     },
     vendorCategory: {
       type: String,
-      default: "Vendor Category",
+      default: "No Category",
     },
     points: {
       type: Number,
@@ -43,18 +39,14 @@ export default {
     },
     src: {
       type: String,
-      default: require("../assets/provider.jpg"),
-    },
-    src2: {
-      type: String,
-      default: require("../assets/builder.jpg"),
+      default: require('../assets/provider.jpg')
     }
   }
 };
 </script>
 
 <style scoped>
-.time {
+#name {
   position: absolute;
   z-index: 1;
   top: 10;
