@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NotFoundComponent.vue should have a match snapshot 1`] = `
+<div class="main-not-found">
+  <center>
+    <h4>Oops!! The page you are looking for might not be available</h4> <br>
+    <router-link-stub to="[object Object]" tag="a" ariacurrentvalue="page" event="click">Go to Home</router-link-stub>
+  </center>
+</div>
+`;

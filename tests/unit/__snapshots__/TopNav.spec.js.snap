@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TopNav.vue should have a match snapshot 1`] = `
+<div>
+  <base-dialog message="" title=""></base-dialog>
+  <v-app-bar-stub color="#3B6EF3" dark="true" tag="header" dense="true" extensionheight="48" src="" value="true">
+    <v-toolbar-title-stub class="toolbar-title">Open 24/7 a week</v-toolbar-title-stub>
+    <v-spacer-stub></v-spacer-stub>
+    <v-spacer-stub></v-spacer-stub>
+    <!---->
+    <!---->
+    <!---->
+    <v-col-stub tag="div" class="hid-navbar sign-in">
+      <router-link-stub to="/login" tag="a" ariacurrentvalue="page" event="click" style="text-decoration: none; color: white;">Login</router-link-stub>
+    </v-col-stub>
+  </v-app-bar-stub>
+</div>
+`;

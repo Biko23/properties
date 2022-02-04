@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PopUpDialog.vue should have a match snapshot 1`] = `
+<v-dialog-stub opendelay="0" closedelay="0" contentclass="" maxwidth="600" origin="center center" persistent="true" retainfocus="true" transition="dialog-top-transition" width="auto">
+  <v-card-stub loaderheight="4" tag="div">
+    <v-toolbar-stub color="primary" dark="true" tag="header" extensionheight="48" src="" data-testid="title-element">No Title</v-toolbar-stub>
+    <v-card-text-stub datatestid="message-element" data-testid="message-element">
+      No message available
+    </v-card-text-stub>
+    <v-card-actions-stub class="justify-end"></v-card-actions-stub>
+  </v-card-stub>
+</v-dialog-stub>
+`;

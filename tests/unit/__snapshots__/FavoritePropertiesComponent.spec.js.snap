@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FavoritePropertiesComponent.vue should match snapshot 1`] = `
+<div>
+  <div class="container container--fluid" id="container">
+    <div id="property-header" class="row">
+      <div style="flex: 1;">
+        <h3>Properties</h3> <small data-testid="total-result-element" style="font-weight: bold;"> results</small>
+      </div>
+      <div style="flex: 1;">
+        <h3 style="color: rgb(59, 110, 243);">Favorite List</h3>
+      </div>
+    </div>
+    <div id="main-property" class="row"></div>
+  </div><br>
+</div>
+`;

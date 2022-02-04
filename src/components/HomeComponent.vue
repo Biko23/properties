@@ -7,7 +7,19 @@
 
             </div>
             <div id="search-field" style="position: relative;">
-                <v-autocomplete background-color="white" filled :outlined="true" append-icon="" :autofocus="true" cache-items auto-select-first placeholder="Search Properties" :items="allAutocompletedList" v-model="keyword" :search-input.sync="search" />
+                <v-autocomplete 
+                    background-color="white" 
+                    filled 
+                    :outlined="true" 
+                    append-icon="" 
+                    :autofocus="true" 
+                    cache-items 
+                    auto-select-first 
+                    placeholder="Search Properties" 
+                    :items="allAutocompletedList" 
+                    v-model="keyword" 
+                    :search-input.sync="search" 
+                />
                 <v-icon small class="mr-2" style="
                         font-size: 40px; 
                         color: blue; 

@@ -2,8 +2,8 @@
 <v-dialog transition="dialog-top-transition" persistent v-model="messageDialog" max-width="600">
     <template>
         <v-card>
-            <v-toolbar :color="color" dark>{{title}}</v-toolbar>
-            <v-card-text>
+            <v-toolbar :color="color" dark data-testid="title-element">{{title}}</v-toolbar>
+            <v-card-text data-testid="message-element">
                 {{message}}
             </v-card-text>
             <v-card-actions class="justify-end">

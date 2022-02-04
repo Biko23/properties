@@ -1,29 +1,30 @@
-BaseDialog => Failing
+BaseDialog => Snapshot Done
 BaseShareComponent => Done
-BaseSpinner => N/A
+BaseSpinner => Snapshot Done
 BaseViewedCard => Done
-BottonNav => 
-FavoritePropertiesComponent => Failing
+BottonNav => Snapshot Done
+FavoritePropertiesComponent => snapshot done
 Footer => Done
-HomeComponent => 
-LearnComponent => 
+HomeComponent => Snapshot Done -> autocomplete component type error
 Links => Done
-MainNav => 
-MobileMainNav => 
-NotFoundComponent => 
-PopUpDialog => 
-PropertiesForSaleComponent => 
 PropertyCard => Done
-PropertyForRentComponent
-RecentActivities
 RecentPropertiesComponent => Done
-SearchPropertiesComponent
 ServiceProviderComponent => Done
-TopNav
-UserAcquiredProperies
-UserInterestedProperties => Half-Done -> Components undiscoverable
 UserLogs => Done
-ViewProperty
-ViewRentalProperty
-ViewSimilarProperty
-ViewSimilarRental
+UserInterestedProperties => Snapshot Done
+LearnComponent => Snapshot Done
+MainNav => Snapshot Done
+MobileMainNav => Snapshot Done
+NotFoundComponent => Snapshot Done
+PopUpDialog => Snapshot Done
+TopNav => Snapshot Done
+ViewProperty =>  Snapshot Done
+
+ViewRentalProperty => 
+ViewSimilarProperty => 
+ViewSimilarRental =>
+RecentActivities => 
+UserAcquiredProperies => 
+SearchPropertiesComponent => 
+PropertiesForSaleComponent => 
+PropertyForRentComponent => 
