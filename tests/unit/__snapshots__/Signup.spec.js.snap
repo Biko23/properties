@@ -1,0 +1,149 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SignUp.vue should have a match snapshot 1`] = `
+<div>
+  <base-dialog message="" title=""></base-dialog>
+  <div class="container container--fluid" id="main-container">
+    <div class="row">
+      <div class="col-sm-12 col-md-6 col-lg-6 col-12"><a href="#/" aria-current="page" class="router-link-exact-active router-link-active" style="color: black; text-align: center; margin-top: 40px; text-decoration: none;">
+          <p class="back-home">
+            <div class="v-image v-responsive theme--light" style="max-height: 20px; max-width: 25px; margin-left: 100px; margin-right: auto;">
+              <transition-stub name="fade-transition" mode="in-out">
+                <div class="v-image__image v-image__image--preload v-image__image--cover" style="background-position: center center;"></div>
+              </transition-stub>
+              <div class="v-responsive__content"></div>
+            </div><span id="back-home">
+                            Back home</span>
+          </p>
+        </a>
+        <h1 id="get-started">Get ready to start buying and selling more!</h1>
+        <p style="margin-left: 100px;">Create an account</p>
+      </div>
+      <div class="col">
+        <form novalidate="novalidate" id="form" class="v-form">
+          <div>
+            <div class="v-image v-responsive theme--light" style="max-height: 45px; max-width: 45px; margin-left: 100px; margin-top: 10px; position: absolute;">
+              <transition-stub name="fade-transition" mode="in-out">
+                <div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image: url(https://picsum.photos/id/11/10/6); background-position: center center;"></div>
+              </transition-stub>
+              <div class="v-responsive__content"></div>
+            </div> <span style="color: rgb(59, 110, 243); margin-top: 23px; margin-left: -55px; position: absolute;">
+                            Stanbic Properties
+                        </span>
+          </div><br><br>
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-12">
+                <div class="v-input theme--light v-text-field v-text-field--single-line v-text-field--solo v-text-field--enclosed v-text-field--placeholder">
+                  <div class="v-input__control">
+                    <div class="v-input__slot">
+                      <div class="v-text-field__slot"><label for="input-10" class="v-label theme--light" style="left: 0px; position: absolute;">Full name</label><input id="input-10" type="text"></div>
+                    </div>
+                    <div class="v-text-field__details">
+                      <div class="v-messages theme--light">
+                        <transition-group-stub tag="div" name="message-transition" class="v-messages__wrapper"></transition-group-stub>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-12">
+                <div class="v-input theme--light v-text-field v-text-field--single-line v-text-field--solo v-text-field--enclosed v-text-field--placeholder">
+                  <div class="v-input__control">
+                    <div class="v-input__slot">
+                      <div class="v-text-field__slot"><label for="input-13" class="v-label theme--light" style="left: 0px; position: absolute;">Email </label><input id="input-13" type="text"></div>
+                    </div>
+                    <div class="v-text-field__details">
+                      <div class="v-messages theme--light">
+                        <transition-group-stub tag="div" name="message-transition" class="v-messages__wrapper"></transition-group-stub>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-12">
+                <div class="v-input theme--light v-text-field v-text-field--single-line v-text-field--solo v-text-field--enclosed v-text-field--placeholder">
+                  <div class="v-input__control">
+                    <div class="v-input__slot">
+                      <div class="v-text-field__slot"><label for="input-16" class="v-label theme--light" style="left: 0px; position: absolute;">Username </label><input id="input-16" type="text"></div>
+                    </div>
+                    <div class="v-text-field__details">
+                      <div class="v-messages theme--light">
+                        <transition-group-stub tag="div" name="message-transition" class="v-messages__wrapper"></transition-group-stub>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-12">
+                <div class="v-input theme--light v-text-field v-text-field--single-line v-text-field--solo v-text-field--enclosed v-text-field--placeholder">
+                  <div class="v-input__control">
+                    <div class="v-input__slot">
+                      <div class="v-text-field__slot"><label for="input-19" class="v-label theme--light" style="left: 0px; position: absolute;">Phone number</label><input id="input-19" type="text"></div>
+                    </div>
+                    <div class="v-text-field__details">
+                      <div class="v-messages theme--light">
+                        <transition-group-stub tag="div" name="message-transition" class="v-messages__wrapper"></transition-group-stub>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-12">
+                <div class="v-input theme--light v-text-field v-text-field--single-line v-text-field--solo v-text-field--enclosed v-text-field--placeholder">
+                  <div class="v-input__control">
+                    <div class="v-input__slot">
+                      <div class="v-text-field__slot"><label for="input-22" class="v-label theme--light" style="left: 0px; position: absolute;">Password</label><input id="input-22" type="password"></div>
+                      <div class="v-input__append-inner">
+                        <div class="v-input__icon v-input__icon--append"><button type="button" aria-label="append icon" class="v-icon notranslate v-icon--link mdi mdi-eye-off theme--light"></button></div>
+                      </div>
+                    </div>
+                    <div class="v-text-field__details">
+                      <div class="v-messages theme--light">
+                        <transition-group-stub tag="div" name="message-transition" class="v-messages__wrapper"></transition-group-stub>
+                      </div>
+                      <div class="v-counter theme--light">0</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-12 col-12">
+                <div class="v-input theme--light v-text-field v-text-field--single-line v-text-field--solo v-text-field--enclosed v-text-field--placeholder">
+                  <div class="v-input__control">
+                    <div class="v-input__slot">
+                      <div class="v-text-field__slot"><label for="input-26" class="v-label theme--light" style="left: 0px; position: absolute;">Confirm password</label><input id="input-26" type="password"></div>
+                      <div class="v-input__append-inner">
+                        <div class="v-input__icon v-input__icon--append"><button type="button" aria-label="append icon" class="v-icon notranslate v-icon--link mdi mdi-eye-off theme--light"></button></div>
+                      </div>
+                    </div>
+                    <div class="v-text-field__details">
+                      <div class="v-messages theme--light">
+                        <transition-group-stub tag="div" name="message-transition" class="v-messages__wrapper"></transition-group-stub>
+                      </div>
+                      <div class="v-counter theme--light">0</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-12"><button type="button" class="v-btn v-btn--block v-btn--is-elevated v-btn--has-bg theme--light v-size--default primary"><span class="v-btn__content"> Sign Up </span></button></div>
+            </div> <br>
+            <p style="font-size: 0.75rem;">Have an Accont?
+              <a href="#/login" class="">Login</a>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+`;

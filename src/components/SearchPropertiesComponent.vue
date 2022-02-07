@@ -278,7 +278,7 @@ export default {
       "allAutocompletedList",
       "currentLoggedinUser",
       "allCurrentUserFavoriteProperties",
-      "loginState",
+      "loginState"
     ]),
   },
   created() {

@@ -71,7 +71,11 @@ export default {
         };
     },
     methods: {
-        ...mapActions(["fetchViewedRentalProperties", "fetchViewedSaleProperties", "postAUserLog"]),
+        ...mapActions([
+            "fetchViewedRentalProperties", 
+            "fetchViewedSaleProperties", 
+            "postAUserLog"
+        ]),
         defaultResponse(msg, heading, status) {
             this.message = msg
             this.title = heading
@@ -137,7 +141,10 @@ export default {
         },
     },
     computed: {
-        ...mapGetters(["allRecentViewedRentals", "allRecentViewedProperties"]),
+        ...mapGetters([
+            "allRecentViewedRentals", 
+            "allRecentViewedProperties"
+            ]),
     },
     created() {
         this.postAUserLog({

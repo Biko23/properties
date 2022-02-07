@@ -57,36 +57,17 @@ describe('UserLogs.vue', () => {
         })
     }
 
+    it('should have a match snapshot', () => {
+        const wrapper = mountFactory()
+        expect(wrapper.html()).toMatchSnapshot()
+    })
+
     it('dispatches "fetchCurrentUserProperties" when the component is created', () => {
         const fetchCurrentUserProperties = jest.fn()
         mountFactory({
             methods: { fetchCurrentUserProperties }
         })
         expect(fetchCurrentUserProperties).toHaveBeenCalled()
-    })
-
-    it.skip('should be with the special data', () => {
-        const fetchCurrentUserProperties = jest.fn()
-        const wrapper = mountFactory()
-        wrapper.vm.$nextTick()
-        console.log(wrapper.html());
-        expect(wrapper.findAllComponents({ name: 'v-data__table'}).exists()).toBe(true)
-    })
-
-    it('dispatches "fetchCurrentUserRentals" when the component is created', () => {
-        const fetchCurrentUserRentals = jest.fn()
-        mountFactory({
-            methods: { fetchCurrentUserRentals }
-        })
-        expect(fetchCurrentUserRentals).toHaveBeenCalled()
-    })
-
-    it.skip('should be with the special data', () => {
-        const fetchCurrentUserRentals = jest.fn()
-        const wrapper = mountFactory({
-            methods: { fetchCurrentUserRentals }
-        })
-        expect(wrapper.find('[data-testid="rental-table"]').text()).toBe('Click view btn')
     })
 })
 

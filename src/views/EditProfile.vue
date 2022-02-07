@@ -88,10 +88,19 @@ export default {
         });
     },
     computed: {
-        ...mapGetters(["currentLoggedinUser", "iAmASeller", "iAmACertifiedSeller"]),
+        ...mapGetters([
+            "currentLoggedinUser", 
+            "iAmASeller", 
+            "iAmACertifiedSeller"
+        ])
     },
     methods: {
-        ...mapActions(["updateUserProfile", "fetchAllUserRoles", "fetchLoggedUser", "postAUserLog"]),
+        ...mapActions([
+            "updateUserProfile", 
+            "fetchAllUserRoles", 
+            "fetchLoggedUser", 
+            "postAUserLog"
+        ]),
         defaultResponse(msg, heading, status) {
             this.message = msg
             this.title = heading

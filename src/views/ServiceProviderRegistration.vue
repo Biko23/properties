@@ -122,7 +122,11 @@ export default {
     this.loadVendorData();
   },
   methods: {
-    ...mapActions(["fetchVendorsCategories", "postVendor", "postAUserLog"]),
+    ...mapActions([
+      "fetchVendorsCategories", 
+      "postVendor", 
+      "postAUserLog"
+      ]),
     defaultResponse(msg, heading, status) {
       this.message = msg
       this.title = heading

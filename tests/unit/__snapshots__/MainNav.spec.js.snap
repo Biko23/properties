@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainNav.vue should have a match snapshot 1`] = `
+<nav>
+  <v-app-bar-stub color="#f2f2f2" dark="true" tag="header" extensionheight="48" src="" value="true">
+    <router-link-stub to="/" tag="a" ariacurrentvalue="page" event="click" style="text-decoration: none;">
+      <div>
+        <v-img-stub maxheight="40" maxwidth="35" options="[object Object]" position="center center" src="../assets/ssss.png" transition="fade-transition" style="margin-left: auto; margin-right: auto; display: block;"></v-img-stub>
+      </div>
+    </router-link-stub>
+    <router-link-stub to="/" tag="a" ariacurrentvalue="page" event="click" style="text-decoration: none;">
+      <v-toolbar-title-stub style="color: rgb(59, 110, 243); margin-top: 8px; text-decoration: none; padding-left: 5px;">Stanbic Properties</v-toolbar-title-stub>
+    </router-link-stub>
+    <v-spacer-stub></v-spacer-stub>
+    <v-spacer-stub></v-spacer-stub>
+    <v-row-stub tag="div" class="hid-navbar">
+      <v-menu-stub opendelay="0" closedelay="0" contentclass="" maxwidth="auto" nudgebottom="0" nudgeleft="0" nudgeright="0" nudgetop="0" nudgewidth="0" openonclick="true" closeonclick="true" closeoncontentclick="true" maxheight="auto" offsety="true" origin="top left" transition="v-menu-transition" text="">
+        <v-list-stub tag="div">
+          <links-stub link="/properties-for-sale" title="Properties for sale"></links-stub>
+        </v-list-stub>
+      </v-menu-stub>
+      <v-spacer-stub></v-spacer-stub>
+      <v-menu-stub opendelay="0" closedelay="0" contentclass="" maxwidth="auto" nudgebottom="0" nudgeleft="0" nudgeright="0" nudgetop="0" nudgewidth="0" openonclick="true" closeonclick="true" closeoncontentclick="true" maxheight="auto" offsety="true" origin="top left" transition="v-menu-transition" text="">
+        <v-list-stub tag="div">
+          <links-stub link="/property-requirement" title="Sell A Property"></links-stub>
+          <links-stub link="/learn" title="Seller's guide"></links-stub>
+          <!---->
+        </v-list-stub>
+      </v-menu-stub>
+      <v-spacer-stub></v-spacer-stub>
+      <v-menu-stub opendelay="0" closedelay="0" contentclass="" maxwidth="auto" nudgebottom="0" nudgeleft="0" nudgeright="0" nudgetop="0" nudgewidth="0" openonclick="true" closeonclick="true" closeoncontentclick="true" maxheight="auto" offsety="true" origin="top left" transition="v-menu-transition" text="">
+        <div style="display: flex; flex-direction: row;">
+          <v-list-stub tag="div">
+            <links-stub link="/properties-for-rent" title="Houses for Rent"></links-stub>
+            <links-stub link="/rental-requirement" title="List A Rental"></links-stub>
+          </v-list-stub>
+        </div>
+      </v-menu-stub>
+      <v-spacer-stub></v-spacer-stub>
+      <v-menu-stub opendelay="0" closedelay="0" contentclass="" maxwidth="auto" nudgebottom="0" nudgeleft="0" nudgeright="0" nudgetop="0" nudgewidth="0" openonclick="true" closeonclick="true" closeoncontentclick="true" maxheight="auto" offsety="true" origin="top left" transition="v-menu-transition" text="">
+        <v-list-stub tag="div">
+          <links-stub link="/mortgage" title="Mortgage Lenders"></links-stub>
+          <links-stub link="/mortgage-rates" title="Mortgage Rates"></links-stub>
+        </v-list-stub>
+      </v-menu-stub>
+      <v-spacer-stub></v-spacer-stub>
+      <v-menu-stub opendelay="0" closedelay="0" contentclass="" maxwidth="auto" nudgebottom="0" nudgeleft="0" nudgeright="0" nudgetop="0" nudgewidth="0" openonclick="true" closeonclick="true" closeoncontentclick="true" maxheight="auto" offsety="true" origin="top left" transition="v-menu-transition" text="">
+        <v-list-stub tag="div"></v-list-stub>
+      </v-menu-stub>
+      <v-spacer-stub></v-spacer-stub>
+      <v-menu-stub opendelay="0" closedelay="0" contentclass="" maxwidth="auto" nudgebottom="0" nudgeleft="0" nudgeright="0" nudgetop="0" nudgewidth="0" openonclick="true" closeonclick="true" closeoncontentclick="true" maxheight="auto" offsety="true" origin="top left" transition="v-menu-transition" text="">
+        <v-list-stub tag="div">
+          <links-stub link="/getstarted" title="Join Us As?"></links-stub>
+        </v-list-stub>
+      </v-menu-stub>
+    </v-row-stub>
+    <v-spacer-stub></v-spacer-stub>
+    <v-spacer-stub></v-spacer-stub>
+    <v-col-stub tag="div" class="hid-navbar">
+      <router-link-stub to="/login" tag="a" ariacurrentvalue="page" event="click" style="text-decoration: none;">Login</router-link-stub>
+    </v-col-stub>
+    <v-spacer-stub></v-spacer-stub>
+    <v-app-bar-nav-icon-stub class="toggle" style="color: rgb(59, 110, 243);"></v-app-bar-nav-icon-stub>
+  </v-app-bar-stub>
+  <v-navigation-drawer-stub absolute="true" mobilebreakpoint="1264" height="100%" minivariantwidth="56" src="" tag="aside" temporary="true" width="256" style="margin-left: 10px; z-index: 100; margin-top: 5px; border-radius: 6px;">
+    <mobile-main-nav-stub></mobile-main-nav-stub>
+  </v-navigation-drawer-stub>
+</nav>
+`;

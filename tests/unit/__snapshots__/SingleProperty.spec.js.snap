@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SingleProperty.vue should have a match snapshot 1`] = `
+<div class="container">
+  <base-dialog message="" title=""></base-dialog>
+  <div class="row mt-2"><button type="button" class="v-btn v-btn--is-elevated v-btn--has-bg theme--light v-size--default"><span class="v-btn__content">Back To Property List</span></button>
+    <div class="col-sm-12 col-md-12 col-12">
+      <div class="v-card v-sheet theme--light basil">
+        <div class="v-tabs v-tabs--grow theme--light">
+          <div role="tablist" class="v-item-group theme--light v-slide-group v-tabs-bar v-tabs-bar--is-mobile deep-purple--text text--accent-4">
+            <div class="v-slide-group__prev v-slide-group__prev--disabled">
+              <transition-stub name="fade-transition"></transition-stub>
+            </div>
+            <div class="v-slide-group__wrapper">
+              <div class="v-slide-group__content v-tabs-bar__content">
+                <div class="v-tabs-slider-wrapper" style="transition: none;">
+                  <div class="v-tabs-slider"></div>
+                </div>
+                <div tabindex="0" aria-selected="true" role="tab" class="v-tab v-tab--active"> Property</div>
+                <div tabindex="0" aria-selected="false" role="tab" class="v-tab"> Landmarks </div>
+                <div tabindex="0" aria-selected="false" role="tab" class="v-tab"> Neighborhood</div>
+                <div tabindex="0" aria-selected="false" role="tab" class="v-tab"> Features</div>
+              </div>
+            </div>
+            <div class="v-slide-group__next v-slide-group__next--disabled">
+              <transition-stub name="fade-transition"></transition-stub>
+            </div>
+          </div>
+        </div>
+        <div class="v-window v-item-group theme--light v-tabs-items">
+          <div class="v-window__container">
+            <transition-stub name="">
+              <!---->
+            </transition-stub>
+            <transition-stub name="">
+              <!---->
+            </transition-stub>
+            <transition-stub name="">
+              <!---->
+            </transition-stub>
+            <transition-stub name="">
+              <!---->
+            </transition-stub>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-12 col-12">
+      <p class="text-h5">Property Details</p>
+      <div class="v-data-table theme--light">
+        <div class="v-data-table__wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th class="text-left">
+                  Feature
+                </th>
+                <th class="text-left">
+                  Description
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <p class="text-h5" style="margin-top: 10px;">Property Legal Details</p>
+                </td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div> <br> <button type="button" class="v-btn v-btn--is-elevated v-btn--has-bg theme--light v-size--default"><span class="v-btn__content">Back To Property List</span></button>
+</div>
+`;

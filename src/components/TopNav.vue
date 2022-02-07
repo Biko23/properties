@@ -121,7 +121,11 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["loginState", "currentLoggedinUser", "currentUserFavoriteTotalCount"]),
+    ...mapGetters([
+      "loginState", 
+      "currentLoggedinUser", 
+      "currentUserFavoriteTotalCount"
+    ]),
     userIntials(){
       const secondName = this.currentLoggedinUser.vendor_name.split(' ')[1] || '';
       return () => this.currentLoggedinUser.vendor_name[0].toUpperCase() + secondName[0].toUpperCase();
@@ -132,7 +136,12 @@ export default {
     this.fetchUserFavoriteCount();
   },
   methods: {
-    ...mapActions(["logout", "fetchVendorsCategories", "fetchTotalFavoriteCount", "postAUserLog"]),
+    ...mapActions([
+      "logout", 
+      "fetchVendorsCategories", 
+      "fetchTotalFavoriteCount", 
+      "postAUserLog"
+    ]),
     defaultResponse(msg, heading, status) {
       this.message = msg
       this.title = heading

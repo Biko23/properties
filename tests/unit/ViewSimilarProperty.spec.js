@@ -1,11 +1,11 @@
 import { createLocalVue, mount } from '@vue/test-utils'
-import ViewSimlarProperty from '@/components/ViewSimilarProperty.vue'
+import ViewSimilarProperty from '@/components/ViewSimilarProperty.vue'
 import Vuetify from 'vuetify'
 import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 
 
-describe('UserLogs.vue', () => {
+describe('ViewSimilarProperty.vue', () => {
     const localVue = createLocalVue()
     localVue.use(Vuex)
     localVue.use(VueRouter)
@@ -55,7 +55,7 @@ describe('UserLogs.vue', () => {
     })
 
     const mountFactory = options => {
-        return mount(ViewSimlarProperty, {
+        return mount(ViewSimilarProperty, {
             localVue,
             vuetify,
             store,
@@ -63,6 +63,15 @@ describe('UserLogs.vue', () => {
             ...options
         })
     }
+
+    it('should have a match snapshot', () => {
+        const commaFormatted = jest.fn()
+        const confirmIfPropertyIsAlreaydAddedToInterests = jest.fn()
+        const wrapper = mountFactory({
+            methods: { commaFormatted, confirmIfPropertyIsAlreaydAddedToInterests }
+        })
+        expect(wrapper.html()).toMatchSnapshot()
+    })
 
     it('should have called "confirmIfPropertyIsAlreaydAddedToInterests" once when the component is created', () => {
         const commaFormatted = jest.fn()
@@ -73,19 +82,6 @@ describe('UserLogs.vue', () => {
         })
 
         expect(confirmIfPropertyIsAlreaydAddedToInterests).toHaveBeenCalledTimes(1)
-    })
-
-    it('should have called "expressInterestInProperty" once when the express-interest btn is clicked', async () => {
-        const commaFormatted = jest.fn()
-        const expressInterestInProperty = jest.fn()
-
-        const wrapper = mountFactory({
-            methods: { commaFormatted, expressInterestInProperty }
-        })
-        
-        await wrapper.findComponent('.express-interest-btn').trigger('click')
-        expect(expressInterestInProperty).toHaveBeenCalledTimes(1)
-    })
-    
+    }) 
 })
 

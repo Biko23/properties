@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RecentActivities.vue should have a match snapshot 1`] = `
+<div>
+  <base-dialog message="" title=""></base-dialog>
+  <div class="container">
+    <div class="row">
+      <div class="col" style="text-align: center;">
+        <h1>Recently Viewed</h1>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div xs="12" class="col-md-6 col-12">
+        <p style="font-weight: bold;">Properties For Sale</p>
+        <div class="row recent"></div>
+      </div>
+      <div xs="12" class="col-md-6 col-xl-4 col-12">
+        <p style="font-weight: bold;">Properties For Rent</p>
+        <div class="row recent"></div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

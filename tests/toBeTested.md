@@ -1,29 +1,55 @@
-BaseDialog => Failing
+BaseDialog => Snapshot Done
 BaseShareComponent => Done
-BaseSpinner => N/A
+BaseSpinner => Snapshot Done
 BaseViewedCard => Done
-BottonNav => 
-FavoritePropertiesComponent => Failing
+BottonNav => Snapshot Done
+FavoritePropertiesComponent => snapshot done
 Footer => Done
-HomeComponent => 
-LearnComponent => 
+HomeComponent => Snapshot Done -> autocomplete component type error
+SearchPropertiesComponent => Snapshot Done -> autocomplete [items]
 Links => Done
-MainNav => 
-MobileMainNav => 
-NotFoundComponent => 
-PopUpDialog => 
-PropertiesForSaleComponent => 
 PropertyCard => Done
-PropertyForRentComponent
-RecentActivities
 RecentPropertiesComponent => Done
-SearchPropertiesComponent
 ServiceProviderComponent => Done
-TopNav
-UserAcquiredProperies
-UserInterestedProperties => Half-Done -> Components undiscoverable
 UserLogs => Done
-ViewProperty
-ViewRentalProperty
-ViewSimilarProperty
-ViewSimilarRental
+UserInterestedProperties => Snapshot Done
+LearnComponent => Snapshot Done
+MainNav => Snapshot Done
+MobileMainNav => Snapshot Done
+NotFoundComponent => Snapshot Done
+PopUpDialog => Snapshot Done
+TopNav => Snapshot Done
+ViewProperty =>  Snapshot Done
+ViewRentalProperty => Snapshot Done
+ViewSimilarProperty => Snapshot Done
+ViewSimilarRental => Snapshot Done
+RecentActivities => Snapshot Done
+UserAcquiredProperies => Snapshot Done
+PropertiesForSaleComponent => Snapshot Done
+PropertyForRentComponent => Snapshot Done
+EmailResetPassword => Snapshot Done
+NewPasswordResetPassword => Snapshot Done
+OTPResetPassword => Snapshot Done
+
+About => Snapshot Done
+EditLandmarkVisuals => Snapshot Done
+EditNeighborhoodVisuals => Snapshot Done
+EditProfile => Snapshot Done
+EditProperty => Snapshot Done
+EditPropertyVisuals => Snapshot Done
+GetStarted => Snapshot Done
+Login => Snapshot Done
+Mortgage => Snapshot Done
+MortgageRates => Snapshot Done
+RegisterProperty => Failed needs mocking image upload
+RegisterProperty2 => Failed needs mocking image upload
+RegisterProperty3 => Failed needs mocking image upload
+RegisterPropertyRequirements => Snapshot Done
+RegisterRentalProperty => Failed needs mocking image upload
+RegisterRentalPropertyRequirements => Snapshot Done
+SellerPropertiesDetails => Snapshot Done
+ServiceProviderRegistration => Snapshot Done
+SignUp => Snapshot Done
+SingleProperty => Snapshot Done
+UserProfile => Snapshot Done
+ViewUserProfile => 

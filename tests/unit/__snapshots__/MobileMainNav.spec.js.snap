@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MobileMainNav.vue should have a match snapshot 1`] = `
+<v-list-stub tag="div" dense="true" nav="true" style="margin-left: 10px;">
+  <v-list-group-stub color="primary" activeclass="" appendicon="$expand" ripple="true">
+    <v-list-stub tag="div">
+      <links-stub link="/properties-for-sale" title="Properties for sale"></links-stub>
+    </v-list-stub>
+  </v-list-group-stub>
+  <v-list-group-stub color="primary" activeclass="" appendicon="$expand" ripple="true">
+    <v-list-stub tag="div">
+      <links-stub link="/property-requirement" title="Sell A Property"></links-stub>
+      <links-stub link="/learn" title="Seller's guide"></links-stub>
+      <!---->
+    </v-list-stub>
+  </v-list-group-stub>
+  <v-list-group-stub color="primary" activeclass="" appendicon="$expand" ripple="true">
+    <v-list-stub tag="div">
+      <links-stub link="/properties-for-rent" title="Houses for Rent"></links-stub>
+      <links-stub link="/rental-requirement" title="List A Rental"></links-stub>
+    </v-list-stub>
+  </v-list-group-stub>
+  <v-list-group-stub color="primary" activeclass="" appendicon="$expand" ripple="true">
+    <v-list-stub tag="div">
+      <links-stub link="/mortgage" title="Mortgage Lenders"></links-stub>
+      <links-stub link="/mortgage-rates" title="Mortgage Rates"></links-stub>
+    </v-list-stub>
+  </v-list-group-stub>
+  <v-list-group-stub color="primary" activeclass="" appendicon="$expand" ripple="true">
+    <v-list-stub tag="div"></v-list-stub>
+  </v-list-group-stub>
+  <v-list-group-stub color="primary" activeclass="" appendicon="$expand" ripple="true">
+    <v-list-stub tag="div">
+      <links-stub link="/getstarted" title="Join Us As?"></links-stub>
+    </v-list-stub>
+  </v-list-group-stub>
+  <v-col-stub tag="div" class="hid-navbar">
+    <router-link-stub to="/login" tag="a" ariacurrentvalue="page" event="click" style="text-decoration: none;">Login</router-link-stub> <span style="margin-left: 15px;">OR</span>
+    <router-link-stub to="/signup" tag="a" ariacurrentvalue="page" event="click" style="text-decoration: none; margin-left: 15px;">Sign up</router-link-stub>
+  </v-col-stub>
+</v-list-stub>
+`;

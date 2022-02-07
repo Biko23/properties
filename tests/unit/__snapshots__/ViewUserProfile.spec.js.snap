@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ViewUserProfile.vue should have a match snapshot 1`] = `
+<div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-8 col-xl-8 offset-md-2 offset-lg-2 col-12">
+        <h3 style="color: rgb(59, 110, 243); font-weight: 400; text-align: center; margin-top: 20px;">Settings</h3> <br>
+        <div class="container" style="background-color: rgb(231, 240, 255); padding: 0px 20%; border-radius: 1%;">
+          <div class="row">
+            <div class="col-sm-12 col-md-5 col-12"><span>Full Name:</span></div>
+            <div class="col-sm-12 col-md-7 col-12"><span></span></div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-5 col-12"><span>Username:</span></div>
+            <div class="col-sm-12 col-md-7 col-12"><span></span></div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-5 col-12"><span>Primary Phone:</span></div>
+            <div class="col-sm-12 col-md-7 col-12"><span></span></div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-5 col-12"><span>Primary Email:</span></div>
+            <div class="col-sm-12 col-md-7 col-12"><span></span></div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-5 col-12"><span>Secondary Phone:</span></div>
+            <div class="col-sm-12 col-md-7 col-12"><span></span></div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-5 col-12"><span>Secondary Email:</span></div>
+            <div class="col-sm-12 col-md-7 col-12"><span></span></div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-5 col-12"><span>Location:</span></div>
+            <div class="col-sm-12 col-md-7 col-12"><span></span></div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-12"><a href="#/editprofile" class="" style="text-decoration: none;"><button type="button" class="v-btn v-btn--block v-btn--has-bg theme--light v-size--default" style="background-color: rgb(59, 110, 243); border-color: #3b6ef3;"><span class="v-btn__content"><span style="color: white;">Edit Profile</span></span></button></a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><br><br>
+</div>
+`;

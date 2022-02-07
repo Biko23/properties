@@ -1,0 +1,200 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HomeComponent.vue should have a match snapshot 1`] = `
+<div>
+  <div class="container container--fluid" id="container">
+    <div id="search-section">
+      <div style="flex: 1;">
+        <p id="intro">Are You looking for your dream house or property?</p>
+      </div>
+      <div id="search-field" style="position: relative;">
+        <div class="v-input theme--light v-text-field v-text-field--single-line v-text-field--filled v-text-field--enclosed v-text-field--outlined v-text-field--placeholder v-select v-autocomplete">
+          <div class="v-input__control">
+            <div role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-owns="list-4" class="v-input__slot white">
+              <fieldset aria-hidden="true">
+                <legend><span>​</span></legend>
+              </fieldset>
+              <div class="v-select__slot"><input autofocus="autofocus" id="input-4" placeholder="Search Properties" type="text" autocomplete="off"><input type="hidden"></div>
+              <div class="v-menu">
+                <!---->
+              </div>
+            </div>
+            <div class="v-text-field__details">
+              <div class="v-messages theme--light">
+                <transition-group-stub tag="div" name="message-transition" class="v-messages__wrapper"></transition-group-stub>
+              </div>
+            </div>
+          </div>
+        </div> <button type="button" class="v-icon notranslate mr-2 v-icon--link mdi mdi-magnify theme--light" style="font-size: 40px; color: blue; position: absolute; right: 0px; top: 10%; z-index: 50;"></button>
+      </div>
+    </div>
+  </div>
+  <div class="container" id="second-container">
+    <div class="row">
+      <div xs="12" class="col-md-3 col-12">
+        <div class="v-card v-sheet theme--light" style="max-width: auto;" id="card">
+          <div style="border-bottom: 2px solid #3b6ef3; height: 50px; text-align: center;">
+            <div style="padding-top: 5px;">
+              <div class="v-image v-responsive theme--light" style="max-height: 45px; max-width: 45px; margin-left: auto; margin-right: auto; display: block;">
+                <transition-stub name="fade-transition" mode="in-out">
+                  <div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image: url(https://picsum.photos/id/11/10/6); background-position: center center;"></div>
+                </transition-stub>
+                <div class="v-responsive__content"></div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h3 style="color: rgb(59, 110, 243); text-align: center; font-weight: 500;">
+              BUY
+            </h3>
+            <p style="font-size: 0.9rem; font-style: normal; font-weight: 300; line-height: 20px; letter-spacing: 0em; text-align: center; margin-left: 5px; margin-right: 5px;">
+              Are you looking for a modern, standout yet affordable home or
+              house to buy for yourself? We have gotten a variety of what you
+              need within and around Kampala.
+            </p>
+            <p style="text-align: center;"><a href="#/properties-for-sale" class=""><button type="button" class="v-btn v-btn--is-elevated v-btn--has-bg theme--light v-size--default" style="background-color: rgb(59, 110, 243);"><span class="v-btn__content"><span style="color: rgb(255, 255, 255); font-size: 20px; font-style: normal; font-weight: 300; line-height: 30px; letter-spacing: 0em; text-align: center; text-transform: capitalize;">
+                                        Find More</span></span></button></a></p> <br>
+          </div>
+        </div>
+      </div>
+      <div xs="12" class="col-md-3 col-12">
+        <div class="v-card v-sheet theme--light" style="max-width: auto;" id="card">
+          <div style="border-bottom: 2px solid #3b6ef3; height: 50px;">
+            <p style="padding-top: 8px;">
+            <div class="v-image v-responsive theme--light" style="max-height: 47px; max-width: 45px; margin-left: auto; margin-right: auto; display: block;">
+              <transition-stub name="fade-transition" mode="in-out">
+                <div class="v-image__image v-image__image--preload v-image__image--cover" style="background-position: center center;"></div>
+              </transition-stub>
+              <div class="v-responsive__content"></div>
+            </div>
+            </p>
+          </div>
+          <div>
+            <h3 style="color: rgb(59, 110, 243); text-align: center; font-weight: 500;">
+              RENT
+            </h3>
+            <p style="font-size: 0.9rem; font-style: normal; font-weight: 300; line-height: 20px; letter-spacing: 0em; text-align: center; margin-left: 5px; margin-right: 5px;">
+              We have gotten for you the best rental houses and homes around.
+              With a number of appproved brokers and properties your rest
+              assured to get the best.
+            </p>
+            <p style="text-align: center;"><a href="#/properties-for-rent" class=""><button type="button" class="v-btn v-btn--is-elevated v-btn--has-bg theme--light v-size--default" style="background-color: rgb(59, 110, 243);"><span class="v-btn__content"><span style="color: rgb(255, 255, 255); font-size: 20px; font-style: normal; font-weight: 300; line-height: 30px; letter-spacing: 0em; text-align: center; text-transform: capitalize;">
+                                        Rent Now</span></span></button></a></p> <br>
+          </div>
+        </div>
+      </div>
+      <div xs="12" class="col-md-3 col-12">
+        <div class="v-card v-sheet theme--light" style="max-width: auto;" id="card">
+          <div style="border-bottom: 2px solid #3b6ef3; height: 50px;">
+            <p style="padding-top: 8px;">
+            <div class="v-image v-responsive theme--light" style="max-height: 45px; max-width: 50px; margin-left: auto; margin-right: auto; display: block;">
+              <transition-stub name="fade-transition" mode="in-out">
+                <div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image: url(https://picsum.photos/id/11/10/6); background-position: center center;"></div>
+              </transition-stub>
+              <div class="v-responsive__content"></div>
+            </div>
+            </p>
+          </div>
+          <div>
+            <h3 style="color: rgb(59, 110, 243); text-align: center; font-weight: 500;">
+              SELL
+            </h3>
+            <p style="font-size: 14px; font-style: normal; font-weight: 300; line-height: 20px; letter-spacing: 0em; text-align: center; margin-left: 5px; margin-right: 5px;">
+              Finding the right buyer for your property can sometimes be
+              tricky. With us, you can sell your property directly to us,
+              yourself or via a broker. Whatever option works for you, we have
+              got you covered.
+            </p>
+            <p style="text-align: center;"><a href="#/property-requirement" class=""><button type="button" class="v-btn v-btn--is-elevated v-btn--has-bg theme--light v-size--default" style="background-color: rgb(59, 110, 243);"><span class="v-btn__content"><span style="color: rgb(255, 255, 255); font-size: 20px; font-style: normal; font-weight: 300; line-height: 30px; letter-spacing: 0em; text-align: center; text-transform: capitalize;">
+                                        Sell</span></span></button></a></p> <br>
+          </div>
+        </div>
+      </div>
+      <div xs="12" class="col-md-3 col-12">
+        <div class="v-card v-sheet theme--light" style="max-width: auto;" id="card">
+          <div style="border-bottom: 2px solid #3b6ef3; height: 50px;">
+            <p style="padding-top: 8px;">
+            <div class="v-image v-responsive theme--light" style="max-height: 45px; max-width: 45px; margin-left: auto; margin-right: auto; display: block;">
+              <transition-stub name="fade-transition" mode="in-out">
+                <div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image: url(https://picsum.photos/id/11/10/6); background-position: center center;"></div>
+              </transition-stub>
+              <div class="v-responsive__content"></div>
+            </div>
+            </p>
+          </div>
+          <div>
+            <h3 style="color: rgb(59, 110, 243); text-align: center; font-weight: 500;">
+              MORTGAGE
+            </h3>
+            <p style="font-size: 0.9rem; font-style: normal; font-weight: 300; line-height: 20px; letter-spacing: 0em; text-align: center; margin-left: 5px; margin-right: 5px;">
+              Do you need a loan to service, purchase, or mantain your
+              property? At affordable rates we can help you make your dream
+              come true. You are just a few steps away from achieving this.
+            </p>
+            <p style="text-align: center;"><a href="#/mortgage" class=""><button type="button" class="v-btn v-btn--is-elevated v-btn--has-bg theme--light v-size--default" style="background-color: rgb(59, 110, 243);"><span class="v-btn__content"><span style="color: rgb(255, 255, 255); font-size: 20px; font-style: normal; font-weight: 300; line-height: 30px; letter-spacing: 0em; text-align: center; text-transform: capitalize;">
+                                        Get Mortgage</span></span></button></a></p> <br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><br>
+  <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="v-card__actions"><button type="button" class="v-btn v-btn--text theme--light v-size--default" style="color: rgb(59, 110, 243); caret-color: #3b6ef3;"><span class="v-btn__content"> Buy </span></button> <button type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-chevron-down theme--light"></i></span></button></div>
+        <transition-stub name="expand-transition">
+          <div style="display: none;">
+            <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <a href="#/properties-for-sale" class="property-link">Properties for sale</a>
+          </div>
+        </transition-stub>
+      </div>
+      <div class="col">
+        <div class="v-card__actions"><button type="button" class="v-btn v-btn--text theme--light v-size--default" style="color: rgb(59, 110, 243); caret-color: #3b6ef3;"><span class="v-btn__content"> Rent </span></button> <button type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-chevron-down theme--light"></i></span></button></div>
+        <transition-stub name="expand-transition">
+          <div style="display: none;">
+            <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <a href="#/properties-for-rent" class="property-link">Houses for Rent</a><br> <a href="#/rental-requirement" class="property-link">List A Rental</a><br> <a href="#/property-details" class="property-link">Property Details</a>
+          </div>
+        </transition-stub>
+      </div>
+      <div class="col">
+        <div class="v-card__actions"><button type="button" class="v-btn v-btn--text theme--light v-size--default" style="color: rgb(59, 110, 243); caret-color: #3b6ef3;"><span class="v-btn__content"> Sell </span></button> <button type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-chevron-down theme--light"></i></span></button></div>
+        <transition-stub name="expand-transition">
+          <div style="display: none;">
+            <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <a href="#/property-requirement" class="property-link">Sell A Property</a><br> <a href="#/learn" class="property-link">Seller's guide</a><br> <a href="#/property-details" class="property-link">Property Details</a>
+          </div>
+        </transition-stub>
+      </div>
+      <div class="col">
+        <div class="v-card__actions"><button type="button" class="v-btn v-btn--text theme--light v-size--default" style="color: rgb(59, 110, 243); caret-color: #3b6ef3;"><span class="v-btn__content"> Home Loan </span></button> <button type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-chevron-down theme--light"></i></span></button></div>
+        <transition-stub name="expand-transition">
+          <div style="display: none;">
+            <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <a href="#/mortgage" class="property-link">Mortgage Lenders</a><br> <a href="#/mortgage-rates" class="property-link">Mortgage Rates</a>
+          </div>
+        </transition-stub>
+      </div>
+      <div class="col">
+        <div class="v-card__actions"><button type="button" class="v-btn v-btn--text theme--light v-size--default" style="color: rgb(59, 110, 243); caret-color: #3b6ef3;"><span class="v-btn__content"> Service Providers </span></button> <button type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-chevron-down theme--light"></i></span></button></div>
+        <transition-stub name="expand-transition">
+          <div style="display: none;">
+            <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light">
+          </div>
+        </transition-stub>
+      </div>
+    </div>
+  </div>
+  <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"><br>
+  <div style="text-align: center; margin-top: 15px;">
+    <h3><span style="color: rgb(59, 110, 243);"> RECENT </span>PROPERTIES</h3>
+  </div>
+  <div class="container">
+    <div class="row" style="display: flex; flex-direction: row; justify-content: space-evenly;"></div>
+  </div>
+  <div style="text-align: center; margin-top: 15px;">
+    <h3><span style="color: rgb(59, 110, 243);"> RECENT </span>RENTALS</h3>
+  </div>
+  <div class="container">
+    <div class="row" style="display: flex; flex-direction: row; justify-content: space-evenly;"></div>
+  </div>
+</div>
+`;

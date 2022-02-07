@@ -229,7 +229,7 @@ import MobileMainNav from "./MobileMainNav";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
-  name: "MainNaigation",
+  name: "MainNav",
   components: {
     Links,
     MobileMainNav,
@@ -254,7 +254,7 @@ export default {
     ...mapGetters([
       "loginState",
       "allVendorsCategories",
-      "iAmACertifiedSeller",
+      "iAmACertifiedSeller"
     ]),
   },
   created() {

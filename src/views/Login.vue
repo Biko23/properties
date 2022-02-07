@@ -130,7 +130,12 @@ export default {
         },
     }),
     methods: {
-        ...mapActions(["login", "fetchLoggedUser", "fetchTotalFavoriteCount", "postAUserLog"]),
+        ...mapActions([
+            "login", 
+            "fetchLoggedUser", 
+            "fetchTotalFavoriteCount", 
+            "postAUserLog"
+        ]),
         defaultResponse(msg, heading, status) {
             this.message = msg
             this.title = heading

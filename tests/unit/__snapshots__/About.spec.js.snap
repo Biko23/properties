@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ViewSimilarRental.vue should have a match snapshot 1`] = `
+<div class="about">
+  <div class="container about-us-container container--fluid">
+    <div class="row">
+      <div class="col-sm-1 col"></div>
+      <div xs="12" class="col-md-3 col-12" style="margin-left: -33px; margin-top: 60px;">
+        <div class="v-image v-responsive theme--light">
+          <transition-stub name="fade-transition" mode="in-out">
+            <div class="v-image__image v-image__image--preload v-image__image--cover" style="background-position: center center;"></div>
+          </transition-stub>
+          <div class="v-responsive__content"></div>
+        </div>
+      </div>
+      <div xs="12" class="col-md-4 col-12" style="margin-top: 25px;">
+        <div style="text-align: left;">
+          <h3><span style="color: rgb(59, 110, 243);"> ABOUT </span>US</h3>
+        </div>
+        <p style="font-size: 13px; font-style: normal; font-weight: 300; line-height: 20px; letter-spacing: 0em; margin-right: 50px; color: black; text-align: justify;">
+          Stanbic properties is building the first modern real estate platform
+          in Uganda, pairing the industry’s top talent with technology to make
+          the search, buy, rent and sell experience intelligent and seamless
+        </p>
+        <p style="font-size: 13px; font-style: normal; font-weight: 300; line-height: 20px; letter-spacing: 0em; margin-right: 50px; color: black; text-align: justify;">
+          With an Exprienced team, Stanbic Properties is led by a team of
+          experienced innovators. These proven pioneers across technology,
+          real estate, marketing, and finance are solving real estate’s most
+          complex challenges.
+        </p>
+      </div>
+      <div xs="12" class="col-md-4 col-12" style="margin-top: 25px;">
+        <div style="text-align: left;">
+          <h3><span style="color: rgb(59, 110, 243);"> WHY </span>US</h3>
+        </div>
+        <p style="font-size: 13px; font-style: normal; font-weight: 300; line-height: 20px; letter-spacing: 0em; margin-right: 50px; text-align: justify;">
+          As an innovative residential real estate firm, we empower our agents
+          so they have more time for advising their clients. With the
+          solutions-driven mindset of a startup and the sophistication of a
+          luxury brand, Stanbic Properties is the future of real estate.
+        </p>
+        <p style="font-size: 13px; font-style: normal; font-weight: 300; line-height: 20px; letter-spacing: 0em; margin-right: 50px; text-align: justify;">
+          To lead the industry requires the smartest tools built by the
+          brightest minds across engineering, design, and strategy. Through
+          our proprietary platform, SBL is changing how agents and clients
+          navigate the process of finding or selling a home.
+        </p>
+      </div>
+      <div class="col-sm-1 col"></div>
+    </div>
+  </div>
+</div>
+`;

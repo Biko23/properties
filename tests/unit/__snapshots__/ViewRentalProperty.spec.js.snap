@@ -1,0 +1,173 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ViewRentalProperty.vue should have a match snapshot 1`] = `
+<div>
+  <base-dialog message="" title=""></base-dialog>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-8 col-lg-8 col-12">
+        <div class="v-window v-item-group theme--dark v-carousel" style="height: 500px;">
+          <div class="v-window__container">
+            <transition-stub name="fade-transition">
+              <div class="v-window-item">
+                <div class="v-image v-responsive v-carousel__item theme--light" style="height: 500px;">
+                  <transition-stub name="fade-transition" mode="in-out">
+                    <div class="v-image__image v-image__image--preload v-image__image--cover" style="background-position: center center;"></div>
+                  </transition-stub>
+                  <div class="v-responsive__content"></div>
+                </div>
+              </div>
+            </transition-stub>
+            <div class="v-window__prev"><button type="button" class="v-btn v-btn--icon v-btn--round theme--dark v-size--default" aria-label="Previous visual"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-chevron-left theme--dark" style="font-size: 36px;"></i></span></button></div>
+            <div class="v-window__next"><button type="button" class="v-btn v-btn--icon v-btn--round theme--dark v-size--default" aria-label="Next visual"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-chevron-right theme--dark" style="font-size: 36px;"></i></span></button></div>
+          </div>
+          <div class="v-carousel__controls">
+            <div class="v-item-group theme--dark"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div style="background-color: rgb(242, 242, 242); border-radius: 6px;">
+          <div class="col"><a href="mailto:cccug@stanbic.com" style="text-decoration: none;"><button type="button" class="v-btn v-btn--block v-btn--is-elevated v-btn--has-bg theme--light v-size--default primary"><span class="v-btn__content">Email Us</span></button></a></div>
+        </div> <br>
+        <div style="background-color: rgb(242, 242, 242); border-radius: 6px;">
+          <div class="col">
+            <div style="display: flex; flex-direction: column;"><span style="flex: 1; display: flex; flex-direction: row; justify-content: space-between; flex-wrap: wrap;"><span> Price: </span> <span>
+                  UGX 
+                </span></span> <span style="flex: 1; display: flex; flex-direction: row; justify-content: space-between; flex-wrap: wrap;"><span> Equavalent To: </span> <span> $ NaN </span></span></div>
+          </div>
+          <div class="col"><a href="tel:+256782456789" title="+256782456789" style="text-decoration: none;"><button type="button" class="v-btn v-btn--block v-btn--is-elevated v-btn--has-bg theme--light v-size--default primary"><span class="v-btn__content">Call Us</span></button></a></div>
+        </div>
+        <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-around;">
+          <div class="col" style="flex: 6;">
+            <h3>Property Details</h3>
+            <p style="font-weight: 600; margin-top: 5px;">CODE: </p>
+            <p style="margin-bottom: 0px;">Location:</p>
+            <p style="font-weight: 300;"> </p>
+          </div>
+          <div class="col" style="display: flex; flex: 1; align-items: center; justify-content: flex-end;">
+            <div class="row">
+              <div class="col">
+                <p></p>
+              </div>
+              <div class="col" style="display: flex; justify-content: center;"><button type="button" class="v-icon notranslate v-icon--link mdi mdi-heart-outline theme--light" style="font-size: 40px; color: black;"></button></div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-left: 10px;">
+          <p style="margin-bottom: 0px;">Features</p>
+          <p style="font-weight: 300;"> undefined</p>
+        </div>
+        <div>
+          <h4 style="margin: 1em 0px 0px 10px;">Social Platform</h4>
+          <div role="list" class="v-list v-sheet theme--light" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: flex-start; margin-left: 10px;">
+            <div><a href="javascript:void(0)" class="share-network-email" data-testid="share-network-element" image="" style="text-decoration: none;"><i aria-hidden="true" data-testid="icon-element" class="v-icon notranslate mdi mdi-email theme--light" style="color: rgb(51, 51, 51); caret-color: #333333;"></i></a><a href="javascript:void(0)" class="share-network-facebook" data-testid="share-network-element" image="" style="text-decoration: none;"><i aria-hidden="true" data-testid="icon-element" class="v-icon notranslate mdi mdi-facebook theme--light" style="color: rgb(24, 119, 242); caret-color: #1877f2;"></i></a><a href="javascript:void(0)" class="share-network-linkedin" data-testid="share-network-element" image="" style="text-decoration: none;"><i aria-hidden="true" data-testid="icon-element" class="v-icon notranslate mdi mdi-linkedin theme--light" style="color: rgb(0, 123, 181); caret-color: #007bb5;"></i></a><a href="javascript:void(0)" class="share-network-skype" data-testid="share-network-element" image="" style="text-decoration: none;"><i aria-hidden="true" data-testid="icon-element" class="v-icon notranslate mdi mdi-skype theme--light" style="color: rgb(0, 175, 240); caret-color: #00aff0;"></i></a><a href="javascript:void(0)" class="share-network-telegram" data-testid="share-network-element" image="" style="text-decoration: none;"><i aria-hidden="true" data-testid="icon-element" class="v-icon notranslate mdi mdi-telegram theme--light" style="color: rgb(0, 136, 204); caret-color: #0088cc;"></i></a><a href="javascript:void(0)" class="share-network-twitter" data-testid="share-network-element" image="" style="text-decoration: none;"><i aria-hidden="true" data-testid="icon-element" class="v-icon notranslate mdi mdi-twitter theme--light" style="color: rgb(29, 161, 242); caret-color: #1da1f2;"></i></a><a href="javascript:void(0)" class="share-network-whatsapp" data-testid="share-network-element" image="" style="text-decoration: none;"><i aria-hidden="true" data-testid="icon-element" class="v-icon notranslate mdi mdi-whatsapp theme--light" style="color: rgb(37, 211, 102); caret-color: #25d366;"></i></a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="v-image v-responsive grey lighten-2 theme--light" style="height: 200px;">
+          <div class="v-responsive__sizer" style="padding-bottom: 100%;"></div>
+          <transition-stub name="fade-transition" mode="in-out">
+            <div class="v-image__image v-image__image--preload v-image__image--cover" style="background-position: center center;"></div>
+          </transition-stub>
+          <div class="v-responsive__content"></div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12">
+        <div class="v-image v-responsive grey lighten-2 theme--light" style="height: 200px;">
+          <div class="v-responsive__sizer" style="padding-bottom: 100%;"></div>
+          <transition-stub name="fade-transition" mode="in-out">
+            <div class="v-image__image v-image__image--preload v-image__image--cover" style="background-position: center center;"></div>
+          </transition-stub>
+          <div class="v-responsive__content"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="v-card v-sheet theme--light basil">
+          <div class="v-card__title text-center justify-center py-6">
+            <h1 class="font-weight-bold text-h6 basil--text">
+              More property Details
+            </h1>
+          </div>
+          <div class="v-tabs v-tabs--grow theme--light">
+            <div role="tablist" class="v-item-group theme--light v-slide-group v-tabs-bar v-tabs-bar--is-mobile basil--text transparent">
+              <div class="v-slide-group__prev v-slide-group__prev--disabled">
+                <transition-stub name="fade-transition"></transition-stub>
+              </div>
+              <div class="v-slide-group__wrapper">
+                <div class="v-slide-group__content v-tabs-bar__content">
+                  <div class="v-tabs-slider-wrapper" style="transition: none;">
+                    <div class="v-tabs-slider"></div>
+                  </div>
+                  <div tabindex="0" aria-selected="true" role="tab" class="v-tab v-tab--active"> Features </div>
+                  <div tabindex="0" aria-selected="false" role="tab" class="v-tab"> Monthly Costs </div>
+                  <div tabindex="0" aria-selected="false" role="tab" class="v-tab"> Neighborhood </div>
+                  <div tabindex="0" aria-selected="false" role="tab" class="v-tab"> Landmarks </div>
+                  <div tabindex="0" aria-selected="false" role="tab" class="v-tab"> Rating </div>
+                  <div tabindex="0" aria-selected="false" role="tab" class="v-tab"> Pricing History</div>
+                </div>
+              </div>
+              <div class="v-slide-group__next v-slide-group__next--disabled">
+                <transition-stub name="fade-transition"></transition-stub>
+              </div>
+            </div>
+          </div>
+          <div class="v-window v-item-group theme--light v-tabs-items">
+            <div class="v-window__container">
+              <transition-stub name="">
+                <!---->
+              </transition-stub>
+              <transition-stub name="">
+                <!---->
+              </transition-stub>
+              <transition-stub name="">
+                <!---->
+              </transition-stub>
+              <transition-stub name="">
+                <!---->
+              </transition-stub>
+              <transition-stub name="">
+                <!---->
+              </transition-stub>
+              <transition-stub name="">
+                <!---->
+              </transition-stub>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="v-card v-sheet theme--light basil">
+          <div class="v-card__title text-center justify-center py-6">
+            <h1 class="font-weight-bold text-h6 basil--text">
+              Similar Properties
+            </h1>
+          </div>
+          <div class="v-card__text">
+            <div class="row">
+              <div class="col">
+                <center>
+                  <h3>No Similar Rentals Available</h3>
+                </center>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

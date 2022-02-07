@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditLandmarkVisuals.vue should have a match snapshot 1`] = `
+<div>
+  <base-dialog message="" title=""></base-dialog>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-12">
+        <div class="v-card v-sheet theme--light">
+          <div class="row">
+            <div class="col-sm-12 col-md-8 col-12">
+              <p class="text-h5 ml-5"><button type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--default primary--text"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mr-3 mdi mdi-arrow-left theme--light" style="font-size: 40px;"></i></span></button>
+                0 landmark visuals on this property</p>
+            </div>
+            <div class="pr-5 col-sm-12 col-md-4 col-12"><button type="button" class="mt-2 mr-5 v-btn v-btn--block v-btn--outlined theme--light v-size--default indigo--text"><span class="v-btn__content">Create New Landmark Image</span></button></div>
+          </div>
+          <div class="v-tabs v-tabs--vertical theme--light">
+            <div role="tablist" class="v-item-group theme--light v-slide-group v-tabs-bar v-tabs-bar--is-mobile primary--text">
+              <div class="v-slide-group__prev v-slide-group__prev--disabled">
+                <transition-stub name="fade-transition"></transition-stub>
+              </div>
+              <div class="v-slide-group__wrapper">
+                <div class="v-slide-group__content v-tabs-bar__content">
+                  <div class="v-tabs-slider-wrapper" style="transition: none;">
+                    <div class="v-tabs-slider"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="v-slide-group__next v-slide-group__next--disabled">
+                <transition-stub name="fade-transition"></transition-stub>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div role="dialog" class="v-dialog__container">
+    <!---->
+  </div>
+  <div role="dialog" class="v-dialog__container">
+    <!---->
+  </div>
+</div>
+`;

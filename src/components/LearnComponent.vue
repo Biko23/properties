@@ -48,7 +48,7 @@
                       required
                       solo
                     ></v-text-field>
-                    <v-btn color="primary" class="mr-4" @click="reset">
+                    <v-btn color="primary" class="mr-4">
                       Submit
                     </v-btn>
                   </v-form>
