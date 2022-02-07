@@ -1,3 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`BaseDialog.vue should have a match snapshot 1`] = `<div class="spin"></div>`;
+
+exports[`BaseSpinner.vue should have a match snapshot 1`] = `<div class="spin"></div>`;

@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditProperty.vue should have a match snapshot 1`] = `
+<div>
+  <base-dialog message="" title=""></base-dialog>
+  <div role="dialog" class="v-dialog__container">
+    <!---->
+  </div>
+  <div role="dialog" class="v-dialog__container">
+    <!---->
+  </div>
+  <div role="dialog" class="v-dialog__container">
+    <!---->
+  </div>
+  <div role="dialog" class="v-dialog__container">
+    <!---->
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-xl-12 col-12">
+        <p class="text-h5" style="font-weight: 400; text-align: center; margin-top: 20px;">
+          Edit property details
+        </p> <br>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-12" style="padding-left: 16px;">
+              <div class="row">
+                <div class="col-sm-12 col-md-6 col-12">
+                  <p class="text-h6" style="font-weight: 400;">Property Visuals:</p>
+                </div>
+                <div class="col-sm-12 col-md-6 col-12"><button type="button" class="ma-2 v-btn v-btn--block v-btn--outlined theme--light v-size--default indigo--text"><span class="v-btn__content">Edit property Visuals</span></button></div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 col-md-6 col-12">
+                  <p class="text-h6" style="font-weight: 400;">Neighborhood Visuals:</p>
+                </div>
+                <div class="col-sm-12 col-md-6 col-12"><a href="#/edit-neighborhood-visuals/undefined?type=undefined" class="ma-2 v-btn v-btn--block v-btn--outlined v-btn--router theme--light v-size--default indigo--text"><span class="v-btn__content">Edit Neighborhood Visuals</span></a></div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 col-md-6 col-12">
+                  <p class="text-h6" style="font-weight: 400;">Landmark Visuals:</p>
+                </div>
+                <div class="col-sm-12 col-md-6 col-12"><button type="button" class="ma-2 v-btn v-btn--block v-btn--outlined theme--light v-size--default indigo--text"><span class="v-btn__content">Edit Landmark Visuals</span></button></div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 col-md-6 col-12">
+                  <p class="text-h6" style="font-weight: 400;">Property Value:</p>
+                </div>
+                <div class="col-sm-12 col-md-6 col-12"><button type="button" class="ma-2 v-btn v-btn--block v-btn--outlined theme--light v-size--default indigo--text"><span class="v-btn__content">Edit Property Value</span></button></div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 col-md-6 col-12">
+                  <p class="text-h6" style="font-weight: 400;">Property Features:</p>
+                </div>
+                <div class="col-sm-12 col-md-6 col-12"><button type="button" class="ma-2 v-btn v-btn--block v-btn--outlined theme--light v-size--default indigo--text"><span class="v-btn__content">Edit Property Features</span></button></div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 col-md-6 col-12">
+                  <p class="text-h6" style="font-weight: 400;">Property Location:</p>
+                </div>
+                <div class="col-sm-12 col-md-6 col-12"><button type="button" class="ma-2 v-btn v-btn--block v-btn--outlined theme--light v-size--default indigo--text"><span class="v-btn__content">Edit Property Location</span></button></div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 col-md-6 col-12">
+                  <p class="text-h6" style="font-weight: 400;">Property Legal Protection:</p>
+                </div>
+                <div class="col-sm-12 col-md-6 col-12"><button type="button" class="ma-2 v-btn v-btn--block v-btn--outlined theme--light v-size--default indigo--text"><span class="v-btn__content"> Property Legal Protection</span></button></div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 col-md-12 col-12"><a href="#/property-details" class="ma-2 v-btn v-btn--block v-btn--outlined v-btn--router theme--light v-size--default indigo--text"><span class="v-btn__content">Done Editing</span></a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

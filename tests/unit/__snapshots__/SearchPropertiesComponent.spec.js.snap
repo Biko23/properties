@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchPropertiesComponent.vue should have a match snapshot 1`] = `
+<div>
+  <div class="container container--fluid" id="container">
+    <div role="dialog" class="v-dialog__container">
+      <!---->
+    </div>
+    <div id="property-header" class="row">
+      <div id="result-total">
+        <h3>Properties for Sale</h3> <small style="font-weight: bold;"> results</small>
+      </div>
+      <div id="search-field" style="position: relative;">
+        <div class="v-input theme--light v-text-field v-text-field--single-line v-text-field--filled v-text-field--enclosed v-text-field--outlined v-text-field--placeholder v-select v-autocomplete">
+          <div class="v-input__control">
+            <div role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-owns="list-5" class="v-input__slot white">
+              <fieldset aria-hidden="true">
+                <legend><span>​</span></legend>
+              </fieldset>
+              <div class="v-select__slot"><input autofocus="autofocus" id="input-5" placeholder="Search Properties" type="text" autocomplete="off"><input type="hidden"></div>
+              <div class="v-menu">
+                <!---->
+              </div>
+            </div>
+            <div class="v-text-field__details">
+              <div class="v-messages theme--light">
+                <transition-group-stub tag="div" name="message-transition" class="v-messages__wrapper"></transition-group-stub>
+              </div>
+            </div>
+          </div>
+        </div> <button type="button" class="v-icon notranslate mr-2 v-icon--link mdi mdi-magnify theme--light" style="font-size: 40px; color: blue; position: absolute; right: 0px; top: 10%; z-index: 100;"></button>
+      </div>
+    </div>
+    <div id="main-property" class="row"></div>
+  </div><br>
+</div>
+`;

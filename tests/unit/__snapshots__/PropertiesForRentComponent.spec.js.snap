@@ -1,0 +1,181 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PropertiesForRentComponent.vue should have a match snapshot 1`] = `
+<div>
+  <base-dialog message="" title=""></base-dialog>
+  <div class="container container--fluid" id="container">
+    <div class="row">
+      <div class="col-md-3 col-12" style="display: flex; flex-direction: row;">
+        <div><span style="margin: 0px 20px 0px 0px; padding: 0px;">Advanced Search On</span>
+          <div class="v-input v-input--is-label-active v-input--is-dirty theme--light v-input--selection-controls v-input--switch primary--text" style="margin: 0px; padding: 0px;">
+            <div class="v-input__control">
+              <div class="v-input__slot">
+                <div class="v-input--selection-controls__input"><input aria-checked="true" id="input-4" role="switch" type="checkbox" aria-disabled="false" value="">
+                  <div class="v-input--selection-controls__ripple primary--text"></div>
+                  <div class="v-input--switch__track theme--light primary--text"></div>
+                  <div class="v-input--switch__thumb theme--light primary--text">
+                    <transition-stub name="fab-transition" mode="out-in"></transition-stub>
+                  </div>
+                </div>
+              </div>
+              <div class="v-messages theme--light primary--text">
+                <transition-group-stub tag="div" name="message-transition" class="v-messages__wrapper"></transition-group-stub>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="result-total">
+          <h3>Rentals</h3> <small style="font-weight: bold;"> results</small>
+        </div>
+      </div>
+      <div class="col-md-9 col-12">
+        <div id="property-header" class="row">
+          <div id="advanced-search-field"><button type="button" class="v-btn v-btn--has-bg v-btn--rounded theme--light v-size--default" style="background-color: rgb(59, 110, 243); border-color: #3b6ef3; margin: 10px 5px 0px 0px;"><span class="v-btn__content"><span style="color: white;">All</span></span></button>
+            <div class="v-input theme--light v-text-field v-text-field--single-line v-text-field--solo v-text-field--enclosed v-select">
+              <div class="v-input__control">
+                <div role="button" aria-haspopup="listbox" aria-expanded="false" aria-owns="list-9" class="v-input__slot">
+                  <div class="v-select__slot"><label for="input-9" class="v-label theme--light" style="left: 0px; position: absolute;">Price range</label>
+                    <div class="v-select__selections"><input id="input-9" readonly="readonly" type="text" aria-readonly="false" autocomplete="off"></div>
+                    <div class="v-input__append-inner">
+                      <div class="v-input__icon v-input__icon--append"><i aria-hidden="true" class="v-icon notranslate mdi mdi-menu-down theme--light"></i></div>
+                    </div><input type="hidden" value="0">
+                  </div>
+                  <div class="v-menu">
+                    <!---->
+                  </div>
+                </div>
+                <div class="v-text-field__details">
+                  <div class="v-messages theme--light">
+                    <transition-group-stub tag="div" name="message-transition" class="v-messages__wrapper"></transition-group-stub>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="v-input theme--light v-text-field v-text-field--single-line v-text-field--solo v-text-field--enclosed v-select">
+              <div class="v-input__control">
+                <div role="button" aria-haspopup="listbox" aria-expanded="false" aria-owns="list-14" class="v-input__slot">
+                  <div class="v-select__slot"><label for="input-14" class="v-label theme--light" style="left: 0px; position: absolute;">Feature</label>
+                    <div class="v-select__selections"><input id="input-14" readonly="readonly" type="text" aria-readonly="false" autocomplete="off"></div>
+                    <div class="v-input__append-inner">
+                      <div class="v-input__icon v-input__icon--append"><i aria-hidden="true" class="v-icon notranslate mdi mdi-menu-down theme--light"></i></div>
+                    </div><input type="hidden">
+                  </div>
+                  <div class="v-menu">
+                    <!---->
+                  </div>
+                </div>
+                <div class="v-text-field__details">
+                  <div class="v-messages theme--light">
+                    <transition-group-stub tag="div" name="message-transition" class="v-messages__wrapper"></transition-group-stub>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="v-input theme--light v-text-field v-text-field--single-line v-text-field--solo v-text-field--enclosed v-select">
+              <div class="v-input__control">
+                <div role="button" aria-haspopup="listbox" aria-expanded="false" aria-owns="list-19" class="v-input__slot">
+                  <div class="v-select__slot"><label for="input-19" class="v-label theme--light" style="left: 0px; position: absolute;">Category</label>
+                    <div class="v-select__selections"><input id="input-19" readonly="readonly" type="text" aria-readonly="false" autocomplete="off"></div>
+                    <div class="v-input__append-inner">
+                      <div class="v-input__icon v-input__icon--append"><i aria-hidden="true" class="v-icon notranslate mdi mdi-menu-down theme--light"></i></div>
+                    </div><input type="hidden">
+                  </div>
+                  <div class="v-menu">
+                    <!---->
+                  </div>
+                </div>
+                <div class="v-text-field__details">
+                  <div class="v-messages theme--light">
+                    <transition-group-stub tag="div" name="message-transition" class="v-messages__wrapper"></transition-group-stub>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="v-input theme--light v-text-field v-text-field--single-line v-text-field--solo v-text-field--enclosed v-select">
+              <div class="v-input__control">
+                <div role="button" aria-haspopup="listbox" aria-expanded="false" aria-owns="list-24" class="v-input__slot">
+                  <div class="v-select__slot"><label for="input-24" class="v-label theme--light" style="left: 0px; position: absolute;">Landmark</label>
+                    <div class="v-select__selections"><input id="input-24" readonly="readonly" type="text" aria-readonly="false" autocomplete="off"></div>
+                    <div class="v-input__append-inner">
+                      <div class="v-input__icon v-input__icon--append"><i aria-hidden="true" class="v-icon notranslate mdi mdi-menu-down theme--light"></i></div>
+                    </div><input type="hidden">
+                  </div>
+                  <div class="v-menu">
+                    <!---->
+                  </div>
+                </div>
+                <div class="v-text-field__details">
+                  <div class="v-messages theme--light">
+                    <transition-group-stub tag="div" name="message-transition" class="v-messages__wrapper"></transition-group-stub>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="v-input theme--light v-text-field v-text-field--single-line v-text-field--solo v-text-field--enclosed v-select">
+              <div class="v-input__control">
+                <div role="button" aria-haspopup="listbox" aria-expanded="false" aria-owns="list-29" class="v-input__slot">
+                  <div class="v-select__slot"><label for="input-29" class="v-label theme--light" style="left: 0px; position: absolute;">District</label>
+                    <div class="v-select__selections"><input id="input-29" readonly="readonly" type="text" aria-readonly="false" autocomplete="off"></div>
+                    <div class="v-input__append-inner">
+                      <div class="v-input__icon v-input__icon--append"><i aria-hidden="true" class="v-icon notranslate mdi mdi-menu-down theme--light"></i></div>
+                    </div><input type="hidden">
+                  </div>
+                  <div class="v-menu">
+                    <!---->
+                  </div>
+                </div>
+                <div class="v-text-field__details">
+                  <div class="v-messages theme--light">
+                    <transition-group-stub tag="div" name="message-transition" class="v-messages__wrapper"></transition-group-stub>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="v-input theme--light v-text-field v-text-field--single-line v-text-field--solo v-text-field--enclosed v-select">
+              <div class="v-input__control">
+                <div role="button" aria-haspopup="listbox" aria-expanded="false" aria-owns="list-34" class="v-input__slot">
+                  <div class="v-select__slot"><label for="input-34" class="v-label theme--light" style="left: 0px; position: absolute;">Division</label>
+                    <div class="v-select__selections"><input id="input-34" readonly="readonly" type="text" aria-readonly="false" autocomplete="off"></div>
+                    <div class="v-input__append-inner">
+                      <div class="v-input__icon v-input__icon--append"><i aria-hidden="true" class="v-icon notranslate mdi mdi-menu-down theme--light"></i></div>
+                    </div><input type="hidden">
+                  </div>
+                  <div class="v-menu">
+                    <!---->
+                  </div>
+                </div>
+                <div class="v-text-field__details">
+                  <div class="v-messages theme--light">
+                    <transition-group-stub tag="div" name="message-transition" class="v-messages__wrapper"></transition-group-stub>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="v-input theme--light v-text-field v-text-field--single-line v-text-field--solo v-text-field--enclosed v-select">
+              <div class="v-input__control">
+                <div role="button" aria-haspopup="listbox" aria-expanded="false" aria-owns="list-39" class="v-input__slot">
+                  <div class="v-select__slot"><label for="input-39" class="v-label theme--light" style="left: 0px; position: absolute;">Suburb</label>
+                    <div class="v-select__selections"><input id="input-39" readonly="readonly" type="text" aria-readonly="false" autocomplete="off"></div>
+                    <div class="v-input__append-inner">
+                      <div class="v-input__icon v-input__icon--append"><i aria-hidden="true" class="v-icon notranslate mdi mdi-menu-down theme--light"></i></div>
+                    </div><input type="hidden">
+                  </div>
+                  <div class="v-menu">
+                    <!---->
+                  </div>
+                </div>
+                <div class="v-text-field__details">
+                  <div class="v-messages theme--light">
+                    <transition-group-stub tag="div" name="message-transition" class="v-messages__wrapper"></transition-group-stub>
+                  </div>
+                </div>
+              </div>
+            </div> <button type="button" class="v-btn v-btn--is-elevated v-btn--has-bg theme--light v-size--default primary" style="height: 40px; margin-left: 10px;"><span class="v-btn__content">Search</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="main-property" class="row"></div>
+  </div><br>
+</div>
+`;

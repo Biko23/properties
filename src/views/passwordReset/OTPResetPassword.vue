@@ -72,7 +72,10 @@ export default {
         submittingToken: false
     }),
   methods: {
-    ...mapActions(['generatePasswordResetOTP', 'validateSubmittedOTP']),
+    ...mapActions([
+        'generatePasswordResetOTP', 
+        'validateSubmittedOTP'
+    ]),
     defaultResponse(msg, heading, status) {
         this.message = msg
         this.title = heading

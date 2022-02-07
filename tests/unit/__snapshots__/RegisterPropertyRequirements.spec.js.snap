@@ -1,0 +1,140 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RegisterPropertyRequirements.vue should have a match snapshot 1`] = `
+<div id="main-div">
+  <div class="container">
+    <div style="text-align: center;">
+      <h3 style="color: white;">Requirements for adding A Property</h3>
+      <h4 style="color: rgb(185, 203, 219);">Step 1/4</h4>
+    </div> <br>
+    <div id="form-row" class="row">
+      <div class="col-md-12 col-12">
+        <div class="row">
+          <div class="col-md-4 col-12">
+            <div class="row">
+              <div class="col">
+                <div class="mx-auto v-card v-sheet theme--light" style="max-width: 400px;">
+                  <div class="v-image v-responsive white--text align-end theme--light" style="height: 200px;">
+                    <transition-stub name="fade-transition" mode="in-out">
+                      <div class="v-image__image v-image__image--preload v-image__image--cover" style="background-position: center center;"></div>
+                    </transition-stub>
+                    <div class="v-responsive__content">
+                      <div class="v-card__title">Requirements</div>
+                    </div>
+                  </div>
+                  <div class="v-card__subtitle pb-0">
+                    Registering as a Seller
+                  </div>
+                  <div class="v-card__text text--primary">
+                    <div>→ A Seller can be a broker or a Landlord</div>
+                    <div>→You need to fullfill the following <b style="font-size: 20px; margin-left: 20px;">↓</b></div>
+                  </div>
+                  <div class="v-card__actions"><button type="button" class="v-btn v-btn--text theme--light v-size--default orange--text text--lighten-2"><span class="v-btn__content">
+                                            Requirements
+                                        </span></button>
+                    <div class="spacer"></div> <button type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-chevron-down theme--light"></i></span></button>
+                  </div>
+                  <transition-stub name="expand-transition">
+                    <div style="display: none;">
+                      <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light">
+                      <div class="v-card__text">
+                        <div>→ Provide more info about you <a href="#/profile" class="">here</a>.</div><br>
+                        <div>→ Get Approved by SPL team.</div><br>
+                        <div>→ Upon approval you start selling.</div>
+                      </div>
+                    </div>
+                  </transition-stub>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-12">
+            <div class="row">
+              <div class="col">
+                <div class="mx-auto v-card v-sheet theme--light" style="max-width: 400px;">
+                  <div class="v-image v-responsive white--text align-end theme--light" style="height: 200px;">
+                    <transition-stub name="fade-transition" mode="in-out">
+                      <div class="v-image__image v-image__image--preload v-image__image--cover" style="background-position: center center;"></div>
+                    </transition-stub>
+                    <div class="v-responsive__content">
+                      <div class="v-card__title">Selling Steps</div>
+                    </div>
+                  </div>
+                  <div class="v-card__subtitle pb-0">
+                    Steps to sell a property
+                  </div>
+                  <div class="v-card__text text--primary">
+                    <div>→ There are steps to upload a property</div>
+                    <div>→These are shown below <b style="font-size: 20px; margin-left: 20px;">↓</b></div>
+                  </div>
+                  <div class="v-card__actions"><button type="button" class="v-btn v-btn--text theme--light v-size--default orange--text text--lighten-2"><span class="v-btn__content">
+                                            Selling Steps
+                                        </span></button>
+                    <div class="spacer"></div> <button type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-chevron-down theme--light"></i></span></button>
+                  </div>
+                  <transition-stub name="expand-transition">
+                    <div style="display: none;">
+                      <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light">
+                      <div class="v-card__text">
+                        <div>Step 2: Property info required.</div><br>
+                        <div>Step 3: Neighborhood info required.</div><br>
+                        <div>Step 4: Landmark Info required.</div>
+                      </div>
+                    </div>
+                  </transition-stub>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-12">
+            <div class="row">
+              <div class="col">
+                <div class="mx-auto v-card v-sheet theme--light" style="max-width: 400px;">
+                  <div class="v-image v-responsive white--text align-end theme--light" style="height: 200px;">
+                    <transition-stub name="fade-transition" mode="in-out">
+                      <div class="v-image__image v-image__image--preload v-image__image--cover" style="background-position: center center;"></div>
+                    </transition-stub>
+                    <div class="v-responsive__content">
+                      <div class="v-card__title">Property Approval</div>
+                    </div>
+                  </div>
+                  <div class="v-card__subtitle pb-0">
+                    Steps for property approval
+                  </div>
+                  <div class="v-card__text text--primary">
+                    <div>→ There are steps to approve a property</div>
+                    <div>→These are shown below <b style="font-size: 20px; margin-left: 20px;">↓</b></div>
+                  </div>
+                  <div class="v-card__actions"><button type="button" class="v-btn v-btn--text theme--light v-size--default orange--text text--lighten-2"><span class="v-btn__content">
+                                            Approval Steps
+                                        </span></button>
+                    <div class="spacer"></div> <button type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-chevron-down theme--light"></i></span></button>
+                  </div>
+                  <transition-stub name="expand-transition">
+                    <div style="display: none;">
+                      <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light">
+                      <div class="v-card__text">
+                        <div>Step 1: On upload property goes to SPL.</div><br>
+                        <div>Step 2: Due deligence is done.</div><br>
+                        <div>Step 3: Property gets approved and appear on the website.</div>
+                      </div>
+                    </div>
+                  </transition-stub>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col" style="display: flex; flex-direction: row; justify-content: center;"><a href="#/register" class=""><button type="button" class="v-btn v-btn--is-elevated v-btn--has-bg theme--light v-size--default primary"><span class="v-btn__content">Proceed to Next Step</span></button></a></div>
+        </div>
+      </div>
+    </div> <br>
+  </div>
+  <div id="col-hidden">
+    <header class="v-sheet theme--dark v-toolbar v-toolbar--dense v-app-bar" style="height: 48px; margin-top: 0px; transform: translateY(0px); left: 0px; right: 0px; background-color: rgb(68, 119, 251); border-color: #4477fb;">
+      <div class="v-toolbar__content" style="height: 48px;"><button type="button" value="recent" class="v-btn v-btn--is-elevated v-btn--has-bg theme--dark v-size--default" style="background-color: rgb(68, 119, 251);"><span class="v-btn__content"><img src="https://res.cloudinary.com/diued7ugb/image/upload/v1625949058/sms_black_24dp_3_og1r7y.png" alt="" width="30" srcset=""> <span style="color: rgb(239, 158, 158);">14</span></span></button> <button type="button" class="v-btn v-btn--is-elevated v-btn--has-bg theme--dark v-size--default" style="background-color: rgb(68, 119, 251);"><span class="v-btn__content"><img src="https://res.cloudinary.com/diued7ugb/image/upload/v1625949073/notifications_black_24dp_2_jvvady.png" alt="" width="30" srcset=""> <span style="color: rgb(239, 158, 158);">14</span></span></button> <button type="button" class="v-btn v-btn--is-elevated v-btn--has-bg theme--dark v-size--default" style="background-color: rgb(68, 119, 251);"><span class="v-btn__content"><img src="https://res.cloudinary.com/diued7ugb/image/upload/v1625948894/home_black_24dp_5_sng2rd.png" alt="" width="30" srcset=""></span></button> <button type="button" value="recent" class="v-btn v-btn--is-elevated v-btn--has-bg theme--dark v-size--default" style="width: 80px; margin-left: auto; background-color: rgb(68, 119, 251);"><span class="v-btn__content"><span>Buy/Rent</span></span></button> <button type="button" value="recent" class="v-btn v-btn--is-elevated v-btn--has-bg theme--dark v-size--default" style="width: 60px; margin-left: auto; background-color: rgb(68, 119, 251);"><span class="v-btn__content"><span>Sell</span></span></button></div>
+    </header>
+  </div>
+</div>
+`;

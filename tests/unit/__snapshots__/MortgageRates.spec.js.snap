@@ -1,0 +1,162 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MortgageRates.vue should have a match snapshot 1`] = `
+<div>
+  <div class="container container--fluid" id="container">
+    <div class="v-window v-item-group theme--dark v-window--show-arrows-on-hover v-carousel v-carousel--hide-delimiter-background" style="height: 500px;">
+      <div class="v-window__container">
+        <transition-stub name="">
+          <div class="v-window-item">
+            <div class="v-image v-responsive v-carousel__item theme--light" style="height: 500px;">
+              <transition-stub name="fade-transition" mode="in-out">
+                <div class="v-image__image v-image__image--preload v-image__image--cover" style="background-position: center center;"></div>
+              </transition-stub>
+              <div class="v-responsive__content">
+                <div class="row fill-height align-center justify-center">
+                  <div class="text-h4">
+                    <p id="intro">Financing your next home starts here.</p>
+                    <p id="intro2">Directly to us, through an agent, or yourself</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </transition-stub>
+        <div class="v-window__prev"><button type="button" class="v-btn v-btn--icon v-btn--round theme--dark v-size--default" aria-label="Previous visual"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-chevron-left theme--dark" style="font-size: 36px;"></i></span></button></div>
+        <div class="v-window__next"><button type="button" class="v-btn v-btn--icon v-btn--round theme--dark v-size--default" aria-label="Next visual"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-chevron-right theme--dark" style="font-size: 36px;"></i></span></button></div>
+      </div>
+      <div class="v-carousel__controls">
+        <div class="v-item-group theme--dark"></div>
+      </div>
+    </div>
+  </div> <br>
+  <div style="text-align: center; margin-top: 15px;">
+    <h3><span style="color: rgb(59, 110, 243);">YOUR</span> DREAM HOME</h3>
+  </div>
+  <div class="container">
+    <div style="margin-bottom: 10px;">
+      <h3 style="font-weight: 300; font-size: 20px;">PROPERTY, HOME LOANS AND MORTGAGES</h3>
+    </div>
+    <div class="row" style="justify-content: center;">
+      <div class="mb-5 col-md-6 col-12">
+        <div class="mx-auto v-card v-sheet theme--light" style="max-width: 600px;">
+          <div class="v-card__title text-h4" style="font-weight: 300; margin-bottom: 10px;">House Completion Loan</div>
+          <div class="v-card__subtitle text--primary">
+            Do you need to complete your dream home? It Can Be possible to meet your goal.
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-6 col-12">
+              <div class="v-card__text text--primary" style="margin-top: 10px;">
+                <div style="font-size: 40px; font-weight: 300;">20 years</div><br>
+                <div style="font-size: 12px;">FLEXIBLE REPAYMENT PERIODS</div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-12">
+              <div class="v-card__text text--primary" style="margin-top: 10px;">
+                <div style="font-size: 40px; font-weight: 300;">30 Million<sup>UGX</sup></div><br>
+                <div style="font-size: 12px;">MINIMUM AMOUNT AVAILABLE</div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-12">
+              <div class="v-card__text text--primary" style="margin-top: 10px;">
+                <div style="font-size: 40px; font-weight: 300;">1 Billion<sup>UGX</sup></div><br>
+                <div style="font-size: 12px;">MAXIMUM LOAN AMOUNT</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5 col-12">
+        <div class="v-card v-sheet theme--light" style="max-width: auto;">
+          <div class="v-image v-responsive theme--light" style="height: 350px;">
+            <transition-stub name="fade-transition" mode="in-out">
+              <div class="v-image__image v-image__image--preload v-image__image--cover" style="background-position: center center;"></div>
+            </transition-stub>
+            <div class="v-responsive__content"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-5 col-12">
+        <div class="v-card v-sheet theme--light" style="max-width: auto;">
+          <div class="v-image v-responsive theme--light" style="height: 402px;">
+            <transition-stub name="fade-transition" mode="in-out">
+              <div class="v-image__image v-image__image--preload v-image__image--cover" style="background-position: center center;"></div>
+            </transition-stub>
+            <div class="v-responsive__content"></div>
+          </div>
+        </div>
+      </div>
+      <div class="mb-5 col-md-6 col-12">
+        <div class="mx-auto v-card v-sheet theme--light" style="max-width: 600px;">
+          <div class="v-card__title text-h4" style="font-weight: 300; margin-bottom: 10px;">House Purchase Loan</div>
+          <div class="v-card__subtitle text--primary">
+            Have you identified land to buy or would you like to get in touch with reputable property developers? It can be possible to finance your goal to become a landowner with the Land Purchase Loan.
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-6 col-12">
+              <div class="v-card__text text--primary" style="margin-top: 10px;">
+                <div style="font-size: 40px; font-weight: 300;">20 years</div><br>
+                <div style="font-size: 12px;">FLEXIBLE REPAYMENT PERIODS</div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-12">
+              <div class="v-card__text text--primary" style="margin-top: 10px;">
+                <div style="font-size: 40px; font-weight: 300;">30 Million<sup>UGX</sup></div><br>
+                <div style="font-size: 12px;">MINIMUM AMOUNT AVAILABLE</div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-12">
+              <div class="v-card__text text--primary" style="margin-top: 10px;">
+                <div style="font-size: 40px; font-weight: 300;">1 Billion<sup>UGX</sup></div><br>
+                <div style="font-size: 12px;">MAXIMUM LOAN AMOUNT</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="mb-5 col-md-6 col-12">
+        <div class="mx-auto v-card v-sheet theme--light" style="max-width: 600px;">
+          <div class="v-card__title text-h4" style="font-weight: 300; margin-bottom: 10px;">Land Purchase Loan</div>
+          <div class="v-card__subtitle text--primary">
+            Are you are looking to buy a house or flat? Buy an existing house, condominium or apartment with this great mortgage solution. It can be possible to be a home owner at the best rates on the market. Get your property with reputable developers, with affordable insurance from our trusted partners. Reach out today.
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-6 col-12">
+              <div class="v-card__text text--primary" style="margin-top: 10px;">
+                <div style="font-size: 40px; font-weight: 300;">5 years</div><br>
+                <div style="font-size: 12px;">REPAYMENT PERIOD Up TO</div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-12">
+              <div class="v-card__text text--primary" style="margin-top: 10px;">
+                <div style="font-size: 40px; font-weight: 300;">30 Million<sup>UGX</sup></div><br>
+                <div style="font-size: 12px;">MINIMUM LOAN AMOUNT</div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-12">
+              <div class="v-card__text text--primary" style="margin-top: 10px;">
+                <div style="font-size: 40px; font-weight: 300; width: 16rem;">300 Million<sup>UGX</sup></div><br>
+                <div style="font-size: 12px;">MAXIMUM LOAN AMOUNT</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5 col-12">
+        <div class="v-card v-sheet theme--light" style="max-width: auto;">
+          <div class="v-image v-responsive theme--light" style="height: 420px;">
+            <transition-stub name="fade-transition" mode="in-out">
+              <div class="v-image__image v-image__image--preload v-image__image--cover" style="background-position: center center;"></div>
+            </transition-stub>
+            <div class="v-responsive__content"></div>
+          </div>
+        </div>
+      </div>
+    </div><br><br>
+  </div>
+</div>
+`;

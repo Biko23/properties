@@ -1,11 +1,11 @@
 import { createLocalVue, mount } from '@vue/test-utils'
-import ViewSimilarProperty from '@/components/ViewSimilarProperty.vue'
+import ViewRentalProperty from '@/components/ViewRentalProperty.vue'
 import Vuetify from 'vuetify'
 import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 
 
-describe('ViewSimilarProperty.vue', () => {
+describe('ViewRentalProperty.vue', () => {
     const localVue = createLocalVue()
     localVue.use(Vuex)
     localVue.use(VueRouter)
@@ -15,7 +15,6 @@ describe('ViewSimilarProperty.vue', () => {
     let vuetify
     let router
 
-    // changed all query from html markup to computed, if fails revert
     beforeEach(() => {
         vuetify = new Vuetify()
         router = new VueRouter()
@@ -31,21 +30,23 @@ describe('ViewSimilarProperty.vue', () => {
             addPropertyToFavorites: jest.fn(),
             checkIfUserIsAlreadyInterestedInAProperty: jest.fn(),
             expressInterestInBuyingAProperty: jest.fn(),
+            getSimilarProperties: jest.fn(),
             postAUserLog: jest.fn()
         }
         getters = {
-            allSinglePropertyVisuals:  () => ([{
-                'property_number': 'E45D5697'
-            }]),
+            allSinglePropertyVisuals: () => ([{created_by: 'Isaac'}]),
             allSinglePropertyNearbyLandmarkVisuals: () => ({}),
             allSingleNeighborhoodVisuals: () => ({}),
-            currentPropertyValue: () => ({}),
+            currentRentalValue: () => ({}),
             currentPropertyPriceHistory: () => ({}),
-            allCurrentPropertyFeatures: () => ([{name: '3 bedroom'}, { name: '1 garage' }]),
+            allCurrentPropertyFeatures: () => ([{}]),
             loginState: () => ({}),
             currentLoggedinUser: () => ({}),
-            allCurrentUserFavoriteProperties: () => ({}),
-            checkUserInterestInProperty: () => ({})           
+            allCurrentUserFavoriteProperties: () => ([{
+                property_id: 1
+            }]),
+            checkUserInterestInProperty: () => ({}),
+            allSimilarProperties: () => ({})           
 
         }
         store = new Vuex.Store({
@@ -55,7 +56,7 @@ describe('ViewSimilarProperty.vue', () => {
     })
 
     const mountFactory = options => {
-        return mount(ViewSimilarProperty, {
+        return mount(ViewRentalProperty, {
             localVue,
             vuetify,
             store,
@@ -66,22 +67,11 @@ describe('ViewSimilarProperty.vue', () => {
 
     it('should have a match snapshot', () => {
         const commaFormatted = jest.fn()
-        const confirmIfPropertyIsAlreaydAddedToInterests = jest.fn()
         const wrapper = mountFactory({
-            methods: { commaFormatted, confirmIfPropertyIsAlreaydAddedToInterests }
+            methods: { commaFormatted }
         })
         expect(wrapper.html()).toMatchSnapshot()
     })
-
-    it('should have called "confirmIfPropertyIsAlreaydAddedToInterests" once when the component is created', () => {
-        const commaFormatted = jest.fn()
-        const confirmIfPropertyIsAlreaydAddedToInterests = jest.fn()
-
-        const wrapper = mountFactory({
-            methods: { commaFormatted, confirmIfPropertyIsAlreaydAddedToInterests }
-        })
-
-        expect(confirmIfPropertyIsAlreaydAddedToInterests).toHaveBeenCalledTimes(1)
-    }) 
+    
 })
 
