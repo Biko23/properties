@@ -123,7 +123,7 @@ export default {
         userSignupDetails: {},
         rules: {
             required: value => !!value || "Required.",
-            min: v => (v && v.length >= 6) || "Min 8 characters",
+            min: v => (v && v.length >= 8) || "Min 8 characters",
             password: v => /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/.test(v) || "Password should have an upper case, lower case and letters",
             nameMin: v => (v && v.length >= 2) || "Min 3 characters",
             char: v => /^\w+([a-zA-Z ])+$/.test(v) || "Only characters allowed"

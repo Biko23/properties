@@ -4,7 +4,7 @@ import Vuetify from 'vuetify'
 import Vuex from 'vuex'
 
 
-describe('UserLogs.vue', () => {
+describe('UserInterestedProperties.vue', () => {
     const localVue = createLocalVue()
     localVue.use(Vuex)
     let actions

@@ -87,9 +87,9 @@
                                         <div v-show="showCard2">
                                             <v-divider></v-divider>
                                             <v-card-text>
-                                                <div>Step 2: Property info required.</div><br />
-                                                <div>Step 3: Neighborhood info required.</div><br />
-                                                <div>Step 4: Landmark Info required.</div>
+                                                <div>Step 1: Property info required.</div><br />
+                                                <div>Step 2: Neighborhood info required.</div><br />
+                                                <div>Step 3: Landmark Info required.</div>
                                             </v-card-text>
                                         </div>
                                     </v-expand-transition>
@@ -131,9 +131,9 @@
                                         <div v-show="showCard3">
                                             <v-divider></v-divider>
                                             <v-card-text>
-                                                <div>Step 1: On upload property goes to SPL.</div><br />
+                                                <div>Step 1: On upload, property goes to SPL.</div><br />
                                                 <div>Step 2: Due deligence is done.</div><br />
-                                                <div>Step 3: Property gets approved and appear on the website.</div>
+                                                <div>Step 3: Property gets approved and appears on the website.</div>
                                             </v-card-text>
                                         </div>
                                     </v-expand-transition>
