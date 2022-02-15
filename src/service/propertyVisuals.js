@@ -62,7 +62,7 @@ export default {
       let formData = new FormData();
       formData.append("file", propertyVisuals.editedVisualImage, propertyVisuals.editedVisualImage.name);
       formData.append("description", propertyVisuals.description);
-      formData.append("visuals_id", propertyVisuals.visuals_id);
+      formData.append("property_id", propertyVisuals.property_id);
       formData.append("updated_by", propertyVisuals.updated_by);
       const response = await API.marketPlaceApi.put(`/property-visuals/${propertyVisuals.visuals_id}`, formData)
       return response

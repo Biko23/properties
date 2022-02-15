@@ -28,12 +28,13 @@
                     </v-col>
                     <v-col class="d-flex" cols="12" sm="6">
                       <v-combobox
-                        v-model="property.features"
-                        :rules="[propertyRules.features]"
-                        :items="allPropertyFeatures"
-                        label="Select Feature"
-                        multiple
-                        solo
+                          @click="alertData"
+                          v-model="property.features"
+                          :rules="[propertyRules.features]"
+                          :items="allPropertyFeatures"
+                          label="Select Feature"
+                          multiple
+                          solo
                       ></v-combobox>
                     </v-col>
                 </v-row>
@@ -256,6 +257,9 @@ export default {
       "fetchDivisionsByDistrictId",
       "fetchSuburbsByDistrictId"
     ]),
+    alertData(){
+      alert('Hello')
+    },
     async fetchDistricts(){
       try {
         const response = await this.fetchAllDistricts();
