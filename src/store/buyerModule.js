@@ -406,10 +406,6 @@ const actions = {
                         listed_for_name: sale.listed_for_name,
                         when_saved: sale.when_saved_ // returned when saved
                     }
-                    // 
-                    bought_: true
-                    // 
-
                 });
 
                 const favoriteRents = (responseRent.data.result).map(rental => {
