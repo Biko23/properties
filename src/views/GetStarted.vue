@@ -250,6 +250,7 @@ export default {
       if(this.loginState == true) {
         try {
           const foundRole = this.allRoles.map(eachRole => eachRole.name).indexOf(role);
+          console.log(foundRole);
           if(foundRole > -1){
             const roleId = this.allRoles[foundRole].role_id
             this.checkUserSellerStatus(roleId);

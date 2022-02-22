@@ -11,6 +11,7 @@
         <h4 style="color: #b9cbdb">Step 2/4</h4>
       </div>
       <br />
+      <p>{{ allPropertyFeatures }}</p>
       <v-form ref="propertyForm1" v-model="valid" lazy-validation>
         <v-row id="form-row">
           <v-col cols="12" md="12">
@@ -27,14 +28,53 @@
                       ></v-select>
                     </v-col>
                     <v-col class="d-flex" cols="12" sm="6">
-                      <v-combobox
-                        v-model="property.features"
-                        :rules="[propertyRules.features]"
-                        :items="allPropertyFeatures"
-                        label="Select Feature"
-                        multiple
-                        solo
-                      ></v-combobox>
+
+                        <div class="text-center">
+                          <v-dialog
+                            v-model="featuresDialog"
+                            width="500"
+                          >
+                            <template v-slot:activator="{ on, attrs }">
+                              <v-btn
+                                @click="setFeatures()"
+                                v-bind="attrs"
+                                v-on="on">
+                                  Features
+                              </v-btn>
+                            </template>
+
+                            <v-card>
+                              <v-card-title class="text-h5 grey lighten-2">
+                                Property Features
+                              </v-card-title>
+                              <ul id="example-2">
+                                <li v-for="(feature, index) in allPropertyFeatures">
+                                  {{ feature }}
+                                </li>
+                              </ul>
+                              <v-data-table
+                                :headers="featureHeaders"
+                                :items="allPropertyFeatures"
+                                :search="search"
+                              ></v-data-table>
+
+                              <v-divider></v-divider>
+
+                              <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn
+                                  color="primary"
+                                  text
+                                  @click="featuresDialog = false"
+                                >
+                                  Save
+                                </v-btn>
+                              </v-card-actions>
+                            </v-card>
+                          </v-dialog>
+                        </div>
+                        
+
                     </v-col>
                 </v-row>
              </v-col>
@@ -206,6 +246,7 @@ export default {
     submitting: false,
     message: '',
     title: '',
+    featuresDialog: false,
     state: false,
     districts: [],
     divisions: [],
@@ -219,7 +260,19 @@ export default {
       description: "",
       imageValidatorField: "",
       features: [],
-      visuals: []
+      visuals: [],
+      featureHeaders: [
+          {
+            sortable: false,
+            text: 'Name',
+            value: 'text',
+          },
+          {
+            sortable: false,
+            text: 'Number',
+            value: 'quantity',
+          }
+      ]
     },
     valid: true,
     propertyRules: {
@@ -256,6 +309,12 @@ export default {
       "fetchDivisionsByDistrictId",
       "fetchSuburbsByDistrictId"
     ]),
+    
+    setFeatures () {
+      console.log("Dialogue not loading");
+      this.featuresDialog = true
+      console.log(this.featuresDialog);
+    },
     async fetchDistricts(){
       try {
         const response = await this.fetchAllDistricts();
