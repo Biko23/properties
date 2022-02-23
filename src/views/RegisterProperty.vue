@@ -47,16 +47,52 @@
                               <v-card-title class="text-h5 grey lighten-2">
                                 Property Features
                               </v-card-title>
-                              <ul id="example-2">
-                                <li v-for="(feature, index) in allPropertyFeatures">
-                                  {{ feature }}
-                                </li>
-                              </ul>
-                              <v-data-table
-                                :headers="featureHeaders"
+                              
+                              <v-simple-table>
+                                <template v-slot:default>
+                                  <thead>
+                                    <tr>
+                                      <th class="text-left">
+                                        Name
+                                      </th>
+                                      <th class="text-left">
+                                        Quantity
+                                      </th>
+                                      <th class="text-left">
+                                        Add
+                                      </th>
+                                      <th class="text-left">
+                                        Subtract
+                                      </th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr
+                                      v-for="item in allPropertyFeatures"
+                                      :key="item.name"
+                                    >
+                                      <td>{{ item.feature }}</td>
+                                      <td>{{ item.quantity }}</td>
+                                      <td @click="incrementQuantity()">
+                                        <v-icon
+                                          class="mr-2" color="warning" v-bind="attrs" @click="addMemberAccount(item)" v-on="on"
+                                        >mdi-plus
+                                        </v-icon>
+                                      </td>
+                                      <td @click="decrementQuantity()">
+                                        <v-icon
+                                          class="mr-2" color="warning" v-bind="attrs" @click="addMemberAccount(item)" v-on="on"
+                                        >mdi-minus
+                                        </v-icon>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </template>
+                              </v-simple-table>
+                              <!-- <v-data-table
+                                :headers="headers"
                                 :items="allPropertyFeatures"
-                                :search="search"
-                              ></v-data-table>
+                              ></v-data-table> -->
 
                               <v-divider></v-divider>
 
@@ -261,17 +297,23 @@ export default {
       imageValidatorField: "",
       features: [],
       visuals: [],
-      featureHeaders: [
+      headers: [
           {
             sortable: false,
-            text: 'Name',
-            value: 'text',
+            text: 'name',
+            value: 'feature',
           },
           {
             sortable: false,
             text: 'Number',
             value: 'quantity',
-          }
+          },
+          {
+            text: 'Actions',
+            value: 'actions',
+            sortable: false,
+            align: 'right',
+          },
       ]
     },
     valid: true,

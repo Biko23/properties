@@ -580,13 +580,13 @@ const mutations = {
             }
         }))
     ,
-    setPropertyFeatures: (state, propertyFeatures) => (state.propertyFeatures = propertyFeatures
-        .map(propertyFeature => {
-            return {
-                value: propertyFeature.features_id,
-                text: propertyFeature.feature
-            }
-        })),
+    setPropertyFeatures: (state, propertyFeatures) => (state.propertyFeatures = propertyFeatures),
+        // .map(propertyFeature => {
+        //     return {
+        //         id: propertyFeature.features_id,
+        //         name: propertyFeature.feature
+        //     }
+        // })),
     setPropertyLandkmarkTypes: (state, propertyLandmarkTypes) => (state.propertyLandmarkTypes = propertyLandmarkTypes
         .map(propertyLandmarkType => {
             return {
