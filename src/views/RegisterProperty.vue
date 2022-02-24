@@ -34,12 +34,26 @@
                             width="500"
                           >
                             <template v-slot:activator="{ on, attrs }">
+                              <v-col cols="12" md="12">
                               <v-btn
                                 @click="setFeatures()"
                                 v-bind="attrs"
                                 v-on="on">
                                   Features
                               </v-btn>
+                              <v-text-field
+                                  background-color="#e7f0ff"
+                                  color="#e7f0ff"
+                                  style="margin-top: -7%; z-index: 0;"
+                                  v-model="property.featureValidatorField"
+                                  :rules="[propertyRules.featuresCheck]"
+                                  class="custom-label-color"
+                                  readonly
+                                  flat
+                                  hidden
+                                >
+                                </v-text-field>
+                              </v-col>
                             </template>
 
                             <v-card>
@@ -55,13 +69,11 @@
                                         Name
                                       </th>
                                       <th class="text-left">
+                                      </th>
+                                      <th class="text-center">
                                         Quantity
                                       </th>
                                       <th class="text-left">
-                                        Add
-                                      </th>
-                                      <th class="text-left">
-                                        Subtract
                                       </th>
                                     </tr>
                                   </thead>
@@ -71,16 +83,16 @@
                                       :key="item.feature_type_id"
                                     >
                                       <td>{{ item.name }}</td>
-                                      <td>{{ item.quantity }}</td>
-                                      <td>
+                                      <td class="text-right">
                                         <v-icon
-                                          class="mr-2" color="warning" v-bind="attrs" @click="adjustQuantity(item, 'increment')"
+                                          class="mr-2" color="blue" v-bind="attrs" @click="adjustQuantity(item, 'increment')"
                                         >mdi-plus
                                         </v-icon>
                                       </td>
-                                      <td>
+                                      <td class="text-center">{{ item.quantity }}</td>
+                                      <td class="text-left">
                                         <v-icon
-                                          class="mr-2" color="warning" v-bind="attrs" @click="adjustQuantity(item, 'decrement')"
+                                          class="mr-2" color="blue" v-bind="attrs" @click="adjustQuantity(item, 'decrement')"
                                         >mdi-minus
                                         </v-icon>
                                       </td>
@@ -296,6 +308,7 @@ export default {
       propertyDescription: "",
       description: "",
       imageValidatorField: "",
+      featureValidatorField: "",
       features: [],
       visuals: [],
       headers: [
@@ -322,12 +335,17 @@ export default {
       type: (value) => !!value || "Field is required.",
       description: (v) => (v && v.length >= 4) || "Min characters should be 5",
       propertyDescription: (value) => !!value || "Property Description is required.",
-      features(value) {
-        if (value instanceof Array && value.length == 0) {
-          return "Features are required";
-        }
-        return !!value || "Features are required.";
-      }, 
+      // features(value) {
+      //   for (let index = 0; index < value.length; index++) {
+      //     const element = value[index];
+          
+      //   }
+      //   if (value instanceof Array && value.length == 0) {
+      //     return "Features are required";
+      //   }
+      //   return !!value || "Features are required.";
+      // },
+      featuresCheck: (value) => !!value || 'Features are required.',
       imageSelectCheck: (value) => !!value || 'At least one image is required.'
     },
     hide: true,
@@ -354,6 +372,16 @@ export default {
     ]),
     saveFeatures () {
       console.log(this.features);
+      let featureQuantities = []
+      for (let index = 0; index < this.features.length; index++) {
+        const feature = this.features[index];
+        if (feature.quantity > 0) {
+          featureQuantities.push(feature.quantity)          
+        }    
+      this.property.featureValidatorField = featureQuantities.length <= 0 ? "" : featureQuantities[0];
+        
+      }
+      console.log(featureQuantities);  
       this.featuresDialog = false
       this.property.features = this.features
     },
