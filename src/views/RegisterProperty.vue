@@ -371,7 +371,6 @@ export default {
       "fetchSuburbsByDistrictId"
     ]),
     saveFeatures () {
-      console.log(this.features);
       let featureQuantities = []
       for (let index = 0; index < this.features.length; index++) {
         const feature = this.features[index];
@@ -380,28 +379,22 @@ export default {
         }    
       this.property.featureValidatorField = featureQuantities.length <= 0 ? "" : featureQuantities[0];
         
-      }
-      console.log(featureQuantities);  
+      } 
       this.featuresDialog = false
       this.property.features = this.features
     },
     setFeatures () {
-      console.log("Dialogue not loading");
       this.featuresDialog = true
-      console.log(this.featuresDialog);
       for (let index = 0; index < this.allPropertyFeatures.length; index++) {
         let feature = {
           name: this.allPropertyFeatures[index].feature,
           feature_type_id: this.allPropertyFeatures[index].features_id,
           quantity: 0
         }
-        // let feature = this.allPropertyFeatures[index]
-        // feature.quantity = 0
         this.features.push(feature)        
       }
     },
     adjustQuantity(item, action) {
-      console.log(item);
       if (action === 'increment') {
         const itemIndex = this.features.findIndex(feature => feature.feature_type_id == item.feature_type_id)
         item.quantity += 1
