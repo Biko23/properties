@@ -24,6 +24,7 @@ export default {
                 for (let feature of featuresToSave) {
                     formData.append("feature_type_id", feature.feature_type_id);
                     formData.append("name", feature.name);
+                    formData.append("quantity", feature.quantity);
                 }
                 const response = await API.marketPlaceApi.post(`/feature-type-lookup/${selectedFeatures.property_id}`, formData)
                 return response

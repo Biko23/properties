@@ -116,6 +116,7 @@ const actions = {
         }
     },
     async addPropertyDataFromPageOne({ commit, rootState }, propertyDataOne) {
+        console.log(propertyDataOne);
         try {
             await commit('setPropertyRegisterFirstData', propertyDataOne);
             await commit('setPropertySubmissionState', 1); // determine value table

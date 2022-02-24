@@ -11,7 +11,6 @@
         <h4 style="color: #b9cbdb">Step 2/4</h4>
       </div>
       <br />
-      <p>{{ allPropertyFeatures }}</p>
       <v-form ref="propertyForm1" v-model="valid" lazy-validation>
         <v-row id="form-row">
           <v-col cols="12" md="12">
@@ -68,20 +67,20 @@
                                   </thead>
                                   <tbody>
                                     <tr
-                                      v-for="item in allPropertyFeatures"
-                                      :key="item.name"
+                                      v-for="item in features"
+                                      :key="item.feature_type_id"
                                     >
-                                      <td>{{ item.feature }}</td>
+                                      <td>{{ item.name }}</td>
                                       <td>{{ item.quantity }}</td>
-                                      <td @click="incrementQuantity()">
+                                      <td>
                                         <v-icon
-                                          class="mr-2" color="warning" v-bind="attrs" @click="addMemberAccount(item)" v-on="on"
+                                          class="mr-2" color="warning" v-bind="attrs" @click="adjustQuantity(item, 'increment')"
                                         >mdi-plus
                                         </v-icon>
                                       </td>
-                                      <td @click="decrementQuantity()">
+                                      <td>
                                         <v-icon
-                                          class="mr-2" color="warning" v-bind="attrs" @click="addMemberAccount(item)" v-on="on"
+                                          class="mr-2" color="warning" v-bind="attrs" @click="adjustQuantity(item, 'decrement')"
                                         >mdi-minus
                                         </v-icon>
                                       </td>
@@ -101,7 +100,7 @@
                                 <v-btn
                                   color="primary"
                                   text
-                                  @click="featuresDialog = false"
+                                  @click="saveFeatures()"
                                 >
                                   Save
                                 </v-btn>
@@ -282,7 +281,9 @@ export default {
     submitting: false,
     message: '',
     title: '',
+    quantity: 0,
     featuresDialog: false,
+    features: [],
     state: false,
     districts: [],
     divisions: [],
@@ -351,12 +352,43 @@ export default {
       "fetchDivisionsByDistrictId",
       "fetchSuburbsByDistrictId"
     ]),
-    
+    saveFeatures () {
+      console.log(this.features);
+      this.featuresDialog = false
+      this.property.features = this.features
+    },
     setFeatures () {
       console.log("Dialogue not loading");
       this.featuresDialog = true
       console.log(this.featuresDialog);
+      for (let index = 0; index < this.allPropertyFeatures.length; index++) {
+        let feature = {
+          name: this.allPropertyFeatures[index].feature,
+          feature_type_id: this.allPropertyFeatures[index].features_id,
+          quantity: 0
+        }
+        // let feature = this.allPropertyFeatures[index]
+        // feature.quantity = 0
+        this.features.push(feature)        
+      }
     },
+    adjustQuantity(item, action) {
+      console.log(item);
+      if (action === 'increment') {
+        const itemIndex = this.features.findIndex(feature => feature.feature_type_id == item.feature_type_id)
+        item.quantity += 1
+        this.features.splice(itemIndex, 1, item)
+        
+      } else {
+        if (item.quantity > 0) {
+        const itemIndex = this.features.findIndex(feature => feature.feature_type_id == item.feature_type_id)
+        item.quantity -= 1
+        this.features.splice(itemIndex, 1, item)
+        } else {
+          this.defaultResponse('No negative values accepted.', 'Error', true);          
+        }        
+      }
+      },
     async fetchDistricts(){
       try {
         const response = await this.fetchAllDistricts();
@@ -445,6 +477,7 @@ export default {
     this.fetchPropertyFeatures();
     this.fetchPropertyCategories();
     this.fetchDistricts();
+    console.log(this.features)
   },
 };
 </script>
