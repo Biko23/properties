@@ -86,7 +86,7 @@
               justify-content: space-between;
             ">
                     <router-link style="text-decoration: none;" to="/register">
-                        <v-btn style="background-color: grey; width: 200px">
+                        <v-btn style="background-color: grey; max-width: 200px">
                             <span style="
                   color: #ffffff;
                   font-size: 18px;
@@ -101,7 +101,7 @@
                         </v-btn>
                     </router-link>
                     <v-btn
-                      style="background-color: #3b6ef3; width: 200px;"
+                      style="background-color: #3b6ef3; max-width: 200px;"
                       :disabled="!valid"
                       @click="storePropertyData"
                     >
@@ -123,12 +123,10 @@
         </v-form>
         <br />
     </v-container>
-    <botton-nav />
 </div>
 </template>
 
 <script>
-import BottonNav from "../components/BottonNav.vue";
 import UploadImages from "vue-upload-drop-images";
 import {
     mapActions,
@@ -159,7 +157,6 @@ export default {
         },
     }),
     components: {
-        BottonNav,
         UploadImages
     },
     methods: {

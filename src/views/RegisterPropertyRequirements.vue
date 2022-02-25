@@ -172,12 +172,10 @@
         </v-row>
         <br />
     </v-container>
-    <botton-nav />
 </div>
 </template>
 
 <script>
-import BottonNav from "../components/BottonNav.vue";
 import {
   mapActions,
     mapGetters
@@ -190,9 +188,6 @@ export default {
         showCard2: false,
         showCard3: false
     }),
-    components: {
-        BottonNav
-    },
     methods: {
         ...mapActions(["postAUserLog"])
     },
