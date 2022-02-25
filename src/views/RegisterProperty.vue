@@ -27,34 +27,38 @@
                       ></v-select>
                     </v-col>
                     <v-col class="d-flex" cols="12" sm="6">
+                      <v-row>
+                        <v-col cols="12">
+                          <v-btn
+                            @click="setFeatures()"
+                            id="featuresBtn">
+                              Features
+                          </v-btn>
+                        </v-col>
+                        <v-col cols="12">
+                          <v-text-field
+                              background-color="#e7f0ff"
+                              color="#e7f0ff"
+                              style="margin-top: -7%; z-index: 0;"
+                              v-model="property.featureValidatorField"
+                              :rules="[propertyRules.featuresCheck]"
+                              class="custom-label-color"
+                              readonly
+                              flat
+                              hidden>
+                          </v-text-field>
+                        </v-col>
+                      </v-row>
 
                         <div class="text-center">
                           <v-dialog
                             v-model="featuresDialog"
                             width="500"
                           >
-                            <template v-slot:activator="{ on, attrs }">
-                              <v-col cols="12" md="12">
-                              <v-btn
-                                @click="setFeatures()"
-                                v-bind="attrs"
-                                v-on="on">
-                                  Features
-                              </v-btn>
-                              <v-text-field
-                                  background-color="#e7f0ff"
-                                  color="#e7f0ff"
-                                  style="margin-top: -7%; z-index: 0;"
-                                  v-model="property.featureValidatorField"
-                                  :rules="[propertyRules.featuresCheck]"
-                                  class="custom-label-color"
-                                  readonly
-                                  flat
-                                  hidden
-                                >
-                                </v-text-field>
-                              </v-col>
-                            </template>
+                            <!-- <template v-slot:activator="{ on, attrs }"> -->
+                              <!-- <v-col id="btnContainer" cols="12" sm="12" md="12"> -->
+                              <!-- </v-col> -->
+                            <!-- </template> -->
 
                             <v-card>
                               <v-card-title class="text-h5 grey lighten-2">
@@ -506,6 +510,16 @@ export default {
 <style scoped>
 #main-div {
   background-color: #3b6ef3;
+}
+
+#btnContainer {
+  background-color: blue;
+  display: block
+}
+
+#featuresBtn {
+  width: 100%;
+  height: 100%;
 }
 
 #form-row {
