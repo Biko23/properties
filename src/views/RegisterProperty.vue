@@ -375,27 +375,24 @@ export default {
       "fetchSuburbsByDistrictId"
     ]),
     saveFeatures () {
-      let featureQuantities = []
-      for (let index = 0; index < this.features.length; index++) {
-        const feature = this.features[index];
-        if (feature.quantity > 0) {
-          featureQuantities.push(feature.quantity)          
-        }    
-      this.property.featureValidatorField = featureQuantities.length <= 0 ? "" : featureQuantities[0];
-        
-      } 
+      const newFeatures = this.features.filter(element => element.quantity > 0)
+      this.property.featureValidatorField = newFeatures.length <= 0 ? "" : newFeatures[0];  
       this.featuresDialog = false
-      this.property.features = this.features
+      this.property.features = newFeatures
     },
     setFeatures () {
       this.featuresDialog = true
-      for (let index = 0; index < this.allPropertyFeatures.length; index++) {
-        let feature = {
-          name: this.allPropertyFeatures[index].feature,
-          feature_type_id: this.allPropertyFeatures[index].features_id,
-          quantity: 0
+      let featuresLength = this.features.length
+      if (this.features.length == 0) {
+        for (let index = 0; index < this.allPropertyFeatures.length; index++) {
+          let feature = {
+            name: this.allPropertyFeatures[index].feature,
+            feature_type_id: this.allPropertyFeatures[index].features_id,
+            quantity: 0
+          }
+          this.features.push(feature)        
         }
-        this.features.push(feature)        
+        
       }
     },
     adjustQuantity(item, action) {
@@ -476,6 +473,7 @@ export default {
     storePropertyData() {
       if (this.$refs.propertyForm1.validate()) {
         this.submitting = true
+        console.log(this.property);
         this.addPropertyDataFromPageOne(this.property)
           .then(response => {
              this.submitting = false

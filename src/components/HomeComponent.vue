@@ -377,6 +377,7 @@
 
 <script>
 import PropertyCard from './PropertyCard'
+import { formatDate } from '../helpers/helpers.js'
 import {
     mapActions,
     mapGetters

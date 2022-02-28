@@ -11,22 +11,25 @@ export default {
         }
     },
     async postAPropertyFeatures(selectedFeatures) {
+        console.log(selectedFeatures);
         try {
             if (selectedFeatures) {
-                const featuresToSave = (selectedFeatures.propertyFeatures).map(eachFeature => {
-                    return {
-                        feature_type_id:  eachFeature.value,
-                        name: eachFeature.text
-                    }
-                })
+                // const featuresToSave = (selectedFeatures.propertyFeatures).map(eachFeature => {
+                //     return {
+                //         feature_type_id:  eachFeature.feature_type_id,
+                //         name: eachFeature.name,
+                //         quantity: eachFeature.quantity
+                //     }
+                // })
 
-                let formData = new FormData();
-                for (let feature of featuresToSave) {
-                    formData.append("feature_type_id", feature.feature_type_id);
-                    formData.append("name", feature.name);
-                    formData.append("quantity", feature.quantity);
-                }
-                const response = await API.marketPlaceApi.post(`/feature-type-lookup/${selectedFeatures.property_id}`, formData)
+                // let formData = new FormData();
+                // for (let feature of featuresToSave) {
+                //     formData.append("feature_type_id", feature.feature_type_id);
+                //     formData.append("name", feature.name);
+                //     formData.append("quantity", feature.quantity);
+                // }
+                const response = await API.marketPlaceApi.post(`/feature-type-lookup/${selectedFeatures.property_id}`, selectedFeatures.propertyFeatures)
+                console.log(response);
                 return response
             }
 

@@ -158,6 +158,7 @@ const actions = {
     async fetchCurrentPropertySelectedFeatures({ commit }, property_id) {
         try {
             const response = await FeatureTypeLookupService.getPropertyFeatureTypesByPropertyId(property_id);
+            console.log(response);
             commit("setCurrentPropertyFeatures", response.data.result);
         } catch (error) {
             console.log(error);
@@ -187,6 +188,7 @@ const actions = {
     async updateAPropertyValue(context, property) {
         try {
             const response = await PropertyValueService.updateAPropertyValue(property);
+            console.log(response);
             if(response.data.status == 1){
                 context.dispatch('fetchCurrentPropertyValue', property.property_id);
             }
@@ -209,6 +211,7 @@ const actions = {
     async fetchPropertyPriceHistories({ commit }, property_id) {
         try {
             const response = await PropertyPriceHistoryService.getPropertyPriceHistoriesByPropertyId(property_id);
+            console.log(response);
             commit("setSinglePropertyPriceHistory", response.data.result);
         } catch (error) {
             console.log(error);
@@ -671,7 +674,8 @@ const mutations = {
         .map(eachFeature => { 
             return { 
                 name: eachFeature.name, 
-                feature_type_lk_id: eachFeature.feature_type_lk_id 
+                feature_type_lk_id: eachFeature.feature_type_lk_id,
+                quantity: eachFeature.quantity
             } 
         })),
     setSearchKey: (state, searchKeyword) => state.searchKeyword = searchKeyword,
