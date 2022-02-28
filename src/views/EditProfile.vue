@@ -17,7 +17,13 @@
                     Edit Your profile
                 </h3>
                 <br />
-                <v-form id="form" style="background-color: rgb(231, 240, 255)" ref="moreUserDataForm" v-model="valid" lazy-validation>
+                <v-form 
+                    id="form" 
+                    style="background-color: rgb(231, 240, 255)" 
+                    ref="moreUserDataForm" 
+                    v-model="valid" 
+                    lazy-validation
+                >
                     <v-text-field style="display: none" v-model="currentLoggedinUser.user_id" type="hidden"></v-text-field>
                     <v-container>
                         <v-row>
@@ -148,7 +154,6 @@ export default {
     background-color: #e7f0ff;
     margin-left: auto;
     margin-right: auto;
-    width: 900px;
     border-radius: 6px;
 }
 

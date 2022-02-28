@@ -9,15 +9,18 @@
         <v-row>
             <v-col cols="12" sm="12" md="6" lg="6">
                 <router-link to="/" style="
-              color: black;
-              text-align: center;
-              margin-top: 40px;
-
-              text-decoration: none;
-            ">
+                    color: black;
+                    text-align: center;
+                    margin-top: 40px;
+                    margin-left: 50px;
+                    text-decoration: none;"
+                >
                     <p class="back-home">
-                        <v-img style="margin-left: 100px; margin-right: auto; " max-height="20" max-width="25" src="https://res.cloudinary.com/diued7ugb/image/upload/v1626937941/Vector_9_aizknf.png"></v-img><span id="back-home">
-                            Back home</span>
+                        <v-icon
+                            size="30"
+                            style="padding: 0 10px 0 0;"
+                        >mdi-keyboard-backspace</v-icon>
+                        <span>Back home</span>
                     </p>
                 </router-link>
                 <h1 id="get-started">Get ready to start buying and selling more!</h1>
@@ -25,12 +28,19 @@
             </v-col>
             <v-col>
                 <v-form id="form" ref="signupForm" v-model="valid" lazy-validation>
-                    <div>
-                        <v-img style="margin-left: 100px; margin-top: 10px;position:absolute;" lazy-src="https://picsum.photos/id/11/10/6" max-height="45" max-width="45" src="https://res.cloudinary.com/diued7ugb/image/upload/v1625749459/Vector_pebqf0.png"></v-img>
-                        <span style="color: #3b6ef3; margin-top:23px;margin-left:-55px;position:absolute;">
+                    <div style="padding-top: 30px;">
+                        <v-icon
+                            size="50"
+                            style="color: #3b6ef3; padding-bottom: 16px; ">mdi-home-outline</v-icon>
+                        <span 
+                            style="
+                                color: #3b6ef3; 
+                                font-size: 24px;
+                            ">
                             Stanbic Properties
                         </span>
-                    </div><br><br>
+                    </div>
+                    <br/>
                     <v-container>
                         <v-row>
                             <v-col cols="12" sm="12" md="12">
@@ -123,7 +133,7 @@ export default {
         userSignupDetails: {},
         rules: {
             required: value => !!value || "Required.",
-            min: v => (v && v.length >= 6) || "Min 8 characters",
+            min: v => (v && v.length >= 8) || "Min 8 characters",
             password: v => /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/.test(v) || "Password should have an upper case, lower case and letters",
             nameMin: v => (v && v.length >= 2) || "Min 3 characters",
             char: v => /^\w+([a-zA-Z ])+$/.test(v) || "Only characters allowed"
@@ -232,7 +242,7 @@ export default {
     #get-started {
         color: #3b6ef3;
         text-align: center;
-        font-weight: 400;
+        font-weight: 300;
         margin-top: 30px;
         margin-left: auto;
         margin-right: auto;

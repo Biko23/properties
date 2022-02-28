@@ -1,6 +1,21 @@
 <template>
-<v-card max-width="auto">
-    <router-link :to="to" style=" text-decoration:none;" data-testid="link-element">
+<v-card max-width="auto" :style="bought == true ? 'opacity: 0.6;': 'opacity: 1;'">
+    <!-- Add a section for bought property false -->
+    <div v-if="bought === true" style=" text-decoration:none;" data-testid="link-element">
+        <v-card-subtitle class="time" style="z-index: 1;" data-testid="date-element">{{date}} </v-card-subtitle>
+        <v-img :src="src" :lazy-src="lazy" height="200px" data-testid="image-element"></v-img>
+        <p style="
+            font-size: 40px; 
+            font-weight: bold; 
+            color: red; 
+            position: absolute; 
+            top: 20%; 
+            right: 30%; 
+            background-color: white;
+            padding: 0 10px 0 10px;
+            ">TAKEN</p>
+    </div>
+    <router-link v-else :to="to" style=" text-decoration:none;" data-testid="link-element">
         <v-card-subtitle class="time" style="z-index: 1;" data-testid="date-element">{{date}} </v-card-subtitle>
         <v-img :src="src" :lazy-src="lazy" height="200px" data-testid="image-element"></v-img>
     </router-link>
@@ -65,6 +80,10 @@ export default {
         to: {
             type: String,
             default: "/view"
+        },
+        bought: {
+            type: String,
+            default: false
         }
     }
 }
