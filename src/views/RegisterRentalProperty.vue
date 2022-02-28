@@ -1,9 +1,9 @@
 <template>
 <div id="main-div">
     <base-dialog :message="message" :title="title" :dialogState="state">
-      <template v-slot:button>
-        <v-btn text @click="state = !state">close</v-btn>
-      </template>
+        <template v-slot:button>
+            <v-btn text @click="state = !state">close</v-btn>
+        </template>
     </base-dialog>
     <v-container>
         <div style="text-align: center">
@@ -18,76 +18,28 @@
                         <v-col cols="12" md="12">
                             <v-row>
                                 <v-col cols="12" sm="12" md="6">
-                                    <v-select 
-                                        v-model="property.type" 
-                                        :rules="[propertyRules.type]" 
-                                        :items="allPropertyTypes" 
-                                        label="Select Property Type" 
-                                        solo
-                                    ></v-select>
+                                    <v-select v-model="property.type" :rules="[propertyRules.type]" :items="allPropertyTypes" label="Select Property Type" solo></v-select>
                                 </v-col>
                                 <v-col class="d-flex" cols="12" sm="6">
-                                    <v-combobox
-                                        v-model="property.features"
-                                        :rules="[propertyRules.features]"
-                                        :items="allPropertyFeatures"
-                                        label="Select Feature"
-                                        multiple
-                                        solo
-                                    ></v-combobox>
+                                    <v-combobox v-model="property.features" :rules="[propertyRules.features]" :items="allPropertyFeatures" label="Select Feature" multiple solo></v-combobox>
                                 </v-col>
                             </v-row>
                         </v-col>
                         <v-col class="d-flex" cols="12" sm="12" md="12">
                             <v-row>
-                                 <v-col class="d-flex" cols="12" sm="4">
-                                    <v-select
-                                        v-model="property.district_id"
-                                        :rules="[propertyRules.type]"
-                                        :items="districts"
-                                        item-text="district_name"
-                                        item-value="district_id"
-                                        @change="fetchDivisions"
-                                        label="Select District"
-                                        solo
-                                    ></v-select>
+                                <v-col class="d-flex" cols="12" sm="4">
+                                    <v-select v-model="property.district_id" :rules="[propertyRules.type]" :items="districts" item-text="district_name" item-value="district_id" @change="fetchDivisions" label="Select District" solo></v-select>
                                 </v-col>
                                 <v-col class="d-flex" cols="12" sm="4">
-                                    <v-select
-                                        v-model="property.division_id"
-                                        :rules="[propertyRules.type]"
-                                        :items="divisions"
-                                        @change="fetchSuburbs"
-                                        item-text="division_name"
-                                        item-value="division_id"
-                                        label="Select Division"
-                                        hint="Select district first"
-                                        solo
-                                    ></v-select>
+                                    <v-select v-model="property.division_id" :rules="[propertyRules.type]" :items="divisions" @change="fetchSuburbs" item-text="division_name" item-value="division_id" label="Select Division" hint="Select district first" solo></v-select>
                                 </v-col>
                                 <v-col class="d-flex" cols="12" sm="4">
-                                    <v-select
-                                        v-model="property.suburb_id"
-                                        :rules="[propertyRules.type]"
-                                        :items="suburbs"
-                                        item-text="suburb_name"
-                                        item-value="suburb_id"
-                                        label="Select Suburb"
-                                        hint="Select suburb first"
-                                        solo
-                                    ></v-select>
+                                    <v-select v-model="property.suburb_id" :rules="[propertyRules.type]" :items="suburbs" item-text="suburb_name" item-value="suburb_id" label="Select Suburb" hint="Select suburb first" solo></v-select>
                                 </v-col>
                             </v-row>
                         </v-col>
                         <v-col cols="12" sm="12">
-                            <v-textarea
-                                v-model="property.propertyDescription"
-                                :rules="[propertyRules.propertyDescription]"
-                                class="custom-label-color"
-                                label="Property Description"
-                                placeholder="Describe the property beliefly i.e, a two storeyed building with tiles roof located in kampala 20 kms off masaka highway"
-                                solo
-                            ></v-textarea>
+                            <v-textarea v-model="property.propertyDescription" :rules="[propertyRules.propertyDescription]" class="custom-label-color" label="Property Description" placeholder="Describe the property beliefly i.e, a two storeyed building with tiles roof located in kampala 20 kms off masaka highway" solo></v-textarea>
                         </v-col>
                     </v-row>
                     <v-row>
@@ -102,37 +54,15 @@
                                 <v-col cols="12" md="12">
                                     <v-row>
                                         <v-col cols="12" md="12">
-                                            <v-text-field 
-                                                v-model="property.description" 
-                                                :rules="[propertyRules.description]" 
-                                                class="custom-label-color" 
-                                                label="Visual description" 
-                                                solo
-                                            ></v-text-field>
+                                            <v-text-field v-model="property.description" :rules="[propertyRules.description]" class="custom-label-color" label="Visual description" solo></v-text-field>
                                         </v-col>
                                         <v-col cols="12" md="12">
-                                            <UploadImages 
-                                                style="background-color: #e7f0ff" 
-                                                :max="6" 
-                                                uploadMsg="Drag n' drop. The first image should be the main image" 
-                                                fileError="images files only accepted" 
-                                                clearAll="Clear" 
-                                                @changed="handleImages" 
-                                            />
+                                            <UploadImages style="background-color: #e7f0ff" :max="6" uploadMsg="Drag n' drop. The first image should be the main image" fileError="images files only accepted" clearAll="Clear" @changed="handleImages" />
                                             <br><br>
                                         </v-col>
                                         <v-col cols="12" md="12">
-                                            <v-text-field
-                                                background-color="#e7f0ff"
-                                                color="#e7f0ff"
-                                                style="margin-top: -7%; z-index: 0;"
-                                                v-model="property.imageValidatorField"
-                                                :rules="[propertyRules.imageSelectCheck]"
-                                                class="custom-label-color"
-                                                readonly
-                                                flat
-                                                >
-                                                </v-text-field>
+                                            <v-text-field background-color="#e7f0ff" color="#e7f0ff" style="margin-top: -7%; z-index: 0;" v-model="property.imageValidatorField" :rules="[propertyRules.imageSelectCheck]" class="custom-label-color" readonly flat>
+                                            </v-text-field>
                                         </v-col>
                                     </v-row>
                                 </v-col>
@@ -145,31 +75,23 @@
                         </v-col>
                     </v-row>
                     <v-row>
-                        <v-col style="
-                display: flex;
-                flex-direction: row;
-                justify-content: flex-end;
-              ">
-                <base-spinner style="margin-left: 40px;" v-if="submitting"/>
-                <v-btn 
-                    style="background-color: #3b6ef3; width: 200px" 
-                    :disabled="!valid" 
-                    @click="storePropertyData"
-                    v-else
-                >
-                    <span style="
-                        color: #ffffff;
-                        font-size: 18px;
-                        font-style: normal;
-                        font-weight: 300;
-                        line-height: 30px;
-                        letter-spacing: 0em;
-                        text-align: center;
-                        text-transform: capitalize;
-                    ">
-                        Second Step
-                    </span>
-                </v-btn>
+                        <v-col style="display: flex; flex-direction: row; justify-content: flex-end;">
+                            <base-spinner 
+                                style="margin-right: 30px; margin-left: 40px; margin-bottom: 15px;" v-if="submitting" />
+                            <v-btn style="background-color: #3b6ef3; width: 200px" :disabled="!valid" @click="storePropertyData" v-else>
+                                <span style="
+                                    color: #ffffff;
+                                    font-size: 18px;
+                                    font-style: normal;
+                                    font-weight: 300;
+                                    line-height: 30px;
+                                    letter-spacing: 0em;
+                                    text-align: center;
+                                    text-transform: capitalize;
+                                ">
+                                    Second Step
+                                </span>
+                            </v-btn>
                         </v-col>
                     </v-row>
                 </v-col>
@@ -177,12 +99,10 @@
         </v-form>
         <br />
     </v-container>
-    <botton-nav />
 </div>
 </template>
 
 <script>
-import BottonNav from "../components/BottonNav.vue";
 import {
     mapGetters,
     mapActions
@@ -226,17 +146,16 @@ export default {
         hide: true,
     }),
     components: {
-        BottonNav,
         UploadImages
     },
     computed: {
         ...mapGetters([
-            "allPropertyTypes", 
+            "allPropertyTypes",
             "allPropertyFeatures",
-            "allDistricts", 
-            "allDivisions", 
+            "allDistricts",
+            "allDivisions",
             "allSuburbs"
-      ])
+        ])
     },
     methods: {
         // post rental price to property_rental_value
@@ -250,10 +169,10 @@ export default {
             "fetchDivisionsByDistrictId",
             "fetchSuburbsByDistrictId"
         ]),
-        async fetchDistricts(){
+        async fetchDistricts() {
             try {
                 const response = await this.fetchAllDistricts();
-                if(response.data.status == 1){
+                if (response.data.status == 1) {
                     this.districts = this.allDistricts;
                 } else {
                     this.defaultResponse(response.data.message, 'Error', true);
@@ -262,13 +181,13 @@ export default {
                 this.defaultResponse(error.message, 'Error', true);
             }
         },
-        async fetchDivisions(){
+        async fetchDivisions() {
             try {
-                if(this.property.district_id == 0){
+                if (this.property.district_id == 0) {
                     this.defaultResponse('No district selected yet', 'Error', true);
                 } else {
                     const response = await this.fetchDivisionsByDistrictId(this.property.district_id);
-                    if(response.data.status == 1){
+                    if (response.data.status == 1) {
                         this.divisions = this.allDivisions;
                     } else {
                         this.defaultResponse(response.data.message, 'Error', true);
@@ -278,13 +197,13 @@ export default {
                 this.defaultResponse(error.message, 'Error', true);
             }
         },
-        async fetchSuburbs(){
+        async fetchSuburbs() {
             try {
-                if(this.property.division_id == 0){
+                if (this.property.division_id == 0) {
                     this.defaultResponse('No division selected yet', 'Error', true);
                 } else {
                     const response = await this.fetchSuburbsByDistrictId(this.property.division_id);
-                    if(response.data.status == 1){
+                    if (response.data.status == 1) {
                         this.suburbs = this.allSuburbs;
                     } else {
                         this.defaultResponse(response.data.message, 'Error', true);
@@ -310,22 +229,21 @@ export default {
             }, 3000);
         },
         storePropertyData() {
-          if (this.$refs.propertyForm1.validate()) {
-            this.submitting = true
-            this.addPropertyForRentDataFromPageOne(this.property)
-                .then(response => {
+            if (this.$refs.propertyForm1.validate()) {
+                this.submitting = true
+                this.addPropertyForRentDataFromPageOne(this.property)
+                    .then(response => {
                         this.submitting = false
-                        if(response.status == 201){
+                        if (response.status == 201) {
                             this.$router.push("/register2");
                         } else {
                             this.defaultResponse(response.data.message, 'Error', true);
                         }
-                    }
-                ).catch(error => {
-                    this.submitting = false
-                    this.defaultResponse(error.message, 'Error', true)
-                });
-          }
+                    }).catch(error => {
+                        this.submitting = false
+                        this.defaultResponse(error.message, 'Error', true)
+                    });
+            }
         }
     },
     created() {

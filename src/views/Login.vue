@@ -9,15 +9,18 @@
         <v-row>
             <v-col cols="12" sm="12" md="6" lg="6">
                 <router-link to="/" style="
-              color: black;
-              text-align: center;
-              margin-top: 40px;
-              margin-left: 50px;
-              text-decoration: none;
-            ">
+                    color: black;
+                    text-align: center;
+                    margin-top: 40px;
+                    margin-left: 50px;
+                    text-decoration: none;"
+                >
                     <p class="back-home">
-                        <v-img style="margin-left: auto; margin-right: auto; display: block" max-height="30" max-width="28" src="https://res.cloudinary.com/diued7ugb/image/upload/v1626937941/Vector_9_aizknf.png"></v-img><span style="margin-left: 20px; margin-top: -20px; position: absolute">
-                            Back home</span>
+                        <v-icon
+                            size="30"
+                            style="padding: 0 10px 0 0;"
+                        >mdi-keyboard-backspace</v-icon>
+                        <span>Back home</span>
                     </p>
                 </router-link>
                 <h1 id="get-started">Welcome Back!</h1>
@@ -25,19 +28,19 @@
             </v-col>
             <v-col>
                 <v-form id="form" ref="loginForm" v-model="valid" lazy-validation>
-                    <div>
-                        <v-img class="image-logo" max-height="45" max-width="45" src="https://res.cloudinary.com/diued7ugb/image/upload/v1625749459/Vector_pebqf0.png"></v-img>
-                        <span style="
-                  color: #3b6ef3;
-                  margin-top: 23px;
-                  margin-left: -55px;
-                  position: absolute;
-                ">
+                    <div style="padding-top: 30px;">
+                        <v-icon
+                            size="50"
+                            style="color: #3b6ef3; padding-bottom: 16px; ">mdi-home-outline</v-icon>
+                        <span 
+                            style="
+                                color: #3b6ef3; 
+                                font-size: 24px;
+                            ">
                             Stanbic Properties
                         </span>
                     </div>
-                    <br /><br />
-
+                    <br/>
                     <v-container>
                         <v-row>
                             <v-col cols="12" sm="12" md="12">
@@ -196,11 +199,6 @@ export default {
     margin-right: 70x;
 }
 
-.back-home {
-    margin-left: -100px;
-    margin-top: 100px;
-}
-
 #login-into {
     margin-top: 70px;
     text-align: center;
@@ -253,15 +251,10 @@ export default {
         margin-left: auto;
     }
 
-    .back-home {
-        margin-left: -100px;
-        margin-top: auto;
-    }
-
     .image-logo {
         margin-left: 90px;
         margin-top: 10px;
         position: absolute;
     }
 }
-</style>>
+</style>

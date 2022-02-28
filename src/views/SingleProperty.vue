@@ -24,9 +24,16 @@
                                 <v-row v-if="allSinglePropertyVisuals.length > 0">
                                     <v-col v-for="(propertyVisual, index) in allSinglePropertyVisuals" :key="index">
                                         <v-img 
+                                            class="d-none d-sm-none d-md-flex grey lighten-2"
                                             :src="'http://localhost:8002/' + propertyVisual.snapshot" 
                                             aspect-ratio="1" 
-                                            class="grey lighten-2" 
+                                            height="200"
+                                        ></v-img>
+                                        <v-img 
+                                            :src="'http://localhost:8002/' + propertyVisual.snapshot" 
+                                            aspect-ratio="1" 
+                                            class="d-flex d-sm-flex d-md-none d-lg-none d-xl-none grey lighten-2"
+                                            width="400"
                                             height="200"
                                         ></v-img>
                                     </v-col>
@@ -42,7 +49,19 @@
                             <v-card-text>
                                 <v-row v-if="allSinglePropertyNearbyLandmarkVisuals.length > 0">
                                     <v-col v-for="(nearbyLandmarkVisual, index) in allSinglePropertyNearbyLandmarkVisuals" :key="index">
-                                        <v-img :src="'http://localhost:8001/' + nearbyLandmarkVisual.snapshot" aspect-ratio="1" class="grey lighten-2" height="200"></v-img>
+                                        <v-img 
+                                            class="d-none d-sm-none d-md-flex grey lighten-2"
+                                            :src="'http://localhost:8001/' + nearbyLandmarkVisual.snapshot" 
+                                            aspect-ratio="1" 
+                                            height="200"
+                                        ></v-img>
+                                         <v-img 
+                                            :src="'http://localhost:8001/' + nearbyLandmarkVisual.snapshot"
+                                            aspect-ratio="1" 
+                                            class="d-flex d-sm-flex d-md-none d-lg-none d-xl-none grey lighten-2"
+                                            width="400"
+                                            height="200"
+                                        ></v-img>
                                     </v-col>
                                 </v-row>
                                 <p v-else>No nearby landmark images to display</p>
@@ -55,7 +74,19 @@
                             <v-card-text>
                                 <v-row v-if="allSingleNeighborhoodVisuals.length > 0">
                                     <v-col v-for="(neighborhoodVisual, index) in allSingleNeighborhoodVisuals" :key="index">
-                                        <v-img :src="'http://localhost:9003/' + neighborhoodVisual.snapshot" aspect-ratio="1" class="grey lighten-2" height="200"></v-img>
+                                        <v-img 
+                                            :src="'http://localhost:9003/' + neighborhoodVisual.snapshot" 
+                                            aspect-ratio="1" 
+                                            class="d-none d-sm-none d-md-flex grey lighten-2 grey lighten-2" 
+                                            height="200"
+                                        ></v-img>
+                                        <v-img 
+                                            :src="'http://localhost:9003/' + neighborhoodVisual.snapshot"
+                                            aspect-ratio="1" 
+                                            class="d-flex d-sm-flex d-md-none d-lg-none d-xl-none grey lighten-2"
+                                            width="400"
+                                            height="200"
+                                        ></v-img>
                                     </v-col>
                                 </v-row>
                                 <p v-else>No Neighborhood images to display</p>
@@ -129,6 +160,7 @@ export default {
     props: ["property_id"],
     data() {
         return {
+            small: true,
             propertyVisuals: [],
             nearbyLandmarkVisuals: [],
             neighborhoodVisuals: [],
@@ -273,3 +305,11 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+    @media only screen and (max-width: 425px) {
+        #image-scale {
+            width: 400;
+        }
+    }
+</style>

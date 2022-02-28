@@ -14,7 +14,7 @@
       <v-row>
         <v-col cols="12" sm="12" md="12" xl="12">
           <h3 id="welcome">
-            Welcome to the largest, trusted property platform in <br />
+            Welcome to the largest, trusted property platform in
             Uganda
           </h3>
           <p id="reach">
@@ -266,18 +266,22 @@ export default {
 </script>
 
 <style scoped>
-#welcome {
-  color: #3b6ef3;
-  text-align: center;
-  font-size: 2rem;
-  margin-left: 100px;
-  margin-right: 100px;
-  margin-top: 50px;
-}
+  #welcome {
+    color: #3b6ef3;
+    text-align: center;
+    font-size: 2em;
+    margin-top: 50px;
+  }
 
-#reach {
-  text-align: center;
-  font-size: 0.9rem;
-  margin-top: 30px;
-}
+  #reach {
+    text-align: center;
+    font-size: 0.9rem;
+    margin-top: 30px;
+  }
+
+  @media only screen and (max-width: 768px) {
+    #welcome {
+      font-size: 1.5em;
+    }
+  }
 </style>

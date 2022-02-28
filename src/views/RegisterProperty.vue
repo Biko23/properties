@@ -28,7 +28,6 @@
                     </v-col>
                     <v-col class="d-flex" cols="12" sm="6">
                       <v-combobox
-                          @click="alertData"
                           v-model="property.features"
                           :rules="[propertyRules.features]"
                           :items="allPropertyFeatures"
@@ -154,14 +153,8 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col
-                style="
-                  display: flex;
-                  flex-direction: row;
-                  justify-content: flex-end;
-                "
-              >
-                <base-spinner style="margin-left: 40px;" v-if="submitting"/>
+              <v-col style="display: flex; flex-direction: row; justify-content: flex-end;">
+                <base-spinner style="margin-right: 30px; margin-left: 40px; margin-bottom: 15px;" v-if="submitting"/>
                 <v-btn
                   style="background-color: #3b6ef3; width: 200px"
                   :disabled="!valid"
@@ -188,19 +181,16 @@
       </v-form>
       <br />
     </v-container>
-    <botton-nav />
   </div>
 </template>
 
 <script>
-import BottonNav from "../components/BottonNav.vue";
 import { mapGetters, mapActions } from "vuex";
 import UploadImages from "vue-upload-drop-images";
 
 export default {
   name: "RegisterProperty",
   components: {
-    BottonNav,
     UploadImages
   },
   data: () => ({
@@ -257,9 +247,6 @@ export default {
       "fetchDivisionsByDistrictId",
       "fetchSuburbsByDistrictId"
     ]),
-    alertData(){
-      alert('Hello')
-    },
     async fetchDistricts(){
       try {
         const response = await this.fetchAllDistricts();

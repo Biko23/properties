@@ -35,31 +35,15 @@
                             <v-text-field v-model="property.description" :rules="[propertyRules.description]" class="custom-label-color" label="Description" color="blue" solo></v-text-field>
                         </v-col>
                     </v-row>
-                    <v-row style="margin: 0 5px">
+                    <v-row style="margin: 0">
                         <v-col cols="12" sm="12">
                             <h3>Add Landmark Photos</h3>
                             <v-row>
                                 <v-col cols="12" md="12">
-                                    <UploadImages 
-                                        style="background-color: #e7f0ff z-index: 100;" 
-                                        :max="6" 
-                                        uploadMsg="click or drag n' drop images" 
-                                        fileError="images files only accepted" 
-                                        clearAll="Clear" 
-                                        @changed="handleImages" 
-                                    />
+                                    <UploadImages style="background-color: #e7f0ff z-index: 100;" :max="6" uploadMsg="click or drag n' drop images" fileError="images files only accepted" clearAll="Clear" @changed="handleImages" />
                                 </v-col>
                                 <v-col cols="12" md="12">
-                                    <v-text-field
-                                        background-color="#e7f0ff"
-                                        color="#e7f0ff"
-                                        style="margin-top: -7%; z-index: 0;"
-                                        v-model="property.imageValidatorField"
-                                        :rules="[propertyRules.imageSelectCheck]"
-                                        class="custom-label-color"
-                                        readonly
-                                        flat
-                                    >
+                                    <v-text-field background-color="#e7f0ff" color="#e7f0ff" style="margin-top: -7%; z-index: 0;" v-model="property.imageValidatorField" :rules="[propertyRules.imageSelectCheck]" class="custom-label-color" readonly flat>
                                     </v-text-field>
                                 </v-col>
                             </v-row>
@@ -70,16 +54,12 @@
                         </v-col>
                     </v-row>
                 </v-col>
-                <br />
-                <v-row>
-                    <v-col class="mb-3 mr-3 ml-3" style="
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: space-between;
-                  ">
-                        <router-link to="/register2">
-                            <v-btn style="background-color: grey; width: 200px">
-                                <span style="
+                <v-col cols="12" class="mb-3 mt-1 mr-3">
+                    <v-row>
+                        <v-col>
+                            <router-link to="/register2">
+                                <v-btn style="background-color: grey; max-width: 200px">
+                                    <span style="
                                   color: #ffffff;
                                   font-size: 18px;
                                   font-style: normal;
@@ -89,20 +69,19 @@
                                   text-align: center;
                                   text-transform: capitalize;
                                 ">
-                                    Back</span>
-                            </v-btn>
-                        </router-link>
-                        <div>
-                            <v-col cols="12" sm="12" md="12" v-if="submitting">
-                                <base-spinner />
-                            </v-col>
-                            <v-btn 
-                                v-else
-                                style="background-color: #3b6ef3; width: 200px" 
+                                        Back</span>
+                                </v-btn>
+                            </router-link>
+                        </v-col>
+                        <v-col style="display: flex; flex-direction: row; justify-content: flex-end;" cols="6" sm="6">
+                            <base-spinner v-if="submitting" style="margin: 16px 50px 0 30px;"/>
+                            <v-btn
+                                v-else 
+                                style="background-color: #3b6ef3; max-width: 200px" 
                                 :disabled="!valid" 
                                 @click="submitFinalData"
                                 >
-                                <span style="
+                                        <span style="
                                 color: #ffffff;
                                 font-size: 18px;
                                 font-style: normal;
@@ -112,22 +91,23 @@
                                 text-align: center;
                                 text-transform: capitalize;
                                 ">
-                                    Create Property</span>
-                            </v-btn>
-                        </div>
-                    </v-col>
-                </v-row>
+                                            Create Property</span>
+                                    </v-btn>
+                        </v-col>
+                    </v-row>
+                </v-col>
             </v-row>
         </v-form>
         <br />
     </v-container>
-    <botton-nav />
 </div>
 </template>
 
 <script>
-import BottonNav from "../components/BottonNav.vue";
-import { mapGetters, mapActions } from "vuex";
+import {
+    mapGetters,
+    mapActions
+} from "vuex";
 import UploadImages from "vue-upload-drop-images";
 
 export default {
@@ -155,7 +135,6 @@ export default {
         },
     }),
     components: {
-        BottonNav,
         UploadImages
     },
     created() {
@@ -195,17 +174,22 @@ export default {
             if (this.$refs.propertyForm3.validate()) {
                 this.submitting = true;
                 await this.addPropertyDataFromPageThird(this.property);
-                const { 
-                        value, location, feature, landmark, neighborhood, propertyVisuals 
-                    } = await this.submitAllPropertyData();
+                const {
+                    value,
+                    location,
+                    feature,
+                    landmark,
+                    neighborhood,
+                    propertyVisuals
+                } = await this.submitAllPropertyData();
 
                 if (
-                    value.status === 201 && 
+                    value.status === 201 &&
                     location.status === 201 &&
                     feature.status === 201 &&
                     landmark.status === 201 &&
                     neighborhood.status === 201 &&
-                    propertyVisuals.status === 201 
+                    propertyVisuals.status === 201
                 ) {
                     this.submitting = false;
                     this.postAUserLog({
@@ -213,13 +197,13 @@ export default {
                         button_clicked: "Create Property Btn"
                     });
                     this.defaultResponse('Property created successfully. Now waiting SPL approval!!', 'Success', true);
-                     setTimeout(() => {
+                    setTimeout(() => {
                         this.$router.push("/properties-for-sale");
                     }, 3000);
                 }
 
                 if (
-                    value.status === 200 || 
+                    value.status === 200 ||
                     location.status === 200 ||
                     feature.status === 200 ||
                     landmark.status === 200 ||
@@ -252,7 +236,7 @@ export default {
 
 #form-row {
     background-color: #e7f0ff;
-    width: 1000px;
+    width: auto;
     margin-left: auto;
     margin-right: auto;
     border-radius: 6px;
@@ -270,30 +254,7 @@ export default {
 
 @media only screen and (max-width: 768px) {
     .main-div {
-        background-color: #3b6ef3;
         height: auto;
-    }
-
-    #form-row {
-        background-color: #e7f0ff;
-        width: auto;
-        margin-left: auto;
-        margin-right: auto;
-        border-radius: 6px;
-    }
-}
-
-@media only screen and (max-width: 1200px) {
-    #main-div {
-        background-color: #3b6ef3;
-    }
-
-    #form-row {
-        background-color: #e7f0ff;
-        width: auto;
-        margin-left: auto;
-        margin-right: auto;
-        border-radius: 6px;
     }
 }
 </style>
