@@ -32,7 +32,7 @@
                           <v-btn
                             @click="setFeatures()"
                             id="featuresBtn">
-                              Features
+                              Add Features
                           </v-btn>
                         </v-col>
                         <v-col cols="12">
@@ -55,11 +55,6 @@
                             v-model="featuresDialog"
                             width="500"
                           >
-                            <!-- <template v-slot:activator="{ on, attrs }"> -->
-                              <!-- <v-col id="btnContainer" cols="12" sm="12" md="12"> -->
-                              <!-- </v-col> -->
-                            <!-- </template> -->
-
                             <v-card>
                               <v-card-title class="text-h5 grey lighten-2">
                                 Property Features
@@ -104,10 +99,6 @@
                                   </tbody>
                                 </template>
                               </v-simple-table>
-                              <!-- <v-data-table
-                                :headers="headers"
-                                :items="allPropertyFeatures"
-                              ></v-data-table> -->
 
                               <v-divider></v-divider>
 
@@ -128,7 +119,24 @@
 
                     </v-col>
                 </v-row>
+                <!-- <v-row v-show="featuresSet">                  
+                    <v-col class="d-flex" cols="12" sm="6">
+                      <h3 style="margin-bottom: 0;">Property features: </h3>
+                      <br />
+                      <p style="font-weight: 300"> {{ spreadFeatures }}</p>
+                    </v-col>
+                </v-row> -->
              </v-col>
+               <v-col cols="12" sm="12">
+                <v-text-field
+                  v-model="spreadFeatures"
+                  class="custom-label-color"
+                  label="Property Features"
+                  placeholder="Describe the property beliefly i.e, a two storeyed building with tiles roof located in kampala 20 kms off masaka highway"
+                  solo
+                  disabled
+                ></v-text-field>
+              </v-col>
               <v-col class="d-flex" cols="12" sm="12" md="12">
                 <v-row>
                   <v-col class="d-flex" cols="12" sm="4">
@@ -300,6 +308,7 @@ export default {
     quantity: 0,
     featuresDialog: false,
     features: [],
+    featuresSet: false,
     state: false,
     districts: [],
     divisions: [],
@@ -361,7 +370,12 @@ export default {
       "allDistricts", 
       "allDivisions", 
       "allSuburbs"
-    ])
+    ]),    
+    spreadFeatures: function () {
+      return this.property.features
+        .reduce((acc, currentFeature) => acc + "," + `${currentFeature.quantity} ${currentFeature.name}`, "")
+        .slice(1);
+    },
   },
   methods: {
     ...mapActions([
@@ -379,6 +393,7 @@ export default {
       this.property.featureValidatorField = newFeatures.length <= 0 ? "" : newFeatures[0];  
       this.featuresDialog = false
       this.property.features = newFeatures
+      this.featuresSet = true
     },
     setFeatures () {
       this.featuresDialog = true
