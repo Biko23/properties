@@ -6,8 +6,10 @@
         <router-view />
     </v-main>
     <template v-if="!shouldHideAboutAndFooter">
-        <about v-if="!shouldShowMainNav" class="d-none d-sm-none d-md-flex" />
-        <Footer v-if="!shouldShowMainNav" class="d-none d-sm-none d-md-flex" />
+      <div class="d-none d-sm-none d-md-flex" style="display: flex; flex-direction: column; justify-content: center;">
+        <about v-if="!shouldShowMainNav" />
+        <Footer v-if="!shouldShowMainNav" />
+      </div>
     </template>
 </v-app>
 </template>
