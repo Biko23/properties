@@ -1,3 +1,7 @@
+/**
+ * @author Isaac Ssemugenyi
+ * @copyright flyhub Uganda Ltd
+*/
 import vendorsBackOfficeService from '@/service/vendors/vendorsBackOfficeService';
 
 const state = {

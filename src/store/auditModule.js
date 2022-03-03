@@ -1,3 +1,7 @@
+/**
+ * @author Isaac Ssemugenyi
+ * @copyright flyhub Uganda Ltd
+*/
 import UserAuditService from '@/service/property/auditLogs';
 import dateFormat from "dateformat";
 
