@@ -19,7 +19,8 @@
                         :category="favoriteProperty.category" 
                         :propertyCode="favoriteProperty.property_number" 
                         :cost="commaFormatted(favoriteProperty.actual_value)" 
-                        :postedBy="favoriteProperty.created_by" 
+                        :postedBy="favoriteProperty.created_by"
+                        :bought="favoriteProperty.bought"
                         :src="'http://localhost:8002/' + favoriteProperty.snapshot" 
                         :to="favoriteProperty.listed_for_name == ('Rent' || 'rent' || 'RENT')
                             ? `/view-rental/${favoriteProperty.property_id}?code=${favoriteProperty.property_number}&location=${favoriteProperty.name}&cost=${favoriteProperty.actual_value}&district=${favoriteProperty.district}&category=${favoriteProperty.category}&type=Rent`
@@ -30,9 +31,9 @@
                             <small style="font-size: 14px">Type: <b>{{ favoriteProperty.listed_for_name }}</b></small><br />
                         </template>
                         <template v-slot:default>
-                            <v-icon small class="mr-2" style="font-size: 40px; color: #3b6ef3; z-index: 100" @click="onRemove(favoriteProperty.property_id)">
-                                mdi-heart
-                            </v-icon>
+                            <p small class="mr-2 text--h6" style="color: red; z-index: 100; text-decoration: underline; cursor: pointer;" @click="onRemove(favoriteProperty.property_id)">
+                                Remove
+                            </p>
                         </template>
                     </property-card>
                 </transition>
@@ -44,7 +45,7 @@
 
 <script>
 import PropertyCard from "@/components/PropertyCard";
-import dateFormat from "dateformat";
+import moment from 'moment';
 import { mapActions, mapGetters } from "vuex";
 export default {
     name: "PropertiesForSaleComponent",
@@ -80,7 +81,7 @@ export default {
                 "7": "7 days ago"
             }
 
-            return `Saved ${DATES[days]}` ?? dateFormat(returnedFormattedDate, "ddd, mmm dS, yyyy");
+            return DATES[days] ? `Saved ${DATES[days]}` : 'Saved ' + moment(returnedFormattedDate).format('YYYY-MM-DD HH:MM');
         },
         commaFormatted(amount) {
             let price = amount.toLocaleString("en-US");

@@ -149,8 +149,7 @@ const actions = {
             commit('setCreatedProperty', response.data.result);
             return response;
         } catch (error) {
-            console.log(error);
-            // throw new Error('Failed to save property details')
+            throw new Error('Failed to save property details')
         }
     },
     // End first property rent

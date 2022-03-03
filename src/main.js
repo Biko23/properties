@@ -14,6 +14,7 @@ import BaseDialog from '@/components/BaseDialog.vue'
 // To load sharing icons
 import vuetifyIcon from 'vuetify'
 import VueSocialSharing from 'vue-social-sharing'
+import './registerServiceWorker'
 // End load sharing icons
 
 Vue.component('base-dialog', BaseDialog)

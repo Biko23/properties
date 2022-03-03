@@ -1,13 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BaseDialog.vue should have a match snapshot 1`] = `
-<div id="col-hidden">
-  <header class="v-sheet theme--dark v-toolbar v-toolbar--dense v-app-bar" style="height: 48px; margin-top: 0px; transform: translateY(0px); left: 0px; right: 0px; background-color: rgb(68, 119, 251); border-color: #4477fb;">
-    <div class="v-toolbar__content" style="height: 48px;"><button type="button" value="recent" class="v-btn v-btn--is-elevated v-btn--has-bg theme--dark v-size--default" style="background-color: rgb(68, 119, 251);"><span class="v-btn__content"><img src="https://res.cloudinary.com/diued7ugb/image/upload/v1625949058/sms_black_24dp_3_og1r7y.png" alt="" width="30" srcset=""> <span style="color: rgb(239, 158, 158);">14</span></span></button> <button type="button" class="v-btn v-btn--is-elevated v-btn--has-bg theme--dark v-size--default" style="background-color: rgb(68, 119, 251);"><span class="v-btn__content"><img src="https://res.cloudinary.com/diued7ugb/image/upload/v1625949073/notifications_black_24dp_2_jvvady.png" alt="" width="30" srcset=""> <span style="color: rgb(239, 158, 158);">14</span></span></button> <button type="button" class="v-btn v-btn--is-elevated v-btn--has-bg theme--dark v-size--default" style="background-color: rgb(68, 119, 251);"><span class="v-btn__content"><img src="https://res.cloudinary.com/diued7ugb/image/upload/v1625948894/home_black_24dp_5_sng2rd.png" alt="" width="30" srcset=""></span></button> <button type="button" value="recent" class="v-btn v-btn--is-elevated v-btn--has-bg theme--dark v-size--default" style="width: 80px; margin-left: auto; background-color: rgb(68, 119, 251);"><span class="v-btn__content"><span>Buy/Rent</span></span></button> <button type="button" value="recent" class="v-btn v-btn--is-elevated v-btn--has-bg theme--dark v-size--default" style="width: 60px; margin-left: auto; background-color: rgb(68, 119, 251);"><span class="v-btn__content"><span>Sell</span></span></button></div>
-  </header>
-</div>
-`;
-
 exports[`BottonNav.vue should have a match snapshot 1`] = `
 <div id="col-hidden">
   <header class="v-sheet theme--dark v-toolbar v-toolbar--dense v-app-bar" style="height: 48px; margin-top: 0px; transform: translateY(0px); left: 0px; right: 0px; background-color: rgb(68, 119, 251); border-color: #4477fb;">

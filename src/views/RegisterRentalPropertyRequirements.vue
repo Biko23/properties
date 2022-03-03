@@ -87,9 +87,9 @@
                                         <div v-show="showCard2">
                                             <v-divider></v-divider>
                                             <v-card-text>
-                                                <div>Step 2: Rental info required.</div><br />
-                                                <div>Step 3: Neighborhood info required.</div><br />
-                                                <div>Step 4: Landmark Info required.</div>
+                                                <div>Step 1: Rental info required.</div><br />
+                                                <div>Step 2: Neighborhood info required.</div><br />
+                                                <div>Step 3: Landmark Info required.</div>
                                             </v-card-text>
                                         </div>
                                     </v-expand-transition>
@@ -131,9 +131,9 @@
                                         <div v-show="showCard3">
                                             <v-divider></v-divider>
                                             <v-card-text>
-                                                <div>Step 1: On upload rental goes to SPL.</div><br />
+                                                <div>Step 1: On upload, rental goes to SPL.</div><br />
                                                 <div>Step 2: Due deligence is done.</div><br />
-                                                <div>Step 3: Rental gets approved and appear on the website.</div>
+                                                <div>Step 3: Rental gets approved and appears on the website.</div>
                                             </v-card-text>
                                         </div>
                                     </v-expand-transition>
@@ -172,12 +172,10 @@
         </v-row>
         <br />
     </v-container>
-    <botton-nav />
 </div>
 </template>
 
 <script>
-import BottonNav from "../components/BottonNav.vue";
 import {
   mapActions,
     mapGetters
@@ -190,9 +188,6 @@ export default {
         showCard2: false,
         showCard3: false
     }),
-    components: {
-        BottonNav
-    },
     computed: {
         ...mapGetters(["loginState"])
     },

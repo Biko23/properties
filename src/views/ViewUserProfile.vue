@@ -11,65 +11,61 @@
                 ">Settings</h3>
                 <br />
                 <v-container 
-                style="
-                    background-color: rgb(231, 240, 255);
-                    padding: 0 20%;
-                    border-radius: 1%;
-                    "
+                    class="edit-profile"
                 >
                     <v-row>
-                        <v-col cols="12" sm="12" md="5">
+                        <v-col cols="6" sm="6" md="5">
                             <span>Full Name:</span>
                         </v-col>
-                        <v-col cols="12" sm="12" md="7">
+                        <v-col cols="6" sm="6" md="7">
                             <span>{{currentLoggedinUser.vendor_name}}</span>
                         </v-col>
                     </v-row>
                     <v-row>
-                        <v-col cols="12" sm="12" md="5">
+                        <v-col cols="6" sm="6" md="5">
                             <span>Username:</span>
                         </v-col>
-                        <v-col cols="12" sm="12" md="7">
+                        <v-col cols="6" sm="6" md="7">
                             <span>{{currentLoggedinUser.username}}</span>
                         </v-col>
                     </v-row>
                     <v-row>
-                        <v-col cols="12" sm="12" md="5">
+                        <v-col cols="6" sm="6" md="5">
                             <span>Primary Phone:</span>
                         </v-col>
-                        <v-col cols="12" sm="12" md="7">
+                        <v-col cols="6" sm="6" md="7">
                             <span>{{currentLoggedinUser.vendor_primary_phone_number}}</span>
                         </v-col>
                     </v-row>
                     <v-row>
-                        <v-col cols="12" sm="12" md="5">
+                        <v-col cols="6" sm="6" md="5">
                             <span>Primary Email:</span>
                         </v-col>
-                        <v-col cols="12" sm="12" md="7">
+                        <v-col cols="6" sm="6" md="7">
                             <span>{{currentLoggedinUser.vendor_primary_email}}</span>
                         </v-col>
                     </v-row>
                     <v-row>
-                        <v-col cols="12" sm="12" md="5">
+                        <v-col cols="6" sm="6" md="5">
                             <span>Secondary Phone:</span>
                         </v-col>
-                        <v-col cols="12" sm="12" md="7">
+                        <v-col cols="6" sm="6" md="7">
                             <span>{{currentLoggedinUser.vendor_secondary_phone_number}}</span>
                         </v-col>
                     </v-row>
                     <v-row>
-                        <v-col cols="12" sm="12" md="5">
+                        <v-col cols="6" sm="6" md="5">
                             <span>Secondary Email:</span>
                         </v-col>
-                        <v-col cols="12" sm="12" md="7">
+                        <v-col cols="6" sm="6" md="7">
                             <span>{{currentLoggedinUser.vendor_secondary_email}}</span>
                         </v-col>
                     </v-row>
                      <v-row>
-                        <v-col cols="12" sm="12" md="5">
+                        <v-col cols="6" sm="6" md="5">
                             <span>Location:</span>
                         </v-col>
-                        <v-col cols="12" sm="12" md="7">
+                        <v-col cols="6" sm="6" md="7">
                             <span>{{currentLoggedinUser.business_location}}</span>
                         </v-col>
                     </v-row>
@@ -99,3 +95,17 @@ export default {
     }
 }
 </script>
+<style scoped>
+    .edit-profile {
+        background-color: rgb(231, 240, 255);
+        padding: 0 20%;
+        border-radius: 1%;
+    }
+
+    
+@media only screen and (max-width: 768px) {
+    .edit-profile {
+        padding: 0 3%;
+    }
+}
+</style>
