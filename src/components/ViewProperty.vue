@@ -440,7 +440,7 @@ export default {
     ],
     featureHeaders: [
       { text: "Feature", value: "name" },
-      { text: "Description", value: "name" },
+      { text: "Quantity", value: "quantity" },
     ],
     priceHistoryHeaders: [
       { text: "Event", value: "event" },
@@ -473,7 +473,7 @@ export default {
     },
     spreadFeatures: function () {
       return this.allCurrentPropertyFeatures
-        .reduce((acc, currentFeature) => acc + "," + currentFeature.name, "")
+        .reduce((acc, currentFeature) => acc + "," + `${currentFeature.quantity} ${currentFeature.name}`, "")
         .slice(1);
     },
     codeParam(){
@@ -598,6 +598,7 @@ export default {
     }
   },
   mounted() {
+    console.log("Is this the property view page?");
     this.addUserView();
     this.fetchSinglePropertyVisuals(this.property_id);
     this.fetchPropertyNearbyLandmarkVisuals(this.property_id);

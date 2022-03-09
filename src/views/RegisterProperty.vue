@@ -27,17 +27,116 @@
                       ></v-select>
                     </v-col>
                     <v-col class="d-flex" cols="12" sm="6">
-                      <v-combobox
-                          v-model="property.features"
-                          :rules="[propertyRules.features]"
-                          :items="allPropertyFeatures"
-                          label="Select Feature"
-                          multiple
-                          solo
-                      ></v-combobox>
+                      <v-row>
+                        <v-col cols="12">
+                          <v-btn
+                            @click="setFeatures()"
+                            id="featuresBtn">
+                              Add Features
+                          </v-btn>
+                        </v-col>
+                        <v-col cols="12">
+                          <v-text-field
+                              background-color="#e7f0ff"
+                              color="#e7f0ff"
+                              style="margin-top: -7%; z-index: 0;"
+                              v-model="property.featureValidatorField"
+                              :rules="[propertyRules.featuresCheck]"
+                              class="custom-label-color"
+                              readonly
+                              flat
+                              hidden>
+                          </v-text-field>
+                        </v-col>
+                      </v-row>
+
+                        <div class="text-center">
+                          <v-dialog
+                            v-model="featuresDialog"
+                            width="500"
+                          >
+                            <v-card>
+                              <v-card-title class="text-h5 grey lighten-2">
+                                Property Features
+                              </v-card-title>
+                              
+                              <v-simple-table>
+                                <template v-slot:default>
+                                  <thead>
+                                    <tr>
+                                      <th class="text-left">
+                                        Name
+                                      </th>
+                                      <th class="text-left">
+                                      </th>
+                                      <th class="text-center">
+                                        Quantity
+                                      </th>
+                                      <th class="text-left">
+                                      </th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr
+                                      v-for="item in features"
+                                      :key="item.feature_type_id"
+                                    >
+                                      <td>{{ item.name }}</td>
+                                      <td class="text-right">
+                                        <v-icon
+                                          class="mr-2" color="blue" v-bind="attrs" @click="adjustQuantity(item, 'increment')"
+                                        >mdi-plus
+                                        </v-icon>
+                                      </td>
+                                      <td class="text-center">{{ item.quantity }}</td>
+                                      <td class="text-left">
+                                        <v-icon
+                                          class="mr-2" color="blue" v-bind="attrs" @click="adjustQuantity(item, 'decrement')"
+                                        >mdi-minus
+                                        </v-icon>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </template>
+                              </v-simple-table>
+
+                              <v-divider></v-divider>
+
+                              <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn
+                                  color="primary"
+                                  text
+                                  @click="saveFeatures()"
+                                >
+                                  Save
+                                </v-btn>
+                              </v-card-actions>
+                            </v-card>
+                          </v-dialog>
+                        </div>
+                        
+
                     </v-col>
                 </v-row>
+                <!-- <v-row v-show="featuresSet">                  
+                    <v-col class="d-flex" cols="12" sm="6">
+                      <h3 style="margin-bottom: 0;">Property features: </h3>
+                      <br />
+                      <p style="font-weight: 300"> {{ spreadFeatures }}</p>
+                    </v-col>
+                </v-row> -->
              </v-col>
+               <v-col cols="12" sm="12">
+                <v-text-field
+                  v-model="spreadFeatures"
+                  class="custom-label-color"
+                  label="Property Features"
+                  placeholder="Describe the property beliefly i.e, a two storeyed building with tiles roof located in kampala 20 kms off masaka highway"
+                  solo
+                  disabled
+                ></v-text-field>
+              </v-col>
               <v-col class="d-flex" cols="12" sm="12" md="12">
                 <v-row>
                   <v-col class="d-flex" cols="12" sm="4">
@@ -197,6 +296,10 @@ export default {
     submitting: false,
     message: '',
     title: '',
+    quantity: 0,
+    featuresDialog: false,
+    features: [],
+    featuresSet: false,
     state: false,
     districts: [],
     divisions: [],
@@ -209,20 +312,44 @@ export default {
       propertyDescription: "",
       description: "",
       imageValidatorField: "",
+      featureValidatorField: "",
       features: [],
-      visuals: []
+      visuals: [],
+      headers: [
+          {
+            sortable: false,
+            text: 'name',
+            value: 'feature',
+          },
+          {
+            sortable: false,
+            text: 'Number',
+            value: 'quantity',
+          },
+          {
+            text: 'Actions',
+            value: 'actions',
+            sortable: false,
+            align: 'right',
+          },
+      ]
     },
     valid: true,
     propertyRules: {
       type: (value) => !!value || "Field is required.",
       description: (v) => (v && v.length >= 4) || "Min characters should be 5",
       propertyDescription: (value) => !!value || "Property Description is required.",
-      features(value) {
-        if (value instanceof Array && value.length == 0) {
-          return "Features are required";
-        }
-        return !!value || "Features are required.";
-      }, 
+      // features(value) {
+      //   for (let index = 0; index < value.length; index++) {
+      //     const element = value[index];
+          
+      //   }
+      //   if (value instanceof Array && value.length == 0) {
+      //     return "Features are required";
+      //   }
+      //   return !!value || "Features are required.";
+      // },
+      featuresCheck: (value) => !!value || 'Features are required.',
       imageSelectCheck: (value) => !!value || 'At least one image is required.'
     },
     hide: true,
@@ -234,7 +361,12 @@ export default {
       "allDistricts", 
       "allDivisions", 
       "allSuburbs"
-    ])
+    ]),    
+    spreadFeatures: function () {
+      return this.property.features
+        .reduce((acc, currentFeature) => acc + "," + `${currentFeature.quantity} ${currentFeature.name}`, "")
+        .slice(1);
+    },
   },
   methods: {
     ...mapActions([
@@ -247,6 +379,44 @@ export default {
       "fetchDivisionsByDistrictId",
       "fetchSuburbsByDistrictId"
     ]),
+    saveFeatures () {
+      const newFeatures = this.features.filter(element => element.quantity > 0)
+      this.property.featureValidatorField = newFeatures.length <= 0 ? "" : newFeatures[0];  
+      this.featuresDialog = false
+      this.property.features = newFeatures
+      this.featuresSet = true
+    },
+    setFeatures () {
+      this.featuresDialog = true
+      let featuresLength = this.features.length
+      if (this.features.length == 0) {
+        for (let index = 0; index < this.allPropertyFeatures.length; index++) {
+          let feature = {
+            name: this.allPropertyFeatures[index].feature,
+            feature_type_id: this.allPropertyFeatures[index].features_id,
+            quantity: 0
+          }
+          this.features.push(feature)        
+        }
+        
+      }
+    },
+    adjustQuantity(item, action) {
+      if (action === 'increment') {
+        const itemIndex = this.features.findIndex(feature => feature.feature_type_id == item.feature_type_id)
+        item.quantity += 1
+        this.features.splice(itemIndex, 1, item)
+        
+      } else {
+        if (item.quantity > 0) {
+        const itemIndex = this.features.findIndex(feature => feature.feature_type_id == item.feature_type_id)
+        item.quantity -= 1
+        this.features.splice(itemIndex, 1, item)
+        } else {
+          this.defaultResponse('No negative values accepted.', 'Error', true);          
+        }        
+      }
+      },
     async fetchDistricts(){
       try {
         const response = await this.fetchAllDistricts();
@@ -309,6 +479,7 @@ export default {
     storePropertyData() {
       if (this.$refs.propertyForm1.validate()) {
         this.submitting = true
+        console.log(this.property);
         this.addPropertyDataFromPageOne(this.property)
           .then(response => {
              this.submitting = false
@@ -335,6 +506,7 @@ export default {
     this.fetchPropertyFeatures();
     this.fetchPropertyCategories();
     this.fetchDistricts();
+    console.log(this.features)
   },
 };
 </script>
@@ -342,6 +514,16 @@ export default {
 <style scoped>
 #main-div {
   background-color: #3b6ef3;
+}
+
+#btnContainer {
+  background-color: blue;
+  display: block
+}
+
+#featuresBtn {
+  width: 100%;
+  height: 100%;
 }
 
 #form-row {

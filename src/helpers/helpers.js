@@ -1,25 +1,5 @@
 import dateFormat from "dateformat";
 
-// const user = localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')) : '';
-// const username = user != '' ? user.username : '';
-
-// export function axiosInstance(currentInstance, url) {
-//     return currentInstance.interceptors.request.use(
-//         async config => {
-//         config.baseURL = url,
-//         config.timeout= 10000,
-//         config.headers = { 
-//             'Authorization': localStorage.getItem('token'),
-//             username,
-//             'Content-Type': 'application/json'
-//         }
-//         return config;
-//         },
-//         error => {
-//         Promise.reject(error)
-//     })
-// }
-
 export const formatDate = (dateToFormat) => {
     let currentDate = new Date();
     let returnedFormattedDate = new Date(dateToFormat);

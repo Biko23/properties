@@ -4,6 +4,7 @@ export default {
     async getAllPropertyFeatures () {
       try {
         const response = await API.marketPlaceApi.get('/property-features')
+        console.log(response)
         return response
       } catch (error) {
         console.log(error);
