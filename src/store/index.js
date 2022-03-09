@@ -1,3 +1,7 @@
+/**
+ * @author Isaac Ssemugenyi
+ * @copyright flyhub Uganda Ltd
+*/
 import Vue from 'vue'
 import Vuex from 'vuex'
 import SellerModule from './sellerModule'

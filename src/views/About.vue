@@ -55,9 +55,23 @@
         </v-col>
         <v-col cols="12" md="4" xs="12" style="margin-top: 25px">
           <div style="text-align: left">
-            <h3><span style="color: #3b6ef3"> WHY </span>US</h3>
+            <!-- <h3><span style="color: #3b6ef3"> WHY </span>US</h3> -->
+            <h3><span style="color: #3b6ef3"> WHAT WE </span>OFFER</h3>
           </div>
-          <p
+           <p
+            style="
+              font-size: 13px;
+              font-style: normal;
+              font-weight: 300;
+              line-height: 20px;
+              letter-spacing: 0em;
+              margin-right: 50px;
+              text-align: justify;
+            "
+          >
+            View related properties within your district. View all details to a property of interest, add it to your favorites and even express interest in a property and SPL team will get back to you.
+          </p>
+          <!-- <p
             style="
               font-size: 13px;
               font-style: normal;
@@ -72,8 +86,21 @@
             so they have more time for advising their clients. With the
             solutions-driven mindset of a startup and the sophistication of a
             luxury brand, Stanbic Properties is the future of real estate.
-          </p>
+          </p> -->
           <p
+            style="
+              font-size: 13px;
+              font-style: normal;
+              font-weight: 300;
+              line-height: 20px;
+              letter-spacing: 0em;
+              margin-right: 50px;
+              text-align: justify;
+            "
+          >
+            View different mortgage plan from Stanbic bank and arrange for one that suits you. View and rate service providers as well as book one to help with repairs for any items that might be broken at your home.
+          </p>
+          <!-- <p
             style="
               font-size: 13px;
               font-style: normal;
@@ -88,7 +115,7 @@
             brightest minds across engineering, design, and strategy. Through
             our proprietary platform, SBL is changing how agents and clients
             navigate the process of finding or selling a home.
-          </p>
+          </p> -->
         </v-col>
         <v-col sm="1"></v-col>
       </v-row>

@@ -1,15 +1,17 @@
 <template>
-  <v-app>
+<v-app>
     <top-nav />
     <main-nav v-if="!shouldShowMainNav" />
     <v-main>
-      <router-view />
+        <router-view />
     </v-main>
     <template v-if="!shouldHideAboutAndFooter">
-      <about v-if="!shouldShowMainNav" />
-      <Footer v-if="!shouldShowMainNav" />
+      <div class="d-none d-sm-none d-md-flex" style="display: flex; flex-direction: column; justify-content: center;">
+        <about v-if="!shouldShowMainNav" />
+        <Footer v-if="!shouldShowMainNav" />
+      </div>
     </template>
-  </v-app>
+</v-app>
 </template>
 
 <script>
@@ -17,35 +19,37 @@ import TopNav from "@/components/TopNav.vue";
 import MainNav from "@/components/MainNav.vue";
 import Footer from "@/components/Footer";
 import About from "@/views/About.vue";
-import { mapActions } from 'vuex';
+import {
+    mapActions
+} from 'vuex';
 export default {
-  name: "App",
-  components: {
-    TopNav,
-    MainNav,
-    Footer,
-    About,
-  },
-  methods: {
-    ...mapActions(['autoLogin'])
-  },
-  computed: {
-    shouldShowMainNav() {
-      return this.$route.meta.hideForAuth == true;
+    name: "App",
+    components: {
+        TopNav,
+        MainNav,
+        Footer,
+        About,
     },
-    shouldHideAboutAndFooter() {
-      return this.$route.meta.hideFooterAndAbout == true;
+    methods: {
+        ...mapActions(['autoLogin'])
+    },
+    computed: {
+        shouldShowMainNav() {
+            return this.$route.meta.hideForAuth == true;
+        },
+        shouldHideAboutAndFooter() {
+            return this.$route.meta.hideFooterAndAbout == true;
+        }
+    },
+    created() {
+        this.autoLogin();
     }
-  },
-  created(){
-    this.autoLogin();
-  }
 };
 </script>
 
 <style>
 @font-face {
-  font-family: "Avenir";
-  src: local("Avenir"), url(./fonts/AvenirLTStd-Book.otf) format("opentypefont");
+    font-family: "Avenir";
+    src: local("Avenir"), url(./fonts/AvenirLTStd-Book.otf) format("opentypefont");
 }
 </style>

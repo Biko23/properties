@@ -1,3 +1,7 @@
+/**
+ * @author Isaac Ssemugenyi
+ * @copyright flyhub Uganda Ltd
+*/
 import AuthService from '@/service/authService';
 import decode from "jwt-decode";
 // const Cryptr = require('cryptr');
