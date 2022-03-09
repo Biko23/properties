@@ -8,14 +8,10 @@
     <v-container id="main-container" fluid>
         <v-row>
             <v-col cols="12" sm="12" md="6" lg="6">
-                <router-link to="/" style="
-                    color: black;
-                    text-align: center;
-                    margin-top: 40px;
-                    margin-left: 50px;
-                    text-decoration: none;"
+                <router-link to="/"
+                    id="backLink"
                 >
-                    <p class="back-home">
+                    <p>
                         <v-icon
                             size="30"
                             style="padding: 0 10px 0 0;"
@@ -24,7 +20,7 @@
                     </p>
                 </router-link>
                 <h1 id="get-started">Get ready to start buying and selling more!</h1>
-                <p style="margin-left:100px;">Create an account</p>
+                <p id="get-started">Sign up</p>
             </v-col>
             <v-col>
                 <v-form id="form" ref="signupForm" v-model="valid" lazy-validation>
@@ -59,7 +55,7 @@
                         </v-row>
                         <v-row>
                             <v-col cols="12" sm="12" md="12">
-                                <v-text-field v-model="userSignupDetails.telephone" :rules="phoneNumberRules" label="Phone number" placeholder="Enter your Phone number(+256712123456)" solo></v-text-field>
+                                <v-text-field v-model="userSignupDetails.telephone" :rules="phoneNumberRules" label="Phone number" placeholder="+256712123456" solo></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
@@ -206,7 +202,7 @@ export default {
 <style scoped>
 #main-container {
     background: url("../assets/signup.png");
-
+    height: 100vh;
     background-size: cover;
 }
 
@@ -214,10 +210,20 @@ export default {
     color: #3b6ef3;
     text-align: center;
     font-weight: 400;
+    margin-top: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/* #get-started {
+    color: #3b6ef3;
+    text-align: center;
+    font-weight: 400;
     margin-top: 30px;
     margin-left: 70px;
     margin-right: 70x;
-}
+} */
 
 #form {
     background-color: #e7f0ff;
@@ -228,36 +234,30 @@ export default {
     text-align: center;
 }
 
-#back-home {
-    margin-left: -190px;
-    margin-top: -20px;
-    position: absolute
-}
-
-.back-home {
-    margin-top: 40px;
+#backLink {
+    text-align: left;
+    color: black;
+    text-decoration: none;
 }
 
 @media only screen and (max-width: 768px) {
+
     #get-started {
+        color: #3b6ef3;
+        text-align: center;
+        font-weight: 300;
+        margin-top: auto;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    /* #get-started {
         color: #3b6ef3;
         text-align: center;
         font-weight: 300;
         margin-top: 30px;
         margin-left: auto;
         margin-right: auto;
-    }
-
-    #back-home {
-        margin-left: -95px;
-        margin-top: -20px;
-        position: absolute
-    }
-
-    .back-home {
-        margin-left: -70px;
-    }
-
+    } */
     #form {
         background-color: #e7f0ff;
         margin-left: auto;

@@ -35,7 +35,7 @@
                         <v-row>
                             <v-col cols="12" sm="12" md="12">
                                 <p>Secondary Phone:</p>
-                                <v-text-field :rules="[userRules.secondary_contact]" v-model="currentLoggedinUser.vendor_secondary_phone_number" label="Secondary Phone" placeholder="Enter your secondary Phone number(+256712123456)" solo></v-text-field>
+                                <v-text-field :rules="[userRules.secondary_contact]" v-model="currentLoggedinUser.vendor_secondary_phone_number" label="Secondary Phone" placeholder="+256712123456" solo></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
