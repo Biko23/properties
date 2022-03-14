@@ -156,9 +156,10 @@ export default {
       try {
         if(this.loginState == true){
           const response = await this.fetchTotalFavoriteCount();
-          if(response.data.status == 0){
-            this.defaultResponse(response.data.message, 'Error', true);
-          }
+            console.log(response.data);
+          // if(response.data.status == 0){
+          //   this.defaultResponse(response.data.message, 'Error5', true);
+          // }
         }
       } catch (error) {
         throw new Error(error.message);

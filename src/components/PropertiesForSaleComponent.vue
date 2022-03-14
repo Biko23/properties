@@ -149,7 +149,7 @@
       </v-row>
       <v-row id="main-property" v-else>
         <v-col cols="12" v-if="allPropertyForSale.length == 0">
-          <center class="text-h4">Not data Available</center>
+          <center class="text-h4">Not properties with requested specifics available</center>
         </v-col>
         <v-col cols="12" xl="2" lg="3" md="4" sm="6" xs="12"
           v-else
@@ -412,15 +412,15 @@ export default {
             this.fetchPropertyForSale()
             .then(sales => {
               if(sales.data.status == 0){
-                this.defaultResponse(sales.data.message, 'Error', true);
+                this.defaultResponse(sales.data.message, 'Error1', true);
               }
-            }).catch(error => this.defaultResponse(error.message, 'Error', true))
+            }).catch(error => this.defaultResponse(error.message, 'Error2', true))
           } else {
-            this.defaultResponse(response.data.message, 'Error', true);
+            this.defaultResponse(response.data.message, 'Error3', true);
           }
         })
       } catch (error) {
-        this.defaultResponse(error.message, 'Error', true);
+        this.defaultResponse(error.message, 'Error4', true);
       }
     },
     resetSelection() {
