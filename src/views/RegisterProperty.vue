@@ -406,25 +406,17 @@ export default {
     setDescription () {
       console.log(this.propertyType);
       this.property.type = this.propertyType.value
-      if (this.propertyType.text == "Land") {
-        console.log(this.property.propertyDescription)
-        console.log(this.property.features);
+      if (this.propertyType.text == "Estate") {
         this.property.propertyDescription = this.property.propertyDescription + " - All"
-        console.log("We got land....");
       } else {
         for (let index = 0; index < this.property.features.length; index++) {
           const element = this.property.features[index];
-          console.log(element);
           if (element.name == "Bedroom") {
           this.property.propertyDescription = this.property.propertyDescription + " - " + element.quantity + element.name            
           }
           
         }
-        console.log(this.property.features);
-
       }
-      console.log(this.property);
-      console.log(allPropertyTypes);
       // this.featuresDialog = true
       // let featuresLength = this.features.length
       // if (propertyType == "Land") {
