@@ -84,6 +84,7 @@ const actions = {
     async fetchPropertyTypes({ commit }) { // Apartments, Houses, land, Banglow,  many more
         try {
             const response = await PropertyCategoryService.getPropertyCategory();
+            console.log(response.data.result);
             commit('setPropertyTypes', response.data.result);
         } catch (error) {
             console.log(error);

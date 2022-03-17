@@ -15,15 +15,26 @@
         <v-row id="form-row">
           <v-col cols="12" md="12">
             <v-row>
+               <v-col cols="12" sm="12">
+                <v-text-field
+                  v-model="property.propertyDescription"
+                  :rules="[propertyRules.propertyDescription]"
+                  class="custom-label-color"
+                  label="Property Name"
+                  placeholder="Property name Eg. Musoke Apartments"
+                  solo
+                ></v-text-field>
+              </v-col>
              <v-col cols="12" md="12">
                <v-row>
                    <v-col cols="12" sm="12" md="6">
                       <v-select
-                        v-model="property.type"
+                        v-model="propertyType"
                         :rules="[propertyRules.type]"
                         :items="allPropertyTypes"
                         label="Select Property Type"
                         solo
+                        return-object
                       ></v-select>
                     </v-col>
                     <v-col class="d-flex" cols="12" sm="6">
@@ -84,14 +95,14 @@
                                       <td>{{ item.name }}</td>
                                       <td class="text-right">
                                         <v-icon
-                                          class="mr-2" color="blue" v-bind="attrs" @click="adjustQuantity(item, 'increment')"
+                                          class="mr-2" color="blue" @click="adjustQuantity(item, 'increment')"
                                         >mdi-plus
                                         </v-icon>
                                       </td>
                                       <td class="text-center">{{ item.quantity }}</td>
                                       <td class="text-left">
                                         <v-icon
-                                          class="mr-2" color="blue" v-bind="attrs" @click="adjustQuantity(item, 'decrement')"
+                                          class="mr-2" color="blue" @click="adjustQuantity(item, 'decrement')"
                                         >mdi-minus
                                         </v-icon>
                                       </td>
@@ -177,17 +188,6 @@
                     ></v-select>
                   </v-col>
                 </v-row>
-              </v-col>
-
-               <v-col cols="12" sm="12">
-                <v-textarea
-                  v-model="property.propertyDescription"
-                  :rules="[propertyRules.propertyDescription]"
-                  class="custom-label-color"
-                  label="Property Description"
-                  placeholder="Describe the property beliefly i.e, a two storeyed building with tiles roof located in kampala 20 kms off masaka highway"
-                  solo
-                ></v-textarea>
               </v-col>
             </v-row>
             <v-row>
@@ -304,6 +304,7 @@ export default {
     districts: [],
     divisions: [],
     suburbs: [],
+    propertyType: {},
     property: {
       type: "",
       district_id: 0,
@@ -385,6 +386,7 @@ export default {
       this.featuresDialog = false
       this.property.features = newFeatures
       this.featuresSet = true
+      this.setDescription()
     },
     setFeatures () {
       this.featuresDialog = true
@@ -400,6 +402,35 @@ export default {
         }
         
       }
+    },
+    setDescription () {
+      console.log(this.propertyType);
+      this.property.type = this.propertyType.value
+      if (this.propertyType.text == "Land") {
+        console.log(this.property.propertyDescription)
+        console.log(this.property.features);
+        this.property.propertyDescription = this.property.propertyDescription + " - All"
+        console.log("We got land....");
+      } else {
+        for (let index = 0; index < this.property.features.length; index++) {
+          const element = this.property.features[index];
+          console.log(element);
+          if (element.name == "Bedroom") {
+          this.property.propertyDescription = this.property.propertyDescription + " - " + element.quantity + element.name            
+          }
+          
+        }
+        console.log(this.property.features);
+
+      }
+      console.log(this.property);
+      console.log(allPropertyTypes);
+      // this.featuresDialog = true
+      // let featuresLength = this.features.length
+      // if (propertyType == "Land") {
+      //   this.property.description = "All"        
+      // }
+      // console.log("Description: ", this.property.description);
     },
     adjustQuantity(item, action) {
       if (action === 'increment') {

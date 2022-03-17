@@ -80,6 +80,7 @@ const actions = {
         try {
             const is_listed_for_id = rootState.SellerModule.saleCategory[0].id
             const response = await PropertyService.getAllPropertyForSale(is_listed_for_id);
+            console.log(response.data.result);
             commit('setPropertyForSale', response.data.result);
             return response;
         } catch (error) {
