@@ -26,7 +26,6 @@
                         position: absolute;
                         right: 0;
                         top: 10%;
-                        z-index: 50;
                     " @click.stop="searchProperties">
                     mdi-magnify
                 </v-icon>

@@ -8,14 +8,10 @@
     <v-container id="main-container" fluid>
         <v-row>
             <v-col cols="12" sm="12" md="6" lg="6">
-                <router-link to="/" style="
-                    color: black;
-                    text-align: center;
-                    margin-top: 40px;
-                    margin-left: 50px;
-                    text-decoration: none;"
+                <router-link to="/"
+                    id="backLink"
                 >
-                    <p class="back-home">
+                    <p>
                         <v-icon
                             size="30"
                             style="padding: 0 10px 0 0;"
@@ -24,7 +20,7 @@
                     </p>
                 </router-link>
                 <h1 id="get-started">Welcome Back!</h1>
-                <p id="login-into">Login into your account</p>
+                <p  id="get-started">Login into your account</p>
             </v-col>
             <v-col>
                 <v-form id="form" ref="loginForm" v-model="valid" lazy-validation>
@@ -193,10 +189,16 @@ export default {
 #get-started {
     color: #3b6ef3;
     text-align: center;
-    font-weight: 500;
-    margin-top: 50px;
-    margin-left: 70px;
-    margin-right: 70x;
+    font-weight: 400;
+    margin-top: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#backLink {
+    text-align: left;
+    color: black;
+    text-decoration: none;
 }
 
 #login-into {
@@ -239,7 +241,7 @@ export default {
     #get-started {
         color: #3b6ef3;
         text-align: center;
-        font-weight: 500;
+        font-weight: 300;
         margin-top: auto;
         margin-left: auto;
         margin-right: auto;
