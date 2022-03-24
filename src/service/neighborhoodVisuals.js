@@ -1,3 +1,7 @@
+/**
+ * @author Isaac Ssemugenyi
+ * @copyright flyhub Uganda Ltd
+*/
 import API from '../config/connections'
 // neighborhood visuals
 export default {

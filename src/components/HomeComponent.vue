@@ -512,7 +512,6 @@ export default {
 
 #container {
     background-image: url("https://res.cloudinary.com/diued7ugb/image/upload/v1626688591/vj-von-art-BP1Ze0qcp-c-unsplash_tlgt7k.jpg");
-    /* background-image: url("https://res.cloudinary.com/diued7ugb/image/upload/v1626688778/dillon-kydd-XGvwt544g8k-unsplash_lrvzid.jpg"); */
     background-size: cover;
     display: flex;
     height: 75vh;
@@ -529,34 +528,10 @@ export default {
     height: 310px;
 }
 
-/* @media only screen and (min-width: 320px) {
-        input {
-        margin-top: 40px;
-        background-color: #f2f2f2;
-        height: 50px;
-        width: auto;
-        margin-left: auto;
-        margin-right: auto;
-        border-radius: 6px;
-    }
-}
-
-@media only screen and (max-width: 414px) {
-        input {
-        margin-top: 40px;
-        background-color: #f2f2f2;
-        height: 50px;
-        width: 350px;
-        margin-left: auto;
-        margin-right: auto;
-        border-radius: 6px;
-    }
-} */
-
 @media only screen and (max-width: 768px) {
     #container {
         display: flex;
-        height: auto;
+        height: 50%;
         width: auto;
     }
 

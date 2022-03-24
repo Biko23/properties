@@ -1,3 +1,7 @@
+/**
+ * @author Isaac Ssemugenyi
+ * @copyright flyhub Uganda Ltd
+*/
 import PropertyLocationService from '@/service/propertyLocation';
 import PropertyValueService from '@/service/propertyValue';
 import PropertyRentalValueService from '@/service/propertyRentalValue';
