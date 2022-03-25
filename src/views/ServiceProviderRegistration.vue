@@ -116,6 +116,7 @@ export default {
   },
 
   created() {
+        this.$log.info('Accessing the service provider registration page.')
     this.getVendorsCategories();
   },
   mounted() {

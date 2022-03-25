@@ -195,6 +195,7 @@ export default {
         ...mapActions(["postAUserLog"])
     },
     created() {
+        this.$log.info('Accessing the register rental properties requirements page.')
         this.postAUserLog({
             activity: "Visited Rental Requirement page",
             button_clicked: "Rental Requirement Page"

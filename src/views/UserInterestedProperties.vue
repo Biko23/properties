@@ -16,6 +16,7 @@ export default {
         ...mapActions(["postAUserLog"])
     },
     created(){
+        this.$log.info('Accessing the user interested properties page.')
         this.postAUserLog({
             activity: "Visited User Interested Properties page",
             button_clicked: "User Interested Properties page"

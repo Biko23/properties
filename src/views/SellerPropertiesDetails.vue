@@ -433,13 +433,16 @@ export default {
         },
         // =============== End rentals
          navigateToEditSection(item){
+            this.$log.info("Move to edit selected property's details")
             this.$router.push(`/edit-property/${item.property_id}?type=${item.type}`);
         },
         viewPropertyDetails(item){
+            this.$log.info("Move to view selected property's details")
             this.$router.push(`/single-property/${item.property_id}`);
         },
     },
     created() {
+        this.$log.info('Accessing the seller property details page.')
         this.postAUserLog({
             activity: "Visited Seller Details page",
             button_clicked: "Seller Details Page"

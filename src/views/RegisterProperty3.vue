@@ -138,6 +138,7 @@ export default {
         UploadImages
     },
     created() {
+        this.$log.info('Accessing the third step in registering a properties details.')
         this.postAUserLog({
             activity: "Visited the Property Listing Third page",
             button_clicked: "Property Listing Page"
@@ -152,6 +153,7 @@ export default {
             "postAUserLog"
         ]),
         handleImages(files) {
+            this.$log.info('Images selected for upload.')
             this.property.imageValidatorField = files.length <= 0 ? "" : files[0].name;
             this.property.landmarkVisuals.splice(
                 0,
@@ -171,6 +173,7 @@ export default {
             }, 3000);
         },
         async submitFinalData() {
+            this.$log.info('Validate property details data')
             if (this.$refs.propertyForm3.validate()) {
                 this.submitting = true;
                 await this.addPropertyDataFromPageThird(this.property);

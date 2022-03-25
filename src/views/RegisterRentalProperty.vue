@@ -184,6 +184,7 @@ export default {
         async fetchDivisions() {
             try {
                 if (this.property.district_id == 0) {
+                    this.$log.warn('A district should be selected to have division populated.')
                     this.defaultResponse('No district selected yet', 'Error', true);
                 } else {
                     const response = await this.fetchDivisionsByDistrictId(this.property.district_id);
@@ -200,6 +201,7 @@ export default {
         async fetchSuburbs() {
             try {
                 if (this.property.division_id == 0) {
+                    this.$log.warn('A division should be selected to have suburbs populated.')
                     this.defaultResponse('No division selected yet', 'Error', true);
                 } else {
                     const response = await this.fetchSuburbsByDistrictId(this.property.division_id);
@@ -214,6 +216,7 @@ export default {
             }
         },
         handleImages(files) {
+            this.$log.info('Images selected for upload.')
             this.property.imageValidatorField = files.length <= 0 ? "" : files[0].name;
             this.property.visuals.splice(0, this.property.visuals.length);
             this.property.visuals.push(...files);
@@ -229,6 +232,7 @@ export default {
             }, 3000);
         },
         storePropertyData() {
+            this.$log.info('Validating rental property details.')
             if (this.$refs.propertyForm1.validate()) {
                 this.submitting = true
                 this.addPropertyForRentDataFromPageOne(this.property)
@@ -247,6 +251,7 @@ export default {
         }
     },
     created() {
+        this.$log.info('Accessing the register rental properties page.')
         this.postAUserLog({
             activity: "Visited the Rental Property Listing First page",
             button_clicked: "Property Listing Page"

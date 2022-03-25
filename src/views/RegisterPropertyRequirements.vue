@@ -195,6 +195,7 @@ export default {
         ...mapGetters(["loginState"])
     },
     created() {
+        this.$log.info('Accessing the registering a properties requirements page.')
          this.postAUserLog({
             activity: "Visited Property Requirement page",
             button_clicked: "Property Requirement Page"

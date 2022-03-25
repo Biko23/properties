@@ -187,6 +187,7 @@ export default {
         ])
     },
     created() {
+        this.$log.info('Accessing the single property page.')
         this.postAUserLog({
             activity: "Visited Single property Details page",
             button_clicked: "Single Property Details Page"
