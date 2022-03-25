@@ -427,15 +427,18 @@ export default {
     adjustQuantity(item, action) {
       if (action === 'increment') {
         const itemIndex = this.features.findIndex(feature => feature.feature_type_id == item.feature_type_id)
+        this.$log.debug('Incrementing ', item.name)
         item.quantity += 1
         this.features.splice(itemIndex, 1, item)
         
       } else {
         if (item.quantity > 0) {
         const itemIndex = this.features.findIndex(feature => feature.feature_type_id == item.feature_type_id)
+        this.$log.debug('Decrementing ', item.name)
         item.quantity -= 1
         this.features.splice(itemIndex, 1, item)
         } else {
+          this.$log.warn("The quantity of a feature can't be negative")
           this.defaultResponse('No negative values accepted.', 'Error', true);          
         }        
       }
@@ -446,6 +449,7 @@ export default {
         if(response.data.status == 1){
           this.districts = this.allDistricts;
         } else {
+          this.$log.error('Error retrieving district data at the back')
           this.defaultResponse(response.data.message, 'Error', true);
         }
       } catch (error) {
@@ -455,12 +459,14 @@ export default {
     async fetchDivisions(){
       try {
         if(this.property.district_id == 0){
+          this.$log.warn('A district should be selected to have divisions populated.')
           this.defaultResponse('No district selected yet', 'Error', true);
         } else {
           const response = await this.fetchDivisionsByDistrictId(this.property.district_id);
           if(response.data.status == 1){
             this.divisions = this.allDivisions;
           } else {
+                this.$log.error('Error retrieving district data at the back')
             this.defaultResponse(response.data.message, 'Error', true);
           }
         }
@@ -471,12 +477,14 @@ export default {
     async fetchSuburbs(){
       try {
         if(this.property.division_id == 0){
+          this.$log.warn('A division should be selected to have suburbs populated.')
           this.defaultResponse('No division selected yet', 'Error', true);
         } else {
           const response = await this.fetchSuburbsByDistrictId(this.property.division_id);
           if(response.data.status == 1){
             this.suburbs = this.allSuburbs;
           } else {
+            this.$log.error('Error retrieving surburb data at the back')
             this.defaultResponse(response.data.message, 'Error', true);
           }
         }
@@ -485,6 +493,7 @@ export default {
       }
     },
     handleImages(files) {
+      this.$log.info('Images selected for upload.')
       this.property.imageValidatorField = files.length <= 0 ? "" : files[0].name;
       this.property.visuals.splice(0, this.property.visuals.length);
       this.property.visuals.push(...files);
@@ -509,11 +518,13 @@ export default {
               if(response.status == 201){
                 this.$router.push("/register2");
               } else {
+                this.$log.error('Error storing property data at the back')
                 this.defaultResponse(response.data.message, 'Error', true);
               }
             }
           )
           .catch(error => {
+            this.$log.error('Error storing property data', error)
              this.submitting = false
             this.defaultResponse(error.message, 'Error', true)
             });
@@ -521,6 +532,7 @@ export default {
     },
   },
   created() {
+    this.$log.info('Accessing the first step in registering a properties details.')
     this.postAUserLog({
       activity: "Visited the Property Listing first page",
       button_clicked: "Property Listing Page"

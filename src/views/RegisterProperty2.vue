@@ -166,6 +166,7 @@ export default {
             "postAUserLog"
         ]),
         handleImages(files) {
+            this.$log.info('Images selected for upload.')
             this.property.imageValidatorField = files.length <= 0 ? "" : files[0].name;
             this.property.neighborhoodVisuals.splice(
                 0,
@@ -174,6 +175,7 @@ export default {
             this.property.neighborhoodVisuals.push(...files);
         },
         storePropertyData() {
+            this.$log.info('Validate data and move to step three.')
             if (this.$refs.propertyForm2.validate()) {
                 this.addPropertyDataFromPageTwo(this.property).then(() =>
                     this.$router.push("/register3")
@@ -185,6 +187,7 @@ export default {
         ...mapGetters(["allCurrencies"])
     },
     created() {
+        this.$log.info('Accessing the second step in registering a properties details.')
         this.postAUserLog({
             activity: "Visited the Property Listing Second page",
             button_clicked: "Property Listing Page"

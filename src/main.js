@@ -17,6 +17,20 @@ import VueSocialSharing from 'vue-social-sharing'
 import './registerServiceWorker'
 // End load sharing icons
 
+//To help with logging
+import VueLogger from 'vuejs-logger'
+
+const isProduction = process.env.NODE_ENV === 'production';
+const opitions = {
+  isEnabled: true,
+  loglevel: isProduction ? 'error' : 'debug',
+  stringifyArguments : false,
+  showLogLevel: true,
+  showMethodName: true,
+  separator: '|',
+  showConsoleColors: true
+}
+
 Vue.component('base-dialog', BaseDialog)
 Vue.component('base-spinner', BaseSpinner)
 
@@ -30,6 +44,10 @@ Vue.use(VueSession)
 Vue.use(vuetifyIcon)
 Vue.use(VueSocialSharing)
 // End load sharing icons
+
+//To use vue-logger
+Vue.use(VueLogger, opitions)
+
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.basicAuth)) {

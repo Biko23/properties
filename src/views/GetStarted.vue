@@ -191,6 +191,8 @@ export default {
     ...mapGetters(["loginState", "iAmASeller", "iAmACertifiedSeller", "allRoles"]),
   },
   created() {
+
+        this.$log.info('Accessing the getting sarted page.')
     this.fetchAllUserRoles();
     this.postAUserLog({
       activity: `Visited Get Started Page`,

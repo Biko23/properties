@@ -181,6 +181,7 @@ export default {
         ...mapActions(["postAUserLog"])
     },
     created(){
+        this.$log.info('Accessing the mortgage page.')
         this.postAUserLog({
             activity: "Visited Mortgage page",
             button_clicked: "Mortgage Page"

@@ -218,6 +218,8 @@ export default {
         }            
     }),
     created() {
+
+        this.$log.info("Accessing page to edit a property's visuals")
         this.postAUserLog({
             "activity":`Visited Edit Property Visuals Page`, 
             "button_clicked":"View Edit Property Visuals Page"

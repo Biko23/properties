@@ -8,6 +8,7 @@
 import { mapActions } from 'vuex'
 import HomeComponent from '../components/HomeComponent.vue'
 
+
 export default {
     name: 'Home',
     components: {
@@ -17,6 +18,7 @@ export default {
         ...mapActions(["postAUserLog"])
     },
     created(){
+        this.$log.info('Accessed Home page.')
          this.postAUserLog({
             activity: "Visited Home page",
             button_clicked: "Visited Home Page"

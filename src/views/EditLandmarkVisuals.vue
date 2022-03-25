@@ -271,6 +271,8 @@ export default {
         }            
     }),
     created() {
+
+        this.$log.info('Accessing page to edit landmark visuals.')
         this.postAUserLog({
             "activity":`Visited Edit Landmark Visuals Page`, 
             "button_clicked":"View Edit Landmark Visuals Page"

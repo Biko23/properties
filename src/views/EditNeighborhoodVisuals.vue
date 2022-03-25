@@ -219,6 +219,8 @@ export default {
         }            
     }),
     created() {
+
+        this.$log.info('Accessing page to edit Neighbourhood visuals.')
         this.postAUserLog({
             "activity":`Visited Edit Neighborhood Visuals Page`, 
             "button_clicked":"View Edit Neighborhood Visuals Page"

@@ -17,6 +17,7 @@ export default {
         ...mapActions(["postAUserLog"])
     },
     created(){
+        this.$log.info('Accessing the recently viewed properties page.')
         this.postAUserLog({
             activity: "Visited Recently Viewed page",
             button_clicked: "Rencently Viewed Page"

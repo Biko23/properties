@@ -162,6 +162,7 @@ export default {
         ...mapActions(["postAUserLog"])
     },
     created(){
+        this.$log.info('Accessing the mortgage rates page.')
         this.postAUserLog({
             activity: "Visited Mortgage Rates page",
             button_clicked: "Mortgage Rate Page"

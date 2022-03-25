@@ -58,8 +58,12 @@
                             </v-col>
                         </v-row>
                         <!-- <br v-if="responseMessage != ''"> -->
-                        <span v-if="responseMessage != ''" style="color: red;">{{responseMessage}}</span>
-                        <br /><br />
+
+                        <!-- Commented Two lines below because "responseMessage is NOT defined" -->
+                        <!-- <span v-if="responseMessage != ''" style="color: red;">{{responseMessage}}</span>
+                        <br /><br /> -->
+
+
                         <!-- <v-row>
                 <v-divider></v-divider><span style="margin-top: -10px">Or</span>
                 <v-divider></v-divider>
@@ -171,6 +175,7 @@ export default {
                     }
                 }
             } catch (error) {
+                this.$log.error('Error:', error)
                 this.submitting = false;
                 this.defaultResponse(error.message, 'Error', true);
             }

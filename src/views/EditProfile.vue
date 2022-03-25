@@ -87,6 +87,8 @@ export default {
         ],
     }),
     created() {
+
+        this.$log.info('Accessing page to edit logged in user profile.')
         this.fetchAllUserRoles();
         this.postAUserLog({
             "activity":`Visited Edit Profile Page`, 

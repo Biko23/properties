@@ -439,6 +439,8 @@ export default {
         ]        
     }),
     created() {
+
+        this.$log.info('Accessing page to edit a property.')
         this.postAUserLog({
             "activity":`Visited Edit Property Page`, 
             "button_clicked":"View Edit Property Page"
